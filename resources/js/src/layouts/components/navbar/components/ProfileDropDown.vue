@@ -62,7 +62,7 @@
 
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-            @click="logout"
+            @click="logout1"
           >
             <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" />
             <span class="ml-2">Salir</span>
@@ -95,6 +95,11 @@ export default {
     }
   },
   methods: {
+    logout1(){
+      localStorage.removeItem('tu');
+      localStorage.removeItem('ru');
+      this.$router.push("/");
+    },
     getData() {
       let token = localStorage.getItem("tu");
       axios({

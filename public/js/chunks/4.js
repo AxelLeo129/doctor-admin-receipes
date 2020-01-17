@@ -1577,6 +1577,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    logout1: function logout1() {
+      localStorage.removeItem('tu');
+      localStorage.removeItem('ru');
+      this.$router.push("/");
+    },
     getData: function getData() {
       var _this = this;
 
@@ -4695,7 +4700,7 @@ var render = function() {
                       {
                         staticClass:
                           "flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white",
-                        on: { click: _vm.logout }
+                        on: { click: _vm.logout1 }
                       },
                       [
                         _c("feather-icon", {
