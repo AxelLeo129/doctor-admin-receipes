@@ -147,7 +147,7 @@
                     <vs-input
                       class="w-full vs-input-shadow-drop vs-input-no-border d-theme-input-dark-bg"
                       placeholder="Ingrese su búsqueda"
-                      v-model="currentRefinement"
+                      v-model="buscar"
                       @input="refine($event)"
                       @keyup.esc="refine('')"
                       size="large"
@@ -196,7 +196,7 @@
                     <div class="vx-row">
                       <div
                         class="vx-col w-full sm:w-1/2 lg:w-1/3 mb-base"
-                        v-for="item in medicamentosList"
+                        v-for="item in searchMedicina"
                         :key="item.id"
                       >
                         <vx-card>
@@ -216,31 +216,23 @@
                             title="Dosificación"
                             :active.sync="activar"
                           >
+                            <h4 class="mb-2">
+                              <strong v-text="nombre"></strong>
+                            </h4>
                             <h5 class="mb-2" v-text="descripcion"></h5>
-                          <h6 class="mb-2" v-text="nombre"></h6>
+                            <h6 class="mb-2" v-text="precentacion"></h6>
 
-                            <vs-input
-                              class="inputx mb-3"
-                              placeholder="Placeholder"
-                              v-model="value1"
-                            />
-                            <vs-input
-                              disabled
-                              class="inputx mb-3"
-                              placeholder="Disabled"
-                              v-model="value2"
-                            />
-                            <vs-button
-                            
-                              color="primary"
-                              type="filled"
-                            >Open Inner Popup</vs-button>
+                            <div class="mt-4">
+                              <vs-textarea class="vs-textarea" label="Descripción de uso" />
+                            </div>
+
+                            <vs-button color="primary" type="filled">Agregar Medicina</vs-button>
                           </vs-popup>
                           <div class="flex justify-between flex-wrap">
                             <vs-button
                               class="mt-4 mr-2 shadow-lg"
                               type="gradient"
-                              @click="activar=true, setData(item.name, item.descripcion, item.precentation)"
+                              @click="activar=true, setData(item.name, item.description, item.precentation)"
                               gradient-color-secondary="#CE9FFC"
                             >Agregar Producto</vs-button>
                           </div>
@@ -328,6 +320,7 @@ export default {
   },
   data() {
     return {
+      buscar: "",
       activar: false,
       precentacion: "",
       uso: "",
@@ -382,6 +375,19 @@ export default {
       ];
     },
 
+    searchMedicina: function() {
+      let result = this.medicamentosList;
+      if (!this.buscar) {
+        return result;
+      }
+      let texto = this.buscar.toLowerCase();
+      const filter = event =>
+        event.name.toLowerCase().includes(texto) ||
+        event.precentation.toLowerCase().includes(texto) ||
+        event.description.toLowerCase().includes(texto);
+
+      return result.filter(filter);
+    },
     // GRID VIEW
     isInCart() {
       return itemId => this.$store.getters["eCommerce/isInCart"](itemId);
@@ -399,12 +405,19 @@ export default {
     }
   },
   methods: {
-    setData(nombre, descripcion, precentacion){
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precentacion = precentacion;
+    openLoading() {
+      this.activeLoading = true;
+      this.$vs.loading({
+        type: "default"
+      });
+    },
+    setData(nombre, descripcion, precentacion) {
+      this.nombre = nombre;
+      this.descripcion = descripcion;
+      this.precentacion = precentacion;
     },
     getData() {
+      this.openLoading();
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
@@ -416,8 +429,12 @@ export default {
       })
         .then(Response => {
           this.medicamentosList = Response.data;
+          this.$vs.loading.close();
+          this.activado = true;
         })
         .catch(err => {
+          this.$vs.loading.close();
+          this.activado = true;
           console.log(err);
         });
     },

@@ -297,14 +297,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -336,6 +328,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      buscar: "",
       activar: false,
       precentacion: "",
       uso: "",
@@ -374,6 +367,21 @@ __webpack_require__.r(__webpack_exports__);
         return [value.min !== null ? value.min : range.min, value.max !== null ? value.max : range.max];
       };
     },
+    searchMedicina: function searchMedicina() {
+      var result = this.medicamentosList;
+
+      if (!this.buscar) {
+        return result;
+      }
+
+      var texto = this.buscar.toLowerCase();
+
+      var filter = function filter(event) {
+        return event.name.toLowerCase().includes(texto) || event.precentation.toLowerCase().includes(texto) || event.description.toLowerCase().includes(texto);
+      };
+
+      return result.filter(filter);
+    },
     // GRID VIEW
     isInCart: function isInCart() {
       var _this = this;
@@ -399,6 +407,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    openLoading: function openLoading() {
+      this.activeLoading = true;
+      this.$vs.loading({
+        type: "default"
+      });
+    },
     setData: function setData(nombre, descripcion, precentacion) {
       this.nombre = nombre;
       this.descripcion = descripcion;
@@ -407,6 +421,7 @@ __webpack_require__.r(__webpack_exports__);
     getData: function getData() {
       var _this3 = this;
 
+      this.openLoading();
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_4___default()({
         method: "get",
@@ -417,7 +432,14 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         _this3.medicamentosList = Response.data;
+
+        _this3.$vs.loading.close();
+
+        _this3.activado = true;
       }).catch(function (err) {
+        _this3.$vs.loading.close();
+
+        _this3.activado = true;
         console.log(err);
       });
     },
@@ -909,11 +931,11 @@ var render = function() {
                                             }
                                           },
                                           model: {
-                                            value: currentRefinement,
+                                            value: _vm.buscar,
                                             callback: function($$v) {
-                                              currentRefinement = $$v
+                                              _vm.buscar = $$v
                                             },
-                                            expression: "currentRefinement"
+                                            expression: "buscar"
                                           }
                                         }),
                                         _vm._v(" "),
@@ -1021,7 +1043,7 @@ var render = function() {
                                               "div",
                                               { staticClass: "vx-row" },
                                               _vm._l(
-                                                _vm.medicamentosList,
+                                                _vm.searchMedicina,
                                                 function(item) {
                                                   return _c(
                                                     "div",
@@ -1127,6 +1149,23 @@ var render = function() {
                                                               }
                                                             },
                                                             [
+                                                              _c(
+                                                                "h4",
+                                                                {
+                                                                  staticClass:
+                                                                    "mb-2"
+                                                                },
+                                                                [
+                                                                  _c("strong", {
+                                                                    domProps: {
+                                                                      textContent: _vm._s(
+                                                                        _vm.nombre
+                                                                      )
+                                                                    }
+                                                                  })
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
                                                               _c("h5", {
                                                                 staticClass:
                                                                   "mb-2",
@@ -1142,51 +1181,32 @@ var render = function() {
                                                                   "mb-2",
                                                                 domProps: {
                                                                   textContent: _vm._s(
-                                                                    _vm.nombre
+                                                                    _vm.precentacion
                                                                   )
                                                                 }
                                                               }),
                                                               _vm._v(" "),
-                                                              _c("vs-input", {
-                                                                staticClass:
-                                                                  "inputx mb-3",
-                                                                attrs: {
-                                                                  placeholder:
-                                                                    "Placeholder"
+                                                              _c(
+                                                                "div",
+                                                                {
+                                                                  staticClass:
+                                                                    "mt-4"
                                                                 },
-                                                                model: {
-                                                                  value:
-                                                                    _vm.value1,
-                                                                  callback: function(
-                                                                    $$v
-                                                                  ) {
-                                                                    _vm.value1 = $$v
-                                                                  },
-                                                                  expression:
-                                                                    "value1"
-                                                                }
-                                                              }),
-                                                              _vm._v(" "),
-                                                              _c("vs-input", {
-                                                                staticClass:
-                                                                  "inputx mb-3",
-                                                                attrs: {
-                                                                  disabled: "",
-                                                                  placeholder:
-                                                                    "Disabled"
-                                                                },
-                                                                model: {
-                                                                  value:
-                                                                    _vm.value2,
-                                                                  callback: function(
-                                                                    $$v
-                                                                  ) {
-                                                                    _vm.value2 = $$v
-                                                                  },
-                                                                  expression:
-                                                                    "value2"
-                                                                }
-                                                              }),
+                                                                [
+                                                                  _c(
+                                                                    "vs-textarea",
+                                                                    {
+                                                                      staticClass:
+                                                                        "vs-textarea",
+                                                                      attrs: {
+                                                                        label:
+                                                                          "Descripción de uso"
+                                                                      }
+                                                                    }
+                                                                  )
+                                                                ],
+                                                                1
+                                                              ),
                                                               _vm._v(" "),
                                                               _c(
                                                                 "vs-button",
@@ -1200,7 +1220,7 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "Open Inner Popup"
+                                                                    "Agregar Medicina"
                                                                   )
                                                                 ]
                                                               )
@@ -1233,7 +1253,7 @@ var render = function() {
                                                                       ;(_vm.activar = true),
                                                                         _vm.setData(
                                                                           item.name,
-                                                                          item.descripcion,
+                                                                          item.description,
                                                                           item.precentation
                                                                         )
                                                                     }
