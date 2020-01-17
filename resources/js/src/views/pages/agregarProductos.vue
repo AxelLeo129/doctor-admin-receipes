@@ -446,7 +446,7 @@ export default {
       }
     },
     formSubmitted() {
-      location.href = "/home";
+      this.$router.push("/editarReceta");
     },
 
     // GRID VIEW - ACTIONS

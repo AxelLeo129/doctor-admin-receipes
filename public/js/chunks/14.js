@@ -451,7 +451,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     formSubmitted: function formSubmitted() {
-      location.href = "/home";
+      this.$router.push("/editarReceta");
     },
     // GRID VIEW - ACTIONS
     toggleFilterSidebar: function toggleFilterSidebar() {

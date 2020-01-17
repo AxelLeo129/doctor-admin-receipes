@@ -56252,6 +56252,53 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         pageTitle: 'Agregar Medicamentos',
         rule: 'editor'
       }
+    }, {
+      path: '/editarReceta',
+      name: 'editarReceta',
+      component: function component() {
+        return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! ./views/pages/checkOut.vue */ "./resources/js/src/views/pages/checkOut.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 2) {
+          next();
+        } else {
+          next({
+            name: 'consola'
+          });
+        }
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Home',
+          url: '/home'
+        }, {
+          title: 'Paciente'
+        }, {
+          title: 'Nueva Receta',
+          active: true
+        }],
+        pageTitle: 'Editar Medicamentos',
+        rule: 'editor'
+      }
+    }, {
+      path: '/recetaFinal',
+      name: 'recetaFinal',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/recetaFinal.vue */ "./resources/js/src/views/pages/recetaFinal.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 2) {
+          next();
+        } else {
+          next({
+            name: 'consola'
+          });
+        }
+      }
     }]
   }, // Redirect to 404 page, if no match found
   {

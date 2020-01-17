@@ -260,6 +260,45 @@ const router = new Router({
             rule: 'editor'
           }
         },
+        {
+          path: '/editarReceta',
+          name: 'editarReceta',
+          component: () => import('./views/pages/checkOut.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 2) {
+              next();
+            } else {
+              next({
+                name: 'consola'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/home' },
+              { title: 'Paciente' },
+              { title: 'Nueva Receta', active: true },
+            ],
+            pageTitle: 'Editar Medicamentos',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/recetaFinal',
+          name: 'recetaFinal',
+          component: () => import('./views/pages/recetaFinal.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 2) {
+              next();
+            } else {
+              next({
+                name: 'consola'
+              });
+            }
+          }
+        },
       ],
     },
     // Redirect to 404 page, if no match found
