@@ -55981,12 +55981,34 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'page-login',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 1 || rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else {
+          next();
+        }
       }
     }, {
       path: '/register',
       name: 'register',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! @/views/pages/Register.vue */ "./resources/js/src/views/pages/Register.vue"));
+        return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! @/views/pages/Register.vue */ "./resources/js/src/views/pages/Register.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 1 || rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else {
+          next();
+        }
       }
     }, {
       path: '/pages/error-404',
@@ -56011,6 +56033,17 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'home',
       component: function component() {
         return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 2) {
+          next();
+        } else {
+          next({
+            name: 'consola'
+          });
+        }
       }
     }, {
       path: '/consola',
@@ -56023,6 +56056,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
         if (rol == 1) {
           next();
+        } else if (rol == null) {
+          next({
+            name: 'page-login'
+          });
         } else {
           next({
             name: 'home'
@@ -56033,7 +56070,18 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/user/profile',
       name: 'perfil',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(15), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! @/views/user/EditarUsuario.vue */ "./resources/js/src/views/user/EditarUsuario.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(16), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! @/views/user/EditarUsuario.vue */ "./resources/js/src/views/user/EditarUsuario.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 1 || rol == 2) {
+          next();
+        } else {
+          next({
+            name: 'home'
+          });
+        }
       },
       meta: {
         breadcrumb: [{
@@ -56054,6 +56102,17 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       component: function component() {
         return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! @/views/admin/nuevoProducto.vue */ "./resources/js/src/views/admin/nuevoProducto.vue"));
       },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 1) {
+          next();
+        } else {
+          next({
+            name: 'home'
+          });
+        }
+      },
       meta: {
         breadcrumb: [{
           title: 'Consola',
@@ -56073,6 +56132,17 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       component: function component() {
         return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! @/views/admin/EditarProducto.vue */ "./resources/js/src/views/admin/EditarProducto.vue"));
       },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 1) {
+          next();
+        } else {
+          next({
+            name: 'home'
+          });
+        }
+      },
       meta: {
         breadcrumb: [{
           title: 'Consola',
@@ -56090,7 +56160,18 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/listadoProductos',
       name: 'listadoProductos',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! @/views/admin/listadoProductos.vue */ "./resources/js/src/views/admin/listadoProductos.vue"));
+        return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! @/views/admin/listadoProductos.vue */ "./resources/js/src/views/admin/listadoProductos.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 1) {
+          next();
+        } else {
+          next({
+            name: 'home'
+          });
+        }
       },
       meta: {
         breadcrumb: [{
@@ -56117,6 +56198,17 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       component: function component() {
         return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! @/views/pages/nuevoPaciente.vue */ "./resources/js/src/views/pages/nuevoPaciente.vue"));
       },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 2) {
+          next();
+        } else {
+          next({
+            name: 'consola'
+          });
+        }
+      },
       meta: {
         breadcrumb: [{
           title: 'Medico',
@@ -56135,6 +56227,17 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'ecommerce-shop',
       component: function component() {
         return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ./views/pages/agregarProductos.vue */ "./resources/js/src/views/pages/agregarProductos.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 2) {
+          next();
+        } else {
+          next({
+            name: 'consola'
+          });
+        }
       },
       meta: {
         breadcrumb: [{
@@ -56575,9 +56678,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuesax__WEBPACK_IMPORTED_MODULE_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\DELL\Desktop\pharma-zone\starter-kit\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\Users\DELL\Desktop\pharma-zone\starter-kit\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\Users\DELL\Desktop\pharma-zone\starter-kit\resources\assets\css\main.css */"./resources/assets/css/main.css");
+__webpack_require__(/*! C:\Users\DELL\Desktop\pharmazone.app\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\Users\DELL\Desktop\pharmazone.app\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\Users\DELL\Desktop\pharmazone.app\resources\assets\css\main.css */"./resources/assets/css/main.css");
 
 
 /***/ })

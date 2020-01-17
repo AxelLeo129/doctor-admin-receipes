@@ -33,12 +33,32 @@ const router = new Router({
         {
           path: '/',
           name: 'page-login',
-          component: () => import('@/views/pages/Login.vue')
+          component: () => import('@/views/pages/Login.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 1 || rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else {
+              next();
+            }
+          }
         },
         {
           path: '/register',
           name: 'register',
-          component: () => import('@/views/pages/Register.vue')
+          component: () => import('@/views/pages/Register.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 1 || rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else {
+              next();
+            }
+          }
         },
         {
           path: '/pages/error-404',
@@ -60,7 +80,17 @@ const router = new Router({
         {
           path: '/home',
           name: 'home',
-          component: () => import('./views/Home.vue')
+          component: () => import('./views/Home.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 2) {
+              next();
+            } else {
+              next({
+                name: 'consola'
+              });
+            }
+          }
         },
         {
           path: '/consola',
@@ -70,7 +100,11 @@ const router = new Router({
             let rol = localStorage.getItem('ru');
             if (rol == 1) {
               next();
-            } else {
+            } else if(rol == null) {
+              next({
+                name: 'page-login'
+              });  
+            }else{
               next({
                 name: 'home'
               });
@@ -81,6 +115,16 @@ const router = new Router({
           path: '/user/profile',
           name: 'perfil',
           component: () => import('@/views/user/EditarUsuario.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 1 || rol == 2) {
+              next();
+            } else {
+              next({
+                name: 'home'
+              });
+            }
+          },
           meta: {
             breadcrumb: [
               { title: 'Consola', url: '/consola' },
@@ -95,6 +139,16 @@ const router = new Router({
           path: '/nuevoProducto',
           name: 'nuevoProducto',
           component: () => import('@/views/admin/nuevoProducto.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 1) {
+              next();
+            } else {
+              next({
+                name: 'home'
+              });
+            }
+          },
           meta: {
             breadcrumb: [
               { title: 'Consola', url: '/consola' },
@@ -109,6 +163,16 @@ const router = new Router({
           path: '/editarProducto/:productId',
           name: 'app-user-edit',
           component: () => import('@/views/admin/EditarProducto.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 1) {
+              next();
+            } else {
+              next({
+                name: 'home'
+              });
+            }
+          },
           meta: {
             breadcrumb: [
               { title: 'Consola', url: '/consola' },
@@ -123,6 +187,16 @@ const router = new Router({
           path: '/listadoProductos',
           name: 'listadoProductos',
           component: () => import('@/views/admin/listadoProductos.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 1) {
+              next();
+            } else {
+              next({
+                name: 'home'
+              });
+            }
+          },
           meta: {
             breadcrumb: [
               { title: 'Consola', url: '/consola' },
@@ -142,6 +216,16 @@ const router = new Router({
           path: '/nuevoPaciente',
           name: 'extra-component-form-wizard',
           component: () => import('@/views/pages/nuevoPaciente.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 2) {
+              next();
+            } else {
+              next({
+                name: 'consola'
+              });
+            }
+          },
           meta: {
             breadcrumb: [
               { title: 'Medico', url: '/home' },
@@ -156,6 +240,16 @@ const router = new Router({
           path: '/agregarProductos',
           name: 'ecommerce-shop',
           component: () => import('./views/pages/agregarProductos.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 2) {
+              next();
+            } else {
+              next({
+                name: 'consola'
+              });
+            }
+          },
           meta: {
             breadcrumb: [
               { title: 'Home', url: '/home' },
