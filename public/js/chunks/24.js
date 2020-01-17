@@ -13,6 +13,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_form_wizard__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-form-wizard/dist/vue-form-wizard.min.css */ "./node_modules/vue-form-wizard/dist/vue-form-wizard.min.css");
 /* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -86,11 +88,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      recetasData: [],
       nuevaRecetaData: null,
       // TAB 2
       fullName: "",
@@ -127,11 +136,39 @@ __webpack_require__.r(__webpack_exports__);
     this.getData();
   },
   methods: {
+    openLoading: function openLoading() {
+      this.activeLoading = true;
+      this.$vs.loading({
+        type: "default"
+      });
+    },
+    remover: function remover(index) {
+      this.nuevaRecetaData.medicamentos.splice(index, 1);
+      localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
+    },
     getData: function getData() {
       this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
     },
     generarReceta: function generarReceta() {
-      this.$router.push("/recetaFinal");
+      this.openLoading();
+      this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
+      this.openLoading();
+      this.recetasData.push({
+        nombrePaciente: this.nuevaRecetaData.nombrePaciente,
+        apellidoPaciente: this.nuevaRecetaData.apellidoPaciente,
+        genero: this.nuevaRecetaData.genero,
+        telefono: this.nuevaRecetaData.telefono,
+        medicamentos: this.nuevaRecetaData.medicamentos
+      });
+      localStorage.setItem("recetasData", JSON.stringify(this.recetasData));
+      this.activeLoading = false;
+      this.$vs.loading.close();
+      location.href = "/recetaFinal";
+      this.$vs.notify({
+        title: "Creado",
+        text: "Receta creada exitosamente.",
+        color: "success"
+      });
     },
     // TAB 1
     removeItemFromCart: function removeItemFromCart(item) {
@@ -303,7 +340,10 @@ var render = function() {
                   _c(
                     "div",
                     { staticClass: "items-list-view" },
-                    _vm._l(_vm.nuevaRecetaData.medicamentos, function(item) {
+                    _vm._l(_vm.nuevaRecetaData.medicamentos, function(
+                      item,
+                      index
+                    ) {
                       return _c(
                         "vx-card",
                         { key: item.id, staticStyle: { height: "75%" } },
@@ -337,8 +377,25 @@ var render = function() {
                                   domProps: {
                                     textContent: _vm._s(item.precentacion)
                                   }
-                                })
-                              ]
+                                }),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-button",
+                                  {
+                                    staticClass: "w-full",
+                                    attrs: { color: "danger" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.remover(index)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Remover")]
+                                )
+                              ],
+                              1
                             )
                           ])
                         ]
@@ -373,7 +430,7 @@ var render = function() {
                               _vm._v("Médico")
                             ]),
                             _vm._v(" "),
-                            _c("span", [_vm._v("$598")])
+                            _c("span", [_vm._v("###")])
                           ]
                         ),
                         _vm._v(" "),
@@ -386,7 +443,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("span", { staticClass: "text-success" }, [
-                              _vm._v("-25$")
+                              _vm._v("###")
                             ])
                           ]
                         ),

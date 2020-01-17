@@ -418,7 +418,7 @@ __webpack_require__.r(__webpack_exports__);
       this.nuevaRecetaData.medicamentos.push({
         nombre: this.nombre,
         precentacion: this.precentacion,
-        descripcion: this.descripcion,
+        descripcion: this.uso,
         img: this.image
       });
       localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
@@ -1219,6 +1219,17 @@ var render = function() {
                                                                       attrs: {
                                                                         label:
                                                                           "Descripción de uso"
+                                                                      },
+                                                                      model: {
+                                                                        value:
+                                                                          _vm.uso,
+                                                                        callback: function(
+                                                                          $$v
+                                                                        ) {
+                                                                          _vm.uso = $$v
+                                                                        },
+                                                                        expression:
+                                                                          "uso"
                                                                       }
                                                                     }
                                                                   )

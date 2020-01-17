@@ -23,15 +23,20 @@
           <!-- LEFT COL -->
           <div class="vx-col lg:w-2/3 w-full relative">
             <div class="items-list-view">
-              <vx-card v-for="item in nuevaRecetaData.medicamentos" :key="item.id" style="height: 75%">
+              <vx-card
+                v-for="(item, index) in nuevaRecetaData.medicamentos"
+                :key="item.id"
+                style="height: 75%"
+              >
                 <div class="vx-row">
                   <div class="vx-col md:w-1/2 w-full">
-                    <img height="75%" :src="'data:image/png;base64,' + item.img" alt="image">
+                    <img height="75%" :src="'data:image/png;base64,' + item.img" alt="image" />
                   </div>
                   <div class="vx-col md:w-1/2 w-full">
-                    <h3 class="mb-3" v-text="item.nombre">
-                    </h3>
+                    <h3 class="mb-3" v-text="item.nombre"></h3>
                     <h5 class="mb-3" v-text="item.precentacion"></h5>
+                    <br />
+                    <vs-button class="w-full" @click="remover(index)" color="danger">Remover</vs-button>
                   </div>
                 </div>
               </vx-card>
@@ -48,11 +53,11 @@
               <p class="font-semibold mb-3">Detalles del Producto</p>
               <div class="flex justify-between mb-2">
                 <span class="text-grey">Médico</span>
-                <span>$598</span>
+                <span>###</span>
               </div>
               <div class="flex justify-between mb-2">
                 <span class="text-grey">Paciente</span>
-                <span class="text-success">-25$</span>
+                <span class="text-success">###</span>
               </div>
 
               <vs-divider />
@@ -74,10 +79,12 @@
 <script>
 import { FormWizard, TabContent } from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
+import axios from "axios";
 
 export default {
   data() {
     return {
+      recetasData: [],
       nuevaRecetaData: null,
       // TAB 2
       fullName: "",
@@ -104,17 +111,53 @@ export default {
       return itemId => this.$store.getters["eCommerce/isInWishList"](itemId);
     }
   },
-  created(){
+  created() {
     this.getData();
   },
   methods: {
-    getData(){
+    openLoading() {
+      this.activeLoading = true;
+      this.$vs.loading({
+        type: "default"
+      });
+    },
+    remover: function(index) {
+      this.nuevaRecetaData.medicamentos.splice(index, 1);
+      localStorage.setItem(
+        "nuevaRecetaData",
+        JSON.stringify(this.nuevaRecetaData)
+      );
+    },
+    getData() {
       this.nuevaRecetaData = JSON.parse(
         localStorage.getItem("nuevaRecetaData")
       );
     },
-    generarReceta(){
-        this.$router.push("/recetaFinal");
+    generarReceta() {
+      this.openLoading();
+      this.nuevaRecetaData = JSON.parse(
+        localStorage.getItem("nuevaRecetaData")
+      );
+
+      this.openLoading();
+
+      this.recetasData.push({
+        nombrePaciente: this.nuevaRecetaData.nombrePaciente,
+        apellidoPaciente: this.nuevaRecetaData.apellidoPaciente,
+        genero: this.nuevaRecetaData.genero,
+        telefono: this.nuevaRecetaData.telefono,
+        medicamentos: this.nuevaRecetaData.medicamentos
+      });
+
+      localStorage.setItem("recetasData", JSON.stringify(this.recetasData));
+      this.activeLoading = false;
+      this.$vs.loading.close();
+      location.href = "/recetaFinal";
+      this.$vs.notify({
+        title: "Creado",
+        text: "Receta creada exitosamente.",
+        color: "success"
+      });
     },
     // TAB 1
     removeItemFromCart(item) {

@@ -29,4 +29,5 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('putProduct', 'Products\ProductController@update');
     Route::put('putUser1', 'User\UserController@update1');
     Route::put('putUser2', 'User\UserController@update2');
+    Route::post('postRecetas', 'Products\ProductController@create');
 });

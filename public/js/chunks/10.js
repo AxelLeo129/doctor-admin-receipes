@@ -129,6 +129,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -144,6 +145,7 @@ __webpack_require__.r(__webpack_exports__);
       supportTracker: {},
       productsOrder: {},
       salesRadar: {},
+      medicamentosData: [],
       timelineData: [{
         color: "primary",
         icon: "PlusIcon",
@@ -189,7 +191,10 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    //  User Reward Card
+    var data = JSON.parse(localStorage.getItem("recetas"));
+    this.medicamentosData = data;
+    console.log(this.medicamentosData); //  User Reward Card
+
     this.$http.get("/api/user/checkpoint-reward").then(function (response) {
       _this.checkpointReward = response.data;
     }).catch(function (error) {
@@ -447,11 +452,16 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      [
-                        _c(
+                      _vm._l(_vm.medicamentosData, function(item, index) {
+                        return _c(
                           "vs-tr",
+                          { key: index },
                           [
-                            _c("vs-td", [_c("span", [_vm._v("#")])]),
+                            _c("vs-td", [
+                              _c("span", {
+                                domProps: { textContent: _vm._s(index + 1) }
+                              })
+                            ]),
                             _vm._v(" "),
                             _c("vs-td", [
                               _c(
@@ -461,9 +471,13 @@ var render = function() {
                                     "flex items-center px-2 py-1 rounded"
                                 },
                                 [
-                                  _c("div", {
-                                    staticClass: "h-3 w-3 rounded-full mr-2"
-                                  })
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "h-3 w-3 rounded-full mr-2"
+                                    },
+                                    [_vm._v("Pendiente")]
+                                  )
                                 ]
                               )
                             ]),
@@ -487,7 +501,15 @@ var render = function() {
                                           })
                                         ],
                                         1
-                                      )
+                                      ),
+                                      _vm._v(" "),
+                                      _c("span", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            item.nombrePaciente
+                                          )
+                                        }
+                                      })
                                     ],
                                     1
                                   )
@@ -495,15 +517,15 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _c("vs-td", [_c("span")]),
+                            _c("vs-td", [_c("span", [_vm._v("01/17/2020")])]),
                             _vm._v(" "),
-                            _c("vs-td", [_c("span")]),
+                            _c("vs-td", [_c("span", [_vm._v("Por definir")])]),
                             _vm._v(" "),
-                            _c("vs-td", [_c("span")])
+                            _c("vs-td", [_c("span", [_vm._v("Pendiente")])])
                           ],
                           1
                         )
-                      ]
+                      })
                     ],
                     2
                   )

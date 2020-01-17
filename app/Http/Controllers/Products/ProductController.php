@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Products;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
+use App\Patient;
 
 class ProductController extends Controller
 {
@@ -23,9 +24,19 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $patient = new Patient();
+        $patient->name = $request->name;
+        $patient->lastName = $request->lastName;
+        $patient->genre = $request->genre;
+        $patient->phone = $request->phone;
+        $patient->medicinas = $request->medicinas;
+        if($patient->save()){
+            return ['result' => 'success', "mess"=>$patient];
+        }else{
+            return ['result' => 'success', "mess"=>$patient];
+        }
     }
 
     /**

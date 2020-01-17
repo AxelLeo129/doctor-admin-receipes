@@ -32,7 +32,7 @@
       </div>
 
       <!-- CARD 2: SUBSCRIBERS GAINED -->
-	  <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
         <a href="/apps/user/user-list">
           <statistics-card-line
             icon="ListIcon"
@@ -70,18 +70,18 @@
                 <vs-th>ESTATUS</vs-th>
                 <vs-th>PACIENTE</vs-th>
                 <vs-th>FECHA</vs-th>
-				<vs-th>PROXIMA CITA</vs-th>
-				<vs-th>ACCIONES</vs-th>
+                <vs-th>PROXIMA CITA</vs-th>
+                <vs-th>ACCIONES</vs-th>
               </template>
 
               <template>
-                <vs-tr>
+                <vs-tr v-for="(item, index) in medicamentosData" :key="index">
                   <vs-td>
-                    <span>#</span>
+                    <span v-text="index + 1"></span>
                   </vs-td>
                   <vs-td>
                     <span class="flex items-center px-2 py-1 rounded">
-                      <div class="h-3 w-3 rounded-full mr-2"></div>
+                      <div class="h-3 w-3 rounded-full mr-2">Pendiente</div>
                     </span>
                   </vs-td>
                   <vs-td>
@@ -90,17 +90,18 @@
                         <vx-tooltip position="bottom">
                           <vs-avatar size="30px" class="border-2 border-white border-solid -m-1"></vs-avatar>
                         </vx-tooltip>
+                        <span v-text="item.nombrePaciente"></span>
                       </li>
                     </ul>
                   </vs-td>
                   <vs-td>
-                    <span></span>
+                    <span>01/17/2020</span>
                   </vs-td>
-				  <vs-td>
-                    <span></span>
+                  <vs-td>
+                    <span>Por definir</span>
                   </vs-td>
-				  <vs-td>
-                    <span></span>
+                  <vs-td>
+                    <span>Pendiente</span>
                   </vs-td>
                 </vs-tr>
               </template>
@@ -129,7 +130,7 @@ export default {
       supportTracker: {},
       productsOrder: {},
       salesRadar: {},
-
+      medicamentosData: [],
       timelineData: [
         {
           color: "primary",
@@ -173,8 +174,7 @@ export default {
       dispatchedOrders: []
     };
   },
-  methods: {
-  },
+  methods: {},
   components: {
     VueApexCharts,
     StatisticsCardLine,
@@ -182,6 +182,9 @@ export default {
     VxTimeline
   },
   created() {
+    let data = JSON.parse(localStorage.getItem("recetas"));
+    this.medicamentosData = data;
+    console.log(this.medicamentosData);
     //  User Reward Card
     this.$http
       .get("/api/user/checkpoint-reward")

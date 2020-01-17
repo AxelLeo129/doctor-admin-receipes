@@ -223,7 +223,7 @@
                             <h6 class="mb-2" v-text="precentacion"></h6>
 
                             <div class="mt-4">
-                              <vs-textarea class="vs-textarea" label="Descripción de uso" />
+                              <vs-textarea class="vs-textarea" label="Descripción de uso" v-model="uso"/>
                             </div>
 
                             <vs-button
@@ -418,7 +418,7 @@ export default {
       this.nuevaRecetaData.medicamentos.push({
         nombre: this.nombre,
         precentacion: this.precentacion,
-        descripcion: this.descripcion,
+        descripcion: this.uso,
         img: this.image
       });
 
