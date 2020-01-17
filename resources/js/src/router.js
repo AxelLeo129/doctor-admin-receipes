@@ -115,7 +115,7 @@ const router = new Router({
           path: '/user/profile',
           name: 'perfil',
           component: () => import('@/views/user/EditarUsuario.vue'),
-          beforeEnter(to, from, next) {
+          /*beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
             if (rol == 1 || rol == 2) {
               next();
@@ -124,7 +124,7 @@ const router = new Router({
                 name: 'home'
               });
             }
-          },
+          },*/
           meta: {
             breadcrumb: [
               { title: 'Consola', url: '/consola' },

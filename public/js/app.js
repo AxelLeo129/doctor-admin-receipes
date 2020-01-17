@@ -55971,7 +55971,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+      return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
     },
     children: [// =============================================================================
     // PAGES
@@ -56014,7 +56014,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/pages/error-404',
       name: 'page-error-404',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+        return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
       }
     }]
   }, {
@@ -56070,12 +56070,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/user/profile',
       name: 'perfil',
       component: function component() {
-<<<<<<< HEAD
         return Promise.all(/*! import() */[__webpack_require__.e(16), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! @/views/user/EditarUsuario.vue */ "./resources/js/src/views/user/EditarUsuario.vue"));
       },
-      beforeEnter: function beforeEnter(to, from, next) {
-        var rol = localStorage.getItem('ru');
 
+      /*beforeEnter(to, from, next) {
+        let rol = localStorage.getItem('ru');
         if (rol == 1 || rol == 2) {
           next();
         } else {
@@ -56083,10 +56082,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
             name: 'home'
           });
         }
-=======
-        return Promise.all(/*! import() */[__webpack_require__.e(15), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! @/views/user/EditarUsuario.vue */ "./resources/js/src/views/user/EditarUsuario.vue"));
->>>>>>> 6eb8b96068fb442c2f95ef5baeeccf95331f3694
-      },
+      },*/
       meta: {
         breadcrumb: [{
           title: 'Consola',
@@ -56104,7 +56100,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/nuevoProducto',
       name: 'nuevoProducto',
       component: function component() {
-        return Promise.resolve().then(function webpackMissingModule() { var e = new Error("Cannot find module '@/views/admin/nuevoProducto.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; });
+        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! @/views/admin/nuevoProducto.vue */ "./resources/js/src/views/admin/nuevoProducto.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56164,7 +56160,6 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/listadoProductos',
       name: 'listadoProductos',
       component: function component() {
-<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! @/views/admin/listadoProductos.vue */ "./resources/js/src/views/admin/listadoProductos.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
@@ -56177,9 +56172,6 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
             name: 'home'
           });
         }
-=======
-        return Promise.resolve().then(function webpackMissingModule() { var e = new Error("Cannot find module '@/views/admin/listadoProductos.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; });
->>>>>>> 6eb8b96068fb442c2f95ef5baeeccf95331f3694
       },
       meta: {
         breadcrumb: [{
@@ -56198,7 +56190,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/page2',
       name: 'page-2',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
+        return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
       }
     }, {
       path: '/nuevoPaciente',
@@ -56234,7 +56226,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/agregarProductos',
       name: 'ecommerce-shop',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ./views/pages/agregarProductos.vue */ "./resources/js/src/views/pages/agregarProductos.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ./views/pages/agregarProductos.vue */ "./resources/js/src/views/pages/agregarProductos.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56686,15 +56678,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuesax__WEBPACK_IMPORTED_MODULE_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 __webpack_require__(/*! C:\Users\DELL\Desktop\pharmazone.app\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! C:\Users\DELL\Desktop\pharmazone.app\resources\sass\app.scss */"./resources/sass/app.scss");
 module.exports = __webpack_require__(/*! C:\Users\DELL\Desktop\pharmazone.app\resources\assets\css\main.css */"./resources/assets/css/main.css");
-=======
-__webpack_require__(/*! /home/pdaniels/Desarrollo/laravel/pharmazone.app/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /home/pdaniels/Desarrollo/laravel/pharmazone.app/resources/sass/app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! /home/pdaniels/Desarrollo/laravel/pharmazone.app/resources/assets/css/main.css */"./resources/assets/css/main.css");
->>>>>>> 6eb8b96068fb442c2f95ef5baeeccf95331f3694
 
 
 /***/ })

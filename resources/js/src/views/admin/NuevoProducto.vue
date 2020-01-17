@@ -125,33 +125,6 @@
                 ]
             };
         },
-        computed: {
-            status_local: {
-                get() {
-                    return {
-                        label: this.capitalize(this.data_local.status),
-                        value: this.data_local.status
-                    };
-                },
-                set(obj) {
-                    this.data_local.status = obj.value;
-                }
-            },
-            role_local: {
-                get() {
-                    return {
-                        label: this.capitalize(this.data_local.role),
-                        value: this.data_local.role
-                    };
-                },
-                set(obj) {
-                    this.data_local.role = obj.value;
-                }
-            },
-            validateForm() {
-                return !this.errors.any();
-            }
-        },
         methods: {
             openLoading() {
                 this.activeLoading = true;
@@ -222,23 +195,6 @@
                 let binaryString1 = readerEvt.target.result;
                 this.base64textString = btoa(binaryString1);
                 this.image = "data:image/png;base64," + this.base64textString;
-            },
-            capitalize(str) {
-                return str.slice(0, 1).toUpperCase() + str.slice(1, str.length);
-            },
-            save_changes() {
-                if (!this.validateForm) return;
-
-                // Here will go your API call for updating data
-                // You can get data in "this.data_local"
-            },
-            reset_data() {
-                this.data_local = JSON.parse(JSON.stringify(this.data));
-            },
-            update_avatar() {
-                // You can update avatar Here
-                // For reference you can check dataList example
-                // We haven't integrated it here, because data isn't saved in DB
             }
         }
     };

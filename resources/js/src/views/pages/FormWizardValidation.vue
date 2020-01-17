@@ -26,12 +26,6 @@
                             <vs-input label="Apellidos"  v-model="apellidos" class="w-full" />
                         </div>
                         <div class="vx-col md:w-1/2 w-full mt-5">
-                            <vs-input type="date" label="Fecha de Nacimiento"  v-model="email" class="w-full" />
-                        </div>
-                        <div class="vx-col md:w-1/2 w-full mt-5">
-                            <vs-input label="Peso" type="number" placeholder="lb" v-model="peso" class="w-full" />
-                        </div>
-                        <div class="vx-col md:w-1/2 w-full mt-5">
                             <vs-select v-model="city" class="w-full select-large" label="Genero">
                                 <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in generos" class="w-full" />
                             </vs-select>
