@@ -118,14 +118,14 @@
                         color="danger"
                         type="filled"
                         size="small"
-                        @click="popupActive3=true"
+                        @click="popupActive3=true, iden=item.id"
                       >Eliminar</vs-button>
                     </span>
                   </vs-td>
                   <vs-popup title="Eliminar Producto" :active.sync="popupActive3">
                     <p>¿Está seguro de eliminar este producto?</p>
                     <br>
-                    <vs-button @click="deleteProduct(item.id)" color="primary" type="filled">Aceptar</vs-button>
+                    <vs-button @click="deleteProduct(iden)" color="primary" type="filled">Aceptar</vs-button>
                     <vs-button @click="popupActive3=false" color="danger" type="filled">Cancelar</vs-button>
                   </vs-popup>
                 </vs-tr>
@@ -149,6 +149,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      iden: 0,
       popupActive3: false,
       medicamentos: {},
       checkpointReward: {},

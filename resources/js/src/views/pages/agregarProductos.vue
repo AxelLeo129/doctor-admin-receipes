@@ -226,13 +226,17 @@
                               <vs-textarea class="vs-textarea" label="Descripción de uso" />
                             </div>
 
-                            <vs-button color="primary" type="filled">Agregar Medicina</vs-button>
+                            <vs-button
+                              color="primary"
+                              type="filled"
+                              @click="agregarM"
+                            >Agregar Medicina</vs-button>
                           </vs-popup>
                           <div class="flex justify-between flex-wrap">
                             <vs-button
                               class="mt-4 mr-2 shadow-lg"
                               type="gradient"
-                              @click="activar=true, setData(item.name, item.description, item.precentation)"
+                              @click="activar=true, setData(item.name, item.description, item.precentation, item.image)"
                               gradient-color-secondary="#CE9FFC"
                             >Agregar Producto</vs-button>
                           </div>
@@ -321,8 +325,10 @@ export default {
   data() {
     return {
       buscar: "",
+      image: "",
       activar: false,
       precentacion: "",
+      nuevaRecetaData: null,
       uso: "",
       nombre: "",
       descripcion: "",
@@ -405,16 +411,35 @@ export default {
     }
   },
   methods: {
+    agregarM() {
+      this.nuevaRecetaData = JSON.parse(
+        localStorage.getItem("nuevaRecetaData")
+      );
+      this.nuevaRecetaData.medicamentos.push({
+        nombre: this.nombre,
+        precentacion: this.precentacion,
+        descripcion: this.descripcion,
+        img: this.image
+      });
+
+      localStorage.setItem(
+        "nuevaRecetaData",
+        JSON.stringify(this.nuevaRecetaData)
+      );
+
+      this.activar = false;
+    },
     openLoading() {
       this.activeLoading = true;
       this.$vs.loading({
         type: "default"
       });
     },
-    setData(nombre, descripcion, precentacion) {
+    setData(nombre, descripcion, precentacion, img) {
       this.nombre = nombre;
       this.descripcion = descripcion;
       this.precentacion = precentacion;
+      this.image = img;
     },
     getData() {
       this.openLoading();

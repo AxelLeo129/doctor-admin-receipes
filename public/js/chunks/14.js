@@ -297,6 +297,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -329,8 +333,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       buscar: "",
+      image: "",
       activar: false,
       precentacion: "",
+      nuevaRecetaData: null,
       uso: "",
       nombre: "",
       descripcion: "",
@@ -407,16 +413,28 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    agregarM: function agregarM() {
+      this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
+      this.nuevaRecetaData.medicamentos.push({
+        nombre: this.nombre,
+        precentacion: this.precentacion,
+        descripcion: this.descripcion,
+        img: this.image
+      });
+      localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
+      this.activar = false;
+    },
     openLoading: function openLoading() {
       this.activeLoading = true;
       this.$vs.loading({
         type: "default"
       });
     },
-    setData: function setData(nombre, descripcion, precentacion) {
+    setData: function setData(nombre, descripcion, precentacion, img) {
       this.nombre = nombre;
       this.descripcion = descripcion;
       this.precentacion = precentacion;
+      this.image = img;
     },
     getData: function getData() {
       var _this3 = this;
@@ -1216,6 +1234,10 @@ var render = function() {
                                                                       "primary",
                                                                     type:
                                                                       "filled"
+                                                                  },
+                                                                  on: {
+                                                                    click:
+                                                                      _vm.agregarM
                                                                   }
                                                                 },
                                                                 [
@@ -1254,7 +1276,8 @@ var render = function() {
                                                                         _vm.setData(
                                                                           item.name,
                                                                           item.description,
-                                                                          item.precentation
+                                                                          item.precentation,
+                                                                          item.image
                                                                         )
                                                                     }
                                                                   }

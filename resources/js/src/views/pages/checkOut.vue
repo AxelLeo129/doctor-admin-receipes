@@ -17,29 +17,21 @@
       :hide-buttons="true"
     >
       <!-- tab 1 content -->
-      <tab-content title="Cart" icon="feather icon-shopping-cart" class="mb-5">
+      <tab-content title="Paso 3" icon="feather icon-home" class="mb-5">
         <!-- IF CART HAVE ITEMS -->
         <div class="vx-row">
           <!-- LEFT COL -->
           <div class="vx-col lg:w-2/3 w-full relative">
             <div class="items-list-view">
-              <vx-card
-                title="Title Color"
-                title-color="primary"
-                subtitle="Brownie pastry chocolate pastry chocolate pudding."
-              >
+              <vx-card v-for="item in nuevaRecetaData.medicamentos" :key="item.id" style="height: 75%">
                 <div class="vx-row">
                   <div class="vx-col md:w-1/2 w-full">
-                    <img src="" alt="image">
+                    <img height="75%" :src="'data:image/png;base64,' + item.img" alt="image">
                   </div>
                   <div class="vx-col md:w-1/2 w-full">
-                    <p class="mb-3">
-                      You can use
-                      <code>title-color</code> prop to change color of title of card. This prop supports hex, rgba, rgb and theme colors.
-                    </p>
-                    <p
-                      class="mb-3"
-                    >Oat cake powder sesame snaps. Chocolate bar dessert bonbon chocolate bar pudding apple pie muffin chocolate ice cream. I love bear claw I love.</p>
+                    <h3 class="mb-3" v-text="item.nombre">
+                    </h3>
+                    <h5 class="mb-3" v-text="item.precentacion"></h5>
                   </div>
                 </div>
               </vx-card>
@@ -86,6 +78,7 @@ import "vue-form-wizard/dist/vue-form-wizard.min.css";
 export default {
   data() {
     return {
+      nuevaRecetaData: null,
       // TAB 2
       fullName: "",
       mobileNum: "",
@@ -111,7 +104,15 @@ export default {
       return itemId => this.$store.getters["eCommerce/isInWishList"](itemId);
     }
   },
+  created(){
+    this.getData();
+  },
   methods: {
+    getData(){
+      this.nuevaRecetaData = JSON.parse(
+        localStorage.getItem("nuevaRecetaData")
+      );
+    },
     generarReceta(){
         this.$router.push("/recetaFinal");
     },

@@ -86,19 +86,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      nuevaRecetaData: null,
       // TAB 2
       fullName: "",
       mobileNum: "",
@@ -130,7 +123,13 @@ __webpack_require__.r(__webpack_exports__);
       };
     }
   },
+  created: function created() {
+    this.getData();
+  },
   methods: {
+    getData: function getData() {
+      this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
+    },
     generarReceta: function generarReceta() {
       this.$router.push("/recetaFinal");
     },
@@ -296,7 +295,7 @@ var render = function() {
             "tab-content",
             {
               staticClass: "mb-5",
-              attrs: { title: "Cart", icon: "feather icon-shopping-cart" }
+              attrs: { title: "Paso 3", icon: "feather icon-home" }
             },
             [
               _c("div", { staticClass: "vx-row" }, [
@@ -304,50 +303,47 @@ var render = function() {
                   _c(
                     "div",
                     { staticClass: "items-list-view" },
-                    [
-                      _c(
+                    _vm._l(_vm.nuevaRecetaData.medicamentos, function(item) {
+                      return _c(
                         "vx-card",
-                        {
-                          attrs: {
-                            title: "Title Color",
-                            "title-color": "primary",
-                            subtitle:
-                              "Brownie pastry chocolate pastry chocolate pudding."
-                          }
-                        },
+                        { key: item.id, staticStyle: { height: "75%" } },
                         [
                           _c("div", { staticClass: "vx-row" }, [
                             _c(
                               "div",
                               { staticClass: "vx-col md:w-1/2 w-full" },
-                              [_c("img", { attrs: { src: "", alt: "image" } })]
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    height: "75%",
+                                    src: "data:image/png;base64," + item.img,
+                                    alt: "image"
+                                  }
+                                })
+                              ]
                             ),
                             _vm._v(" "),
                             _c(
                               "div",
                               { staticClass: "vx-col md:w-1/2 w-full" },
                               [
-                                _c("p", { staticClass: "mb-3" }, [
-                                  _vm._v(
-                                    "\n                    You can use\n                    "
-                                  ),
-                                  _c("code", [_vm._v("title-color")]),
-                                  _vm._v(
-                                    " prop to change color of title of card. This prop supports hex, rgba, rgb and theme colors.\n                  "
-                                  )
-                                ]),
+                                _c("h3", {
+                                  staticClass: "mb-3",
+                                  domProps: { textContent: _vm._s(item.nombre) }
+                                }),
                                 _vm._v(" "),
-                                _c("p", { staticClass: "mb-3" }, [
-                                  _vm._v(
-                                    "Oat cake powder sesame snaps. Chocolate bar dessert bonbon chocolate bar pudding apple pie muffin chocolate ice cream. I love bear claw I love."
-                                  )
-                                ])
+                                _c("h5", {
+                                  staticClass: "mb-3",
+                                  domProps: {
+                                    textContent: _vm._s(item.precentacion)
+                                  }
+                                })
                               ]
                             )
                           ])
                         ]
                       )
-                    ],
+                    }),
                     1
                   )
                 ]),

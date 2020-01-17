@@ -166,6 +166,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      iden: 0,
       popupActive3: false,
       medicamentos: {},
       checkpointReward: {},
@@ -574,7 +575,8 @@ var render = function() {
                                     },
                                     on: {
                                       click: function($event) {
-                                        _vm.popupActive3 = true
+                                        ;(_vm.popupActive3 = true),
+                                          (_vm.iden = item.id)
                                       }
                                     }
                                   },
@@ -613,7 +615,7 @@ var render = function() {
                                   attrs: { color: "primary", type: "filled" },
                                   on: {
                                     click: function($event) {
-                                      return _vm.deleteProduct(item.id)
+                                      return _vm.deleteProduct(_vm.iden)
                                     }
                                   }
                                 },

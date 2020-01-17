@@ -55,6 +55,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -70,6 +81,7 @@ __webpack_require__.r(__webpack_exports__);
       jobTitle: "",
       textarea: "",
       eventName: "",
+      genero: "",
       eventLocation: "san-francisco",
       status: "plannning",
       generos: [{
@@ -106,6 +118,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     formSubmitted: function formSubmitted() {
+      var nuevaRecetaData = {
+        nombrePaciente: this.nombres,
+        apellidoPaciente: this.apellidos,
+        fechaNacimiento: '',
+        peso: '',
+        genero: this.genero,
+        telefono: this.telefono,
+        fecha: '',
+        sintomas: "",
+        diagnostico: "",
+        observaciones: "",
+        proximaCita: "",
+        medicamentos: []
+      };
+      localStorage.setItem('nuevaRecetaData', JSON.stringify(nuevaRecetaData));
       location.href = "/agregarProductos";
     }
   },
@@ -257,7 +284,14 @@ var render = function() {
                             return _c("vs-select-item", {
                               key: index,
                               staticClass: "w-full",
-                              attrs: { value: item.value, text: item.text }
+                              attrs: { value: item.value, text: item.text },
+                              model: {
+                                value: _vm.genero,
+                                callback: function($$v) {
+                                  _vm.genero = $$v
+                                },
+                                expression: "genero"
+                              }
                             })
                           }),
                           1
