@@ -100,11 +100,11 @@ const router = new Router({
             let rol = localStorage.getItem('ru');
             if (rol == 1) {
               next();
-            } else if(rol == null) {
+            } else if (rol == null) {
               next({
                 name: 'page-login'
-              });  
-            }else{
+              });
+            } else {
               next({
                 name: 'home'
               });
@@ -115,16 +115,16 @@ const router = new Router({
           path: '/user/profile',
           name: 'perfil',
           component: () => import('@/views/user/EditarUsuario.vue'),
-          /*beforeEnter(to, from, next) {
-            let rol = localStorage.getItem('ru');
-            if (rol == 1 || rol == 2) {
+          beforeEnter(to, from, next) {
+            let token = localStorage.getItem('tu');
+            if (token) {
               next();
             } else {
               next({
                 name: 'home'
               });
             }
-          },*/
+          },
           meta: {
             breadcrumb: [
               { title: 'Consola', url: '/consola' },

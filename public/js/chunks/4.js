@@ -2461,8 +2461,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'v-nav-menu-item',
+  name: "v-nav-menu-item",
   props: {
     icon: {
       type: String,
@@ -2474,11 +2475,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     iconPack: {
       type: String,
-      default: 'material-icons'
+      default: "material-icons"
     },
     href: {
       type: [String, null],
-      default: '#'
+      default: "#"
     },
     to: {
       type: [String, Object, null],
@@ -2498,17 +2499,26 @@ __webpack_require__.r(__webpack_exports__);
     },
     target: {
       type: String,
-      default: '_self'
+      default: "_self"
     },
     isDisabled: {
       type: Boolean,
       default: false
     }
   },
+  data: function data() {
+    return {
+      rol: ""
+    };
+  },
   computed: {
     activeLink: function activeLink() {
       return this.to == this.$route.path || this.$route.meta.parent == this.slug && this.to ? true : false;
     }
+  },
+  created: function created() {
+    this.rol = localStorage.getItem("ru");
+    console.log(this.rol);
   }
 });
 
@@ -6839,28 +6849,33 @@ __webpack_require__.r(__webpack_exports__);
   url: "/home",
   name: "Medico",
   slug: "home",
-  icon: "CircleIcon"
+  icon: "CircleIcon",
+  rol: 2
 }, {
   url: "/nuevoPaciente",
   name: "Nueva Receta",
   slug: "nuevaReceta",
-  icon: "PlusIcon"
+  icon: "PlusIcon",
+  rol: 2
 }, //Admin
 {
   url: "/consola",
   name: "Consola",
   slug: "consola",
-  icon: "CircleIcon"
+  icon: "CircleIcon",
+  rol: 1
 }, {
   url: "/nuevoProducto",
   name: "Nuevo Producto",
   slug: "nuevoProducto",
-  icon: "PlusIcon"
+  icon: "PlusIcon",
+  rol: 1
 }, {
   url: "/listadoProductos",
   name: "Listado Medicamentos",
   slug: "listadoProductos",
-  icon: "ListIcon"
+  icon: "ListIcon",
+  rol: 1
 }]);
 
 /***/ }),

@@ -56072,17 +56072,17 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       component: function component() {
         return Promise.all(/*! import() */[__webpack_require__.e(18), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! @/views/user/EditarUsuario.vue */ "./resources/js/src/views/user/EditarUsuario.vue"));
       },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var token = localStorage.getItem('tu');
 
-      /*beforeEnter(to, from, next) {
-        let rol = localStorage.getItem('ru');
-        if (rol == 1 || rol == 2) {
+        if (token) {
           next();
         } else {
           next({
             name: 'home'
           });
         }
-      },*/
+      },
       meta: {
         breadcrumb: [{
           title: 'Consola',

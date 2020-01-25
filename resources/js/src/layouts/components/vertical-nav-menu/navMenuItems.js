@@ -15,12 +15,14 @@ export default [
     name: "Medico",
     slug: "home",
     icon: "CircleIcon",
+    rol: 2
   },
   {
     url: "/nuevoPaciente",
     name: "Nueva Receta",
     slug: "nuevaReceta",
     icon: "PlusIcon",
+    rol: 2
   },
   //Admin
   {
@@ -28,17 +30,20 @@ export default [
     name: "Consola",
     slug: "consola",
     icon: "CircleIcon",
+    rol: 1
   },
   {
     url: "/nuevoProducto",
     name: "Nuevo Producto",
     slug: "nuevoProducto",
     icon: "PlusIcon",
+    rol: 1
   },
   {
     url: "/listadoProductos",
     name: "Listado Medicamentos",
     slug: "listadoProductos",
     icon: "ListIcon",
+    rol: 1
   }
 ]
