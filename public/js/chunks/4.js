@@ -1866,12 +1866,32 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'v-nav-menu',
+  name: "v-nav-menu",
   components: {
     VNavMenuGroup: _VerticalNavMenuGroup_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     VNavMenuItem: _VerticalNavMenuItem_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -1903,6 +1923,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   },
   data: function data() {
     return {
+      token: null,
       clickNotClose: false,
       // disable close navMenu on outside click
       isMouseEnter: false,
@@ -1945,6 +1966,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       };
     },
     menuItemsUpdated: function menuItemsUpdated() {
+      var _this2 = this;
+
       var clone = this.navMenuItems.slice();
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
@@ -2007,6 +2030,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         }
       }
 
+      var newArray = [];
+      clone.forEach(function (element) {
+        if (element.rol == _this2.token) {
+          newArray.push(element);
+        }
+      });
+      clone = newArray;
       return clone;
     },
     isVerticalNavMenuActive: {
@@ -2014,7 +2044,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         return this.$store.state.isVerticalNavMenuActive;
       },
       set: function set(val) {
-        this.$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', val);
+        this.$store.commit("TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE", val);
       }
     },
     layoutType: function layoutType() {
@@ -2025,7 +2055,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         return this.$store.state.reduceButton;
       },
       set: function set(val) {
-        this.$store.commit('TOGGLE_REDUCE_BUTTON', val);
+        this.$store.commit("TOGGLE_REDUCE_BUTTON", val);
       }
     },
     isVerticalNavMenuReduced: function isVerticalNavMenuReduced() {
@@ -2039,14 +2069,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     }
   },
   watch: {
-    '$route': function $route() {
-      if (this.isVerticalNavMenuActive && this.showCloseButton) this.$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', false);
+    $route: function $route() {
+      if (this.isVerticalNavMenuActive && this.showCloseButton) this.$store.commit("TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE", false);
     },
     reduce: function reduce(val) {
       var verticalNavMenuWidth = val ? "reduced" : this.$store.state.windowWidth < 1200 ? "no-nav-menu" : "default";
-      this.$store.dispatch('updateVerticalNavMenuWidth', verticalNavMenuWidth);
+      this.$store.dispatch("updateVerticalNavMenuWidth", verticalNavMenuWidth);
       setTimeout(function () {
-        window.dispatchEvent(new Event('resize'));
+        window.dispatchEvent(new Event("resize"));
       }, 100);
     },
     layoutType: function layoutType() {
@@ -2060,6 +2090,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     }
   },
   methods: {
+    onItem: function onItem() {
+      this.token = localStorage.getItem("ru");
+      console.log(this.token);
+    },
     // handleWindowResize(event) {
     //   this.windowWidth = event.currentTarget.innerWidth;
     //   this.setVerticalNavMenuWidth()
@@ -2074,43 +2108,43 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       this.showShadowBottom = this.$refs.verticalNavMenuPs.$el.scrollTop > 0 ? true : false;
     },
     mouseEnter: function mouseEnter() {
-      if (this.reduce) this.$store.commit('UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN', false);
+      if (this.reduce) this.$store.commit("UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN", false);
       this.isMouseEnter = true;
     },
     mouseLeave: function mouseLeave() {
-      if (this.reduce) this.$store.commit('UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN', true);
+      if (this.reduce) this.$store.commit("UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN", true);
       this.isMouseEnter = false;
     },
     setVerticalNavMenuWidth: function setVerticalNavMenuWidth() {
       if (this.windowWidth > 1200) {
-        if (this.layoutType === 'vertical') {
+        if (this.layoutType === "vertical") {
           // Set reduce
           this.reduce = this.reduceButton ? true : false; // Open NavMenu
 
-          this.$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', true); // Set Menu Items Only Icon Mode
+          this.$store.commit("TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE", true); // Set Menu Items Only Icon Mode
 
           var verticalNavMenuItemsMin = this.reduceButton && !this.isMouseEnter ? true : false;
-          this.$store.commit('UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN', verticalNavMenuItemsMin); // Menu Action buttons
+          this.$store.commit("UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN", verticalNavMenuItemsMin); // Menu Action buttons
 
           this.clickNotClose = true;
           this.showCloseButton = false;
           var verticalNavMenuWidth = this.isVerticalNavMenuReduced ? "reduced" : "default";
-          this.$store.dispatch('updateVerticalNavMenuWidth', verticalNavMenuWidth);
+          this.$store.dispatch("updateVerticalNavMenuWidth", verticalNavMenuWidth);
           return;
         }
       } // Close NavMenu
 
 
-      this.$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', false); // Reduce button
+      this.$store.commit("TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE", false); // Reduce button
 
       if (this.reduceButton) this.reduce = false; // Menu Action buttons
 
       this.showCloseButton = true;
       this.clickNotClose = false; // Update NavMenu Width
 
-      this.$store.dispatch('updateVerticalNavMenuWidth', 'no-nav-menu'); // Remove Only Icon in Menu
+      this.$store.dispatch("updateVerticalNavMenuWidth", "no-nav-menu"); // Remove Only Icon in Menu
 
-      this.$store.commit('UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN', false); // if(this.layoutType === 'vertical' || (this.layoutType === 'horizontal' && this.windowWidth < 1200))
+      this.$store.commit("UPDATE_VERTICAL_NAV_MENU_ITEMS_MIN", false); // if(this.layoutType === 'vertical' || (this.layoutType === 'horizontal' && this.windowWidth < 1200))
       // if (this.windowWidth < 1200) {
       //   // Close NavMenu
       //   this.$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', false)
@@ -2144,6 +2178,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     }
   },
   mounted: function mounted() {
+    this.onItem();
     this.setVerticalNavMenuWidth();
   }
 });
@@ -5050,13 +5085,7 @@ var render = function() {
                               key: "header-" + index,
                               staticClass: "navigation-header truncate"
                             },
-                            [
-                              _vm._v(
-                                "\n            " +
-                                  _vm._s(item.header) +
-                                  "\n          "
-                              )
-                            ]
+                            [_vm._v(_vm._s(item.header))]
                           )
                         : !item.header
                         ? [
