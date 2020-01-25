@@ -91,11 +91,13 @@
                       v-model="name"
                     />
                     <span class="text-danger text-sm" v-show="name === ''">{{ errors.campo }}</span>
+                    
                     <vs-input
                       class="w-full mt-4"
-                      label="No. Colegiado"
-                      name="noCollegiate"
-                      v-model="noCollegiate"
+                      label="Teléfono"
+                      type="number"
+                      name="phone"
+                      v-model="phone"
                     />
 
                     <vs-input
@@ -117,12 +119,11 @@
                     />
                     <span class="text-danger text-sm" v-show="userName === ''">{{ errors.campo }}</span>
 
-                    <vs-input
+                    <vs-input v-show="rol == 2"
                       class="w-full mt-4"
-                      label="Teléfono"
-                      type="number"
-                      name="phone"
-                      v-model="phone"
+                      label="No. Colegiado"
+                      name="noCollegiate"
+                      v-model="noCollegiate"
                     />
 
                     <div class="mt-4">
@@ -159,7 +160,7 @@
               </div>
             </div>
           </vs-tab>
-          <vs-tab label="Información Médica" icon-pack="feather" icon="icon-info">
+          <vs-tab label="Información Médica" v-if="rol == 2" icon-pack="feather" icon="icon-info">
             <div class="tab-text">
               <div id="user-edit-tab-info">
                 <div class="vx-row">
@@ -266,6 +267,7 @@ export default {
   },
   data() {
     return {
+      rol: null,
       errors: {
         campo: "Este campo es requerido"
       },
@@ -295,6 +297,9 @@ export default {
     };
   },
   methods: {
+    getRol(){
+      this.rol = localStorage.getItem('ru');
+    },
     handleFileSelect(evt) {
       let files = evt.target.files;
       let file = files[0];
@@ -459,6 +464,7 @@ export default {
     }
   },
   created() {
+    this.getRol();
     this.openLoading();
     this.getData();
   }

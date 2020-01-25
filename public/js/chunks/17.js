@@ -276,6 +276,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -291,6 +292,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      rol: null,
       errors: {
         campo: "Este campo es requerido"
       },
@@ -314,6 +316,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }, _defineProperty(_ref, "email", null), _defineProperty(_ref, "clinicalRecord", null), _defineProperty(_ref, "showAlerts", null), _defineProperty(_ref, "base64textString", null), _defineProperty(_ref, "activado", false), _defineProperty(_ref, "activado1", false), _ref;
   },
   methods: {
+    getRol: function getRol() {
+      this.rol = localStorage.getItem('ru');
+    },
     handleFileSelect: function handleFileSelect(evt) {
       var files = evt.target.files;
       var file = files[0];
@@ -498,6 +503,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   created: function created() {
+    this.getRol();
     this.openLoading();
     this.getData();
   }
@@ -787,15 +793,16 @@ var render = function() {
                               _c("vs-input", {
                                 staticClass: "w-full mt-4",
                                 attrs: {
-                                  label: "No. Colegiado",
-                                  name: "noCollegiate"
+                                  label: "Teléfono",
+                                  type: "number",
+                                  name: "phone"
                                 },
                                 model: {
-                                  value: _vm.noCollegiate,
+                                  value: _vm.phone,
                                   callback: function($$v) {
-                                    _vm.noCollegiate = $$v
+                                    _vm.phone = $$v
                                   },
-                                  expression: "noCollegiate"
+                                  expression: "phone"
                                 }
                               }),
                               _vm._v(" "),
@@ -870,18 +877,25 @@ var render = function() {
                               ),
                               _vm._v(" "),
                               _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.rol == 2,
+                                    expression: "rol == 2"
+                                  }
+                                ],
                                 staticClass: "w-full mt-4",
                                 attrs: {
-                                  label: "Teléfono",
-                                  type: "number",
-                                  name: "phone"
+                                  label: "No. Colegiado",
+                                  name: "noCollegiate"
                                 },
                                 model: {
-                                  value: _vm.phone,
+                                  value: _vm.noCollegiate,
                                   callback: function($$v) {
-                                    _vm.phone = $$v
+                                    _vm.noCollegiate = $$v
                                   },
-                                  expression: "phone"
+                                  expression: "noCollegiate"
                                 }
                               }),
                               _vm._v(" "),
@@ -962,212 +976,236 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "vs-tab",
-                  {
-                    attrs: {
-                      label: "Información Médica",
-                      "icon-pack": "feather",
-                      icon: "icon-info"
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "tab-text" }, [
-                      _c("div", { attrs: { id: "user-edit-tab-info" } }, [
-                        _c(
-                          "div",
-                          { staticClass: "vx-row" },
-                          [
-                            _c(
-                              "vs-alert",
-                              {
-                                staticStyle: { width: "70%" },
-                                attrs: {
-                                  color: "danger",
-                                  title: "Error",
-                                  active: _vm.activado1,
-                                  closable: "",
-                                  "icon-pack": "feather",
-                                  "close-icon": "icon-x"
-                                },
-                                on: {
-                                  "update:active": function($event) {
-                                    _vm.activado1 = $event
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "Error en el servidor, por favor intentelo más tarde."
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "vx-row" }, [
-                          _c("div", { staticClass: "vx-col w-full md:w-1/2" }, [
+                _vm.rol == 2
+                  ? _c(
+                      "vs-tab",
+                      {
+                        attrs: {
+                          label: "Información Médica",
+                          "icon-pack": "feather",
+                          icon: "icon-info"
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "tab-text" }, [
+                          _c("div", { attrs: { id: "user-edit-tab-info" } }, [
                             _c(
                               "div",
-                              { staticClass: "flex items-end" },
+                              { staticClass: "vx-row" },
                               [
-                                _c("feather-icon", {
-                                  staticClass: "mr-2",
-                                  attrs: {
-                                    icon: "HomeIcon",
-                                    svgClasses: "w-5 h-5"
-                                  }
-                                }),
-                                _vm._v(" "),
                                 _c(
-                                  "span",
-                                  { staticClass: "leading-none font-medium" },
-                                  [_vm._v("Clínica")]
+                                  "vs-alert",
+                                  {
+                                    staticStyle: { width: "70%" },
+                                    attrs: {
+                                      color: "danger",
+                                      title: "Error",
+                                      active: _vm.activado1,
+                                      closable: "",
+                                      "icon-pack": "feather",
+                                      "close-icon": "icon-x"
+                                    },
+                                    on: {
+                                      "update:active": function($event) {
+                                        _vm.activado1 = $event
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "Error en el servidor, por favor intentelo más tarde."
+                                    )
+                                  ]
                                 )
                               ],
                               1
                             ),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              [
-                                _c("vs-input", {
-                                  staticClass: "w-full mt-4",
-                                  attrs: {
-                                    label: "Nombre Clínica",
-                                    name: "clinicName"
-                                  },
-                                  model: {
-                                    value: _vm.clinicName,
-                                    callback: function($$v) {
-                                      _vm.clinicName = $$v
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "vx-row" }, [
+                              _c(
+                                "div",
+                                { staticClass: "vx-col w-full md:w-1/2" },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "flex items-end" },
+                                    [
+                                      _c("feather-icon", {
+                                        staticClass: "mr-2",
+                                        attrs: {
+                                          icon: "HomeIcon",
+                                          svgClasses: "w-5 h-5"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "leading-none font-medium"
+                                        },
+                                        [_vm._v("Clínica")]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    [
+                                      _c("vs-input", {
+                                        staticClass: "w-full mt-4",
+                                        attrs: {
+                                          label: "Nombre Clínica",
+                                          name: "clinicName"
+                                        },
+                                        model: {
+                                          value: _vm.clinicName,
+                                          callback: function($$v) {
+                                            _vm.clinicName = $$v
+                                          },
+                                          expression: "clinicName"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("vs-input", {
+                                        staticClass: "w-full mt-4",
+                                        attrs: {
+                                          type: "number",
+                                          label: "Teléfono",
+                                          name: "clinicPhone"
+                                        },
+                                        model: {
+                                          value: _vm.clinicPhone,
+                                          callback: function($$v) {
+                                            _vm.clinicPhone = $$v
+                                          },
+                                          expression: "clinicPhone"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "mt-4" },
+                                        [
+                                          _c("vs-textarea", {
+                                            attrs: { label: "Dirección" },
+                                            model: {
+                                              value: _vm.clinicAddress,
+                                              callback: function($$v) {
+                                                _vm.clinicAddress = $$v
+                                              },
+                                              expression: "clinicAddress"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "vx-col w-full md:w-1/2" },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "flex items-end md:mt-0 mt-base"
                                     },
-                                    expression: "clinicName"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("vs-input", {
-                                  staticClass: "w-full mt-4",
-                                  attrs: {
-                                    type: "number",
-                                    label: "Teléfono",
-                                    name: "clinicPhone"
-                                  },
-                                  model: {
-                                    value: _vm.clinicPhone,
-                                    callback: function($$v) {
-                                      _vm.clinicPhone = $$v
-                                    },
-                                    expression: "clinicPhone"
-                                  }
-                                }),
-                                _vm._v(" "),
+                                    [
+                                      _c("feather-icon", {
+                                        staticClass: "mr-2",
+                                        attrs: {
+                                          icon: "PlusIcon",
+                                          svgClasses: "w-5 h-5"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "leading-none font-medium"
+                                        },
+                                        [_vm._v("Especialidades")]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", [
+                                    _c(
+                                      "div",
+                                      { staticClass: "mt-4" },
+                                      [
+                                        _c("vs-textarea", {
+                                          attrs: {
+                                            label: "Lista Especialidades"
+                                          },
+                                          model: {
+                                            value: _vm.specialties,
+                                            callback: function($$v) {
+                                              _vm.specialties = $$v
+                                            },
+                                            expression: "specialties"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ])
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "vx-row" }, [
+                              _c("div", { staticClass: "vx-col w-full" }, [
                                 _c(
                                   "div",
-                                  { staticClass: "mt-4" },
+                                  {
+                                    staticClass:
+                                      "mt-8 flex flex-wrap items-center justify-end"
+                                  },
                                   [
-                                    _c("vs-textarea", {
-                                      attrs: { label: "Dirección" },
-                                      model: {
-                                        value: _vm.clinicAddress,
-                                        callback: function($$v) {
-                                          _vm.clinicAddress = $$v
+                                    _c(
+                                      "vs-button",
+                                      {
+                                        staticClass: "ml-auto mt-2",
+                                        attrs: { color: "warning" },
+                                        on: { click: _vm.update2 }
+                                      },
+                                      [_vm._v("Guardar Cambios")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "vs-button",
+                                      {
+                                        staticClass: "ml-4 mt-2",
+                                        attrs: {
+                                          type: "border",
+                                          color: "danger"
                                         },
-                                        expression: "clinicAddress"
-                                      }
-                                    })
+                                        on: { click: _vm.getData }
+                                      },
+                                      [_vm._v("Resetear")]
+                                    )
                                   ],
                                   1
                                 )
-                              ],
-                              1
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "vx-col w-full md:w-1/2" }, [
-                            _c(
-                              "div",
-                              { staticClass: "flex items-end md:mt-0 mt-base" },
-                              [
-                                _c("feather-icon", {
-                                  staticClass: "mr-2",
-                                  attrs: {
-                                    icon: "PlusIcon",
-                                    svgClasses: "w-5 h-5"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "span",
-                                  { staticClass: "leading-none font-medium" },
-                                  [_vm._v("Especialidades")]
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c("div", [
-                              _c(
-                                "div",
-                                { staticClass: "mt-4" },
-                                [
-                                  _c("vs-textarea", {
-                                    attrs: { label: "Lista Especialidades" },
-                                    model: {
-                                      value: _vm.specialties,
-                                      callback: function($$v) {
-                                        _vm.specialties = $$v
-                                      },
-                                      expression: "specialties"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
+                              ])
                             ])
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "vx-row" }, [
-                          _c("div", { staticClass: "vx-col w-full" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "mt-8 flex flex-wrap items-center justify-end"
-                              },
-                              [
-                                _c(
-                                  "vs-button",
-                                  {
-                                    staticClass: "ml-auto mt-2",
-                                    attrs: { color: "warning" },
-                                    on: { click: _vm.update2 }
-                                  },
-                                  [_vm._v("Guardar Cambios")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vs-button",
-                                  {
-                                    staticClass: "ml-4 mt-2",
-                                    attrs: { type: "border", color: "danger" },
-                                    on: { click: _vm.getData }
-                                  },
-                                  [_vm._v("Resetear")]
-                                )
-                              ],
-                              1
-                            )
-                          ])
                         ])
-                      ])
-                    ])
-                  ]
-                )
+                      ]
+                    )
+                  : _vm._e()
               ],
               1
             )
