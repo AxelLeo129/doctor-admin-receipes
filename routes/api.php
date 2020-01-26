@@ -21,13 +21,20 @@ Route::post('login', 'User\UserController@login');
 Route::any('register', 'User\UserController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
+    //User
     Route::get('details', 'User\UserController@details');
+    Route::put('putUser1', 'User\UserController@update1');
+    Route::put('putUser2', 'User\UserController@update2');
+    //Product
     Route::get('getProducts', 'Products\ProductController@list');
     Route::post('postProducts', 'Products\ProductController@store');
     Route::get('getProduct/{id}', 'Products\ProductController@show');
     Route::get('deleteProduct/{id}', 'Products\ProductController@destroy');
     Route::put('putProduct', 'Products\ProductController@update');
-    Route::put('putUser1', 'User\UserController@update1');
-    Route::put('putUser2', 'User\UserController@update2');
+    //Recetas
     Route::post('postRecetas', 'Products\ProductController@create');
+    //Categorias
+    Route::post('postCategory', 'Categories\CategoryController@store');
+    Route::get('getCategories', 'Categories\CategoryController@index');
+    Route::put('putCategory', 'Categories\CategoryController@update');
 });
