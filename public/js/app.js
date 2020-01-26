@@ -56299,6 +56299,67 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           });
         }
       }
+    }, //Admin - Categorias
+    {
+      path: '/listadoCategorias',
+      name: 'listadoCategorias',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! @/views/admin/categories/ListadoCategorias.vue */ "./resources/js/src/views/admin/categories/ListadoCategorias.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 1) {
+          next();
+        } else {
+          next({
+            name: 'home'
+          });
+        }
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Categorias'
+        }, {
+          title: 'Listado Categorias',
+          active: true
+        }],
+        pageTitle: 'Listado Categorias',
+        rule: 'editor'
+      }
+    }, {
+      path: '/nuevaCategoria',
+      name: 'nuevaCategoria',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! @/views/admin/categories/nuevaCategoria.vue */ "./resources/js/src/views/admin/categories/nuevaCategoria.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 1) {
+          next();
+        } else {
+          next({
+            name: 'home'
+          });
+        }
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Categorías'
+        }, {
+          title: 'Nueva Categoría',
+          active: true
+        }],
+        pageTitle: 'Nueva Categoría',
+        rule: 'editor'
+      }
     }]
   }, // Redirect to 404 page, if no match found
   {

@@ -299,6 +299,55 @@ const router = new Router({
             }
           }
         },
+        //Admin - Categorias
+        {
+          path: '/listadoCategorias',
+          name: 'listadoCategorias',
+          component: () => import('@/views/admin/categories/ListadoCategorias.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 1) {
+              next();
+            } else {
+              next({
+                name: 'home'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Categorias' },
+              { title: 'Listado Categorias', active: true },
+            ],
+            pageTitle: 'Listado Categorias',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/nuevaCategoria',
+          name: 'nuevaCategoria',
+          component: () => import('@/views/admin/categories/nuevaCategoria.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 1) {
+              next();
+            } else {
+              next({
+                name: 'home'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Categorías' },
+              { title: 'Nueva Categoría', active: true },
+            ],
+            pageTitle: 'Nueva Categoría',
+            rule: 'editor'
+          }
+        },
       ],
     },
     // Redirect to 404 page, if no match found

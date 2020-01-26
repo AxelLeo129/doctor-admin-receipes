@@ -32,6 +32,7 @@ export default [
     icon: "CircleIcon",
     rol: 1
   },
+  //Admin - Productos
   {
     url: "/nuevoProducto",
     name: "Nuevo Producto",
@@ -44,6 +45,21 @@ export default [
     name: "Listado Medicamentos",
     slug: "listadoProductos",
     icon: "ListIcon",
+    rol: 1
+  },
+  //Admin - Categorias
+  {
+    url: "/listadoCategorias",
+    name: "Listado Categorias",
+    slug: "listadoCategorias",
+    icon: "ListIcon",
+    rol: 1
+  },
+  {
+    url: "/nuevaCategoria",
+    name: "Nueva Categoria",
+    slug: "nuevaCategoria",
+    icon: "PlusIcon",
     rol: 1
   }
 ]

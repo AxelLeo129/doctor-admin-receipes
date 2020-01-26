@@ -6893,7 +6893,8 @@ __webpack_require__.r(__webpack_exports__);
   slug: "consola",
   icon: "CircleIcon",
   rol: 1
-}, {
+}, //Admin - Productos
+{
   url: "/nuevoProducto",
   name: "Nuevo Producto",
   slug: "nuevoProducto",
@@ -6904,6 +6905,19 @@ __webpack_require__.r(__webpack_exports__);
   name: "Listado Medicamentos",
   slug: "listadoProductos",
   icon: "ListIcon",
+  rol: 1
+}, //Admin - Categorias
+{
+  url: "/listadoCategorias",
+  name: "Listado Categorias",
+  slug: "listadoCategorias",
+  icon: "ListIcon",
+  rol: 1
+}, {
+  url: "/nuevaCategoria",
+  name: "Nueva Categoria",
+  slug: "nuevaCategoria",
+  icon: "PlusIcon",
   rol: 1
 }]);
 
