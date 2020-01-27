@@ -348,6 +348,30 @@ const router = new Router({
             rule: 'editor'
           }
         },
+        {
+          path: '/editarCategoria/:categoryId',
+          name: 'category-edit',
+          component: () => import('@/views/admin/categories/EditarCategoria.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 1) {
+              next();
+            } else {
+              next({
+                name: 'home'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Categorías' },
+              { title: 'Editar Categoría ', active: true },
+            ],
+            pageTitle: 'Editar Categoría',
+            rule: 'editor'
+          },
+        },
       ],
     },
     // Redirect to 404 page, if no match found

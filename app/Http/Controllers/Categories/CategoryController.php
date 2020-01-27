@@ -38,6 +38,7 @@ class CategoryController extends Controller
     {
         $category = new Category();
         $category->name = $request->name;
+        $category->user_id = $request->user_id;
         if($category->save()){
             return ['result' => 'success', "mess"=>$category];
         }
@@ -76,6 +77,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($request->id);
         $category->name = $request->name;
+        $category->user_id = $request->user_id;
 
         if($category->save()){
             return ['result' => 'success', "mess"=>$category];
@@ -92,6 +94,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+
+        if($category->delete()){
+            return ['result' => 'success'];
+        } else {
+            return ['result' => 'fail', "mess"=>$category];
+        }
     }
 }

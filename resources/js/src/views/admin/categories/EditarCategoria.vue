@@ -10,11 +10,11 @@
         close-icon="icon-x"
       >Error en el Servidor</vs-alert>
     </div>
-    <br/>
+    <br />
     <div class="vx-row">
       <div class="vx-col md:w-1/2 w-full">
         <vx-card>
-          <form v-on:submit.prevent="onSubmit()">
+          <form v-on:submit.prevent="onUpdate()">
             <div class="vx-row mb-6">
               <div class="vx-col sm:w-1/3 w-full">
                 <span>Nombre</span>
@@ -29,14 +29,14 @@
                 <vs-button
                   class="mr-3 mb-2"
                   :disabled="nombre == null || nombre == ''"
-                  @click="onSubmit"
-                  color="success"
+                  @click="onUpdate"
+                  color="warning"
                 >Guardar</vs-button>
                 <vs-button
                   color="warning"
                   type="border"
                   class="mb-2"
-                  @click="nombre =  null"
+                  @click="getCategoria()"
                 >Resetear</vs-button>
               </div>
             </div>
@@ -60,23 +60,64 @@ export default {
   data() {
     return {
       nombre: null,
+      id: null,
       activado: false
     };
   },
   methods: {
+    getCategoria() {
+      this.openLoading();
+      this.id = this.$route.params.categoryId;
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCategory/" + this.id,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          if (Response.data.length == 0) {
+            this.activeLoading = false;
+            this.$vs.loading.close();
+            this.$vs.notify({
+              title: "Atención",
+              text: "Categoría no encontrada.",
+              color: "warning"
+            });
+            this.$router.push("/listadoCategorias");
+          } else {
+            this.nombre = Response.data[0].name;
+            this.activeLoading = false;
+            this.$vs.loading.close();
+          }
+        })
+        .catch(err => {
+          this.activeLoading = false;
+          this.$vs.loading.close();
+          this.$vs.notify({
+            title: "Precaución",
+            text: "Categoría no encontrada.",
+            color: "warning"
+          });
+          this.$router.push("/listadoCategorias");
+        });
+    },
     openLoading() {
       this.activeLoading = true;
       this.$vs.loading({
         type: "default"
       });
     },
-    onSubmit() {
+    onUpdate() {
       this.openLoading();
       let token = localStorage.getItem("tu");
       axios({
-        method: "post",
-        url: "http://127.0.0.1:8000/api/postCategory",
+        method: "put",
+        url: "http://127.0.0.1:8000/api/putCategory",
         data: JSON.stringify({
+          id: this.id,
           name: this.nombre
         }),
         headers: {
@@ -89,8 +130,8 @@ export default {
           this.$vs.loading.close();
           this.$router.push("/listadoCategorias");
           this.$vs.notify({
-            title: "Agregado",
-            text: "Categoría creada exitosamente.",
+            title: "Actualizado",
+            text: "Categoría actualizada exitosamente.",
             color: "success"
           });
         })
@@ -101,6 +142,9 @@ export default {
           //console.log(err);
         });
     }
+  },
+  created() {
+    this.getCategoria();
   }
 };
 </script>

@@ -33,7 +33,7 @@
       <div class="vx-col w-full">
         <vx-card title="Categorias">
           <div slot="no-body" class="mt-4">
-            <vs-table :data="dispatchedOrders" class="table-dark-inverted">
+            <vs-table class="table-dark-inverted">
               <template slot="thead">
                 <vs-th>NUMERO.</vs-th>
                 <vs-th>NONBRE</vs-th>
@@ -64,10 +64,14 @@
                       >Eliminar</vs-button>
                     </span>
                   </vs-td>
-                  <vs-popup title="Eliminar Producto" :active.sync="popupActive3">
-                    <p>¿Está seguro de eliminar este producto?</p>
+                  <vs-popup title="Eliminar Categoría" :active.sync="popupActive3">
+                    <p>¿Está seguro de eliminar esta categoría?</p>
                     <br />
-                    <vs-button @click="deleteProduct(item.id)" color="primary" type="filled">Aceptar</vs-button>
+                    <vs-button
+                      @click="deleteCategory(item.id)"
+                      color="primary"
+                      type="filled"
+                    >Aceptar</vs-button>
                     <vs-button @click="popupActive3=false" color="danger" type="filled">Cancelar</vs-button>
                   </vs-popup>
                 </vs-tr>
@@ -93,7 +97,7 @@ export default {
   },
   methods: {
     edit(id) {
-      this.$router.push("/editarProducto/" + id);
+      this.$router.push("/editarCategoria/" + id);
     },
     getData() {
       this.openLoading();
@@ -121,11 +125,11 @@ export default {
         type: "default"
       });
     },
-    deleteProduct(id) {
+    deleteCategory(id) {
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
-        url: "http://127.0.0.1:8000/api/deleteProduct/" + id,
+        url: "http://127.0.0.1:8000/api/deleteCategory/" + id,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
@@ -136,7 +140,7 @@ export default {
           this.popupActive3 = false;
           this.$vs.notify({
             title: "Eliminado",
-            text: "Producto eliminado exitosamente.",
+            text: "Categoría eliminada exitosamente.",
             color: "success"
           });
         })

@@ -2552,8 +2552,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.rol = localStorage.getItem("ru");
-    console.log(this.rol);
+    this.rol = localStorage.getItem("ru"); //console.log(this.rol);
   }
 });
 

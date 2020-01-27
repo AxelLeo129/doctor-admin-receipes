@@ -37,4 +37,6 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('postCategory', 'Categories\CategoryController@store');
     Route::get('getCategories', 'Categories\CategoryController@index');
     Route::put('putCategory', 'Categories\CategoryController@update');
+    Route::get('getCategory/{id}', 'Categories\CategoryController@show');
+    Route::get('deleteCategory/{id}', 'Categories\CategoryController@destroy');
 });

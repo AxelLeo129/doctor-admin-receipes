@@ -178,6 +178,7 @@ __webpack_require__.r(__webpack_exports__);
       email: "",
       password: "",
       rol: "",
+      user_id: null,
       token: "",
       checkbox_remember_me: false
     };
@@ -211,10 +212,13 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$vs.loading.close();
 
+        console.log(Response);
         _this.token = Response.data.success.token;
         _this.rol = Response.data.rol;
+        _this.user_id = Response.data.id;
         localStorage.setItem('tu', _this.token);
         localStorage.setItem('ru', _this.rol);
+        localStorage.setItem('ui', _this.user_id);
 
         if (_this.rol == 1) {
           _this.$router.push("/consola");

@@ -167,6 +167,7 @@ export default {
       email: "",
       password: "",
       rol: "",
+      user_id: null,
       token: "",
       checkbox_remember_me: false
     };
@@ -197,10 +198,13 @@ export default {
         .then(Response => {
           this.activeLoading = false;
           this.$vs.loading.close();
+          console.log(Response);
           this.token = Response.data.success.token;
           this.rol = Response.data.rol;
+          this.user_id = Response.data.id;
           localStorage.setItem('tu', this.token);
           localStorage.setItem('ru', this.rol);
+          localStorage.setItem('ui', this.user_id);
           if(this.rol == 1){
             this.$router.push("/consola");
           }else {

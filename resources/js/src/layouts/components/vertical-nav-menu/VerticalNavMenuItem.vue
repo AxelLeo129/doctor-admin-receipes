@@ -67,7 +67,7 @@ export default {
   },
   created() {
     this.rol = localStorage.getItem("ru");
-    console.log(this.rol);
+    //console.log(this.rol);
   }
 };
 </script>
