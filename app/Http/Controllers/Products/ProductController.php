@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Patient;
+use App\Products_category;
 
 class ProductController extends Controller
 {
@@ -47,19 +48,50 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        //return ['result' => 'success', "mess"=>$request->categories];
         $product = new Product();
         $product->name = $request->name;
         $product->image = $request->image;
         $product->description = $request->description;
         $product->price = $request->price;
         $product->precentation = $request->precentation;
-        $product->category = $request->category;
         $product->laboratory = $request->laboratory;
         $product->warehouse = $request->warehouse;
         $product->quantity = $request->quantity;
+        $product->user_id = $request->user_id;
         if($product->save()){
-            return ['result' => 'success', "mess"=>$product];
+            return ['result' => 'success', "mess"=>$product->id];
         }
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeCategory(Request $request)
+    {
+        $errores = [];
+        $succes = [];
+        foreach($request->categories as $element){
+            $prod_cate = new Products_category();
+            $prod_cate->product_id = $request->product_id;
+            $prod_cate->category_id = $element;
+            if($prod_cate->save()){
+                array_push($succes, $prod_cate);
+            }else{
+                array_push($errores, $prod_cate);
+            }
+        }
+        return ['result' => $succes, "result1"=>$errores];
+        /*$prod_cate = new Products_category();
+        $prod_cate->product_id = $request->product_id;
+        $prod_cate->category_id = $request->category_id;
+        if($prod_cate->save()){
+            return ['result' => 'success', "mess"=>$prod_cate];
+        }*/
     }
 
     /**
@@ -70,7 +102,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::where('id', $id)->get();
+        return \DB::select("SELECT prod.id, prod.name, prod.image, prod.description, prod.precentation, prod.price, prod.laboratory, prod.warehouse, prod.quantity, prod.user_id, GROUP_CONCAT(cat.id SEPARATOR ',') categories FROM products_categories pp INNER JOIN products prod ON pp.product_id=prod.id INNER JOIN categories cat ON pp.category_id=cat.id WHERE prod.id = $id GROUP BY prod.id");
     }
 
     /**

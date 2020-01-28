@@ -86,6 +86,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -113,27 +148,37 @@ __webpack_require__.r(__webpack_exports__);
       message: "Error en el servidor, Intente más tarde.",
       laboratory: null,
       warehouse: null,
-      category: null,
+      category: [],
       base64textString: "",
-      categorias: [{
-        label: "Ginecología",
-        value: "ginecologia"
-      }, {
-        label: "Dermatología",
-        value: "dermatologia"
-      }, {
-        label: "Psicología",
-        value: "psicologia"
-      }, {
-        label: "Pediatría",
-        value: "pediatria"
-      }, {
-        label: "Otros",
-        value: "otros"
-      }]
+      categorias: []
     };
   },
   methods: {
+    getCategories: function getCategories() {
+      var _this = this;
+
+      var token = localStorage.getItem("tu");
+      var idu = localStorage.getItem("ui");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCategories",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        Response.data.forEach(function (element) {
+          if (element.user_id == idu) {
+            _this.categorias.push({
+              label: element.name,
+              value: element.id
+            });
+          }
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
     openLoading: function openLoading() {
       this.activeLoading = true;
       this.$vs.loading({
@@ -143,11 +188,28 @@ __webpack_require__.r(__webpack_exports__);
     cancel: function cancel() {
       this.$router.push("/consola");
     },
+    cate: function cate() {
+      var arrayFinal = [];
+      this.category.forEach(function (element) {
+        arrayFinal.push(element.value);
+      });
+      console.log(JSON.stringify({
+        name: this.name,
+        image: this.base64textString,
+        description: this.description,
+        price: this.price,
+        precentation: this.precentation,
+        category: arrayFinal,
+        laboratory: this.laboratory,
+        warehouse: this.warehouse,
+        quantity: this.quantity
+      }));
+    },
     touched: function touched() {
       this.bol = "";
     },
     doSave: function doSave() {
-      var _this = this;
+      var _this2 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -170,21 +232,21 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this.activeLoading = false;
+        _this2.activeLoading = false;
 
-        _this.$vs.loading.close();
+        _this2.$vs.loading.close();
 
-        _this.$router.push("/consola");
+        _this2.$router.push("/consola");
 
-        _this.$vs.notify({
+        _this2.$vs.notify({
           title: "Agregado",
           text: "Producto creado exitosamente.",
           color: "success"
         });
       }).catch(function (err) {
-        _this.activeLoading = false;
+        _this2.activeLoading = false;
 
-        _this.$vs.loading.close();
+        _this2.$vs.loading.close();
 
         activado = true; //console.log(err);
       });
@@ -206,6 +268,9 @@ __webpack_require__.r(__webpack_exports__);
       this.base64textString = btoa(binaryString1);
       this.image = "data:image/png;base64," + this.base64textString;
     }
+  },
+  created: function created() {
+    this.getCategories();
   }
 });
 
@@ -472,9 +537,9 @@ var render = function() {
               _vm._v(" "),
               _c("v-select", {
                 attrs: {
-                  clearable: false,
+                  multiple: "",
+                  closeOnSelect: false,
                   options: _vm.categorias,
-                  name: "category",
                   dir: _vm.$vs.rtl ? "rtl" : "ltr"
                 },
                 model: {
@@ -487,22 +552,6 @@ var render = function() {
               })
             ],
             1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.category === "",
-                  expression: "category === ''"
-                }
-              ],
-              staticClass: "text-danger text-sm"
-            },
-            [_vm._v(_vm._s(_vm.errors.campo))]
           )
         ],
         1
@@ -664,13 +713,13 @@ var render = function() {
                       _vm.laboratory == null ||
                       _vm.laboratory == "" ||
                       _vm.category == null ||
-                      _vm.category == "" ||
+                      _vm.category.length == 0 ||
                       _vm.warehouse == null ||
                       _vm.warehouse == ""
                   },
                   on: { click: _vm.doSave }
                 },
-                [_vm._v("\n                        Guardar")]
+                [_vm._v("Guardar")]
               ),
               _vm._v(" "),
               _c(
@@ -678,7 +727,7 @@ var render = function() {
                 {
                   staticClass: "ml-4 mt-2",
                   attrs: { type: "border", color: "danger" },
-                  on: { click: _vm.cancel }
+                  on: { click: _vm.cate }
                 },
                 [_vm._v("Cancelar")]
               )
