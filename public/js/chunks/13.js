@@ -121,6 +121,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -150,7 +162,8 @@ __webpack_require__.r(__webpack_exports__);
       warehouse: null,
       category: [],
       base64textString: "",
-      categorias: []
+      categorias: [],
+      Resid: null
     };
   },
   methods: {
@@ -188,23 +201,6 @@ __webpack_require__.r(__webpack_exports__);
     cancel: function cancel() {
       this.$router.push("/consola");
     },
-    cate: function cate() {
-      var arrayFinal = [];
-      this.category.forEach(function (element) {
-        arrayFinal.push(element.value);
-      });
-      console.log(JSON.stringify({
-        name: this.name,
-        image: this.base64textString,
-        description: this.description,
-        price: this.price,
-        precentation: this.precentation,
-        category: arrayFinal,
-        laboratory: this.laboratory,
-        warehouse: this.warehouse,
-        quantity: this.quantity
-      }));
-    },
     touched: function touched() {
       this.bol = "";
     },
@@ -213,6 +209,11 @@ __webpack_require__.r(__webpack_exports__);
 
       this.openLoading();
       var token = localStorage.getItem("tu");
+      var idu = localStorage.getItem("ui");
+      var arrayFinal = [];
+      this.category.forEach(function (element) {
+        arrayFinal.push(element.value);
+      });
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "post",
         url: "http://127.0.0.1:8000/api/postProducts",
@@ -222,26 +223,46 @@ __webpack_require__.r(__webpack_exports__);
           description: this.description,
           price: this.price,
           precentation: this.precentation,
-          category: this.category.value,
           laboratory: this.laboratory,
           warehouse: this.warehouse,
-          quantity: this.quantity
+          quantity: this.quantity,
+          user_id: idu
         }),
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this2.activeLoading = false;
+        _this2.Resid = Response.data.mess;
+        axios__WEBPACK_IMPORTED_MODULE_1___default()({
+          method: "post",
+          url: "http://127.0.0.1:8000/api/postProdCate",
+          data: JSON.stringify({
+            categories: arrayFinal,
+            product_id: _this2.Resid
+          }),
+          headers: {
+            authorization: "Bearer " + token,
+            "content-type": "application/json"
+          }
+        }).then(function (Response) {
+          _this2.activeLoading = false;
 
-        _this2.$vs.loading.close();
+          _this2.$vs.loading.close();
 
-        _this2.$router.push("/consola");
+          _this2.$router.push("/consola");
 
-        _this2.$vs.notify({
-          title: "Agregado",
-          text: "Producto creado exitosamente.",
-          color: "success"
+          _this2.$vs.notify({
+            title: "Agregado",
+            text: "Producto creado exitosamente.",
+            color: "success"
+          });
+        }).catch(function (err) {
+          _this2.activeLoading = false;
+
+          _this2.$vs.loading.close();
+
+          activado = true; //console.log(err);
         });
       }).catch(function (err) {
         _this2.activeLoading = false;
@@ -341,402 +362,421 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "vx-row" }, [
-      _c(
-        "div",
-        { staticClass: "vx-col w-full" },
-        [
-          _c("div", { staticClass: "flex items-start flex-col sm:flex-row" }, [
-            _c("img", {
-              staticClass: "mr-8 rounded h-24 w-24",
-              attrs: { alt: "hola", src: _vm.image }
-            }),
-            _vm._v(" "),
-            _c("div", [
-              _c("p", {
-                staticClass: "text-lg font-medium mb-2 mt-4 sm:mt-0",
-                domProps: { textContent: _vm._s(_vm.name) }
-              }),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "fileInput",
-                attrs: {
-                  accept: "image/*",
-                  type: "file",
-                  color: "danger",
-                  id: "image",
-                  name: "image"
-                },
-                on: {
-                  change: function($event) {
-                    return _vm.handleFileSelect($event)
-                  },
-                  click: _vm.touched
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { staticClass: "subir", attrs: { for: "image" } }, [
-                _vm._v("Agregar Foto")
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { id: "info1" } }),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value:
-                        _vm.image === "images/medicamentos/demo.jpg" &&
-                        _vm.bol == "",
-                      expression:
-                        "image === 'images/medicamentos/demo.jpg' && bol == ''"
-                    }
-                  ],
-                  staticClass: "text-danger text-sm"
-                },
-                [_vm._v(_vm._s(_vm.errors.campo))]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "vs-alert",
-            {
-              attrs: {
-                color: "danger",
-                title: "Error",
-                active: _vm.activado,
-                closable: "",
-                "icon-pack": "feather",
-                "close-icon": "icon-x"
-              },
-              on: {
-                "update:active": function($event) {
-                  _vm.activado = $event
-                }
-              }
-            },
-            [_vm._v(_vm._s(_vm.message))]
-          )
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "vx-row" }, [
-      _c(
-        "div",
-        { staticClass: "vx-col md:w-1/2 w-full" },
-        [
-          _c("vs-input", {
-            staticClass: "w-full mt-4",
-            attrs: { label: "Nombre", name: "name" },
-            model: {
-              value: _vm.name,
-              callback: function($$v) {
-                _vm.name = $$v
-              },
-              expression: "name"
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.name === "",
-                  expression: "name === ''"
-                }
-              ],
-              staticClass: "text-danger text-sm"
-            },
-            [_vm._v(_vm._s(_vm.errors.campo))]
-          ),
-          _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.doSave()
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "vx-row" }, [
           _c(
             "div",
-            { staticClass: "mt-4" },
-            [
-              _c("vs-textarea", {
-                staticClass: "vs-textarea",
-                attrs: { label: "Descripción" },
-                model: {
-                  value: _vm.description,
-                  callback: function($$v) {
-                    _vm.description = $$v
-                  },
-                  expression: "description"
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.description === "",
-                      expression: "description === ''"
-                    }
-                  ],
-                  staticClass: "text-danger text-sm"
-                },
-                [_vm._v(_vm._s(_vm.errors.campo))]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("vs-input", {
-            staticClass: "w-full mt-4",
-            attrs: {
-              label: "Precio",
-              name: "precio",
-              placeholder: "Q",
-              type: "number"
-            },
-            model: {
-              value: _vm.price,
-              callback: function($$v) {
-                _vm.price = $$v
-              },
-              expression: "price"
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.price === "",
-                  expression: "price === ''"
-                }
-              ],
-              staticClass: "text-danger text-sm"
-            },
-            [_vm._v(_vm._s(_vm.errors.campo))]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "mt-4" },
-            [
-              _c("label", { staticClass: "vs-input--label" }, [
-                _vm._v("Categoría")
-              ]),
-              _vm._v(" "),
-              _c("v-select", {
-                attrs: {
-                  multiple: "",
-                  closeOnSelect: false,
-                  options: _vm.categorias,
-                  dir: _vm.$vs.rtl ? "rtl" : "ltr"
-                },
-                model: {
-                  value: _vm.category,
-                  callback: function($$v) {
-                    _vm.category = $$v
-                  },
-                  expression: "category"
-                }
-              })
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "vx-col md:w-1/2 w-full" },
-        [
-          _c("vs-input", {
-            staticClass: "w-full mt-4",
-            attrs: { label: "Cantidad", name: "cantidad", type: "number" },
-            model: {
-              value: _vm.quantity,
-              callback: function($$v) {
-                _vm.quantity = $$v
-              },
-              expression: "quantity"
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.quantity === "",
-                  expression: "quantity === ''"
-                }
-              ],
-              staticClass: "text-danger text-sm"
-            },
-            [_vm._v(_vm._s(_vm.errors.campo))]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "mt-4" },
-            [
-              _c("vs-textarea", {
-                staticClass: "vs-textarea",
-                attrs: { label: "Precentación" },
-                model: {
-                  value: _vm.precentation,
-                  callback: function($$v) {
-                    _vm.precentation = $$v
-                  },
-                  expression: "precentation"
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.precentation === "",
-                      expression: "precentation === ''"
-                    }
-                  ],
-                  staticClass: "text-danger text-sm"
-                },
-                [_vm._v(_vm._s(_vm.errors.campo))]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("vs-input", {
-            staticClass: "w-full mt-4",
-            attrs: { label: "Laboratorio", name: "laboratorio" },
-            model: {
-              value: _vm.laboratory,
-              callback: function($$v) {
-                _vm.laboratory = $$v
-              },
-              expression: "laboratory"
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.laboratory === "",
-                  expression: "laboratory === ''"
-                }
-              ],
-              staticClass: "text-danger text-sm"
-            },
-            [_vm._v(_vm._s(_vm.errors.campo))]
-          ),
-          _vm._v(" "),
-          _c("vs-input", {
-            staticClass: "w-full mt-4",
-            attrs: { label: "Bodega de Despacho", name: "bodega" },
-            model: {
-              value: _vm.warehouse,
-              callback: function($$v) {
-                _vm.warehouse = $$v
-              },
-              expression: "warehouse"
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.warehouse === "",
-                  expression: "warehouse === ''"
-                }
-              ],
-              staticClass: "text-danger text-sm"
-            },
-            [_vm._v(_vm._s(_vm.errors.campo))]
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "vx-row" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "vx-col w-full" }, [
-          _c(
-            "div",
-            { staticClass: "mt-8 flex flex-wrap items-center justify-end" },
+            { staticClass: "vx-col w-full" },
             [
               _c(
-                "vs-button",
-                {
-                  staticClass: "ml-auto mt-2",
-                  attrs: {
-                    color: "success",
-                    disabled:
-                      _vm.name == null ||
-                      _vm.name == "" ||
-                      _vm.image == "images/medicamentos/demo.jpg" ||
-                      _vm.bol == "as" ||
-                      _vm.quantity == null ||
-                      _vm.quantity == "" ||
-                      _vm.description == null ||
-                      _vm.description == "" ||
-                      _vm.precentation == null ||
-                      _vm.precentation == "" ||
-                      _vm.price == null ||
-                      _vm.price == "" ||
-                      _vm.laboratory == null ||
-                      _vm.laboratory == "" ||
-                      _vm.category == null ||
-                      _vm.category.length == 0 ||
-                      _vm.warehouse == null ||
-                      _vm.warehouse == ""
-                  },
-                  on: { click: _vm.doSave }
-                },
-                [_vm._v("Guardar")]
+                "div",
+                { staticClass: "flex items-start flex-col sm:flex-row" },
+                [
+                  _c("img", {
+                    staticClass: "mr-8 rounded h-24 w-24",
+                    attrs: { alt: "hola", src: _vm.image }
+                  }),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("p", {
+                      staticClass: "text-lg font-medium mb-2 mt-4 sm:mt-0",
+                      domProps: { textContent: _vm._s(_vm.name) }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "fileInput",
+                      attrs: {
+                        accept: "image/*",
+                        type: "file",
+                        color: "danger",
+                        id: "image",
+                        name: "image"
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.handleFileSelect($event)
+                        },
+                        click: _vm.touched
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      { staticClass: "subir", attrs: { for: "image" } },
+                      [_vm._v("Agregar Foto")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { attrs: { id: "info1" } }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value:
+                              _vm.image === "images/medicamentos/demo.jpg" &&
+                              _vm.bol == "",
+                            expression:
+                              "image === 'images/medicamentos/demo.jpg' && bol == ''"
+                          }
+                        ],
+                        staticClass: "text-danger text-sm"
+                      },
+                      [_vm._v(_vm._s(_vm.errors.campo))]
+                    )
+                  ])
+                ]
               ),
               _vm._v(" "),
               _c(
-                "vs-button",
+                "vs-alert",
                 {
-                  staticClass: "ml-4 mt-2",
-                  attrs: { type: "border", color: "danger" },
-                  on: { click: _vm.cate }
+                  attrs: {
+                    color: "danger",
+                    title: "Error",
+                    active: _vm.activado,
+                    closable: "",
+                    "icon-pack": "feather",
+                    "close-icon": "icon-x"
+                  },
+                  on: {
+                    "update:active": function($event) {
+                      _vm.activado = $event
+                    }
+                  }
                 },
-                [_vm._v("Cancelar")]
+                [_vm._v(_vm._s(_vm.message))]
               )
             ],
             1
           )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "vx-row" }, [
+          _c(
+            "div",
+            { staticClass: "vx-col md:w-1/2 w-full" },
+            [
+              _c("vs-input", {
+                staticClass: "w-full mt-4",
+                attrs: { label: "Nombre", name: "name" },
+                model: {
+                  value: _vm.name,
+                  callback: function($$v) {
+                    _vm.name = $$v
+                  },
+                  expression: "name"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.name === "",
+                      expression: "name === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v(_vm._s(_vm.errors.campo))]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mt-4" },
+                [
+                  _c("vs-textarea", {
+                    staticClass: "vs-textarea",
+                    attrs: { label: "Descripción" },
+                    model: {
+                      value: _vm.description,
+                      callback: function($$v) {
+                        _vm.description = $$v
+                      },
+                      expression: "description"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.description === "",
+                          expression: "description === ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v(_vm._s(_vm.errors.campo))]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "w-full mt-4",
+                attrs: {
+                  label: "Precio",
+                  name: "precio",
+                  placeholder: "Q",
+                  type: "number"
+                },
+                model: {
+                  value: _vm.price,
+                  callback: function($$v) {
+                    _vm.price = $$v
+                  },
+                  expression: "price"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.price === "",
+                      expression: "price === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v(_vm._s(_vm.errors.campo))]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mt-4" },
+                [
+                  _c("label", { staticClass: "vs-input--label" }, [
+                    _vm._v("Categoría")
+                  ]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    attrs: {
+                      multiple: "",
+                      closeOnSelect: false,
+                      options: _vm.categorias,
+                      dir: _vm.$vs.rtl ? "rtl" : "ltr"
+                    },
+                    model: {
+                      value: _vm.category,
+                      callback: function($$v) {
+                        _vm.category = $$v
+                      },
+                      expression: "category"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "vx-col md:w-1/2 w-full" },
+            [
+              _c("vs-input", {
+                staticClass: "w-full mt-4",
+                attrs: { label: "Cantidad", name: "cantidad", type: "number" },
+                model: {
+                  value: _vm.quantity,
+                  callback: function($$v) {
+                    _vm.quantity = $$v
+                  },
+                  expression: "quantity"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.quantity === "",
+                      expression: "quantity === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v(_vm._s(_vm.errors.campo))]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mt-4" },
+                [
+                  _c("vs-textarea", {
+                    staticClass: "vs-textarea",
+                    attrs: { label: "Precentación" },
+                    model: {
+                      value: _vm.precentation,
+                      callback: function($$v) {
+                        _vm.precentation = $$v
+                      },
+                      expression: "precentation"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.precentation === "",
+                          expression: "precentation === ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v(_vm._s(_vm.errors.campo))]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "w-full mt-4",
+                attrs: { label: "Laboratorio", name: "laboratorio" },
+                model: {
+                  value: _vm.laboratory,
+                  callback: function($$v) {
+                    _vm.laboratory = $$v
+                  },
+                  expression: "laboratory"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.laboratory === "",
+                      expression: "laboratory === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v(_vm._s(_vm.errors.campo))]
+              ),
+              _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "w-full mt-4",
+                attrs: { label: "Bodega de Despacho", name: "bodega" },
+                model: {
+                  value: _vm.warehouse,
+                  callback: function($$v) {
+                    _vm.warehouse = $$v
+                  },
+                  expression: "warehouse"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.warehouse === "",
+                      expression: "warehouse === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v(_vm._s(_vm.errors.campo))]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "vx-row" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "vx-col w-full" }, [
+              _c(
+                "div",
+                { staticClass: "mt-8 flex flex-wrap items-center justify-end" },
+                [
+                  _c(
+                    "vs-button",
+                    {
+                      staticClass: "ml-auto mt-2",
+                      attrs: {
+                        color: "success",
+                        disabled:
+                          _vm.name == null ||
+                          _vm.name == "" ||
+                          _vm.image == "images/medicamentos/demo.jpg" ||
+                          _vm.bol == "as" ||
+                          _vm.quantity == null ||
+                          _vm.quantity == "" ||
+                          _vm.description == null ||
+                          _vm.description == "" ||
+                          _vm.precentation == null ||
+                          _vm.precentation == "" ||
+                          _vm.price == null ||
+                          _vm.price == "" ||
+                          _vm.laboratory == null ||
+                          _vm.laboratory == "" ||
+                          _vm.category == null ||
+                          _vm.category.length == 0 ||
+                          _vm.warehouse == null ||
+                          _vm.warehouse == ""
+                      },
+                      on: { click: _vm.doSave }
+                    },
+                    [_vm._v("Guardar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-button",
+                    {
+                      staticClass: "ml-4 mt-2",
+                      attrs: { type: "border", color: "danger" },
+                      on: { click: _vm.cancel }
+                    },
+                    [_vm._v("Cancelar")]
+                  )
+                ],
+                1
+              )
+            ])
+          ])
         ])
-      ])
-    ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [

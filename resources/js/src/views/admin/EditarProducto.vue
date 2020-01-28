@@ -55,10 +55,10 @@
         <div class="mt-4">
           <label class="vs-input--label">Categoría</label>
           <v-select
+            multiple
+            :closeOnSelect="false"
             v-model="category"
-            :clearable="false"
             :options="categorias"
-            name="role"
             :dir="$vs.rtl ? 'rtl' : 'ltr'"
           />
         </div>
@@ -132,33 +132,12 @@ export default {
       id: null,
       laboratory: null,
       warehouse: null,
-      category: null,
+      category: [6],
       category1: null,
       message: "Error en el servidor, por favor inténtalo más tarde.",
       activado: false,
       base64textString: "",
-      categorias: [
-        {
-          label: "Ginecología",
-          value: "ginecologia"
-        },
-        {
-          label: "Dermatología",
-          value: "dermatologia"
-        },
-        {
-          label: "Psicología",
-          value: "psicologia"
-        },
-        {
-          label: "Pediatría",
-          value: "pediatria"
-        },
-        {
-          label: "Otros",
-          value: "otros"
-        }
-      ]
+      categorias: []
     };
   },
   computed: {
@@ -189,6 +168,7 @@ export default {
     }
   },
   created() {
+    this.getCategories();
     this.openLoading();
     this.id = this.$route.params.productId;
     let token = localStorage.getItem("tu");
@@ -219,11 +199,24 @@ export default {
           this.precentation = Response.data[0].precentation;
           this.price = Response.data[0].price;
           this.laboratory = Response.data[0].laboratory;
-          this.category = Response.data[0].category;
-          this.category1 = Response.data[0].category;
+          this.category1 = Response.data[0].categories.split(",");
+          console.log(this.categorias, this.category1);
+          this.category1.forEach(element => {
+            element = parseInt(element);
+            //this.categories.forEach(element1 => {
+            //   console.log(element1);
+            //   if (element == element1.value) {
+            //     console.log(element1);
+            //     this.category.push({
+            //       label: element1.label,
+            //       value: element1.value
+            //     });
+            //   }
+            //});
+          });
           this.warehouse = Response.data[0].warehouse;
           this.activeLoading = false;
-          this.$vs.loading.close(); 
+          this.$vs.loading.close();
         }
       })
       .catch(err => {
@@ -238,6 +231,31 @@ export default {
       });
   },
   methods: {
+    getCategories() {
+      let token = localStorage.getItem("tu");
+      let idu = localStorage.getItem("ui");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCategories",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          Response.data.forEach(element => {
+            if (element.user_id == idu) {
+              this.categorias.push({
+                label: element.name,
+                value: element.id
+              });
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     doUpdate() {
       this.openLoading();
       let token = localStorage.getItem("tu");

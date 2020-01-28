@@ -145,27 +145,12 @@ __webpack_require__.r(__webpack_exports__);
       id: null,
       laboratory: null,
       warehouse: null,
-      category: null,
+      category: [6],
       category1: null,
       message: "Error en el servidor, por favor inténtalo más tarde.",
       activado: false,
       base64textString: "",
-      categorias: [{
-        label: "Ginecología",
-        value: "ginecologia"
-      }, {
-        label: "Dermatología",
-        value: "dermatologia"
-      }, {
-        label: "Psicología",
-        value: "psicologia"
-      }, {
-        label: "Pediatría",
-        value: "pediatria"
-      }, {
-        label: "Otros",
-        value: "otros"
-      }]
+      categorias: []
     };
   },
   computed: {
@@ -198,6 +183,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
+    this.getCategories();
     this.openLoading();
     this.id = this.$route.params.productId;
     var token = localStorage.getItem("tu");
@@ -230,8 +216,22 @@ __webpack_require__.r(__webpack_exports__);
         _this.precentation = Response.data[0].precentation;
         _this.price = Response.data[0].price;
         _this.laboratory = Response.data[0].laboratory;
-        _this.category = Response.data[0].category;
-        _this.category1 = Response.data[0].category;
+        _this.category1 = Response.data[0].categories.split(",");
+        console.log(_this.categorias, _this.category1);
+
+        _this.category1.forEach(function (element) {
+          element = parseInt(element); //this.categories.forEach(element1 => {
+          //   console.log(element1);
+          //   if (element == element1.value) {
+          //     console.log(element1);
+          //     this.category.push({
+          //       label: element1.label,
+          //       value: element1.value
+          //     });
+          //   }
+          //});
+        });
+
         _this.warehouse = Response.data[0].warehouse;
         _this.activeLoading = false;
 
@@ -252,8 +252,33 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    doUpdate: function doUpdate() {
+    getCategories: function getCategories() {
       var _this2 = this;
+
+      var token = localStorage.getItem("tu");
+      var idu = localStorage.getItem("ui");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCategories",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        Response.data.forEach(function (element) {
+          if (element.user_id == idu) {
+            _this2.categorias.push({
+              label: element.name,
+              value: element.id
+            });
+          }
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    doUpdate: function doUpdate() {
+      var _this3 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -282,23 +307,23 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this2.activeLoading = false;
+        _this3.activeLoading = false;
 
-        _this2.$vs.loading.close();
+        _this3.$vs.loading.close();
 
-        _this2.$router.push("/consola");
+        _this3.$router.push("/consola");
 
-        _this2.$vs.notify({
+        _this3.$vs.notify({
           title: "Actualizado",
           text: "Producto actualizado exitosamente.",
           color: "success"
         });
       }).catch(function (err) {
-        _this2.activeLoading = false;
+        _this3.activeLoading = false;
 
-        _this2.$vs.loading.close();
+        _this3.$vs.loading.close();
 
-        _this2.activado = true;
+        _this3.activado = true;
         console.log(err);
       });
     },
@@ -588,9 +613,9 @@ var render = function() {
               _vm._v(" "),
               _c("v-select", {
                 attrs: {
-                  clearable: false,
+                  multiple: "",
+                  closeOnSelect: false,
                   options: _vm.categorias,
-                  name: "role",
                   dir: _vm.$vs.rtl ? "rtl" : "ltr"
                 },
                 model: {
