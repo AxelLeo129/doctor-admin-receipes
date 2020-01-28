@@ -91,7 +91,7 @@ export default {
   data() {
     return {
       popupActive3: false,
-      categorias: {},
+      categorias: [],
       buscar: ""
     };
   },
@@ -102,6 +102,7 @@ export default {
     getData() {
       this.openLoading();
       let token = localStorage.getItem("tu");
+      let id = localStorage.getItem("ui");
       axios({
         method: "get",
         url: "http://127.0.0.1:8000/api/getCategories",
@@ -111,7 +112,12 @@ export default {
         }
       })
         .then(Response => {
-          this.categorias = Response.data;
+          Response.data.forEach(element => {
+            if(element.user_id == id){
+              this.categorias.push(element);
+            }
+          });
+          //this.categorias = Response.data;
           this.activeLoading = false;
           this.$vs.loading.close();
         })

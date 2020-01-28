@@ -45,7 +45,7 @@
       </div>
       <div class="vx-col md:w-1/2 w-full">
         <vx-card>
-          <h3>Registra la categoría del medicamentos ...</h3>
+          <h3>Edita la categoría del medicamentos ...</h3>
           <br />
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nobis quo sunt ducimus minima unde labore dolores saepe qui doloribus numquam, accusantium ad adipisci voluptates velit necessitatibus vel totam dolor?</p>
         </vx-card>
@@ -61,6 +61,7 @@ export default {
     return {
       nombre: null,
       id: null,
+      idu: null,
       activado: false
     };
   },
@@ -89,6 +90,7 @@ export default {
             this.$router.push("/listadoCategorias");
           } else {
             this.nombre = Response.data[0].name;
+            this.idu = Response.data[0].user_id;
             this.activeLoading = false;
             this.$vs.loading.close();
           }
@@ -118,7 +120,8 @@ export default {
         url: "http://127.0.0.1:8000/api/putCategory",
         data: JSON.stringify({
           id: this.id,
-          name: this.nombre
+          name: this.nombre,
+          user_id: this.idu
         }),
         headers: {
           authorization: "Bearer " + token,

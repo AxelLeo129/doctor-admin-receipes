@@ -10,7 +10,7 @@
         close-icon="icon-x"
       >Error en el Servidor</vs-alert>
     </div>
-    <br/>
+    <br />
     <div class="vx-row">
       <div class="vx-col md:w-1/2 w-full">
         <vx-card>
@@ -73,11 +73,13 @@ export default {
     onSubmit() {
       this.openLoading();
       let token = localStorage.getItem("tu");
+      let id = localStorage.getItem("ui");
       axios({
         method: "post",
         url: "http://127.0.0.1:8000/api/postCategory",
         data: JSON.stringify({
-          name: this.nombre
+          name: this.nombre,
+          user_id: id
         }),
         headers: {
           authorization: "Bearer " + token,
