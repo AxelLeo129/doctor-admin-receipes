@@ -349,20 +349,6 @@ const router = new Router({
           }
         },
         {
-          path: '/dashboard',
-          name: 'testPage',
-          component: () => import('./views/call-center/dashboard.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Consola', url: '/consola' },
-              { title: 'Listado Call-Center' },
-              { title: 'Listado Call-Center', active: true },
-            ],
-            pageTitle: 'Listado Call-Center',
-            rule: 'editor'
-          },
-        },
-        {
           path: '/editarCategoria/:categoryId',
           name: 'category-edit',
           component: () => import('@/views/admin/categories/EditarCategoria.vue'),
@@ -383,6 +369,31 @@ const router = new Router({
               { title: 'Editar Categoría ', active: true },
             ],
             pageTitle: 'Editar Categoría',
+            rule: 'editor'
+          },
+        },
+        //Call Center
+        {
+          path: '/dashboard',
+          name: 'testPage',
+          component: () => import('./views/call-center/dashboard.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 3) {
+              next();
+            } else {
+              next({
+                name: 'home'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Listado Call-Center' },
+              { title: 'Listado Call-Center', active: true },
+            ],
+            pageTitle: 'Listado Call-Center',
             rule: 'editor'
           },
         },
