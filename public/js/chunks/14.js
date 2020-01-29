@@ -302,6 +302,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -441,6 +442,19 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    agregarmF: function agregarmF() {
+      this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
+      this.nuevaRecetaData.medicamentos.push({
+        nombre: this.nombre,
+        precentacion: this.precentacion,
+        descripcion: this.uso,
+        img: this.image
+      });
+      localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
+      this.uso = "";
+      this.activar = false;
+      this.$router.push("/editarReceta");
+    },
     agregarM: function agregarM() {
       this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
       this.nuevaRecetaData.medicamentos.push({
@@ -450,6 +464,7 @@ __webpack_require__.r(__webpack_exports__);
         img: this.image
       });
       localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
+      this.uso = "";
       this.activar = false;
     },
     openLoading: function openLoading() {
@@ -603,7 +618,10 @@ var render = function() {
         [
           _c(
             "tab-content",
-            { staticClass: "mb-5", attrs: { title: "Paso 2" } },
+            {
+              staticClass: "mb-5",
+              attrs: { title: "Paso 2", icon: "feather icon-home" }
+            },
             [
               _c(
                 "ais-instant-search",
@@ -1283,7 +1301,28 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "Agregar Medicina"
+                                                                    "Agregar & Continuar"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "vs-button",
+                                                                {
+                                                                  attrs: {
+                                                                    color:
+                                                                      "rgb(62, 201, 214)",
+                                                                    type:
+                                                                      "filled"
+                                                                  },
+                                                                  on: {
+                                                                    click:
+                                                                      _vm.agregarmF
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Agregar & Finalizar"
                                                                   )
                                                                 ]
                                                               )
@@ -1325,7 +1364,7 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "Agregar Producto"
+                                                                    "Agregar Medicamento"
                                                                   )
                                                                 ]
                                                               )

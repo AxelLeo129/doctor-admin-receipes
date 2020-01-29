@@ -20,7 +20,7 @@
         finishButtonText="Siguiente"
         @on-complete="formSubmitted"
       >
-        <tab-content title="Paso 1" class="mb-5">
+        <tab-content title="Paso 1" icon="feather icon-home" class="mb-5">
           <!-- tab 1 content -->
           <div class="vx-row">
             <div class="vx-col md:w-1/2 w-full mt-5">

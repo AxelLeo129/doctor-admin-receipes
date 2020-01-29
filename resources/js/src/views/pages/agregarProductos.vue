@@ -16,7 +16,7 @@
       finishButtonText="Siguiente"
       @on-complete="formSubmitted"
     >
-      <tab-content title="Paso 2" class="mb-5">
+      <tab-content title="Paso 2" icon="feather icon-home" class="mb-5">
         <ais-instant-search
           :search-client="searchClient"
           index-name="instant_search"
@@ -231,7 +231,8 @@
                               color="primary"
                               type="filled"
                               @click="agregarM"
-                            >Agregar Medicina</vs-button>
+                            >Agregar & Continuar</vs-button>
+                            <vs-button color="rgb(62, 201, 214)" @click="agregarmF" type="filled">Agregar & Finalizar</vs-button>
                           </vs-popup>
                           <div class="flex justify-between flex-wrap">
                             <vs-button
@@ -239,7 +240,7 @@
                               type="gradient"
                               @click="activar=true, setData(item.name, item.description, item.precentation, item.image)"
                               gradient-color-secondary="#CE9FFC"
-                            >Agregar Producto</vs-button>
+                            >Agregar Medicamento</vs-button>
                           </div>
                         </vx-card>
                       </div>
@@ -364,7 +365,6 @@ export default {
         {
           label: "Bayern",
           count: 1
-
         },
         {
           label: "Adenuric",
@@ -452,6 +452,25 @@ export default {
     }
   },
   methods: {
+    agregarmF() {
+      this.nuevaRecetaData = JSON.parse(
+        localStorage.getItem("nuevaRecetaData")
+      );
+      this.nuevaRecetaData.medicamentos.push({
+        nombre: this.nombre,
+        precentacion: this.precentacion,
+        descripcion: this.uso,
+        img: this.image
+      });
+
+      localStorage.setItem(
+        "nuevaRecetaData",
+        JSON.stringify(this.nuevaRecetaData)
+      );
+      this.uso = "";
+      this.activar = false;
+      this.$router.push("/editarReceta");
+    },
     agregarM() {
       this.nuevaRecetaData = JSON.parse(
         localStorage.getItem("nuevaRecetaData")
@@ -467,7 +486,7 @@ export default {
         "nuevaRecetaData",
         JSON.stringify(this.nuevaRecetaData)
       );
-
+      this.uso = "";
       this.activar = false;
     },
     openLoading() {

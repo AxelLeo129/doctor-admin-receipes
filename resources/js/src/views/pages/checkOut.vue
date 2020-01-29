@@ -46,18 +46,16 @@
           <!-- RIGHT COL -->
           <div class="vx-col lg:w-1/3 w-full">
             <vx-card>
-              <p class="text-grey mb-3">Detalles</p>
+              <p class="font-semibold mb-3">Detalles del Paciente</p>
 
               <vs-divider />
-
-              <p class="font-semibold mb-3">Detalles del Producto</p>
               <div class="flex justify-between mb-2">
-                <span class="text-grey">Médico</span>
-                <span>###</span>
+                <span class="text-grey">Nombre</span>
+                <span>{{nuevaRecetaData.nombrePaciente}}</span>
               </div>
               <div class="flex justify-between mb-2">
-                <span class="text-grey">Paciente</span>
-                <span class="text-success">###</span>
+                <span class="text-grey">Teléfono</span>
+                <span class="text-success">{{nuevaRecetaData.telefono}}</span>
               </div>
 
               <vs-divider />
