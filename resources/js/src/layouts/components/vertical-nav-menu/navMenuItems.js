@@ -61,5 +61,12 @@ export default [
     slug: "nuevaCategoria",
     icon: "PlusIcon",
     rol: 1
+  },
+  {
+    url: "/dashboardCallCenter",
+    name: "Listado Call-Center",
+    slug: "ListCallCenter",
+    icon: "ListIcon",
+    rol: 3
   }
 ]

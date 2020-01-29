@@ -56039,9 +56039,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
         if (rol == 2) {
           next();
-        } else {
+        } else if (rol == 1) {
           next({
             name: 'consola'
+          });
+        } else {
+          next({
+            name: 'ListCallCenter'
           });
         }
       }
@@ -56392,8 +56396,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       }
     }, //Call Center
     {
-      path: '/dashboard',
-      name: 'testPage',
+      path: '/dashboardCallCenter',
+      name: 'ListCallCenter',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/call-center/dashboard.vue */ "./resources/js/src/views/call-center/dashboard.vue"));
       },

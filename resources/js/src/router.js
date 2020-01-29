@@ -85,9 +85,13 @@ const router = new Router({
             let rol = localStorage.getItem('ru');
             if (rol == 2) {
               next();
-            } else {
+            } else if(rol == 1){
               next({
                 name: 'consola'
+              });
+            } else {
+              next({
+                name: 'ListCallCenter'
               });
             }
           }
@@ -374,8 +378,8 @@ const router = new Router({
         },
         //Call Center
         {
-          path: '/dashboard',
-          name: 'testPage',
+          path: '/dashboardCallCenter',
+          name: 'ListCallCenter',
           component: () => import('./views/call-center/dashboard.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');

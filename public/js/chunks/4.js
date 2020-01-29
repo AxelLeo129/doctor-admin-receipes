@@ -6918,6 +6918,12 @@ __webpack_require__.r(__webpack_exports__);
   slug: "nuevaCategoria",
   icon: "PlusIcon",
   rol: 1
+}, {
+  url: "/dashboardCallCenter",
+  name: "Listado Call-Center",
+  slug: "ListCallCenter",
+  icon: "ListIcon",
+  rol: 3
 }]);
 
 /***/ }),
