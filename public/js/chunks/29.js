@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[6],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[29],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/DataViewSidebar.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
@@ -264,9 +264,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DataViewSidebar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DataViewSidebar.vue */ "./resources/js/src/views/DataViewSidebar.vue");
-/* harmony import */ var _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/store/data-list/moduleDataList.js */ "./resources/js/src/store/data-list/moduleDataList.js");
-//
+/* harmony import */ var _DataViewSidebar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../DataViewSidebar.vue */ "./resources/js/src/views/DataViewSidebar.vue");
+!(function webpackMissingModule() { var e = new Error("Cannot find module '@/store/data-list/moduleDataList.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 //
 //
 //
@@ -409,7 +408,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    DataViewSidebar: _DataViewSidebar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    DataViewSidebar: _DataViewSidebar_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -471,9 +470,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    if (!_store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__["default"].isRegistered) {
-      this.$store.registerModule('dataList', _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
-      _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__["default"].isRegistered = true;
+    if (!!(function webpackMissingModule() { var e = new Error("Cannot find module '@/store/data-list/moduleDataList.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).isRegistered) {
+      this.$store.registerModule('dataList', !(function webpackMissingModule() { var e = new Error("Cannot find module '@/store/data-list/moduleDataList.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+      !(function webpackMissingModule() { var e = new Error("Cannot find module '@/store/data-list/moduleDataList.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).isRegistered = true;
     }
 
     this.$store.dispatch("dataList/fetchDataListItems");
@@ -1011,12 +1010,6 @@ var render = function() {
                             ])
                           ]),
                           _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "product-price" }, [
-                              _vm._v(_vm._s(tr.price))
-                            ])
-                          ]),
-                          _vm._v(" "),
                           _c(
                             "vs-td",
                             [
@@ -1056,13 +1049,19 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "product-price" }, [
+                              _vm._v("$" + _vm._s(tr.price))
+                            ])
+                          ]),
+                          _vm._v(" "),
                           _c(
                             "vs-td",
                             { staticClass: "whitespace-no-wrap" },
                             [
                               _c("feather-icon", {
                                 attrs: {
-                                  icon: "PhoneOutgoingIcon",
+                                  icon: "EditIcon",
                                   svgClasses:
                                     "w-5 h-5 hover:text-primary stroke-current"
                                 },
@@ -1141,7 +1140,7 @@ var render = function() {
                         },
                         [
                           _c("span", { staticClass: "mr-2" }, [
-                            _vm._v("Acciones")
+                            _vm._v("Actions")
                           ]),
                           _vm._v(" "),
                           _c("feather-icon", {
@@ -1165,12 +1164,12 @@ var render = function() {
                                 _c("feather-icon", {
                                   staticClass: "mr-2",
                                   attrs: {
-                                    icon: "LinkIcon",
+                                    icon: "TrashIcon",
                                     svgClasses: "h-4 w-4"
                                   }
                                 }),
                                 _vm._v(" "),
-                                _c("span", [_vm._v("Asociar Cliente")])
+                                _c("span", [_vm._v("Delete")])
                               ],
                               1
                             )
@@ -1189,7 +1188,7 @@ var render = function() {
                                   }
                                 }),
                                 _vm._v(" "),
-                                _c("span", [_vm._v("Archivar")])
+                                _c("span", [_vm._v("Archive")])
                               ],
                               1
                             )
@@ -1203,12 +1202,12 @@ var render = function() {
                                 _c("feather-icon", {
                                   staticClass: "mr-2",
                                   attrs: {
-                                    icon: "MessageCircleIcon",
+                                    icon: "FileIcon",
                                     svgClasses: "h-4 w-4"
                                   }
                                 }),
                                 _vm._v(" "),
-                                _c("span", [_vm._v("Enviar Receta")])
+                                _c("span", [_vm._v("Print")])
                               ],
                               1
                             )
@@ -1222,12 +1221,12 @@ var render = function() {
                                 _c("feather-icon", {
                                   staticClass: "mr-2",
                                   attrs: {
-                                    icon: "CalendarIcon",
+                                    icon: "SaveIcon",
                                     svgClasses: "h-4 w-4"
                                   }
                                 }),
                                 _vm._v(" "),
-                                _c("span", [_vm._v("Re-agendar")])
+                                _c("span", [_vm._v("Another Action")])
                               ],
                               1
                             )
@@ -1248,13 +1247,13 @@ var render = function() {
                     },
                     [
                       _c("feather-icon", {
-                        attrs: { icon: "UserPlusIcon", svgClasses: "h-4 w-4" }
+                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
                       }),
                       _vm._v(" "),
                       _c(
                         "span",
                         { staticClass: "ml-2 text-base text-primary" },
-                        [_vm._v("Nuevo Cliente")]
+                        [_vm._v("Add New")]
                       )
                     ],
                     1
@@ -1371,27 +1370,25 @@ var render = function() {
             "template",
             { slot: "thead" },
             [
-              _c("vs-th", { attrs: { "sort-key": "name" } }, [
-                _vm._v("Paciente/Cliente")
-              ]),
+              _c("vs-th", { attrs: { "sort-key": "name" } }, [_vm._v("Name")]),
               _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "category" } }, [
-                _vm._v("Teléfono")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "price" } }, [
-                _vm._v("Médico")
+                _vm._v("Category")
               ]),
               _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "popularity" } }, [
-                _vm._v("Dosis Pendiente")
+                _vm._v("Popularity")
               ]),
               _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "order_status" } }, [
-                _vm._v("Etatus")
+                _vm._v("Order Status")
               ]),
               _vm._v(" "),
-              _c("vs-th", [_vm._v("Acción")])
+              _c("vs-th", { attrs: { "sort-key": "price" } }, [
+                _vm._v("Price")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", [_vm._v("Action")])
             ],
             1
           )
@@ -1406,228 +1403,6 @@ var staticRenderFns = []
 render._withStripped = true
 
 
-
-/***/ }),
-
-/***/ "./resources/js/src/store/data-list/moduleDataList.js":
-/*!************************************************************!*\
-  !*** ./resources/js/src/store/data-list/moduleDataList.js ***!
-  \************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _moduleDataListState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./moduleDataListState.js */ "./resources/js/src/store/data-list/moduleDataListState.js");
-/* harmony import */ var _moduleDataListMutations_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moduleDataListMutations.js */ "./resources/js/src/store/data-list/moduleDataListMutations.js");
-/* harmony import */ var _moduleDataListActions_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./moduleDataListActions.js */ "./resources/js/src/store/data-list/moduleDataListActions.js");
-/* harmony import */ var _moduleDataListGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./moduleDataListGetters.js */ "./resources/js/src/store/data-list/moduleDataListGetters.js");
-/*=========================================================================================
-  File Name: moduleDataList.js
-  Description: Calendar Module
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  isRegistered: false,
-  namespaced: true,
-  state: _moduleDataListState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
-  mutations: _moduleDataListMutations_js__WEBPACK_IMPORTED_MODULE_1__["default"],
-  actions: _moduleDataListActions_js__WEBPACK_IMPORTED_MODULE_2__["default"],
-  getters: _moduleDataListGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
-});
-
-/***/ }),
-
-/***/ "./resources/js/src/store/data-list/moduleDataListActions.js":
-/*!*******************************************************************!*\
-  !*** ./resources/js/src/store/data-list/moduleDataListActions.js ***!
-  \*******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _axios_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/axios.js */ "./resources/js/src/axios.js");
-/*=========================================================================================
-  File Name: moduleCalendarActions.js
-  Description: Calendar Module Actions
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  addItem: function addItem(_ref, item) {
-    var commit = _ref.commit;
-    return new Promise(function (resolve, reject) {
-      _axios_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/api/data-list/products/", {
-        item: item
-      }).then(function (response) {
-        commit('ADD_ITEM', Object.assign(item, {
-          id: response.data.id
-        }));
-        resolve(response);
-      }).catch(function (error) {
-        reject(error);
-      });
-    });
-  },
-  fetchDataListItems: function fetchDataListItems(_ref2) {
-    var commit = _ref2.commit;
-    return new Promise(function (resolve, reject) {
-      _axios_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/api/data-list/products").then(function (response) {
-        commit('SET_PRODUCTS', response.data);
-        resolve(response);
-      }).catch(function (error) {
-        reject(error);
-      });
-    });
-  },
-  // fetchEventLabels({ commit }) {
-  //   return new Promise((resolve, reject) => {
-  //     axios.get("/api/apps/calendar/labels")
-  //       .then((response) => {
-  //         commit('SET_LABELS', response.data)
-  //         resolve(response)
-  //       })
-  //       .catch((error) => { reject(error) })
-  //   })
-  // },
-  updateItem: function updateItem(_ref3, item) {
-    var commit = _ref3.commit;
-    return new Promise(function (resolve, reject) {
-      _axios_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/api/data-list/products/".concat(item.id), {
-        item: item
-      }).then(function (response) {
-        commit('UPDATE_PRODUCT', response.data);
-        resolve(response);
-      }).catch(function (error) {
-        reject(error);
-      });
-    });
-  },
-  removeItem: function removeItem(_ref4, itemId) {
-    var commit = _ref4.commit;
-    return new Promise(function (resolve, reject) {
-      _axios_js__WEBPACK_IMPORTED_MODULE_0__["default"].delete("/api/data-list/products/".concat(itemId)).then(function (response) {
-        commit('REMOVE_ITEM', itemId);
-        resolve(response);
-      }).catch(function (error) {
-        reject(error);
-      });
-    });
-  } // eventDragged({ commit }, payload) {
-  //   return new Promise((resolve, reject) => {
-  //     axios.post(`/api/apps/calendar/event/dragged/${payload.event.id}`, {payload: payload})
-  //       .then((response) => {
-  //         // Convert Date String to Date Object
-  //         let event = response.data
-  //         event.startDate = new Date(event.startDate)
-  //         event.endDate = new Date(event.endDate)
-  //         commit('UPDATE_EVENT', event)
-  //         resolve(response)
-  //       })
-  //       .catch((error) => { reject(error) })
-  //   })
-  // },
-
-});
-
-/***/ }),
-
-/***/ "./resources/js/src/store/data-list/moduleDataListGetters.js":
-/*!*******************************************************************!*\
-  !*** ./resources/js/src/store/data-list/moduleDataListGetters.js ***!
-  \*******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/*=========================================================================================
-  File Name: moduleCalendarGetters.js
-  Description: Calendar Module Getters
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-/* harmony default export */ __webpack_exports__["default"] = ({// getItem: state => (productId) => state.products.find((product) => product.id == productId),
-});
-
-/***/ }),
-
-/***/ "./resources/js/src/store/data-list/moduleDataListMutations.js":
-/*!*********************************************************************!*\
-  !*** ./resources/js/src/store/data-list/moduleDataListMutations.js ***!
-  \*********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/*=========================================================================================
-  File Name: moduleCalendarMutations.js
-  Description: Calendar Module Mutations
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-/* harmony default export */ __webpack_exports__["default"] = ({
-  ADD_ITEM: function ADD_ITEM(state, item) {
-    state.products.unshift(item);
-  },
-  SET_PRODUCTS: function SET_PRODUCTS(state, products) {
-    state.products = products;
-  },
-  // SET_LABELS(state, labels) {
-  //   state.eventLabels = labels
-  // },
-  UPDATE_PRODUCT: function UPDATE_PRODUCT(state, product) {
-    var productIndex = state.products.findIndex(function (p) {
-      return p.id == product.id;
-    });
-    Object.assign(state.products[productIndex], product);
-  },
-  REMOVE_ITEM: function REMOVE_ITEM(state, itemId) {
-    var ItemIndex = state.products.findIndex(function (p) {
-      return p.id == itemId;
-    });
-    state.products.splice(ItemIndex, 1);
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/src/store/data-list/moduleDataListState.js":
-/*!*****************************************************************!*\
-  !*** ./resources/js/src/store/data-list/moduleDataListState.js ***!
-  \*****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/*=========================================================================================
-  File Name: moduleCalendarState.js
-  Description: Calendar Module State
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-/* harmony default export */ __webpack_exports__["default"] = ({
-  products: []
-});
 
 /***/ }),
 
@@ -1722,14 +1497,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************************!*\
   !*** ./resources/js/src/views/call-center/dashboard.vue ***!
   \**********************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dashboard_vue_vue_type_template_id_d669a862___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dashboard.vue?vue&type=template&id=d669a862& */ "./resources/js/src/views/call-center/dashboard.vue?vue&type=template&id=d669a862&");
 /* harmony import */ var _dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dashboard.vue?vue&type=script&lang=js& */ "./resources/js/src/views/call-center/dashboard.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _dashboard_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/call-center/dashboard.vue?vue&type=style&index=0&lang=scss&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _dashboard_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/call-center/dashboard.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1761,7 +1537,7 @@ component.options.__file = "resources/js/src/views/call-center/dashboard.vue"
 /*!***********************************************************************************!*\
   !*** ./resources/js/src/views/call-center/dashboard.vue?vue&type=script&lang=js& ***!
   \***********************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
