@@ -56361,6 +56361,25 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         rule: 'editor'
       }
     }, {
+      path: '/dashboard',
+      name: 'testPage',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/call-center/dashboard.vue */ "./resources/js/src/views/call-center/dashboard.vue"));
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Listado Call-Center'
+        }, {
+          title: 'Listado Call-Center',
+          active: true
+        }],
+        pageTitle: 'Listado Call-Center',
+        rule: 'editor'
+      }
+    }, {
       path: '/editarCategoria/:categoryId',
       name: 'category-edit',
       component: function component() {

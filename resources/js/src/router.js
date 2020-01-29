@@ -349,6 +349,20 @@ const router = new Router({
           }
         },
         {
+          path: '/dashboard',
+          name: 'testPage',
+          component: () => import('./views/call-center/dashboard.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Listado Call-Center' },
+              { title: 'Listado Call-Center', active: true },
+            ],
+            pageTitle: 'Listado Call-Center',
+            rule: 'editor'
+          },
+        },
+        {
           path: '/editarCategoria/:categoryId',
           name: 'category-edit',
           component: () => import('@/views/admin/categories/EditarCategoria.vue'),
