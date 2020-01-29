@@ -24,22 +24,7 @@
           <!-- tab 1 content -->
           <div class="vx-row">
             <div class="vx-col md:w-1/2 w-full mt-5">
-              <vs-input label="Nombres" v-model="nombres" class="w-full" />
-            </div>
-            <div class="vx-col md:w-1/2 w-full mt-5">
-              <vs-input label="Apellidos" v-model="apellidos" class="w-full" />
-            </div>
-            <div class="vx-col md:w-1/2 w-full mt-5">
-              <vs-select v-model="city" class="w-full select-large" label="Genero">
-                <vs-select-item
-                  :key="index"
-                  v-model="genero"
-                  :value="item.value"
-                  :text="item.text"
-                  v-for="(item,index) in generos"
-                  class="w-full"
-                />
-              </vs-select>
+              <vs-input label="Nombre Completo del Paciente" v-model="nombres" class="w-full" />
             </div>
             <div class="vx-col md:w-1/2 w-full mt-5">
               <vs-input label="Teléfono" type="number" v-model="telefono" class="w-full" />
@@ -92,10 +77,10 @@ export default {
     formSubmitted() {
       let nuevaRecetaData = {
         nombrePaciente: this.nombres,
-        apellidoPaciente: this.apellidos,
+        apellidoPaciente: "",
         fechaNacimiento: '',
         peso: '',
-        genero: this.genero,
+        genero: "",
         telefono: this.telefono,
         fecha: '',
         sintomas: "",

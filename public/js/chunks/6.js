@@ -51,21 +51,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -120,10 +105,10 @@ __webpack_require__.r(__webpack_exports__);
     formSubmitted: function formSubmitted() {
       var nuevaRecetaData = {
         nombrePaciente: this.nombres,
-        apellidoPaciente: this.apellidos,
+        apellidoPaciente: "",
         fechaNacimiento: '',
         peso: '',
-        genero: this.genero,
+        genero: "",
         telefono: this.telefono,
         fecha: '',
         sintomas: "",
@@ -231,7 +216,7 @@ var render = function() {
                       [
                         _c("vs-input", {
                           staticClass: "w-full",
-                          attrs: { label: "Nombres" },
+                          attrs: { label: "Nombre Completo del Paciente" },
                           model: {
                             value: _vm.nombres,
                             callback: function($$v) {
@@ -240,62 +225,6 @@ var render = function() {
                             expression: "nombres"
                           }
                         })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "vx-col md:w-1/2 w-full mt-5" },
-                      [
-                        _c("vs-input", {
-                          staticClass: "w-full",
-                          attrs: { label: "Apellidos" },
-                          model: {
-                            value: _vm.apellidos,
-                            callback: function($$v) {
-                              _vm.apellidos = $$v
-                            },
-                            expression: "apellidos"
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "vx-col md:w-1/2 w-full mt-5" },
-                      [
-                        _c(
-                          "vs-select",
-                          {
-                            staticClass: "w-full select-large",
-                            attrs: { label: "Genero" },
-                            model: {
-                              value: _vm.city,
-                              callback: function($$v) {
-                                _vm.city = $$v
-                              },
-                              expression: "city"
-                            }
-                          },
-                          _vm._l(_vm.generos, function(item, index) {
-                            return _c("vs-select-item", {
-                              key: index,
-                              staticClass: "w-full",
-                              attrs: { value: item.value, text: item.text },
-                              model: {
-                                value: _vm.genero,
-                                callback: function($$v) {
-                                  _vm.genero = $$v
-                                },
-                                expression: "genero"
-                              }
-                            })
-                          }),
-                          1
-                        )
                       ],
                       1
                     ),

@@ -189,6 +189,9 @@ export default {
     finalizar() {
       let a = JSON.parse(localStorage.getItem('recetas'));
       this.recetas = a;
+      if(this.recetas == null){
+        this.recetas = [];
+      }
       this.recetas.push({
         nombrePaciente: this.nuevaRecetaData.nombrePaciente,
         apellidoPaciente: this.nuevaRecetaData.apellidoPaciente,
