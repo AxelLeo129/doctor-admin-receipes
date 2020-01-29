@@ -56100,7 +56100,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/nuevoProducto',
       name: 'nuevoProducto',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! @/views/admin/nuevoProducto.vue */ "./resources/js/src/views/admin/nuevoProducto.vue"));
+        return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! @/views/admin/NuevoProducto.vue */ "./resources/js/src/views/admin/NuevoProducto.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56160,7 +56160,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/listadoProductos',
       name: 'listadoProductos',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! @/views/admin/listadoProductos.vue */ "./resources/js/src/views/admin/listadoProductos.vue"));
+        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! @/views/admin/ListadoProductos.vue */ "./resources/js/src/views/admin/ListadoProductos.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56334,7 +56334,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/nuevaCategoria',
       name: 'nuevaCategoria',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! @/views/admin/categories/nuevaCategoria.vue */ "./resources/js/src/views/admin/categories/nuevaCategoria.vue"));
+        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! @/views/admin/categories/NuevaCategoria.vue */ "./resources/js/src/views/admin/categories/NuevaCategoria.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56364,7 +56364,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/dashboard',
       name: 'testPage',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/call-center/dashboard.vue */ "./resources/js/src/views/call-center/dashboard.vue"));
+        return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/call-center/dashboard.vue */ "./resources/js/src/views/call-center/dashboard.vue"));
       },
       meta: {
         breadcrumb: [{

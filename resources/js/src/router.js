@@ -138,7 +138,7 @@ const router = new Router({
         {
           path: '/nuevoProducto',
           name: 'nuevoProducto',
-          component: () => import('@/views/admin/nuevoProducto.vue'),
+          component: () => import('@/views/admin/NuevoProducto.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
             if (rol == 1) {
@@ -186,7 +186,7 @@ const router = new Router({
         {
           path: '/listadoProductos',
           name: 'listadoProductos',
-          component: () => import('@/views/admin/listadoProductos.vue'),
+          component: () => import('@/views/admin/ListadoProductos.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
             if (rol == 1) {
@@ -327,7 +327,7 @@ const router = new Router({
         {
           path: '/nuevaCategoria',
           name: 'nuevaCategoria',
-          component: () => import('@/views/admin/categories/nuevaCategoria.vue'),
+          component: () => import('@/views/admin/categories/NuevaCategoria.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
             if (rol == 1) {
