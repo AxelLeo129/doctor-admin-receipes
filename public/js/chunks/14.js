@@ -301,6 +301,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -347,6 +348,33 @@ __webpack_require__.r(__webpack_exports__);
       isFilterSidebarActive: true,
       clickNotClose: true,
       currentItemView: "item-grid-view",
+      categorias: [{
+        label: "Ginecología"
+      }, {
+        label: "Gastroenterología"
+      }, {
+        label: "Pediatría"
+      }, {
+        label: "Psicología"
+      }, {
+        label: "Reumatología"
+      }],
+      marcas: [{
+        label: "Bayern",
+        count: 1
+      }, {
+        label: "Adenuric",
+        count: 0
+      }, {
+        label: "Badyket",
+        count: 0
+      }, {
+        label: "Carbimen",
+        count: 0
+      }, {
+        label: "Cromatonbic Ferro",
+        count: 0
+      }],
       numericItems: [{
         label: "All"
       }, {
@@ -734,7 +762,9 @@ var render = function() {
                                       return _c("div", {}, [
                                         _c(
                                           "ul",
-                                          _vm._l(items, function(item) {
+                                          _vm._l(_vm.categorias, function(
+                                            item
+                                          ) {
                                             return _c(
                                               "li",
                                               {
@@ -809,7 +839,7 @@ var render = function() {
                                                 ])
                                               : _vm._e(),
                                             _vm._v(" "),
-                                            _vm._l(items, function(item) {
+                                            _vm._l(_vm.marcas, function(item) {
                                               return _c(
                                                 "li",
                                                 {

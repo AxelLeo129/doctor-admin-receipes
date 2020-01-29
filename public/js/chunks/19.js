@@ -134,6 +134,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -182,7 +183,8 @@ __webpack_require__.r(__webpack_exports__);
           name: this.name,
           email: this.email,
           password: this.password,
-          userName: this.userName,
+          userName: this.name,
+          noCollegiate: this.userName,
           c_password: this.confirmPassword,
           rol: "2"
         }),
@@ -463,9 +465,10 @@ var render = function() {
                                 staticClass: "w-full",
                                 attrs: {
                                   "data-vv-validate-on": "blur",
-                                  "label-placeholder": "Nombre de Usuario",
+                                  "label-placeholder": "No.Colegiado",
                                   name: "userName",
-                                  placeholder: "Nombre de Usuario"
+                                  type: "number",
+                                  placeholder: "No.Colegiado"
                                 },
                                 model: {
                                   value: _vm.userName,

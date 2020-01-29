@@ -76,7 +76,7 @@
                   >
                     <ul>
                       <li
-                        v-for="item in items"
+                        v-for="item in categorias"
                         :key="item.value"
                         class="flex items-center cursor-pointer py-1"
                         @click="refine(item.value)"
@@ -85,10 +85,7 @@
                           icon="CircleIcon"
                           :svgClasses="[{ 'text-primary fill-current': item.isRefined}, 'h-5 w-5']"
                         />
-                        <span
-                          class="ml-2"
-                          :class="{'text-primary': item.isRefined}"
-                        >{{ item.label }}</span>
+                        <span class="ml-2" :class="{'text-primary': item.isRefined}">{{item.label}}</span>
                       </li>
                     </ul>
                   </div>
@@ -109,7 +106,7 @@
                     <ul>
                       <li v-if="isFromSearch && !items.length">No results.</li>
                       <li
-                        v-for="item in items"
+                        v-for="item in marcas"
                         :key="item.value"
                         class="mb-2 flex items-center justify-between"
                       >
@@ -223,7 +220,11 @@
                             <h6 class="mb-2" v-text="precentacion"></h6>
 
                             <div class="mt-4">
-                              <vs-textarea class="vs-textarea" label="Descripción de uso" v-model="uso"/>
+                              <vs-textarea
+                                class="vs-textarea"
+                                label="Descripción de uso"
+                                v-model="uso"
+                              />
                             </div>
 
                             <vs-button
@@ -342,6 +343,46 @@ export default {
       isFilterSidebarActive: true,
       clickNotClose: true,
       currentItemView: "item-grid-view",
+      categorias: [
+        {
+          label: "Ginecología"
+        },
+        {
+          label: "Gastroenterología"
+        },
+        {
+          label: "Pediatría"
+        },
+        {
+          label: "Psicología"
+        },
+        {
+          label: "Reumatología"
+        }
+      ],
+      marcas: [
+        {
+          label: "Bayern",
+          count: 1
+
+        },
+        {
+          label: "Adenuric",
+          count: 0
+        },
+        {
+          label: "Badyket",
+          count: 0
+        },
+        {
+          label: "Carbimen",
+          count: 0
+        },
+        {
+          label: "Cromatonbic Ferro",
+          count: 0
+        }
+      ],
       numericItems: [
         {
           label: "All"

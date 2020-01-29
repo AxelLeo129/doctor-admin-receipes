@@ -58,10 +58,11 @@
 
                   <vs-input
                     data-vv-validate-on="blur"
-                    label-placeholder="Nombre de Usuario"
+                    label-placeholder="No.Colegiado"
                     name="userName"
                     v-model="userName"
-                    placeholder="Nombre de Usuario"
+                    type="number"
+                    placeholder="No.Colegiado"
                     class="w-full"
                   />
                   <span class="text-danger text-sm" v-show="userName === ''">{{ errors.userName }}</span>
@@ -169,7 +170,8 @@ export default {
           name: this.name,
           email: this.email,
           password: this.password,
-          userName: this.userName,
+          userName: this.name,
+          noCollegiate: this.userName,
           c_password: this.confirmPassword,
           rol: "2"
         }),
