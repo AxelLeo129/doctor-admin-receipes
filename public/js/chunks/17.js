@@ -91,8 +91,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -412,25 +410,23 @@ var render = function() {
                     _c(
                       "vx-card",
                       [
-                        _c("p", { staticClass: "text-grey mb-3" }, [
-                          _vm._v("Detalles")
+                        _c("p", { staticClass: "font-semibold mb-3" }, [
+                          _vm._v("Detalles del Paciente")
                         ]),
                         _vm._v(" "),
                         _c("vs-divider"),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "font-semibold mb-3" }, [
-                          _vm._v("Detalles del Producto")
-                        ]),
                         _vm._v(" "),
                         _c(
                           "div",
                           { staticClass: "flex justify-between mb-2" },
                           [
                             _c("span", { staticClass: "text-grey" }, [
-                              _vm._v("Médico")
+                              _vm._v("Nombre")
                             ]),
                             _vm._v(" "),
-                            _c("span", [_vm._v("###")])
+                            _c("span", [
+                              _vm._v(_vm._s(_vm.nuevaRecetaData.nombrePaciente))
+                            ])
                           ]
                         ),
                         _vm._v(" "),
@@ -439,11 +435,11 @@ var render = function() {
                           { staticClass: "flex justify-between mb-2" },
                           [
                             _c("span", { staticClass: "text-grey" }, [
-                              _vm._v("Paciente")
+                              _vm._v("Teléfono")
                             ]),
                             _vm._v(" "),
                             _c("span", { staticClass: "text-success" }, [
-                              _vm._v("###")
+                              _vm._v(_vm._s(_vm.nuevaRecetaData.telefono))
                             ])
                           ]
                         ),

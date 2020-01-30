@@ -96,7 +96,7 @@
               class="ml-auto mt-2"
               color="warning"
               @click="doUpdate"
-              :disabled="name == '' || quantity == '' || description == '' || precentation == '' || price == '' || laboratory == '' || category == '' || warehouse == ''"
+              :disabled="descartivado == true || name == '' || quantity == '' || description == '' || precentation == '' || price == '' || laboratory == '' || category == '' || warehouse == ''"
             >Guardar</vs-button>
             <vs-button class="ml-4 mt-2" type="border" color="danger">Resetear</vs-button>
           </div>
@@ -129,6 +129,7 @@ export default {
       description: null,
       quantity: null,
       price: null,
+      descartivado: true,
       id: null,
       laboratory: null,
       warehouse: null,

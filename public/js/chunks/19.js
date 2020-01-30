@@ -248,7 +248,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-<<<<<<< HEAD
 //
 //
 //
@@ -283,8 +282,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-=======
->>>>>>> 7661dadc47fcf80554e653a2eab56bdaff43e7d6
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -367,7 +364,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         data: JSON.stringify({
           id: this.id,
           name: this.name,
-<<<<<<< HEAD
           userName: this.userName,
           noCollegiate: this.noCollegiate,
           phone: this.phone,
@@ -376,14 +372,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           showAlerts: this.showAlerts,
           email: this.email,
           image: this.base64textString
-=======
-          email: this.email,
-          password: this.password,
-          userName: this.name,
-          noCollegiate: this.userName,
-          c_password: this.confirmPassword,
-          rol: "2"
->>>>>>> 7661dadc47fcf80554e653a2eab56bdaff43e7d6
         }),
         headers: {
           authorization: "Bearer " + token,
@@ -860,16 +848,8 @@ var render = function() {
                               _c("vs-input", {
                                 staticClass: "w-full mt-4",
                                 attrs: {
-<<<<<<< HEAD
                                   label: "Nombre de Usuario",
                                   name: "userName"
-=======
-                                  "data-vv-validate-on": "blur",
-                                  "label-placeholder": "No.Colegiado",
-                                  name: "userName",
-                                  type: "number",
-                                  placeholder: "No.Colegiado"
->>>>>>> 7661dadc47fcf80554e653a2eab56bdaff43e7d6
                                 },
                                 model: {
                                   value: _vm.userName,

@@ -131,12 +131,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-<<<<<<< HEAD
-
-=======
 //
 //
->>>>>>> 137ae18b04aa3c9e6e9468a4dff4ac1d1e854bd9
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -423,52 +419,9 @@ var render = function() {
                     _c("div", { attrs: { id: "info1" } }),
                     _vm._v(" "),
                     _c(
-<<<<<<< HEAD
-                      "vx-card",
-                      [
-                        _c("p", { staticClass: "font-semibold mb-3" }, [
-                          _vm._v("Detalles del Paciente")
-                        ]),
-                        _vm._v(" "),
-                        _c("vs-divider"),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "flex justify-between mb-2" },
-                          [
-                            _c("span", { staticClass: "text-grey" }, [
-                              _vm._v("Nombre")
-                            ]),
-                            _vm._v(" "),
-                            _c("span", [
-                              _vm._v(_vm._s(_vm.nuevaRecetaData.nombrePaciente))
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "flex justify-between mb-2" },
-                          [
-                            _c("span", { staticClass: "text-grey" }, [
-                              _vm._v("Teléfono")
-                            ]),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "text-success" }, [
-                              _vm._v(_vm._s(_vm.nuevaRecetaData.telefono))
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("vs-divider"),
-                        _vm._v(" "),
-                        _c(
-                          "vs-button",
-=======
                       "span",
                       {
                         directives: [
->>>>>>> 137ae18b04aa3c9e6e9468a4dff4ac1d1e854bd9
                           {
                             name: "show",
                             rawName: "v-show",

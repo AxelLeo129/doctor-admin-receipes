@@ -660,19 +660,8 @@ var render = function() {
             "div",
             { staticClass: "p-6" },
             [
-<<<<<<< HEAD
-              _c(
-                "tab-content",
-                {
-                  staticClass: "mb-5",
-                  attrs: { title: "Paso 1", icon: "feather icon-home" }
-                },
-                [
-                  _c("div", { staticClass: "vx-row" }, [
-=======
               _vm.dataImg
                 ? [
->>>>>>> 137ae18b04aa3c9e6e9468a4dff4ac1d1e854bd9
                     _c(
                       "div",
                       {

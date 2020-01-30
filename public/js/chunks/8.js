@@ -207,7 +207,10 @@ var render = function() {
             [
               _c(
                 "tab-content",
-                { staticClass: "mb-5", attrs: { title: "Paso 1" } },
+                {
+                  staticClass: "mb-5",
+                  attrs: { title: "Paso 1", icon: "feather icon-home" }
+                },
                 [
                   _c("div", { staticClass: "vx-row" }, [
                     _c(
