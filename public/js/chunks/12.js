@@ -15,6 +15,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_elements_card_analyticsData_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui-elements/card/analyticsData.js */ "./resources/js/src/views/ui-elements/card/analyticsData.js");
 /* harmony import */ var _components_ChangeTimeDurationDropdown_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/ChangeTimeDurationDropdown.vue */ "./resources/js/src/components/ChangeTimeDurationDropdown.vue");
 /* harmony import */ var _components_timeline_VxTimeline__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/timeline/VxTimeline */ "./resources/js/src/components/timeline/VxTimeline.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
 //
 //
 //
@@ -130,6 +132,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -145,7 +148,10 @@ __webpack_require__.r(__webpack_exports__);
       supportTracker: {},
       productsOrder: {},
       salesRadar: {},
+      //Variables usadas
       medicamentosData: [],
+      recipes: [],
+      fecha: '',
       timelineData: [{
         color: "primary",
         icon: "PlusIcon",
@@ -181,7 +187,36 @@ __webpack_require__.r(__webpack_exports__);
       dispatchedOrders: []
     };
   },
-  methods: {},
+  methods: {
+    getDate: function getDate() {
+      var f = new Date();
+      this.fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+    },
+    getRecipes: function getRecipes() {
+      var _this = this;
+
+      var token = localStorage.getItem("tu");
+      var id = localStorage.getItem("ui");
+      axios__WEBPACK_IMPORTED_MODULE_5___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getRecipes",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        Response.data.forEach(function (element) {
+          if (element.doctor_id == id) {
+            _this.recipes.push(element);
+          }
+
+          console.log(_this.recipes);
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+  },
   components: {
     VueApexCharts: vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default.a,
     StatisticsCardLine: _components_statistics_cards_StatisticsCardLine_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -189,56 +224,58 @@ __webpack_require__.r(__webpack_exports__);
     VxTimeline: _components_timeline_VxTimeline__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   created: function created() {
-    var _this = this;
+    var _this2 = this;
 
+    this.getRecipes();
+    this.getDate();
     var data = JSON.parse(localStorage.getItem("recetas"));
     this.medicamentosData = data;
     console.log(this.medicamentosData); //  User Reward Card
 
     this.$http.get("/api/user/checkpoint-reward").then(function (response) {
-      _this.checkpointReward = response.data;
+      _this2.checkpointReward = response.data;
     }).catch(function (error) {
       console.log(error);
     }); // Subscribers gained - Statistics
 
     this.$http.get("/api/card/card-statistics/subscribers").then(function (response) {
-      _this.subscribersGained = response.data;
+      _this2.subscribersGained = response.data;
     }).catch(function (error) {
       console.log(error);
     }); // Orders - Statistics
 
     this.$http.get("/api/card/card-statistics/orders").then(function (response) {
-      _this.ordersRecevied = response.data;
+      _this2.ordersRecevied = response.data;
     }).catch(function (error) {
       console.log(error);
     }); // Sales bar - Analytics
 
     this.$http.get("/api/card/card-analytics/sales/bar").then(function (response) {
-      _this.salesBarSession = response.data;
+      _this2.salesBarSession = response.data;
     }).catch(function (error) {
       console.log(error);
     }); // Support Tracker
 
     this.$http.get("/api/card/card-analytics/support-tracker").then(function (response) {
-      _this.supportTracker = response.data;
+      _this2.supportTracker = response.data;
     }).catch(function (error) {
       console.log(error);
     }); // Products Order
 
     this.$http.get("/api/card/card-analytics/products-orders").then(function (response) {
-      _this.productsOrder = response.data;
+      _this2.productsOrder = response.data;
     }).catch(function (error) {
       console.log(error);
     }); // Sales Radar
 
     this.$http.get("/api/card/card-analytics/sales/radar").then(function (response) {
-      _this.salesRadar = response.data;
+      _this2.salesRadar = response.data;
     }).catch(function (error) {
       console.log(error);
     }); // Dispatched Orders
 
     this.$http.get("/api/table/dispatched-orders").then(function (response) {
-      _this.dispatchedOrders = response.data;
+      _this2.dispatchedOrders = response.data;
     }).catch(function (error) {
       console.log(error);
     });
@@ -452,7 +489,7 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _vm._l(_vm.medicamentosData, function(item, index) {
+                      _vm._l(_vm.recipes, function(item, index) {
                         return _c(
                           "vs-tr",
                           { key: index },
@@ -505,9 +542,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("span", {
                                         domProps: {
-                                          textContent: _vm._s(
-                                            item.nombrePaciente
-                                          )
+                                          textContent: _vm._s(item.name)
                                         }
                                       })
                                     ],
@@ -517,7 +552,13 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _c("vs-td", [_c("span", [_vm._v("01/17/2020")])]),
+                            _c("vs-td", [
+                              _c("span", {
+                                domProps: {
+                                  textContent: _vm._s(item.dateIssue)
+                                }
+                              })
+                            ]),
                             _vm._v(" "),
                             _c("vs-td", [_c("span", [_vm._v("Por definir")])]),
                             _vm._v(" "),

@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('postRecetas', 'Recipies\RecipieController@store');
     Route::post('postReceProd', 'Recipies\RecipieController@storeProduct');
     Route::get('getReceta/{id}', 'Recipies\RecipieController@show');
+    Route::get('getRecipes', 'Recipies\RecipieController@index');
     //Categorias
     Route::post('postCategory', 'Categories\CategoryController@store');
     Route::get('getCategories', 'Categories\CategoryController@index');

@@ -75,7 +75,7 @@
               </template>
 
               <template>
-                <vs-tr v-for="(item, index) in medicamentosData" :key="index">
+                <vs-tr v-for="(item, index) in recipes" :key="index">
                   <vs-td>
                     <span v-text="index + 1"></span>
                   </vs-td>
@@ -90,12 +90,12 @@
                         <vx-tooltip position="bottom">
                           <vs-avatar size="30px" class="border-2 border-white border-solid -m-1"></vs-avatar>
                         </vx-tooltip>
-                        <span v-text="item.nombrePaciente"></span>
+                        <span v-text="item.name"></span>
                       </li>
                     </ul>
                   </vs-td>
                   <vs-td>
-                    <span>01/17/2020</span>
+                    <span v-text="item.dateIssue"></span>
                   </vs-td>
                   <vs-td>
                     <span>Por definir</span>
@@ -119,6 +119,7 @@ import StatisticsCardLine from "@/components/statistics-cards/StatisticsCardLine
 import analyticsData from "./ui-elements/card/analyticsData.js";
 import ChangeTimeDurationDropdown from "@/components/ChangeTimeDurationDropdown.vue";
 import VxTimeline from "@/components/timeline/VxTimeline";
+import axios from "axios";
 
 export default {
   data() {
@@ -130,7 +131,11 @@ export default {
       supportTracker: {},
       productsOrder: {},
       salesRadar: {},
+      //Variables usadas
       medicamentosData: [],
+      recipes: [],
+      fecha: '',
+
       timelineData: [
         {
           color: "primary",
@@ -174,7 +179,35 @@ export default {
       dispatchedOrders: []
     };
   },
-  methods: {},
+  methods: {
+    getDate(){
+      let f = new Date();
+      this.fecha = (f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
+    },
+    getRecipes(){
+      let token = localStorage.getItem("tu");
+      let id = localStorage.getItem("ui");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getRecipes",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          Response.data.forEach(element => {
+            if(element.doctor_id == id){
+              this.recipes.push(element);
+            }
+            console.log(this.recipes);
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  },
   components: {
     VueApexCharts,
     StatisticsCardLine,
@@ -182,6 +215,8 @@ export default {
     VxTimeline
   },
   created() {
+    this.getRecipes();
+    this.getDate();
     let data = JSON.parse(localStorage.getItem("recetas"));
     this.medicamentosData = data;
     console.log(this.medicamentosData);
