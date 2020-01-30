@@ -25,9 +25,17 @@
           <div class="vx-row">
             <div class="vx-col md:w-1/2 w-full mt-5">
               <vs-input label="Nombre Completo del Paciente" v-model="nombres" class="w-full" />
+              <span
+                class="text-danger text-sm"
+                v-show="nombres === '' || (nombres === '' && actiErr == true)"
+              >Este campo es requerido.</span>
             </div>
             <div class="vx-col md:w-1/2 w-full mt-5">
               <vs-input label="Teléfono" type="number" v-model="telefono" class="w-full" />
+              <span
+                class="text-danger text-sm"
+                v-show="telefono === '' || (telefono === '' && actiErr1 == true)"
+              >Este campo es requerido.</span>
             </div>
           </div>
         </tab-content>
@@ -43,59 +51,56 @@ import "vue-form-wizard/dist/vue-form-wizard.min.css";
 export default {
   data() {
     return {
-      nombres: "",
-      apellidos: "",
-      peso: "",
-      email: "",
-      city: "new-york",
-      proposalTitle: "",
-      telefono: "",
-      jobTitle: "",
-      textarea: "",
-      eventName: "",
-      genero: "",
-      eventLocation: "san-francisco",
-      status: "plannning",
-      generos: [
-        { text: "Femenino", value: "f" },
-        { text: "Masculino", value: "m" }
-      ],
-      statusOptions: [
-        { text: "Plannning", value: "plannning" },
-        { text: "In Progress", value: "in progress" },
-        { text: "Finished", value: "finished" }
-      ],
-      LocationOptions: [
-        { text: "New York", value: "new-york" },
-        { text: "Chicago", value: "chicago" },
-        { text: "San Francisco", value: "san-francisco" },
-        { text: "Boston", value: "boston" }
-      ]
+      nombres: null,
+      telefono: null,
+      fecha: "",
+      actiErr: false,
+      actiErr1: false
     };
   },
   methods: {
+    getDate() {
+      let f = new Date();
+      this.fecha =
+        f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+    },
     formSubmitted() {
-      let nuevaRecetaData = {
-        nombrePaciente: this.nombres,
-        apellidoPaciente: "",
-        fechaNacimiento: '',
-        peso: '',
-        genero: "",
-        telefono: this.telefono,
-        fecha: '',
-        sintomas: "",
-        diagnostico: "",
-        observaciones: "",
-        proximaCita: "",
-        medicamentos: []
-      };
-      localStorage.setItem('nuevaRecetaData', JSON.stringify(nuevaRecetaData));
-      location.href = "/agregarProductos";
+      if (this.nombres == null || this.nombres == "") {
+        this.actiErr = true;
+        this.nombres = "";
+      } else if (this.telefono == null || this.telefono == "") {
+        this.actiErr1 = true;
+        this.telefono = "";
+      } else {
+        let idu = localStorage.getItem("ui");
+        idu = parseInt(idu);
+        let nuevaRecetaData = {
+          recipe_id: "",
+          name: this.nombres,
+          phone: this.telefono,
+          doctor_id: idu,
+          symptom: "",
+          diagnostics: "",
+          observations: "",
+          nextAppointment: "",
+          status: 1,
+          dateIssue: this.fecha,
+          medicines: []
+        };
+        localStorage.setItem(
+          "nuevaRecetaData",
+          JSON.stringify(nuevaRecetaData)
+        );
+        this.$router.push("/agregarProductos");
+      }
     }
   },
   components: {
     FormWizard,
     TabContent
+  },
+  created() {
+    this.getDate();
   }
 };
 </script>

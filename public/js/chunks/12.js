@@ -151,7 +151,6 @@ __webpack_require__.r(__webpack_exports__);
       //Variables usadas
       medicamentosData: [],
       recipes: [],
-      fecha: '',
       timelineData: [{
         color: "primary",
         icon: "PlusIcon",
@@ -188,10 +187,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getDate: function getDate() {
-      var f = new Date();
-      this.fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-    },
     getRecipes: function getRecipes() {
       var _this = this;
 
@@ -227,7 +222,6 @@ __webpack_require__.r(__webpack_exports__);
     var _this2 = this;
 
     this.getRecipes();
-    this.getDate();
     var data = JSON.parse(localStorage.getItem("recetas"));
     this.medicamentosData = data;
     console.log(this.medicamentosData); //  User Reward Card

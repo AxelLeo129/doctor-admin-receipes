@@ -51,79 +51,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      nombres: "",
-      apellidos: "",
-      peso: "",
-      email: "",
-      city: "new-york",
-      proposalTitle: "",
-      telefono: "",
-      jobTitle: "",
-      textarea: "",
-      eventName: "",
-      genero: "",
-      eventLocation: "san-francisco",
-      status: "plannning",
-      generos: [{
-        text: "Femenino",
-        value: "f"
-      }, {
-        text: "Masculino",
-        value: "m"
-      }],
-      statusOptions: [{
-        text: "Plannning",
-        value: "plannning"
-      }, {
-        text: "In Progress",
-        value: "in progress"
-      }, {
-        text: "Finished",
-        value: "finished"
-      }],
-      LocationOptions: [{
-        text: "New York",
-        value: "new-york"
-      }, {
-        text: "Chicago",
-        value: "chicago"
-      }, {
-        text: "San Francisco",
-        value: "san-francisco"
-      }, {
-        text: "Boston",
-        value: "boston"
-      }]
+      nombres: null,
+      telefono: null,
+      fecha: "",
+      actiErr: false,
+      actiErr1: false
     };
   },
   methods: {
+    getDate: function getDate() {
+      var f = new Date();
+      this.fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+    },
     formSubmitted: function formSubmitted() {
-      var nuevaRecetaData = {
-        nombrePaciente: this.nombres,
-        apellidoPaciente: "",
-        fechaNacimiento: '',
-        peso: '',
-        genero: "",
-        telefono: this.telefono,
-        fecha: '',
-        sintomas: "",
-        diagnostico: "",
-        observaciones: "",
-        proximaCita: "",
-        medicamentos: []
-      };
-      localStorage.setItem('nuevaRecetaData', JSON.stringify(nuevaRecetaData));
-      location.href = "/agregarProductos";
+      if (this.nombres == null || this.nombres == "") {
+        this.actiErr = true;
+        this.nombres = "";
+      } else if (this.telefono == null || this.telefono == "") {
+        this.actiErr1 = true;
+        this.telefono = "";
+      } else {
+        var idu = localStorage.getItem("ui");
+        idu = parseInt(idu);
+        var nuevaRecetaData = {
+          recipe_id: "",
+          name: this.nombres,
+          phone: this.telefono,
+          doctor_id: idu,
+          symptom: "",
+          diagnostics: "",
+          observations: "",
+          nextAppointment: "",
+          status: 1,
+          dateIssue: this.fecha,
+          medicines: []
+        };
+        localStorage.setItem("nuevaRecetaData", JSON.stringify(nuevaRecetaData));
+        this.$router.push("/agregarProductos");
+      }
     }
   },
   components: {
     FormWizard: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["FormWizard"],
     TabContent: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["TabContent"]
+  },
+  created: function created() {
+    this.getDate();
   }
 });
 
@@ -227,7 +213,26 @@ var render = function() {
                             },
                             expression: "nombres"
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value:
+                                  _vm.nombres === "" ||
+                                  (_vm.nombres === "" && _vm.actiErr == true),
+                                expression:
+                                  "nombres === '' || (nombres === '' && actiErr == true)"
+                              }
+                            ],
+                            staticClass: "text-danger text-sm"
+                          },
+                          [_vm._v("Este campo es requerido.")]
+                        )
                       ],
                       1
                     ),
@@ -246,7 +251,26 @@ var render = function() {
                             },
                             expression: "telefono"
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value:
+                                  _vm.telefono === "" ||
+                                  (_vm.telefono === "" && _vm.actiErr1 == true),
+                                expression:
+                                  "telefono === '' || (telefono === '' && actiErr1 == true)"
+                              }
+                            ],
+                            staticClass: "text-danger text-sm"
+                          },
+                          [_vm._v("Este campo es requerido.")]
+                        )
                       ],
                       1
                     )

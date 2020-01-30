@@ -47,6 +47,7 @@ class RecipieController extends Controller
         $recipe->observations = $request->observations;
         $recipe->nextAppointment = $request->nextAppointment;
         $recipe->status = $request->status;
+        $recipe->dateIssue = $recipe->dateIssue;
 
         if($recipe->save()){
             return ['result' => 'success', "mess"=>$recipe->id];

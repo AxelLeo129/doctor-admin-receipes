@@ -134,7 +134,6 @@ export default {
       //Variables usadas
       medicamentosData: [],
       recipes: [],
-      fecha: '',
 
       timelineData: [
         {
@@ -180,10 +179,6 @@ export default {
     };
   },
   methods: {
-    getDate(){
-      let f = new Date();
-      this.fecha = (f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
-    },
     getRecipes(){
       let token = localStorage.getItem("tu");
       let id = localStorage.getItem("ui");
@@ -216,7 +211,6 @@ export default {
   },
   created() {
     this.getRecipes();
-    this.getDate();
     let data = JSON.parse(localStorage.getItem("recetas"));
     this.medicamentosData = data;
     console.log(this.medicamentosData);
