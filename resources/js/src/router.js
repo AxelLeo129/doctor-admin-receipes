@@ -289,6 +289,30 @@ const router = new Router({
           }
         },
         {
+          path: '/datosPaciente',
+          name: 'datosPaciente',
+          component: () => import('./views/pages/paso4.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            if (rol == 2) {
+              next();
+            } else {
+              next({
+                name: 'consola'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/home' },
+              { title: 'Paciente' },
+              { title: 'Nueva Receta', active: true },
+            ],
+            pageTitle: 'Agregar Datos Paciente',
+            rule: 'editor'
+          },
+        },
+        {
           path: '/recetaFinal',
           name: 'recetaFinal',
           component: () => import('./views/pages/recetaFinal.vue'),

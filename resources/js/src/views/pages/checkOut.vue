@@ -82,6 +82,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      nextStep: null,
       resid: null,
       recetasData: [],
       nuevaRecetaData: null,
@@ -111,6 +112,8 @@ export default {
     }
   },
   created() {
+    this.openLoading();
+    this.getUser();
     this.getData();
   },
   methods: {
@@ -146,33 +149,36 @@ export default {
         localStorage.getItem("nuevaRecetaData")
       );
     },
-    generarReceta() {
-      this.openLoading();
+    getUser() {
       let token = localStorage.getItem("tu");
-      this.nuevaRecetaData = JSON.parse(
-        localStorage.getItem("nuevaRecetaData")
-      );
-
-      this.recetasData.push({
-        name: this.nuevaRecetaData.name,
-        phone: this.nuevaRecetaData.phone,
-        doctor_id: this.nuevaRecetaData.doctor_id,
-        symptom: this.nuevaRecetaData.symptom,
-        diagnostics: this.nuevaRecetaData.diagnostics,
-        observations: this.nuevaRecetaData.observations,
-        nextAppointment: this.nuevaRecetaData.nextAppointment,
-        status: this.nuevaRecetaData.status,
-        dateIssue: this.nuevaRecetaData.dateIssue,
-        medicines: this.nuevaRecetaData.medicines,
-        medicamentos: this.nuevaRecetaData.medicamentos
-      });
-
-      localStorage.setItem("recetasData", JSON.stringify(this.recetasData));
-
       axios({
-        method: "post",
-        url: "http://127.0.0.1:8000/api/postRecetas",
-        data: JSON.stringify({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/details",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          this.nextStep = Response.data.success.clinicalRecord;
+          this.activeLoading = false;
+          this.$vs.loading.close();
+        })
+        .catch(err => {
+          console.log(err);
+          this.activeLoading = false;
+          this.$vs.loading.close();
+        });
+    },
+    generarReceta() {
+      if (this.nextStep == 0) {
+        this.openLoading();
+        let token = localStorage.getItem("tu");
+        this.nuevaRecetaData = JSON.parse(
+          localStorage.getItem("nuevaRecetaData")
+        );
+
+        this.recetasData.push({
           name: this.nuevaRecetaData.name,
           phone: this.nuevaRecetaData.phone,
           doctor_id: this.nuevaRecetaData.doctor_id,
@@ -181,58 +187,80 @@ export default {
           observations: this.nuevaRecetaData.observations,
           nextAppointment: this.nuevaRecetaData.nextAppointment,
           status: this.nuevaRecetaData.status,
-          dateIssue: this.nuevaRecetaData.dateIssue
-        }),
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      })
-        .then(Response => {
-          this.Resid = Response.data.mess;
-          axios({
-            method: "post",
-            url: "http://127.0.0.1:8000/api/postReceProd",
-            data: JSON.stringify({
-              medicines: this.nuevaRecetaData.medicines,
-              recipe_id: this.Resid
-            }),
-            headers: {
-              authorization: "Bearer " + token,
-              "content-type": "application/json"
-            }
-          })
-            .then(Response => {
-              this.activeLoading = false;
-              this.$vs.loading.close();
-              this.$router.push("/recetaFinal");
-              this.$vs.notify({
-                title: "Satisfactorio",
-                text: "Receta creada exitosamente.",
-                color: "success"
-              });
-            })
-            .catch(err => {
-              this.activeLoading = false;
-              this.$vs.loading.close();
-              this.$vs.notify({
-                title: "Error",
-                text: "No se puedo crear la receta.",
-                color: "danger"
-              });
-              //console.log(err);
-            });
-        })
-        .catch(err => {
-          this.activeLoading = false;
-          this.$vs.loading.close();
-          this.$vs.notify({
-            title: "Error",
-            text: "No se puedo crear la receta.",
-            color: "danger"
-          });
-          //console.log(err);
+          dateIssue: this.nuevaRecetaData.dateIssue,
+          medicines: this.nuevaRecetaData.medicines,
+          medicamentos: this.nuevaRecetaData.medicamentos
         });
+
+        localStorage.setItem("recetasData", JSON.stringify(this.recetasData));
+
+        axios({
+          method: "post",
+          url: "http://127.0.0.1:8000/api/postRecetas",
+          data: JSON.stringify({
+            name: this.nuevaRecetaData.name,
+            phone: this.nuevaRecetaData.phone,
+            doctor_id: this.nuevaRecetaData.doctor_id,
+            symptom: this.nuevaRecetaData.symptom,
+            diagnostics: this.nuevaRecetaData.diagnostics,
+            observations: this.nuevaRecetaData.observations,
+            nextAppointment: this.nuevaRecetaData.nextAppointment,
+            status: this.nuevaRecetaData.status,
+            dateIssue: this.nuevaRecetaData.dateIssue
+          }),
+          headers: {
+            authorization: "Bearer " + token,
+            "content-type": "application/json"
+          }
+        })
+          .then(Response => {
+            this.Resid = Response.data.mess;
+            axios({
+              method: "post",
+              url: "http://127.0.0.1:8000/api/postReceProd",
+              data: JSON.stringify({
+                medicines: this.nuevaRecetaData.medicines,
+                recipe_id: this.Resid
+              }),
+              headers: {
+                authorization: "Bearer " + token,
+                "content-type": "application/json"
+              }
+            })
+              .then(Response => {
+                this.activeLoading = false;
+                this.$vs.loading.close();
+                this.$router.push("/recetaFinal");
+                this.$vs.notify({
+                  title: "Satisfactorio",
+                  text: "Receta creada exitosamente.",
+                  color: "success"
+                });
+              })
+              .catch(err => {
+                this.activeLoading = false;
+                this.$vs.loading.close();
+                this.$vs.notify({
+                  title: "Error",
+                  text: "No se puedo crear la receta.",
+                  color: "danger"
+                });
+                //console.log(err);
+              });
+          })
+          .catch(err => {
+            this.activeLoading = false;
+            this.$vs.loading.close();
+            this.$vs.notify({
+              title: "Error",
+              text: "No se puedo crear la receta.",
+              color: "danger"
+            });
+            //console.log(err);
+          });
+      } else {
+        this.$router.push("/datosPaciente");
+      }
     },
     // TAB 1
     removeItemFromCart(item) {

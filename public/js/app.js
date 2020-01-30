@@ -56200,7 +56200,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/nuevoPaciente',
       name: 'extra-component-form-wizard',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! @/views/pages/nuevoPaciente.vue */ "./resources/js/src/views/pages/nuevoPaciente.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(29), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! @/views/pages/nuevoPaciente.vue */ "./resources/js/src/views/pages/nuevoPaciente.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56230,7 +56230,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/agregarProductos',
       name: 'ecommerce-shop',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./views/pages/agregarProductos.vue */ "./resources/js/src/views/pages/agregarProductos.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(29), __webpack_require__.e(4), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./views/pages/agregarProductos.vue */ "./resources/js/src/views/pages/agregarProductos.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56260,7 +56260,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/editarReceta',
       name: 'editarReceta',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! ./views/pages/checkOut.vue */ "./resources/js/src/views/pages/checkOut.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(29), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! ./views/pages/checkOut.vue */ "./resources/js/src/views/pages/checkOut.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56284,6 +56284,36 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           active: true
         }],
         pageTitle: 'Editar Medicamentos',
+        rule: 'editor'
+      }
+    }, {
+      path: '/datosPaciente',
+      name: 'datosPaciente',
+      component: function component() {
+        return Promise.all(/*! import() */[__webpack_require__.e(29), __webpack_require__.e(20), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ./views/pages/paso4.vue */ "./resources/js/src/views/pages/paso4.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+
+        if (rol == 2) {
+          next();
+        } else {
+          next({
+            name: 'consola'
+          });
+        }
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Home',
+          url: '/home'
+        }, {
+          title: 'Paciente'
+        }, {
+          title: 'Nueva Receta',
+          active: true
+        }],
+        pageTitle: 'Agregar Datos Paciente',
         rule: 'editor'
       }
     }, {

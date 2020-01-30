@@ -74,9 +74,9 @@ class UserController extends Controller
             $user->phone = $request->phone;
             $user->email = $request->email;
             $user->birthDate = $request->birthDate;
-            $user->clinicalRecord = $user->clinicalRecord;
-            $user->showAlerts = $user->showAlerts;
-
+            $user->clinicalRecord = $request->clinicalRecord;
+            $user->showAlerts = $request->showAlerts;
+            //return ['result' => 'success', "mess"=>$user];
             if($user->save()){
                 return ['result' => 'success', "mess"=>$user];
             }else{

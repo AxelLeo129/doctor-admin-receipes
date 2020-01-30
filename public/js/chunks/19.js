@@ -477,6 +477,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this3.image = "images/medicamentos/avatar-s-23.jpg";
         } else {
           _this3.image = "data:image/png;base64," + Response.data.success.image;
+          _this3.base64textString = Response.data.success.image;
         }
 
         _this3.email = Response.data.success.email;

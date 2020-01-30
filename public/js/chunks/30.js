@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[0],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[30],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/FormWizardValidation1.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************!*\
@@ -13,16 +13,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_form_wizard__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-form-wizard/dist/vue-form-wizard.min.css */ "./node_modules/vue-form-wizard/dist/vue-form-wizard.min.css");
 /* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
-/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flatpickr/dist/flatpickr.css */ "./node_modules/flatpickr/dist/flatpickr.css");
-/* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var flatpickr_dist_flatpickr_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flatpickr/dist/flatpickr.min.css */ "./node_modules/flatpickr/dist/flatpickr.min.css");
-/* harmony import */ var flatpickr_dist_flatpickr_min_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flatpickr_dist_flatpickr_min_css__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var flatpickr_dist_l10n_es_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flatpickr/dist/l10n/es.js */ "./node_modules/flatpickr/dist/l10n/es.js");
-/* harmony import */ var flatpickr_dist_l10n_es_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flatpickr_dist_l10n_es_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
 //
 //
 //
@@ -72,159 +62,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      nombres: null,
+      telefono: null,
       symptom: null,
       diagnostics: null,
       observations: null,
       nextAppointment: null,
+      fecha: "",
       actiErr: false,
-      actiErr1: false,
-      actiErr2: false,
-      actiErr3: false,
-      recetasData: []
+      actiErr1: false
     };
   },
   methods: {
-    openLoading: function openLoading() {
-      this.activeLoading = true;
-      this.$vs.loading({
-        type: "default"
-      });
+    getDate: function getDate() {
+      var f = new Date();
+      this.fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
     },
     formSubmitted: function formSubmitted() {
-      var _this = this;
-
-      if (this.symptom == null || this.symptom == "") {
+      if (this.nombres == null || this.nombres == "") {
         this.actiErr = true;
-        this.symptom = "";
-      } else if (this.diagnostics == null || this.diagnostics == "") {
+        this.nombres = "";
+      } else if (this.telefono == null || this.telefono == "") {
         this.actiErr1 = true;
-        this.diagnostics = "";
-      } else if (this.observations == null || this.observations == "") {
-        this.actiErr2 = true;
-        this.observations = "";
-      } else if (this.nextAppointment == null || this.nextAppointment == "") {
-        this.actiErr3 = true;
-        this.nextAppointment = "";
+        this.telefono = "";
       } else {
-        this.openLoading();
-        var token = localStorage.getItem("tu");
-        this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
-        this.recetasData.push({
-          name: this.nuevaRecetaData.name,
-          phone: this.nuevaRecetaData.phone,
-          doctor_id: this.nuevaRecetaData.doctor_id,
-          symptom: this.symptom,
-          diagnostics: this.diagnostics,
-          observations: this.observations,
-          nextAppointment: this.nextAppointment,
-          status: this.nuevaRecetaData.status,
-          dateIssue: this.nuevaRecetaData.dateIssue,
-          medicines: this.nuevaRecetaData.medicines,
-          medicamentos: this.nuevaRecetaData.medicamentos
-        });
-        localStorage.setItem("recetasData", JSON.stringify(this.recetasData));
-        axios__WEBPACK_IMPORTED_MODULE_6___default()({
-          method: "post",
-          url: "http://127.0.0.1:8000/api/postRecetas",
-          data: JSON.stringify({
-            name: this.nuevaRecetaData.name,
-            phone: this.nuevaRecetaData.phone,
-            doctor_id: this.nuevaRecetaData.doctor_id,
-            symptom: this.symptom,
-            diagnostics: this.diagnostics,
-            observations: this.observations,
-            nextAppointment: this.nextAppointment,
-            status: this.nuevaRecetaData.status,
-            dateIssue: this.nuevaRecetaData.dateIssue
-          }),
-          headers: {
-            authorization: "Bearer " + token,
-            "content-type": "application/json"
-          }
-        }).then(function (Response) {
-          _this.Resid = Response.data.mess;
-          axios__WEBPACK_IMPORTED_MODULE_6___default()({
-            method: "post",
-            url: "http://127.0.0.1:8000/api/postReceProd",
-            data: JSON.stringify({
-              medicines: _this.nuevaRecetaData.medicines,
-              recipe_id: _this.Resid
-            }),
-            headers: {
-              authorization: "Bearer " + token,
-              "content-type": "application/json"
-            }
-          }).then(function (Response) {
-            _this.activeLoading = false;
-
-            _this.$vs.loading.close();
-
-            _this.$router.push("/recetaFinal");
-
-            _this.$vs.notify({
-              title: "Satisfactorio",
-              text: "Receta creada exitosamente.",
-              color: "success"
-            });
-          }).catch(function (err) {
-            _this.activeLoading = false;
-
-            _this.$vs.loading.close();
-
-            _this.$vs.notify({
-              title: "Error",
-              text: "No se puedo crear la receta.",
-              color: "danger"
-            }); //console.log(err);
-
-          });
-        }).catch(function (err) {
-          _this.activeLoading = false;
-
-          _this.$vs.loading.close();
-
-          _this.$vs.notify({
-            title: "Error",
-            text: "No se puedo crear la receta.",
-            color: "danger"
-          }); //console.log(err);
-
-        });
+        var idu = localStorage.getItem("ui");
+        idu = parseInt(idu);
+        var nuevaRecetaData = {
+          recipe_id: "",
+          name: this.nombres,
+          phone: this.telefono,
+          doctor_id: idu,
+          symptom: "",
+          diagnostics: "",
+          observations: "",
+          nextAppointment: "",
+          status: 1,
+          dateIssue: this.fecha,
+          medicines: [],
+          medicamentos: []
+        };
+        localStorage.setItem("nuevaRecetaData", JSON.stringify(nuevaRecetaData));
+        this.$router.push("/agregarProductos");
       }
     }
   },
   components: {
     FormWizard: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["FormWizard"],
-    TabContent: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["TabContent"],
-    flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default.a
+    TabContent: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["TabContent"]
   },
-  created: function created() {}
+  created: function created() {
+    this.getDate();
+  }
 });
 
 /***/ }),
@@ -300,7 +194,7 @@ var render = function() {
                 color: "rgba(var(--vs-primary), 1)",
                 title: null,
                 subtitle: null,
-                finishButtonText: "Finalizar"
+                finishButtonText: "Siguiente"
               },
               on: { "on-complete": _vm.formSubmitted }
             },
@@ -337,10 +231,10 @@ var render = function() {
                                 name: "show",
                                 rawName: "v-show",
                                 value:
-                                  _vm.symptom === "" ||
-                                  (_vm.symptom === "" && _vm.actiErr == true),
+                                  _vm.nombres === "" ||
+                                  (_vm.nombres === "" && _vm.actiErr == true),
                                 expression:
-                                  "symptom === '' || (symptom === '' && actiErr == true)"
+                                  "nombres === '' || (nombres === '' && actiErr == true)"
                               }
                             ],
                             staticClass: "text-danger text-sm"
@@ -358,27 +252,7 @@ var render = function() {
                             },
                             expression: "diagnostics"
                           }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value:
-                                  _vm.diagnostics === "" ||
-                                  (_vm.diagnostics === "" &&
-                                    _vm.actiErr1 == true),
-                                expression:
-                                  "diagnostics === '' || (diagnostics === '' && actiErr1 == true)"
-                              }
-                            ],
-                            staticClass: "text-danger text-sm"
-                          },
-                          [_vm._v("Este campo es requerido.")]
-                        )
+                        })
                       ],
                       1
                     ),
@@ -389,7 +263,7 @@ var render = function() {
                       [
                         _c("vs-textarea", {
                           staticClass: "w-full",
-                          attrs: { label: "Observaciones" },
+                          attrs: { label: "observaciones" },
                           model: {
                             value: _vm.observations,
                             callback: function($$v) {
@@ -407,11 +281,10 @@ var render = function() {
                                 name: "show",
                                 rawName: "v-show",
                                 value:
-                                  _vm.observations === "" ||
-                                  (_vm.observations === "" &&
-                                    _vm.actiErr2 == true),
+                                  _vm.telefono === "" ||
+                                  (_vm.telefono === "" && _vm.actiErr1 == true),
                                 expression:
-                                  "observations === '' || (observations === '' && actiErr2 == true)"
+                                  "telefono === '' || (telefono === '' && actiErr1 == true)"
                               }
                             ],
                             staticClass: "text-danger text-sm"
@@ -419,54 +292,17 @@ var render = function() {
                           [_vm._v("Este campo es requerido.")]
                         ),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "mt-4" },
-                          [
-                            _c("label", { staticClass: "text-sm" }, [
-                              _vm._v("Próxima Cita")
-                            ]),
-                            _vm._v(" "),
-                            _c("flat-pickr", {
-                              staticClass: "w-full",
-                              attrs: {
-                                config: {
-                                  dateFormat: "d F Y",
-                                  minDate: new Date()
-                                },
-                                name: "nextAppointment"
-                              },
-                              model: {
-                                value: _vm.nextAppointment,
-                                callback: function($$v) {
-                                  _vm.nextAppointment = $$v
-                                },
-                                expression: "nextAppointment"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value:
-                                  _vm.nextAppointment === "" ||
-                                  (_vm.nextAppointment === "" &&
-                                    _vm.actiErr3 == true),
-                                expression:
-                                  "nextAppointment === '' || (nextAppointment === '' && actiErr3 == true)"
-                              }
-                            ],
-                            staticClass: "text-danger text-sm"
-                          },
-                          [_vm._v("Este campo es requerido.")]
-                        )
+                        _c("vs-input", {
+                          staticClass: "w-full",
+                          attrs: { type: "date", label: "Próxima Cita" },
+                          model: {
+                            value: _vm.nextAppointment,
+                            callback: function($$v) {
+                              _vm.nextAppointment = $$v
+                            },
+                            expression: "nextAppointment"
+                          }
+                        })
                       ],
                       1
                     )

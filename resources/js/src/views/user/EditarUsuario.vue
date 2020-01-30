@@ -327,6 +327,7 @@ export default {
       } else {
         this.clinicalRecord = 1;
       }
+      
       if (this.alertas == false) {
         this.showAlerts = 0;
       } else {
@@ -442,6 +443,7 @@ export default {
             this.image = "images/medicamentos/avatar-s-23.jpg";
           }else{
             this.image = "data:image/png;base64," + Response.data.success.image;
+            this.base64textString = Response.data.success.image;
           }
           this.email = Response.data.success.email;
           this.clinicName = Response.data.success.clinicName;

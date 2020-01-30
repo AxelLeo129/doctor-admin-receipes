@@ -97,6 +97,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      nextStep: null,
       resid: null,
       recetasData: [],
       nuevaRecetaData: null,
@@ -132,6 +133,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
+    this.openLoading();
+    this.getUser();
     this.getData();
   },
   methods: {
@@ -160,30 +163,37 @@ __webpack_require__.r(__webpack_exports__);
     getData: function getData() {
       this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
     },
-    generarReceta: function generarReceta() {
+    getUser: function getUser() {
       var _this2 = this;
 
-      this.openLoading();
       var token = localStorage.getItem("tu");
-      this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
-      this.recetasData.push({
-        name: this.nuevaRecetaData.name,
-        phone: this.nuevaRecetaData.phone,
-        doctor_id: this.nuevaRecetaData.doctor_id,
-        symptom: this.nuevaRecetaData.symptom,
-        diagnostics: this.nuevaRecetaData.diagnostics,
-        observations: this.nuevaRecetaData.observations,
-        nextAppointment: this.nuevaRecetaData.nextAppointment,
-        status: this.nuevaRecetaData.status,
-        dateIssue: this.nuevaRecetaData.dateIssue,
-        medicines: this.nuevaRecetaData.medicines,
-        medicamentos: this.nuevaRecetaData.medicamentos
-      });
-      localStorage.setItem("recetasData", JSON.stringify(this.recetasData));
       axios__WEBPACK_IMPORTED_MODULE_2___default()({
-        method: "post",
-        url: "http://127.0.0.1:8000/api/postRecetas",
-        data: JSON.stringify({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/details",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this2.nextStep = Response.data.success.clinicalRecord;
+        _this2.activeLoading = false;
+
+        _this2.$vs.loading.close();
+      }).catch(function (err) {
+        console.log(err);
+        _this2.activeLoading = false;
+
+        _this2.$vs.loading.close();
+      });
+    },
+    generarReceta: function generarReceta() {
+      var _this3 = this;
+
+      if (this.nextStep == 0) {
+        this.openLoading();
+        var token = localStorage.getItem("tu");
+        this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
+        this.recetasData.push({
           name: this.nuevaRecetaData.name,
           phone: this.nuevaRecetaData.phone,
           doctor_id: this.nuevaRecetaData.doctor_id,
@@ -192,61 +202,81 @@ __webpack_require__.r(__webpack_exports__);
           observations: this.nuevaRecetaData.observations,
           nextAppointment: this.nuevaRecetaData.nextAppointment,
           status: this.nuevaRecetaData.status,
-          dateIssue: this.nuevaRecetaData.dateIssue
-        }),
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      }).then(function (Response) {
-        _this2.Resid = Response.data.mess;
+          dateIssue: this.nuevaRecetaData.dateIssue,
+          medicines: this.nuevaRecetaData.medicines,
+          medicamentos: this.nuevaRecetaData.medicamentos
+        });
+        localStorage.setItem("recetasData", JSON.stringify(this.recetasData));
         axios__WEBPACK_IMPORTED_MODULE_2___default()({
           method: "post",
-          url: "http://127.0.0.1:8000/api/postReceProd",
+          url: "http://127.0.0.1:8000/api/postRecetas",
           data: JSON.stringify({
-            medicines: _this2.nuevaRecetaData.medicines,
-            recipe_id: _this2.Resid
+            name: this.nuevaRecetaData.name,
+            phone: this.nuevaRecetaData.phone,
+            doctor_id: this.nuevaRecetaData.doctor_id,
+            symptom: this.nuevaRecetaData.symptom,
+            diagnostics: this.nuevaRecetaData.diagnostics,
+            observations: this.nuevaRecetaData.observations,
+            nextAppointment: this.nuevaRecetaData.nextAppointment,
+            status: this.nuevaRecetaData.status,
+            dateIssue: this.nuevaRecetaData.dateIssue
           }),
           headers: {
             authorization: "Bearer " + token,
             "content-type": "application/json"
           }
         }).then(function (Response) {
-          _this2.activeLoading = false;
+          _this3.Resid = Response.data.mess;
+          axios__WEBPACK_IMPORTED_MODULE_2___default()({
+            method: "post",
+            url: "http://127.0.0.1:8000/api/postReceProd",
+            data: JSON.stringify({
+              medicines: _this3.nuevaRecetaData.medicines,
+              recipe_id: _this3.Resid
+            }),
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          }).then(function (Response) {
+            _this3.activeLoading = false;
 
-          _this2.$vs.loading.close();
+            _this3.$vs.loading.close();
 
-          _this2.$router.push("/recetaFinal");
+            _this3.$router.push("/recetaFinal");
 
-          _this2.$vs.notify({
-            title: "Satisfactorio",
-            text: "Receta creada exitosamente.",
-            color: "success"
+            _this3.$vs.notify({
+              title: "Satisfactorio",
+              text: "Receta creada exitosamente.",
+              color: "success"
+            });
+          }).catch(function (err) {
+            _this3.activeLoading = false;
+
+            _this3.$vs.loading.close();
+
+            _this3.$vs.notify({
+              title: "Error",
+              text: "No se puedo crear la receta.",
+              color: "danger"
+            }); //console.log(err);
+
           });
         }).catch(function (err) {
-          _this2.activeLoading = false;
+          _this3.activeLoading = false;
 
-          _this2.$vs.loading.close();
+          _this3.$vs.loading.close();
 
-          _this2.$vs.notify({
+          _this3.$vs.notify({
             title: "Error",
             text: "No se puedo crear la receta.",
             color: "danger"
           }); //console.log(err);
 
         });
-      }).catch(function (err) {
-        _this2.activeLoading = false;
-
-        _this2.$vs.loading.close();
-
-        _this2.$vs.notify({
-          title: "Error",
-          text: "No se puedo crear la receta.",
-          color: "danger"
-        }); //console.log(err);
-
-      });
+      } else {
+        this.$router.push("/datosPaciente");
+      }
     },
     // TAB 1
     removeItemFromCart: function removeItemFromCart(item) {
@@ -271,15 +301,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     // TAB 2
     submitNewAddressForm: function submitNewAddressForm() {
-      var _this3 = this;
+      var _this4 = this;
 
       return new Promise(function () {
-        _this3.$validator.validateAll("add-new-address").then(function (result) {
+        _this4.$validator.validateAll("add-new-address").then(function (result) {
           if (result) {
             // if form have no errors
-            _this3.$refs.checkoutWizard.nextTab();
+            _this4.$refs.checkoutWizard.nextTab();
           } else {
-            _this3.$vs.notify({
+            _this4.$vs.notify({
               title: "Error",
               text: "Please enter valid details",
               color: "warning",
@@ -292,13 +322,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     // TAB 3
     makePayment: function makePayment() {
-      var _this4 = this;
+      var _this5 = this;
 
       return new Promise(function () {
-        _this4.$validator.validateAll("cvv-form").then(function (result) {
+        _this5.$validator.validateAll("cvv-form").then(function (result) {
           if (result) {
             // if form have no errors
-            _this4.$vs.notify({
+            _this5.$vs.notify({
               title: "Success",
               text: "Payment received successfully",
               color: "success",
@@ -306,7 +336,7 @@ __webpack_require__.r(__webpack_exports__);
               icon: "icon-check"
             });
           } else {
-            _this4.$vs.notify({
+            _this5.$vs.notify({
               title: "Error",
               text: "Please enter valid details",
               color: "warning",
