@@ -97,6 +97,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      resid: null,
       recetasData: [],
       nuevaRecetaData: null,
       // TAB 2
@@ -142,30 +143,109 @@ __webpack_require__.r(__webpack_exports__);
     },
     remover: function remover(index) {
       this.nuevaRecetaData.medicamentos.splice(index, 1);
+      this.nuevaRecetaData.medicines.splice(index, 1);
       localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
+
+      if (this.nuevaRecetaData.medicamentos.length <= 0 || this.nuevaRecetaData.medicines.length <= 0) {
+        this.$vs.notify({
+          title: "Atención",
+          text: "Debe de agregar medicamentos.",
+          color: "warning",
+          time: 4000,
+          position: "top-center"
+        });
+        this.$router.push("/agregarProductos");
+      }
     },
     getData: function getData() {
       this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
     },
     generarReceta: function generarReceta() {
+      var _this2 = this;
+
       this.openLoading();
+      var token = localStorage.getItem("tu");
       this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
-      this.openLoading();
       this.recetasData.push({
-        nombrePaciente: this.nuevaRecetaData.nombrePaciente,
-        apellidoPaciente: this.nuevaRecetaData.apellidoPaciente,
-        genero: this.nuevaRecetaData.genero,
-        telefono: this.nuevaRecetaData.telefono,
+        name: this.nuevaRecetaData.name,
+        phone: this.nuevaRecetaData.phone,
+        doctor_id: this.nuevaRecetaData.doctor_id,
+        symptom: this.nuevaRecetaData.symptom,
+        diagnostics: this.nuevaRecetaData.diagnostics,
+        observations: this.nuevaRecetaData.observations,
+        nextAppointment: this.nuevaRecetaData.nextAppointment,
+        status: this.nuevaRecetaData.status,
+        dateIssue: this.nuevaRecetaData.dateIssue,
+        medicines: this.nuevaRecetaData.medicines,
         medicamentos: this.nuevaRecetaData.medicamentos
       });
       localStorage.setItem("recetasData", JSON.stringify(this.recetasData));
-      this.activeLoading = false;
-      this.$vs.loading.close();
-      location.href = "/recetaFinal";
-      this.$vs.notify({
-        title: "Creado",
-        text: "Receta creada exitosamente.",
-        color: "success"
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: "post",
+        url: "http://127.0.0.1:8000/api/postRecetas",
+        data: JSON.stringify({
+          name: this.nuevaRecetaData.name,
+          phone: this.nuevaRecetaData.phone,
+          doctor_id: this.nuevaRecetaData.doctor_id,
+          symptom: this.nuevaRecetaData.symptom,
+          diagnostics: this.nuevaRecetaData.diagnostics,
+          observations: this.nuevaRecetaData.observations,
+          nextAppointment: this.nuevaRecetaData.nextAppointment,
+          status: this.nuevaRecetaData.status,
+          dateIssue: this.nuevaRecetaData.dateIssue
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this2.Resid = Response.data.mess;
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: "post",
+          url: "http://127.0.0.1:8000/api/postReceProd",
+          data: JSON.stringify({
+            medicines: _this2.nuevaRecetaData.medicines,
+            recipe_id: _this2.Resid
+          }),
+          headers: {
+            authorization: "Bearer " + token,
+            "content-type": "application/json"
+          }
+        }).then(function (Response) {
+          _this2.activeLoading = false;
+
+          _this2.$vs.loading.close();
+
+          _this2.$router.push("/recetaFinal");
+
+          _this2.$vs.notify({
+            title: "Satisfactorio",
+            text: "Receta creada exitosamente.",
+            color: "success"
+          });
+        }).catch(function (err) {
+          _this2.activeLoading = false;
+
+          _this2.$vs.loading.close();
+
+          _this2.$vs.notify({
+            title: "Error",
+            text: "No se puedo crear la receta.",
+            color: "danger"
+          }); //console.log(err);
+
+        });
+      }).catch(function (err) {
+        _this2.activeLoading = false;
+
+        _this2.$vs.loading.close();
+
+        _this2.$vs.notify({
+          title: "Error",
+          text: "No se puedo crear la receta.",
+          color: "danger"
+        }); //console.log(err);
+
       });
     },
     // TAB 1
@@ -191,15 +271,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     // TAB 2
     submitNewAddressForm: function submitNewAddressForm() {
-      var _this2 = this;
+      var _this3 = this;
 
       return new Promise(function () {
-        _this2.$validator.validateAll("add-new-address").then(function (result) {
+        _this3.$validator.validateAll("add-new-address").then(function (result) {
           if (result) {
             // if form have no errors
-            _this2.$refs.checkoutWizard.nextTab();
+            _this3.$refs.checkoutWizard.nextTab();
           } else {
-            _this2.$vs.notify({
+            _this3.$vs.notify({
               title: "Error",
               text: "Please enter valid details",
               color: "warning",
@@ -212,13 +292,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     // TAB 3
     makePayment: function makePayment() {
-      var _this3 = this;
+      var _this4 = this;
 
       return new Promise(function () {
-        _this3.$validator.validateAll("cvv-form").then(function (result) {
+        _this4.$validator.validateAll("cvv-form").then(function (result) {
           if (result) {
             // if form have no errors
-            _this3.$vs.notify({
+            _this4.$vs.notify({
               title: "Success",
               text: "Payment received successfully",
               color: "success",
@@ -226,7 +306,7 @@ __webpack_require__.r(__webpack_exports__);
               icon: "icon-check"
             });
           } else {
-            _this3.$vs.notify({
+            _this4.$vs.notify({
               title: "Error",
               text: "Please enter valid details",
               color: "warning",
@@ -425,7 +505,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("span", [
-                              _vm._v(_vm._s(_vm.nuevaRecetaData.nombrePaciente))
+                              _vm._v(_vm._s(_vm.nuevaRecetaData.name))
                             ])
                           ]
                         ),
@@ -439,7 +519,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("span", { staticClass: "text-success" }, [
-                              _vm._v(_vm._s(_vm.nuevaRecetaData.telefono))
+                              _vm._v(_vm._s(_vm.nuevaRecetaData.phone))
                             ])
                           ]
                         ),

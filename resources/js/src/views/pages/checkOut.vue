@@ -51,11 +51,11 @@
               <vs-divider />
               <div class="flex justify-between mb-2">
                 <span class="text-grey">Nombre</span>
-                <span>{{nuevaRecetaData.nombrePaciente}}</span>
+                <span>{{nuevaRecetaData.name}}</span>
               </div>
               <div class="flex justify-between mb-2">
                 <span class="text-grey">Teléfono</span>
-                <span class="text-success">{{nuevaRecetaData.telefono}}</span>
+                <span class="text-success">{{nuevaRecetaData.phone}}</span>
               </div>
 
               <vs-divider />
@@ -82,6 +82,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      resid: null,
       recetasData: [],
       nuevaRecetaData: null,
       // TAB 2
@@ -121,10 +122,24 @@ export default {
     },
     remover: function(index) {
       this.nuevaRecetaData.medicamentos.splice(index, 1);
+      this.nuevaRecetaData.medicines.splice(index, 1);
       localStorage.setItem(
         "nuevaRecetaData",
         JSON.stringify(this.nuevaRecetaData)
       );
+      if (
+        this.nuevaRecetaData.medicamentos.length <= 0 ||
+        this.nuevaRecetaData.medicines.length <= 0
+      ) {
+        this.$vs.notify({
+          title: "Atención",
+          text: "Debe de agregar medicamentos.",
+          color: "warning",
+          time: 4000,
+          position: "top-center"
+        });
+        this.$router.push("/agregarProductos");
+      }
     },
     getData() {
       this.nuevaRecetaData = JSON.parse(
@@ -133,29 +148,91 @@ export default {
     },
     generarReceta() {
       this.openLoading();
+      let token = localStorage.getItem("tu");
       this.nuevaRecetaData = JSON.parse(
         localStorage.getItem("nuevaRecetaData")
       );
 
-      this.openLoading();
-
       this.recetasData.push({
-        nombrePaciente: this.nuevaRecetaData.nombrePaciente,
-        apellidoPaciente: this.nuevaRecetaData.apellidoPaciente,
-        genero: this.nuevaRecetaData.genero,
-        telefono: this.nuevaRecetaData.telefono,
+        name: this.nuevaRecetaData.name,
+        phone: this.nuevaRecetaData.phone,
+        doctor_id: this.nuevaRecetaData.doctor_id,
+        symptom: this.nuevaRecetaData.symptom,
+        diagnostics: this.nuevaRecetaData.diagnostics,
+        observations: this.nuevaRecetaData.observations,
+        nextAppointment: this.nuevaRecetaData.nextAppointment,
+        status: this.nuevaRecetaData.status,
+        dateIssue: this.nuevaRecetaData.dateIssue,
+        medicines: this.nuevaRecetaData.medicines,
         medicamentos: this.nuevaRecetaData.medicamentos
       });
 
       localStorage.setItem("recetasData", JSON.stringify(this.recetasData));
-      this.activeLoading = false;
-      this.$vs.loading.close();
-      location.href = "/recetaFinal";
-      this.$vs.notify({
-        title: "Creado",
-        text: "Receta creada exitosamente.",
-        color: "success"
-      });
+
+      axios({
+        method: "post",
+        url: "http://127.0.0.1:8000/api/postRecetas",
+        data: JSON.stringify({
+          name: this.nuevaRecetaData.name,
+          phone: this.nuevaRecetaData.phone,
+          doctor_id: this.nuevaRecetaData.doctor_id,
+          symptom: this.nuevaRecetaData.symptom,
+          diagnostics: this.nuevaRecetaData.diagnostics,
+          observations: this.nuevaRecetaData.observations,
+          nextAppointment: this.nuevaRecetaData.nextAppointment,
+          status: this.nuevaRecetaData.status,
+          dateIssue: this.nuevaRecetaData.dateIssue
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          this.Resid = Response.data.mess;
+          axios({
+            method: "post",
+            url: "http://127.0.0.1:8000/api/postReceProd",
+            data: JSON.stringify({
+              medicines: this.nuevaRecetaData.medicines,
+              recipe_id: this.Resid
+            }),
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          })
+            .then(Response => {
+              this.activeLoading = false;
+              this.$vs.loading.close();
+              this.$router.push("/recetaFinal");
+              this.$vs.notify({
+                title: "Satisfactorio",
+                text: "Receta creada exitosamente.",
+                color: "success"
+              });
+            })
+            .catch(err => {
+              this.activeLoading = false;
+              this.$vs.loading.close();
+              this.$vs.notify({
+                title: "Error",
+                text: "No se puedo crear la receta.",
+                color: "danger"
+              });
+              //console.log(err);
+            });
+        })
+        .catch(err => {
+          this.activeLoading = false;
+          this.$vs.loading.close();
+          this.$vs.notify({
+            title: "Error",
+            text: "No se puedo crear la receta.",
+            color: "danger"
+          });
+          //console.log(err);
+        });
     },
     // TAB 1
     removeItemFromCart(item) {

@@ -343,6 +343,7 @@ __webpack_require__.r(__webpack_exports__);
       activar: false,
       precentacion: "",
       nuevaRecetaData: null,
+      idMedicanto: "",
       uso: "",
       nombre: "",
       descripcion: "",
@@ -420,6 +421,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     agregarmF: function agregarmF() {
+      this.activar = false;
       this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
       this.nuevaRecetaData.medicamentos.push({
         nombre: this.nombre,
@@ -427,9 +429,9 @@ __webpack_require__.r(__webpack_exports__);
         descripcion: this.uso,
         img: this.image
       });
+      this.nuevaRecetaData.medicines.push(this.idMedicanto);
       localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
       this.uso = "";
-      this.activar = false;
       this.$router.push("/editarReceta");
     },
     agregarM: function agregarM() {
@@ -440,6 +442,7 @@ __webpack_require__.r(__webpack_exports__);
         descripcion: this.uso,
         img: this.image
       });
+      this.nuevaRecetaData.medicines.push(this.idMedicanto);
       localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
       this.uso = "";
       this.activar = false;
@@ -450,7 +453,8 @@ __webpack_require__.r(__webpack_exports__);
         type: "default"
       });
     },
-    setData: function setData(nombre, descripcion, precentacion, img) {
+    setData: function setData(id, nombre, descripcion, precentacion, img) {
+      this.idMedicanto = id;
       this.nombre = nombre;
       this.descripcion = descripcion;
       this.precentacion = precentacion;
@@ -512,7 +516,19 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     formSubmitted: function formSubmitted() {
-      this.$router.push("/editarReceta");
+      this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData")); //console.log(this.nuevaRecetaData.medicines);
+
+      if (this.nuevaRecetaData.medicines.length > 0) {
+        this.$router.push("/editarReceta");
+      } else {
+        this.$vs.notify({
+          title: "Atención",
+          text: "Debe de agregar medicamentos.",
+          color: "warning",
+          time: 4000,
+          position: "top-center"
+        });
+      }
     },
     // GRID VIEW - ACTIONS
     toggleFilterSidebar: function toggleFilterSidebar() {
@@ -1355,6 +1371,7 @@ var render = function() {
                                                                     ) {
                                                                       ;(_vm.activar = true),
                                                                         _vm.setData(
+                                                                          item.id,
                                                                           item.name,
                                                                           item.description,
                                                                           item.precentation,

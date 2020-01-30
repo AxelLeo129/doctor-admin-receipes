@@ -85,7 +85,8 @@ export default {
           nextAppointment: "",
           status: 1,
           dateIssue: this.fecha,
-          medicines: []
+          medicines: [],
+          medicamentos: []
         };
         localStorage.setItem(
           "nuevaRecetaData",

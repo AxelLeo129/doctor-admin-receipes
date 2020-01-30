@@ -8,6 +8,6 @@ class Recipie extends Model
 {
     protected $fillable = [
         'name', 'phone', 'doctor_id', 'symptom', 
-        'diagnostics', 'observations', 'nextAppointment', 'status'
+        'diagnostics', 'observations', 'nextAppointment', 'status', 'dateIssue'
     ];
 }

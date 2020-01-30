@@ -97,7 +97,8 @@ __webpack_require__.r(__webpack_exports__);
           nextAppointment: "",
           status: 1,
           dateIssue: this.fecha,
-          medicines: []
+          medicines: [],
+          medicamentos: []
         };
         localStorage.setItem("nuevaRecetaData", JSON.stringify(nuevaRecetaData));
         this.$router.push("/agregarProductos");

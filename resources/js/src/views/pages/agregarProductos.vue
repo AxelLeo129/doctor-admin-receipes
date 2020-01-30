@@ -242,7 +242,7 @@
                             <vs-button
                               class="mt-4 mr-2 shadow-lg"
                               type="gradient"
-                              @click="activar=true, setData(item.name, item.description, item.precentation, item.image)"
+                              @click="activar=true, setData(item.id, item.name, item.description, item.precentation, item.image)"
                               gradient-color-secondary="#CE9FFC"
                             >Agregar Medicamento</vs-button>
                           </div>
@@ -335,6 +335,7 @@ export default {
       activar: false,
       precentacion: "",
       nuevaRecetaData: null,
+      idMedicanto: "",
       uso: "",
       nombre: "",
       descripcion: "",
@@ -418,6 +419,7 @@ export default {
   },
   methods: {
     agregarmF() {
+      this.activar = false;
       this.nuevaRecetaData = JSON.parse(
         localStorage.getItem("nuevaRecetaData")
       );
@@ -428,12 +430,13 @@ export default {
         img: this.image
       });
 
+      this.nuevaRecetaData.medicines.push(this.idMedicanto);
+
       localStorage.setItem(
         "nuevaRecetaData",
         JSON.stringify(this.nuevaRecetaData)
       );
       this.uso = "";
-      this.activar = false;
       this.$router.push("/editarReceta");
     },
     agregarM() {
@@ -446,6 +449,8 @@ export default {
         descripcion: this.uso,
         img: this.image
       });
+
+      this.nuevaRecetaData.medicines.push(this.idMedicanto);
 
       localStorage.setItem(
         "nuevaRecetaData",
@@ -460,7 +465,8 @@ export default {
         type: "default"
       });
     },
-    setData(nombre, descripcion, precentacion, img) {
+    setData(id, nombre, descripcion, precentacion, img) {
+      this.idMedicanto = id;
       this.nombre = nombre;
       this.descripcion = descripcion;
       this.precentacion = precentacion;
@@ -518,7 +524,21 @@ export default {
       }
     },
     formSubmitted() {
-      this.$router.push("/editarReceta");
+      this.nuevaRecetaData = JSON.parse(
+        localStorage.getItem("nuevaRecetaData")
+      );
+      //console.log(this.nuevaRecetaData.medicines);
+      if (this.nuevaRecetaData.medicines.length > 0) {
+        this.$router.push("/editarReceta");
+      } else {
+        this.$vs.notify({
+          title: "Atención",
+          text: "Debe de agregar medicamentos.",
+          color: "warning",
+          time: 4000,
+          position: "top-center"
+        });
+      }
     },
 
     // GRID VIEW - ACTIONS
@@ -550,7 +570,7 @@ export default {
 <style lang="scss">
 .size {
   height: 206px;
-  width: 266px; 
+  width: 266px;
 }
 #algolia-instant-search-demo {
   .algolia-header {
