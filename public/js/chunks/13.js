@@ -168,7 +168,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       iden: 0,
       popupActive3: false,
-      medicamentos: {},
+      medicamentos: [],
       checkpointReward: {},
       subscribersGained: {},
       ordersRecevied: {},
@@ -219,6 +219,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var token = localStorage.getItem("tu");
+      var id = localStorage.getItem("ui");
       axios__WEBPACK_IMPORTED_MODULE_5___default()({
         method: "get",
         url: "http://127.0.0.1:8000/api/getProducts",
@@ -227,7 +228,11 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this.medicamentos = Response.data;
+        Response.data.forEach(function (element) {
+          if (element.user_id == id) {
+            _this.medicamentos.push(element);
+          }
+        });
       }).catch(function (err) {
         console.log(err);
       });

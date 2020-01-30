@@ -124,7 +124,7 @@
                   </vs-td>
                   <vs-popup title="Eliminar Producto" :active.sync="popupActive3">
                     <p>¿Está seguro de eliminar este producto?</p>
-                    <br>
+                    <br />
                     <vs-button @click="deleteProduct(iden)" color="primary" type="filled">Aceptar</vs-button>
                     <vs-button @click="popupActive3=false" color="danger" type="filled">Cancelar</vs-button>
                   </vs-popup>
@@ -151,7 +151,7 @@ export default {
     return {
       iden: 0,
       popupActive3: false,
-      medicamentos: {},
+      medicamentos: [],
       checkpointReward: {},
       subscribersGained: {},
       ordersRecevied: {},
@@ -209,6 +209,7 @@ export default {
     },
     getData() {
       let token = localStorage.getItem("tu");
+      let id = localStorage.getItem("ui");
       axios({
         method: "get",
         url: "http://127.0.0.1:8000/api/getProducts",
@@ -218,7 +219,11 @@ export default {
         }
       })
         .then(Response => {
-          this.medicamentos = Response.data;
+          Response.data.forEach(element => {
+            if (element.user_id == id) {
+              this.medicamentos.push(element);
+            }
+          });
         })
         .catch(err => {
           console.log(err);

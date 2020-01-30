@@ -113,7 +113,7 @@ export default {
   data() {
     return {
       popupActive3: false,
-      medicamentos: {},
+      medicamentos: [],
       buscar: ""
     };
   },
@@ -123,6 +123,7 @@ export default {
     },
     getData() {
       let token = localStorage.getItem("tu");
+      let id = localStorage.getItem("ui");
       axios({
         method: "get",
         url: "http://127.0.0.1:8000/api/getProducts",
@@ -132,7 +133,11 @@ export default {
         }
       })
         .then(Response => {
-          this.medicamentos = Response.data;
+          Response.data.forEach(element => {
+            if(element.user_id == id){
+              this.medicamentos.push(element);
+            }
+          });
         })
         .catch(err => {
           console.log(err);
