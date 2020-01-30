@@ -2091,8 +2091,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   },
   methods: {
     onItem: function onItem() {
-      this.token = localStorage.getItem("ru");
-      console.log(this.token);
+      this.token = localStorage.getItem("ru"); //console.log(this.token);
     },
     // handleWindowResize(event) {
     //   this.windowWidth = event.currentTarget.innerWidth;

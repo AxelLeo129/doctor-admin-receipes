@@ -303,6 +303,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -342,24 +346,14 @@ __webpack_require__.r(__webpack_exports__);
       uso: "",
       nombre: "",
       descripcion: "",
-      medicamentosList: {},
+      medicamentosList: [],
       popupActive: false,
       searchClient: algoliasearch_lite__WEBPACK_IMPORTED_MODULE_3___default()("latency", "6be0576ff61c053d5f9a3225e2a90f76"),
       // Filter Sidebar
       isFilterSidebarActive: true,
       clickNotClose: true,
       currentItemView: "item-grid-view",
-      categorias: [{
-        label: "Ginecología"
-      }, {
-        label: "Gastroenterología"
-      }, {
-        label: "Pediatría"
-      }, {
-        label: "Psicología"
-      }, {
-        label: "Reumatología"
-      }],
+      categorias: [],
       marcas: [{
         label: "Bayern",
         count: 1
@@ -375,23 +369,6 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         label: "Cromatonbic Ferro",
         count: 0
-      }],
-      numericItems: [{
-        label: "All"
-      }, {
-        label: "<= $10",
-        end: 10
-      }, {
-        label: "$10 - $100",
-        start: 10,
-        end: 100
-      }, {
-        label: "$100 - $500",
-        start: 100,
-        end: 500
-      }, {
-        label: ">= $500",
-        start: 500
       }],
       algoliaCategories: ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2", "hierarchicalCategories.lvl3"]
     };
@@ -479,8 +456,25 @@ __webpack_require__.r(__webpack_exports__);
       this.precentacion = precentacion;
       this.image = img;
     },
-    getData: function getData() {
+    getCategorias: function getCategorias() {
       var _this3 = this;
+
+      var token = localStorage.getItem("tu");
+      axios__WEBPACK_IMPORTED_MODULE_4___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCategories",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this3.categorias = Response.data;
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    getData: function getData() {
+      var _this4 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -492,15 +486,21 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this3.medicamentosList = Response.data;
+        Response.data.forEach(function (element) {
+          element.quantity = parseInt(element.quantity);
 
-        _this3.$vs.loading.close();
+          if (element.quantity > 0) {
+            _this4.medicamentosList.push(element);
+          }
+        });
 
-        _this3.activado = true;
+        _this4.$vs.loading.close();
+
+        _this4.activado = true;
       }).catch(function (err) {
-        _this3.$vs.loading.close();
+        _this4.$vs.loading.close();
 
-        _this3.activado = true;
+        _this4.activado = true;
         console.log(err);
       });
     },
@@ -531,6 +531,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.setSidebarWidth();
+    this.getCategorias();
     this.getData();
   }
 });
@@ -549,7 +550,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "#algolia-instant-search-demo .algolia-header .algolia-filters-label {\n  width: calc(260px + 2.4rem);\n}\n#algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  position: relative;\n}\n[dir=ltr] #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  float: left;\n}\n[dir=rtl] #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  float: right;\n}\n[dir] #algolia-instant-search-demo .algolia-search-input-right-aligned-icon {\n  padding: 1rem 1.5rem;\n}\n#algolia-instant-search-demo .algolia-price-slider {\n  min-width: unset;\n}\n#algolia-instant-search-demo .item-view-primary-action-btn {\n  color: #2c2c2c !important;\n  min-width: 50%;\n}\n[dir] #algolia-instant-search-demo .item-view-primary-action-btn {\n  background-color: #f6f6f6;\n}\n#algolia-instant-search-demo .item-view-secondary-action-btn {\n  min-width: 50%;\n}\n[dir] .theme-dark #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  background-color: #10163a;\n}\n@media (min-width: 992px) {\n[dir] .vs-sidebar-rounded .vs-sidebar {\n    border-radius: 0.5rem;\n}\n[dir] .vs-sidebar-rounded .vs-sidebar--items {\n    border-radius: 0.5rem;\n}\n}\n@media (max-width: 992px) {\n#algolia-content-container .vs-sidebar {\n    position: absolute !important;\n}\n[dir] #algolia-content-container .vs-sidebar {\n    float: none !important;\n}\n}", ""]);
+exports.push([module.i, ".size {\n  height: 206px;\n  width: 266px;\n}\n#algolia-instant-search-demo .algolia-header .algolia-filters-label {\n  width: calc(260px + 2.4rem);\n}\n#algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  position: relative;\n}\n[dir=ltr] #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  float: left;\n}\n[dir=rtl] #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  float: right;\n}\n[dir] #algolia-instant-search-demo .algolia-search-input-right-aligned-icon {\n  padding: 1rem 1.5rem;\n}\n#algolia-instant-search-demo .algolia-price-slider {\n  min-width: unset;\n}\n#algolia-instant-search-demo .item-view-primary-action-btn {\n  color: #2c2c2c !important;\n  min-width: 50%;\n}\n[dir] #algolia-instant-search-demo .item-view-primary-action-btn {\n  background-color: #f6f6f6;\n}\n#algolia-instant-search-demo .item-view-secondary-action-btn {\n  min-width: 50%;\n}\n[dir] .theme-dark #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  background-color: #10163a;\n}\n@media (min-width: 992px) {\n[dir] .vs-sidebar-rounded .vs-sidebar {\n    border-radius: 0.5rem;\n}\n[dir] .vs-sidebar-rounded .vs-sidebar--items {\n    border-radius: 0.5rem;\n}\n}\n@media (max-width: 992px) {\n#algolia-content-container .vs-sidebar {\n    position: absolute !important;\n}\n[dir] #algolia-content-container .vs-sidebar {\n    float: none !important;\n}\n}", ""]);
 
 // exports
 
@@ -818,7 +819,7 @@ var render = function() {
                                                         item.isRefined
                                                     }
                                                   },
-                                                  [_vm._v(_vm._s(item.label))]
+                                                  [_vm._v(_vm._s(item.name))]
                                                 )
                                               ],
                                               1
@@ -1133,7 +1134,7 @@ var render = function() {
                                                             [
                                                               _c("img", {
                                                                 staticClass:
-                                                                  "responsive card-img-top",
+                                                                  "responsive card-img-top size",
                                                                 attrs: {
                                                                   src:
                                                                     "data:image/png;base64," +

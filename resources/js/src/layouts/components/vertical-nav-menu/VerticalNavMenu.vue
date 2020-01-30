@@ -281,7 +281,7 @@ export default {
   methods: {
     onItem() {
       this.token = localStorage.getItem("ru");
-      console.log(this.token);
+      //console.log(this.token);
     },
     // handleWindowResize(event) {
     //   this.windowWidth = event.currentTarget.innerWidth;

@@ -484,14 +484,16 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm._l(_vm.medicamentos, function(item) {
+                    _vm._l(_vm.medicamentos, function(item, index) {
                       return _c(
                         "vs-tr",
                         { key: item.id },
                         [
                           _c("vs-td", [
                             _c("span", {
-                              domProps: { textContent: _vm._s("# " + item.id) }
+                              domProps: {
+                                textContent: _vm._s("# " + (index + 1))
+                              }
                             })
                           ]),
                           _vm._v(" "),

@@ -85,7 +85,7 @@
                           icon="CircleIcon"
                           :svgClasses="[{ 'text-primary fill-current': item.isRefined}, 'h-5 w-5']"
                         />
-                        <span class="ml-2" :class="{'text-primary': item.isRefined}">{{item.label}}</span>
+                        <span class="ml-2" :class="{'text-primary': item.isRefined}">{{item.name}}</span>
                       </li>
                     </ul>
                   </div>
@@ -201,7 +201,7 @@
                             <img
                               :src="'data:image/png;base64,' + item.image"
                               alt="content-img"
-                              class="responsive card-img-top"
+                              class="responsive card-img-top size"
                             />
                           </div>
                           <h5 class="mb-2">{{ item.precentation }}</h5>
@@ -232,7 +232,11 @@
                               type="filled"
                               @click="agregarM"
                             >Agregar & Continuar</vs-button>
-                            <vs-button color="rgb(62, 201, 214)" @click="agregarmF" type="filled">Agregar & Finalizar</vs-button>
+                            <vs-button
+                              color="rgb(62, 201, 214)"
+                              @click="agregarmF"
+                              type="filled"
+                            >Agregar & Finalizar</vs-button>
                           </vs-popup>
                           <div class="flex justify-between flex-wrap">
                             <vs-button
@@ -334,7 +338,7 @@ export default {
       uso: "",
       nombre: "",
       descripcion: "",
-      medicamentosList: {},
+      medicamentosList: [],
       popupActive: false,
       searchClient: algoliasearch(
         "latency",
@@ -344,23 +348,7 @@ export default {
       isFilterSidebarActive: true,
       clickNotClose: true,
       currentItemView: "item-grid-view",
-      categorias: [
-        {
-          label: "Ginecología"
-        },
-        {
-          label: "Gastroenterología"
-        },
-        {
-          label: "Pediatría"
-        },
-        {
-          label: "Psicología"
-        },
-        {
-          label: "Reumatología"
-        }
-      ],
+      categorias: [],
       marcas: [
         {
           label: "Bayern",
@@ -381,29 +369,6 @@ export default {
         {
           label: "Cromatonbic Ferro",
           count: 0
-        }
-      ],
-      numericItems: [
-        {
-          label: "All"
-        },
-        {
-          label: "<= $10",
-          end: 10
-        },
-        {
-          label: "$10 - $100",
-          start: 10,
-          end: 100
-        },
-        {
-          label: "$100 - $500",
-          start: 100,
-          end: 500
-        },
-        {
-          label: ">= $500",
-          start: 500
         }
       ],
       algoliaCategories: [
@@ -501,6 +466,23 @@ export default {
       this.precentacion = precentacion;
       this.image = img;
     },
+    getCategorias() {
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCategories",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          this.categorias = Response.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     getData() {
       this.openLoading();
       let token = localStorage.getItem("tu");
@@ -513,7 +495,12 @@ export default {
         }
       })
         .then(Response => {
-          this.medicamentosList = Response.data;
+          Response.data.forEach(element => {
+            element.quantity = parseInt(element.quantity);
+            if (element.quantity > 0) {
+              this.medicamentosList.push(element);
+            }
+          });
           this.$vs.loading.close();
           this.activado = true;
         })
@@ -553,6 +540,7 @@ export default {
   },
   created() {
     this.setSidebarWidth();
+    this.getCategorias();
     this.getData();
   }
 };
@@ -560,6 +548,10 @@ export default {
 
 
 <style lang="scss">
+.size {
+  height: 206px;
+  width: 266px; 
+}
 #algolia-instant-search-demo {
   .algolia-header {
     .algolia-filters-label {
