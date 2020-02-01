@@ -294,7 +294,7 @@ export default {
 
 .subir {
   padding: 5px 10px;
-  background: #7044ff;
+  background: #003DA5;
   color: #fff;
   border: 0px solid #fff;
   border-radius: 15px 15px 15px 15px;
@@ -302,7 +302,7 @@ export default {
 
 .subir:hover {
   color: #fff;
-  background: #7e57ff;
+  background: #003DA5;
 }
 
 .vs-textarea {
