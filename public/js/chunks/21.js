@@ -355,7 +355,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       clinicPhone: null,
       clinicAddress: null,
       specialties: null
-    }, _defineProperty(_ref, "email", null), _defineProperty(_ref, "clinicalRecord", null), _defineProperty(_ref, "showAlerts", null), _defineProperty(_ref, "base64textString", null), _defineProperty(_ref, "activado", false), _defineProperty(_ref, "activado1", false), _ref;
+    }, _defineProperty(_ref, "email", null), _defineProperty(_ref, "clinicalRecord", null), _defineProperty(_ref, "showAlerts", null), _defineProperty(_ref, "base64textString", null), _defineProperty(_ref, "base64textString1", null), _defineProperty(_ref, "activado", false), _defineProperty(_ref, "activado1", false), _defineProperty(_ref, "clinicLogo", null), _ref;
   },
   methods: {
     getRol: function getRol() {
@@ -378,6 +378,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.base64textString = btoa(binaryString1);
       this.image = "data:image/png;base64," + this.base64textString;
     },
+    handleFileSelect1: function handleFileSelect1(evt) {
+      var files = evt.target.files;
+      var file = files[0];
+      var nombre = files[0].name;
+      document.getElementById("info2").innerHTML = nombre;
+
+      if (files && file) {
+        var reader = new FileReader();
+        reader.onload = this._handleReaderLoaded2.bind(this);
+        reader.readAsBinaryString(file);
+      }
+    },
+    _handleReaderLoaded2: function _handleReaderLoaded2(readerEvt) {
+      var binaryString1 = readerEvt.target.result;
+      this.base64textString1 = btoa(binaryString1);
+      this.clinicLogo = "data:image/png;base64," + this.base64textString1;
+    },
     update1: function update1() {
       var _this = this;
 
@@ -396,8 +413,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.showAlerts = 1;
       }
 
-      if (this.image == "images/medicamentos/avatar-s-23.jpg") {
-        this.image = "";
+      if (this.image == "/images/medicamentos/avatar.jpeg") {
+        this.image = null;
       }
 
       axios__WEBPACK_IMPORTED_MODULE_5___default()({
@@ -451,7 +468,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         data: JSON.stringify({
           id: this.id,
           clinicName: this.clinicName,
-          clinicLogo: "",
+          clinicLogo: this.base64textString1,
           clinicPhone: this.clinicPhone,
           clinicAddress: this.clinicAddress,
           specialties: this.specialties
@@ -515,14 +532,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this3.alertas = true;
         }
 
-        if (Response.data.success.image == "") {
-          _this3.image = "images/medicamentos/avatar-s-23.jpg";
+        if (Response.data.success.image == null) {
+          _this3.image = "/images/medicamentos/avatar.jpeg";
         } else {
           _this3.image = "data:image/png;base64," + Response.data.success.image;
           _this3.base64textString = Response.data.success.image;
         }
 
         _this3.email = Response.data.success.email;
+
+        if (Response.data.success.clinicLogo == null) {
+          _this3.clinicLogo = "/images/medicamentos/demol.PNG";
+        } else {
+          _this3.clinicLogo = "data:image/png;base64," + Response.data.success.clinicLogo;
+          _this3.base64textString1 = Response.data.success.clinicLogo;
+        }
+
         _this3.clinicName = Response.data.success.clinicName;
         _this3.clinicPhone = Response.data.success.clinicPhone;
         _this3.clinicAddress = Response.data.success.clinicAddress;
@@ -1107,13 +1132,13 @@ var render = function() {
                                               "div",
                                               {
                                                 staticClass:
-                                                  "flex items-start flex-col sm:flex-row"
+                                                  "flex items-start flex-col sm:flex-row mt-4"
                                               },
                                               [
                                                 _c("img", {
                                                   staticClass:
                                                     "mr-8 rounded h-24 w-24",
-                                                  attrs: { src: _vm.image }
+                                                  attrs: { src: _vm.clinicLogo }
                                                 }),
                                                 _vm._v(" "),
                                                 _c("div", [
@@ -1141,12 +1166,12 @@ var render = function() {
                                                       accept: "image/*",
                                                       type: "file",
                                                       color: "warning",
-                                                      id: "image",
-                                                      name: "image"
+                                                      id: "logo",
+                                                      name: "logo"
                                                     },
                                                     on: {
                                                       change: function($event) {
-                                                        return _vm.handleFileSelect(
+                                                        return _vm.handleFileSelect1(
                                                           $event
                                                         )
                                                       }
@@ -1157,7 +1182,7 @@ var render = function() {
                                                     "label",
                                                     {
                                                       staticClass: "subir",
-                                                      attrs: { for: "image" }
+                                                      attrs: { for: "logo" }
                                                     },
                                                     [
                                                       _c("vs-icon", {
@@ -1168,7 +1193,7 @@ var render = function() {
                                                   ),
                                                   _vm._v(" "),
                                                   _c("div", {
-                                                    attrs: { id: "info1" }
+                                                    attrs: { id: "info2" }
                                                   }),
                                                   _vm._v(" "),
                                                   _c("span")

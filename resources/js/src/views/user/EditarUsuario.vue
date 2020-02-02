@@ -189,8 +189,8 @@
                       <!-- DOB -->
                       <div class="vx-row">
                         <div class="vx-col w-full">
-                          <div class="flex items-start flex-col sm:flex-row">
-                            <img v-bind:src="image" class="mr-8 rounded h-24 w-24" />
+                          <div class="flex items-start flex-col sm:flex-row mt-4">
+                            <img v-bind:src="clinicLogo" class="mr-8 rounded h-24 w-24" />
                             <!-- <vs-avatar :src="data.avatar" size="80px" class="mr-4" /> -->
                             <div>
                               <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">Logo Clínica</p>
@@ -205,15 +205,15 @@
                                 accept="image/*"
                                 type="file"
                                 color="warning"
-                                id="image"
-                                name="image"
-                                @change="handleFileSelect($event)"
+                                id="logo"
+                                name="logo"
+                                @change="handleFileSelect1($event)"
                                 class="fileInput"
                               />
-                              <label for="image" class="subir">
+                              <label for="logo" class="subir">
                                 <vs-icon icon="edit"></vs-icon>
                               </label>
-                              <div id="info1"></div>
+                              <div id="info2"></div>
                               <span></span>
                             </div>
                             <vs-alert
@@ -334,8 +334,10 @@ export default {
       clinicalRecord: null,
       showAlerts: null,
       base64textString: null,
+      base64textString1: null,
       activado: false,
-      activado1: false
+      activado1: false,
+      clinicLogo: null
     };
   },
   methods: {
@@ -361,6 +363,25 @@ export default {
       this.base64textString = btoa(binaryString1);
       this.image = "data:image/png;base64," + this.base64textString;
     },
+    handleFileSelect1(evt) {
+      let files = evt.target.files;
+      let file = files[0];
+      let nombre = files[0].name;
+      document.getElementById("info2").innerHTML = nombre;
+
+      if (files && file) {
+        let reader = new FileReader();
+
+        reader.onload = this._handleReaderLoaded2.bind(this);
+
+        reader.readAsBinaryString(file);
+      }
+    },
+    _handleReaderLoaded2(readerEvt) {
+      let binaryString1 = readerEvt.target.result;
+      this.base64textString1 = btoa(binaryString1);
+      this.clinicLogo = "data:image/png;base64," + this.base64textString1;
+    },
     update1() {
       this.openLoading();
       let token = localStorage.getItem("tu");
@@ -375,8 +396,8 @@ export default {
       } else {
         this.showAlerts = 1;
       }
-      if (this.image == "images/medicamentos/avatar-s-23.jpg") {
-        this.image = "";
+      if (this.image == "/images/medicamentos/avatar.jpeg") {
+        this.image = null;
       }
       axios({
         method: "put",
@@ -424,7 +445,7 @@ export default {
         data: JSON.stringify({
           id: this.id,
           clinicName: this.clinicName,
-          clinicLogo: "",
+          clinicLogo: this.base64textString1,
           clinicPhone: this.clinicPhone,
           clinicAddress: this.clinicAddress,
           specialties: this.specialties
@@ -481,13 +502,20 @@ export default {
           } else {
             this.alertas = true;
           }
-          if (Response.data.success.image == "") {
-            this.image = "images/medicamentos/avatar-s-23.jpg";
+          if (Response.data.success.image == null) {
+            this.image = "/images/medicamentos/avatar.jpeg";
           } else {
             this.image = "data:image/png;base64," + Response.data.success.image;
             this.base64textString = Response.data.success.image;
           }
           this.email = Response.data.success.email;
+          if (Response.data.success.clinicLogo == null) {
+            this.clinicLogo = "/images/medicamentos/demol.PNG";
+          } else {
+            this.clinicLogo = "data:image/png;base64," + Response.data.success.clinicLogo;
+            this.base64textString1 = Response.data.success.clinicLogo;
+          }
+
           this.clinicName = Response.data.success.clinicName;
           this.clinicPhone = Response.data.success.clinicPhone;
           this.clinicAddress = Response.data.success.clinicAddress;

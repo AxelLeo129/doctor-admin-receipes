@@ -1603,8 +1603,10 @@ __webpack_require__.r(__webpack_exports__);
           _this.rol = "Médico";
         }
 
-        if (Response.data.success.image == "") {
-          _this.image = _this.activeUserInfo.photoURL;
+        console.log(Response.data.success);
+
+        if (Response.data.success.image == null) {
+          _this.image = "/images/medicamentos/avatar.jpeg";
         } else {
           _this.image = "data:image/png;base64," + Response.data.success.image;
         }

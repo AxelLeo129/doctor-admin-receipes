@@ -88,6 +88,7 @@ class UserController extends Controller
             $user = User::find($request->id);
             $user->clinicName = $request->clinicName;
             $user->clinicPhone = $request->clinicPhone;
+            $user->clinicLogo = $request->clinicLogo;
             $user->clinicAddress = $request->clinicAddress;
             $user->specialties = $request->specialties;
 

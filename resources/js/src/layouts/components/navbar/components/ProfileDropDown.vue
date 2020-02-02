@@ -118,8 +118,9 @@ export default {
           } else {
             this.rol = "Médico";
           }
-          if (Response.data.success.image == "") {
-            this.image = this.activeUserInfo.photoURL;
+          console.log(Response.data.success);
+          if (Response.data.success.image == null) {
+            this.image = "/images/medicamentos/avatar.jpeg";
           } else {
             this.image = "data:image/png;base64," + Response.data.success.image;
             
