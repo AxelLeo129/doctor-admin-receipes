@@ -9,6 +9,18 @@
 
 <template>
   <div id="page-user-edit">
+    <vs-popup title="Actualizar Datos de Usuario" :active.sync="popupActive2">
+      <p>¿Está seguro de actualizar esta información?</p>
+      <br />
+      <vs-button @click="update1" color="primary" type="filled">Actualizar</vs-button>
+      <vs-button @click="popupActive3=false" color="danger" type="filled">Cancelar</vs-button>
+    </vs-popup>
+    <vs-popup title="Actualizar Datos Médicos" :active.sync="popupActive3">
+      <p>¿Está seguro de actualizar esta información?</p>
+      <br />
+      <vs-button @click="update2" color="primary" type="filled">Actualizar</vs-button>
+      <vs-button @click="popupActive3=false" color="danger" type="filled">Cancelar</vs-button>
+    </vs-popup>
     <vx-card>
       <div slot="no-body" class="tabs-container px-6 pt-6">
         <vs-tabs class="tab-action-btn-fill-conatiner">
@@ -146,7 +158,7 @@
                       <vs-button
                         class="ml-auto mt-2"
                         color="warning"
-                        @click="update1"
+                        @click="popupActive2=true"
                         :disabled="name == '' || userName == '' || email === ''"
                       >Guardar Cambios</vs-button>
                       <vs-button
@@ -274,7 +286,7 @@
                       <vs-button
                         class="ml-auto mt-2"
                         color="warning"
-                        @click="update2"
+                        @click="popupActive3=true"
                       >Guardar Cambios</vs-button>
                       <vs-button
                         class="ml-4 mt-2"
@@ -337,7 +349,9 @@ export default {
       base64textString1: null,
       activado: false,
       activado1: false,
-      clinicLogo: null
+      clinicLogo: null,
+      popupActive2: false,
+      popupActive3: false
     };
   },
   methods: {
@@ -383,6 +397,7 @@ export default {
       this.clinicLogo = "data:image/png;base64," + this.base64textString1;
     },
     update1() {
+      this.popupActive2 = false;
       this.openLoading();
       let token = localStorage.getItem("tu");
       if (this.registro == false) {
@@ -437,6 +452,7 @@ export default {
         });
     },
     update2() {
+      this.popupActive3 = false;
       this.openLoading();
       let token = localStorage.getItem("tu");
       axios({
@@ -479,6 +495,7 @@ export default {
       });
     },
     getData() {
+      this.openLoading();
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
@@ -502,17 +519,18 @@ export default {
           } else {
             this.alertas = true;
           }
-          if (Response.data.success.image == null) {
+          if (Response.data.success.image == null || Response.data.success.image == "") {
             this.image = "/images/medicamentos/avatar.jpeg";
           } else {
             this.image = "data:image/png;base64," + Response.data.success.image;
             this.base64textString = Response.data.success.image;
           }
           this.email = Response.data.success.email;
-          if (Response.data.success.clinicLogo == null) {
+          if (Response.data.success.clinicLogo == null || Response.data.success.clinicLogo == "") {
             this.clinicLogo = "/images/medicamentos/demol.PNG";
           } else {
-            this.clinicLogo = "data:image/png;base64," + Response.data.success.clinicLogo;
+            this.clinicLogo =
+              "data:image/png;base64," + Response.data.success.clinicLogo;
             this.base64textString1 = Response.data.success.clinicLogo;
           }
 
@@ -537,7 +555,6 @@ export default {
   },
   created() {
     this.getRol();
-    this.openLoading();
     this.getData();
   }
 };

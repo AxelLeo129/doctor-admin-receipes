@@ -1,5 +1,11 @@
 <template>
   <div>
+    <vs-popup title="Actualizar Categoría" :active.sync="popupActive2">
+      <p>¿Está seguro de actualizar esta información?</p>
+      <br />
+      <vs-button @click="onUpdate" color="primary" type="filled">Actualizar</vs-button>
+      <vs-button @click="popupActive2=false" color="danger" type="filled">Cancelar</vs-button>
+    </vs-popup>
     <div class="vx-row">
       <vs-alert
         color="danger"
@@ -14,7 +20,7 @@
     <div class="vx-row">
       <div class="vx-col md:w-1/2 w-full">
         <vx-card>
-          <form v-on:submit.prevent="onUpdate()">
+          <form v-on:submit.prevent="popupActive2 = true">
             <div class="vx-row mb-6">
               <div class="vx-col sm:w-1/3 w-full">
                 <span>Nombre</span>
@@ -29,11 +35,11 @@
                 <vs-button
                   class="mr-3 mb-2"
                   :disabled="nombre == null || nombre == ''"
-                  @click="onUpdate"
+                  @click="popupActive2 = true"
                   color="warning"
                 >Guardar</vs-button>
                 <vs-button
-                  color="warning"
+                  color="danger"
                   type="border"
                   class="mb-2"
                   @click="getCategoria()"
@@ -62,7 +68,8 @@ export default {
       nombre: null,
       id: null,
       idu: null,
-      activado: false
+      activado: false,
+      popupActive2: false
     };
   },
   methods: {
@@ -113,6 +120,7 @@ export default {
       });
     },
     onUpdate() {
+      this.popupActive2=false;
       this.openLoading();
       let token = localStorage.getItem("tu");
       axios({

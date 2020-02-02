@@ -319,6 +319,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -355,7 +367,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       clinicPhone: null,
       clinicAddress: null,
       specialties: null
-    }, _defineProperty(_ref, "email", null), _defineProperty(_ref, "clinicalRecord", null), _defineProperty(_ref, "showAlerts", null), _defineProperty(_ref, "base64textString", null), _defineProperty(_ref, "base64textString1", null), _defineProperty(_ref, "activado", false), _defineProperty(_ref, "activado1", false), _defineProperty(_ref, "clinicLogo", null), _ref;
+    }, _defineProperty(_ref, "email", null), _defineProperty(_ref, "clinicalRecord", null), _defineProperty(_ref, "showAlerts", null), _defineProperty(_ref, "base64textString", null), _defineProperty(_ref, "base64textString1", null), _defineProperty(_ref, "activado", false), _defineProperty(_ref, "activado1", false), _defineProperty(_ref, "clinicLogo", null), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "popupActive3", false), _ref;
   },
   methods: {
     getRol: function getRol() {
@@ -398,6 +410,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     update1: function update1() {
       var _this = this;
 
+      this.popupActive2 = false;
       this.openLoading();
       var token = localStorage.getItem("tu");
 
@@ -460,6 +473,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     update2: function update2() {
       var _this2 = this;
 
+      this.popupActive3 = false;
       this.openLoading();
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_5___default()({
@@ -507,6 +521,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getData: function getData() {
       var _this3 = this;
 
+      this.openLoading();
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_5___default()({
         method: "get",
@@ -532,7 +547,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this3.alertas = true;
         }
 
-        if (Response.data.success.image == null) {
+        if (Response.data.success.image == null || Response.data.success.image == "") {
           _this3.image = "/images/medicamentos/avatar.jpeg";
         } else {
           _this3.image = "data:image/png;base64," + Response.data.success.image;
@@ -541,7 +556,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this3.email = Response.data.success.email;
 
-        if (Response.data.success.clinicLogo == null) {
+        if (Response.data.success.clinicLogo == null || Response.data.success.clinicLogo == "") {
           _this3.clinicLogo = "/images/medicamentos/demol.PNG";
         } else {
           _this3.clinicLogo = "data:image/png;base64," + Response.data.success.clinicLogo;
@@ -572,7 +587,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.getRol();
-    this.openLoading();
     this.getData();
   }
 });
@@ -647,6 +661,92 @@ var render = function() {
     "div",
     { attrs: { id: "page-user-edit" } },
     [
+      _c(
+        "vs-popup",
+        {
+          attrs: {
+            title: "Actualizar Datos de Usuario",
+            active: _vm.popupActive2
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActive2 = $event
+            }
+          }
+        },
+        [
+          _c("p", [_vm._v("¿Está seguro de actualizar esta información?")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              attrs: { color: "primary", type: "filled" },
+              on: { click: _vm.update1 }
+            },
+            [_vm._v("Actualizar")]
+          ),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              attrs: { color: "danger", type: "filled" },
+              on: {
+                click: function($event) {
+                  _vm.popupActive3 = false
+                }
+              }
+            },
+            [_vm._v("Cancelar")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          attrs: {
+            title: "Actualizar Datos Médicos",
+            active: _vm.popupActive3
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActive3 = $event
+            }
+          }
+        },
+        [
+          _c("p", [_vm._v("¿Está seguro de actualizar esta información?")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              attrs: { color: "primary", type: "filled" },
+              on: { click: _vm.update2 }
+            },
+            [_vm._v("Actualizar")]
+          ),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              attrs: { color: "danger", type: "filled" },
+              on: {
+                click: function($event) {
+                  _vm.popupActive3 = false
+                }
+              }
+            },
+            [_vm._v("Cancelar")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
       _c("vx-card", [
         _c(
           "div",
@@ -1020,7 +1120,11 @@ var render = function() {
                                         _vm.userName == "" ||
                                         _vm.email === ""
                                     },
-                                    on: { click: _vm.update1 }
+                                    on: {
+                                      click: function($event) {
+                                        _vm.popupActive2 = true
+                                      }
+                                    }
                                   },
                                   [_vm._v("Guardar Cambios")]
                                 ),
@@ -1358,7 +1462,11 @@ var render = function() {
                                       {
                                         staticClass: "ml-auto mt-2",
                                         attrs: { color: "warning" },
-                                        on: { click: _vm.update2 }
+                                        on: {
+                                          click: function($event) {
+                                            _vm.popupActive3 = true
+                                          }
+                                        }
                                       },
                                       [_vm._v("Guardar Cambios")]
                                     ),

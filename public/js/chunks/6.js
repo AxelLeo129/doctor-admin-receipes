@@ -1603,9 +1603,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.rol = "Médico";
         }
 
-        console.log(Response.data.success);
-
-        if (Response.data.success.image == null) {
+        if (Response.data.success.image == null || Response.data.success.image == "") {
           _this.image = "/images/medicamentos/avatar.jpeg";
         } else {
           _this.image = "data:image/png;base64," + Response.data.success.image;
@@ -6898,7 +6896,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ([//Medico
 {
   url: "/home",
-  name: "Medico",
+  name: "Pacientes",
   slug: "home",
   icon: "CircleIcon",
   rol: 2

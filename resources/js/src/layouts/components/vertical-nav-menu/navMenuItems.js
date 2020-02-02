@@ -12,7 +12,7 @@ export default [
   //Medico
   {
     url: "/home",
-    name: "Medico",
+    name: "Pacientes",
     slug: "home",
     icon: "CircleIcon",
     rol: 2

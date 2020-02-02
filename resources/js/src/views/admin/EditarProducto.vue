@@ -1,5 +1,11 @@
 <template>
   <div>
+    <vs-popup title="Actualizar Datos" :active.sync="popupActive2">
+      <p>¿Está seguro de actualizar esta información?</p>
+      <br />
+      <vs-button @click="doUpdate" color="primary" type="filled">Actualizar</vs-button>
+      <vs-button @click="popupActive2=false" color="danger" type="filled">Cancelar</vs-button>
+    </vs-popup>
     <div class="vx-row">
       <div class="vx-col w-full">
         <div class="flex items-start flex-col sm:flex-row">
@@ -95,7 +101,7 @@
             <vs-button
               class="ml-auto mt-2"
               color="warning"
-              @click="doUpdate"
+              @click="popupActive2 = true"
               :disabled="name == '' || quantity == '' || description == '' || precentation == '' || price == '' || laboratory == '' || category == '' || warehouse == ''"
             >Guardar</vs-button>
             <vs-button class="ml-4 mt-2" type="border" @click="getData" color="danger">Resetear</vs-button>
@@ -138,7 +144,8 @@ export default {
       activado: false,
       base64textString: "",
       categorias: [],
-      categories: []
+      categories: [],
+      popupActive2: false,
     };
   },
   computed: {
@@ -295,6 +302,7 @@ export default {
         });
     },
     doUpdate() {
+      this.popupActive2 = false;
       this.openLoading();
       let token = localStorage.getItem("tu");
       let arrayFinal = [];

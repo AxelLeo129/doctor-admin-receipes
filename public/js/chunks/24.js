@@ -66,6 +66,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -73,7 +79,8 @@ __webpack_require__.r(__webpack_exports__);
       nombre: null,
       id: null,
       idu: null,
-      activado: false
+      activado: false,
+      popupActive2: false
     };
   },
   methods: {
@@ -133,6 +140,7 @@ __webpack_require__.r(__webpack_exports__);
     onUpdate: function onUpdate() {
       var _this2 = this;
 
+      this.popupActive2 = false;
       this.openLoading();
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
@@ -190,155 +198,203 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "vx-row" },
-      [
-        _c(
-          "vs-alert",
-          {
-            attrs: {
-              color: "danger",
-              title: "Error",
-              active: _vm.activado,
-              closable: "",
-              "icon-pack": "feather",
-              "close-icon": "icon-x"
-            },
-            on: {
-              "update:active": function($event) {
-                _vm.activado = $event
-              }
-            }
-          },
-          [_vm._v("Error en el Servidor")]
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c("div", { staticClass: "vx-row" }, [
+  return _c(
+    "div",
+    [
       _c(
-        "div",
-        { staticClass: "vx-col md:w-1/2 w-full" },
+        "vs-popup",
+        {
+          attrs: { title: "Actualizar Categoría", active: _vm.popupActive2 },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActive2 = $event
+            }
+          }
+        },
         [
-          _c("vx-card", [
-            _c(
-              "form",
-              {
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.onUpdate()
-                  }
+          _c("p", [_vm._v("¿Está seguro de actualizar esta información?")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              attrs: { color: "primary", type: "filled" },
+              on: { click: _vm.onUpdate }
+            },
+            [_vm._v("Actualizar")]
+          ),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              attrs: { color: "danger", type: "filled" },
+              on: {
+                click: function($event) {
+                  _vm.popupActive2 = false
                 }
-              },
-              [
-                _c("div", { staticClass: "vx-row mb-6" }, [
-                  _c("div", { staticClass: "vx-col sm:w-1/3 w-full" }, [
-                    _c("span", [_vm._v("Nombre")])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "vx-col sm:w-2/3 w-full" },
-                    [
-                      _c("vs-input", {
-                        staticClass: "w-full",
-                        model: {
-                          value: _vm.nombre,
-                          callback: function($$v) {
-                            _vm.nombre = $$v
-                          },
-                          expression: "nombre"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.nombre === "",
-                              expression: "nombre === ''"
-                            }
-                          ],
-                          staticClass: "text-danger text-sm"
-                        },
-                        [_vm._v("Este campo es requerido.")]
-                      )
-                    ],
-                    1
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "vx-row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "vx-col sm:w-2/3 w-full ml-auto" },
-                    [
-                      _c(
-                        "vs-button",
-                        {
-                          staticClass: "mr-3 mb-2",
-                          attrs: {
-                            disabled: _vm.nombre == null || _vm.nombre == "",
-                            color: "warning"
-                          },
-                          on: { click: _vm.onUpdate }
-                        },
-                        [_vm._v("Guardar")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-button",
-                        {
-                          staticClass: "mb-2",
-                          attrs: { color: "warning", type: "border" },
-                          on: {
-                            click: function($event) {
-                              return _vm.getCategoria()
-                            }
-                          }
-                        },
-                        [_vm._v("Resetear")]
-                      )
-                    ],
-                    1
-                  )
-                ])
-              ]
-            )
-          ])
+              }
+            },
+            [_vm._v("Cancelar")]
+          )
         ],
         1
       ),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "vx-col md:w-1/2 w-full" },
+        { staticClass: "vx-row" },
         [
-          _c("vx-card", [
-            _c("h3", [_vm._v("Edita la categoría del medicamentos ...")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nobis quo sunt ducimus minima unde labore dolores saepe qui doloribus numquam, accusantium ad adipisci voluptates velit necessitatibus vel totam dolor?"
-              )
-            ])
-          ])
+          _c(
+            "vs-alert",
+            {
+              attrs: {
+                color: "danger",
+                title: "Error",
+                active: _vm.activado,
+                closable: "",
+                "icon-pack": "feather",
+                "close-icon": "icon-x"
+              },
+              on: {
+                "update:active": function($event) {
+                  _vm.activado = $event
+                }
+              }
+            },
+            [_vm._v("Error en el Servidor")]
+          )
         ],
         1
-      )
-    ])
-  ])
+      ),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("div", { staticClass: "vx-row" }, [
+        _c(
+          "div",
+          { staticClass: "vx-col md:w-1/2 w-full" },
+          [
+            _c("vx-card", [
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.popupActive2 = true
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "vx-row mb-6" }, [
+                    _c("div", { staticClass: "vx-col sm:w-1/3 w-full" }, [
+                      _c("span", [_vm._v("Nombre")])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "vx-col sm:w-2/3 w-full" },
+                      [
+                        _c("vs-input", {
+                          staticClass: "w-full",
+                          model: {
+                            value: _vm.nombre,
+                            callback: function($$v) {
+                              _vm.nombre = $$v
+                            },
+                            expression: "nombre"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.nombre === "",
+                                expression: "nombre === ''"
+                              }
+                            ],
+                            staticClass: "text-danger text-sm"
+                          },
+                          [_vm._v("Este campo es requerido.")]
+                        )
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "vx-row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "vx-col sm:w-2/3 w-full ml-auto" },
+                      [
+                        _c(
+                          "vs-button",
+                          {
+                            staticClass: "mr-3 mb-2",
+                            attrs: {
+                              disabled: _vm.nombre == null || _vm.nombre == "",
+                              color: "warning"
+                            },
+                            on: {
+                              click: function($event) {
+                                _vm.popupActive2 = true
+                              }
+                            }
+                          },
+                          [_vm._v("Guardar")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "vs-button",
+                          {
+                            staticClass: "mb-2",
+                            attrs: { color: "danger", type: "border" },
+                            on: {
+                              click: function($event) {
+                                return _vm.getCategoria()
+                              }
+                            }
+                          },
+                          [_vm._v("Resetear")]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                ]
+              )
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "vx-col md:w-1/2 w-full" },
+          [
+            _c("vx-card", [
+              _c("h3", [_vm._v("Edita la categoría del medicamentos ...")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v(
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nobis quo sunt ducimus minima unde labore dolores saepe qui doloribus numquam, accusantium ad adipisci voluptates velit necessitatibus vel totam dolor?"
+                )
+              ])
+            ])
+          ],
+          1
+        )
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
