@@ -36,39 +36,40 @@
                     icon-pack="feather"
                     close-icon="icon-x"
                   >{{message}}</vs-alert>
-                  <br>
+                  <br />
                   <div>
-                    <vs-input
-                      name="email"
-                      icon-no-border
-                      icon="icon icon-user"
-                      icon-pack="feather"
-                      label-placeholder="Email"
-                      v-model="email"
-                      class="w-full"
-                    />
+                    <form v-on:submit.prevent="doLogin()">
+                      <vs-input
+                        name="email"
+                        icon-no-border
+                        icon="icon icon-user"
+                        icon-pack="feather"
+                        label-placeholder="Email"
+                        v-model="email"
+                        class="w-full"
+                      />
 
-                    <vs-input
-                      type="password"
-                      name="password"
-                      icon-no-border
-                      icon="icon icon-lock"
-                      icon-pack="feather"
-                      label-placeholder="Password"
-                      v-model="password"
-                      class="w-full mt-6"
-                    />
+                      <vs-input
+                        type="password"
+                        name="password"
+                        icon-no-border
+                        icon="icon icon-lock"
+                        icon-pack="feather"
+                        label-placeholder="Password"
+                        v-model="password"
+                        class="w-full mt-6"
+                      />
 
-                    <div class="flex flex-wrap justify-between my-5">
-                      <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Recordarme</vs-checkbox>
-                      <router-link to>¿Olvidó su Contraseña?</router-link>
-                    </div>
-                    <vs-button type="border" @click="registro">Registro</vs-button>
-                    <vs-button class="float-right" @click="doLogin">Ingresar</vs-button>
+                      <div class="flex flex-wrap justify-between my-5">
+                        <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Recordarme</vs-checkbox>
+                        <router-link to>¿Olvidó su Contraseña?</router-link>
+                      </div>
+                      <vs-button type="border" @click="registro">Registro</vs-button>
+                      <vs-button class="float-right" @click="doLogin()">Ingresar</vs-button>
 
-                    <!-- <vs-divider>O</vs-divider> -->
+                      <!-- <vs-divider>O</vs-divider> -->
 
-                    <!-- <div class="social-login-buttons flex flex-wrap items-center mt-4">
+                      <!-- <div class="social-login-buttons flex flex-wrap items-center mt-4">
                       
                       <div class="bg-facebook pt-3 pb-2 px-4 rounded-lg cursor-pointer mr-4">
                         <svg
@@ -144,7 +145,8 @@
                           />
                         </svg>
                       </div>
-                    </div>-->
+                      </div>-->
+                    </form>
                   </div>
                 </div>
               </div>
@@ -169,7 +171,7 @@ export default {
       rol: "",
       user_id: null,
       token: "",
-      checkbox_remember_me: false
+      checkbox_remember_me: true
     };
   },
   methods: {
@@ -202,12 +204,12 @@ export default {
           this.token = Response.data.success.token;
           this.rol = Response.data.rol;
           this.user_id = Response.data.id;
-          localStorage.setItem('tu', this.token);
-          localStorage.setItem('ru', this.rol);
-          localStorage.setItem('ui', this.user_id);
-          if(this.rol == 1){
+          localStorage.setItem("tu", this.token);
+          localStorage.setItem("ru", this.rol);
+          localStorage.setItem("ui", this.user_id);
+          if (this.rol == 1) {
             this.$router.push("/consola");
-          }else {
+          } else {
             this.$router.push("/home");
           }
         })

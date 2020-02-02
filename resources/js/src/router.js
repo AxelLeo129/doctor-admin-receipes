@@ -36,7 +36,11 @@ const router = new Router({
           component: () => import('@/views/pages/Login.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 1 || rol == 2) {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next();
+            } else if (rol == 1 || rol == 2 || rol == 3) {
               next({
                 name: 'home'
               });
@@ -51,7 +55,11 @@ const router = new Router({
           component: () => import('@/views/pages/Register.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 1 || rol == 2) {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next();
+            } else if (rol == 1 || rol == 2 || rol == 3) {
               next({
                 name: 'home'
               });
@@ -83,15 +91,25 @@ const router = new Router({
           component: () => import('./views/Home.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 2) {
-              next();
-            } else if(rol == 1){
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
               next({
                 name: 'consola'
               });
-            } else {
+            } else if (rol == 2) {
+              next();
+            } else if (rol == 3) {
               next({
                 name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           }
@@ -102,15 +120,25 @@ const router = new Router({
           component: () => import('@/views/admin/Dashboard.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 1) {
-              next();
-            } else if (rol == null) {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
               next({
                 name: 'page-login'
               });
-            } else {
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
               next({
                 name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           }
@@ -121,11 +149,13 @@ const router = new Router({
           component: () => import('@/views/user/EditarUsuario.vue'),
           beforeEnter(to, from, next) {
             let token = localStorage.getItem('tu');
-            if (token) {
+            let idu = localStorage.getItem('ui');
+            let rol = localStorage.getItem('rol');
+            if (token && idu && rol) {
               next();
             } else {
               next({
-                name: 'home'
+                name: 'page-login'
               });
             }
           },
@@ -145,11 +175,25 @@ const router = new Router({
           component: () => import('@/views/admin/NuevoProducto.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 1) {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
               next();
-            } else {
+            } else if (rol == 2) {
               next({
                 name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           },
@@ -169,11 +213,25 @@ const router = new Router({
           component: () => import('@/views/admin/EditarProducto.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 1) {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
               next();
-            } else {
+            } else if (rol == 2) {
               next({
                 name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           },
@@ -193,11 +251,25 @@ const router = new Router({
           component: () => import('@/views/admin/ListadoProductos.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 1) {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
               next();
-            } else {
+            } else if (rol == 2) {
               next({
                 name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           },
@@ -222,11 +294,25 @@ const router = new Router({
           component: () => import('@/views/pages/nuevoPaciente.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 2) {
-              next();
-            } else {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
               next({
                 name: 'consola'
+              });
+            } else if (rol == 2) {
+              next();
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           },
@@ -246,11 +332,25 @@ const router = new Router({
           component: () => import('./views/pages/agregarProductos.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 2) {
-              next();
-            } else {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
               next({
                 name: 'consola'
+              });
+            } else if (rol == 2) {
+              next();
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           },
@@ -270,11 +370,25 @@ const router = new Router({
           component: () => import('./views/pages/checkOut.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 2) {
-              next();
-            } else {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
               next({
                 name: 'consola'
+              });
+            } else if (rol == 2) {
+              next();
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           },
@@ -294,11 +408,25 @@ const router = new Router({
           component: () => import('./views/pages/paso4.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 2) {
-              next();
-            } else {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
               next({
                 name: 'consola'
+              });
+            } else if (rol == 2) {
+              next();
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           },
@@ -318,11 +446,25 @@ const router = new Router({
           component: () => import('./views/pages/recetaFinal.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 2) {
-              next();
-            } else {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
               next({
                 name: 'consola'
+              });
+            } else if (rol == 2) {
+              next();
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           }
@@ -334,11 +476,25 @@ const router = new Router({
           component: () => import('@/views/admin/categories/ListadoCategorias.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 1) {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
               next();
-            } else {
+            } else if (rol == 2) {
               next({
                 name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           },
@@ -358,11 +514,25 @@ const router = new Router({
           component: () => import('@/views/admin/categories/NuevaCategoria.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 1) {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
               next();
-            } else {
+            } else if (rol == 2) {
               next({
                 name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           },
@@ -382,11 +552,25 @@ const router = new Router({
           component: () => import('@/views/admin/categories/EditarCategoria.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 1) {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
               next();
-            } else {
+            } else if (rol == 2) {
               next({
                 name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else {
+              next({
+                name: 'page-login'
               });
             }
           },
@@ -407,11 +591,25 @@ const router = new Router({
           component: () => import('./views/call-center/dashboard.vue'),
           beforeEnter(to, from, next) {
             let rol = localStorage.getItem('ru');
-            if (rol == 3) {
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next({
+                name: 'consola'
+              });
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
               next();
             } else {
               next({
-                name: 'home'
+                name: 'page-login'
               });
             }
           },

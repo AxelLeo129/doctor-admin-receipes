@@ -1580,6 +1580,8 @@ __webpack_require__.r(__webpack_exports__);
     logout1: function logout1() {
       localStorage.removeItem('tu');
       localStorage.removeItem('ru');
+      localStorage.removeItem('ui');
+      localStorage.removeItem('nuevaRecetaData');
       this.$router.push("/");
     },
     getData: function getData() {

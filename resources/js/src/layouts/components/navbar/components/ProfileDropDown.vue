@@ -98,6 +98,8 @@ export default {
     logout1(){
       localStorage.removeItem('tu');
       localStorage.removeItem('ru');
+      localStorage.removeItem('ui');
+      localStorage.removeItem('nuevaRecetaData');
       this.$router.push("/");
     },
     getData() {

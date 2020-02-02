@@ -55996,8 +55996,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 1 || rol == 2) {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next();
+        } else if (rol == 1 || rol == 2 || rol == 3) {
           next({
             name: 'home'
           });
@@ -56013,8 +56017,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 1 || rol == 2) {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next();
+        } else if (rol == 1 || rol == 2 || rol == 3) {
           next({
             name: 'home'
           });
@@ -56048,16 +56056,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 2) {
-          next();
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
         } else if (rol == 1) {
           next({
             name: 'consola'
           });
-        } else {
+        } else if (rol == 2) {
+          next();
+        } else if (rol == 3) {
           next({
             name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       }
@@ -56069,16 +56087,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 1) {
-          next();
-        } else if (rol == null) {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
           next({
             name: 'page-login'
           });
-        } else {
+        } else if (rol == 1) {
+          next();
+        } else if (rol == 2) {
           next({
             name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       }
@@ -56090,12 +56118,14 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var token = localStorage.getItem('tu');
+        var idu = localStorage.getItem('ui');
+        var rol = localStorage.getItem('rol');
 
-        if (token) {
+        if (token && idu && rol) {
           next();
         } else {
           next({
-            name: 'home'
+            name: 'page-login'
           });
         }
       },
@@ -56120,12 +56150,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 1) {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
           next();
-        } else {
+        } else if (rol == 2) {
           next({
             name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       },
@@ -56150,12 +56194,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 1) {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
           next();
-        } else {
+        } else if (rol == 2) {
           next({
             name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       },
@@ -56180,12 +56238,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 1) {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
           next();
-        } else {
+        } else if (rol == 2) {
           next({
             name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       },
@@ -56216,12 +56288,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 2) {
-          next();
-        } else {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
           next({
             name: 'consola'
+          });
+        } else if (rol == 2) {
+          next();
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       },
@@ -56246,12 +56332,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 2) {
-          next();
-        } else {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
           next({
             name: 'consola'
+          });
+        } else if (rol == 2) {
+          next();
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       },
@@ -56276,12 +56376,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 2) {
-          next();
-        } else {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
           next({
             name: 'consola'
+          });
+        } else if (rol == 2) {
+          next();
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       },
@@ -56306,12 +56420,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 2) {
-          next();
-        } else {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
           next({
             name: 'consola'
+          });
+        } else if (rol == 2) {
+          next();
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       },
@@ -56336,12 +56464,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 2) {
-          next();
-        } else {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
           next({
             name: 'consola'
+          });
+        } else if (rol == 2) {
+          next();
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       }
@@ -56354,12 +56496,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 1) {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
           next();
-        } else {
+        } else if (rol == 2) {
           next({
             name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       },
@@ -56384,12 +56540,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 1) {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
           next();
-        } else {
+        } else if (rol == 2) {
           next({
             name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       },
@@ -56414,12 +56584,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 1) {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
           next();
-        } else {
+        } else if (rol == 2) {
           next({
             name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
           });
         }
       },
@@ -56445,12 +56629,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
 
-        if (rol == 3) {
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next({
+            name: 'consola'
+          });
+        } else if (rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else if (rol == 3) {
           next();
         } else {
           next({
-            name: 'home'
+            name: 'page-login'
           });
         }
       },

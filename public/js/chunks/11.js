@@ -169,6 +169,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -180,7 +182,7 @@ __webpack_require__.r(__webpack_exports__);
       rol: "",
       user_id: null,
       token: "",
-      checkbox_remember_me: false
+      checkbox_remember_me: true
     };
   },
   methods: {
@@ -216,9 +218,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.token = Response.data.success.token;
         _this.rol = Response.data.rol;
         _this.user_id = Response.data.id;
-        localStorage.setItem('tu', _this.token);
-        localStorage.setItem('ru', _this.rol);
-        localStorage.setItem('ui', _this.user_id);
+        localStorage.setItem("tu", _this.token);
+        localStorage.setItem("ru", _this.rol);
+        localStorage.setItem("ui", _this.user_id);
 
         if (_this.rol == 1) {
           _this.$router.push("/consola");
@@ -397,95 +399,111 @@ var render = function() {
                               _vm._v(" "),
                               _c("br"),
                               _vm._v(" "),
-                              _c(
-                                "div",
-                                [
-                                  _c("vs-input", {
-                                    staticClass: "w-full",
-                                    attrs: {
-                                      name: "email",
-                                      "icon-no-border": "",
-                                      icon: "icon icon-user",
-                                      "icon-pack": "feather",
-                                      "label-placeholder": "Email"
-                                    },
-                                    model: {
-                                      value: _vm.email,
-                                      callback: function($$v) {
-                                        _vm.email = $$v
-                                      },
-                                      expression: "email"
+                              _c("div", [
+                                _c(
+                                  "form",
+                                  {
+                                    on: {
+                                      submit: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.doLogin()
+                                      }
                                     }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("vs-input", {
-                                    staticClass: "w-full mt-6",
-                                    attrs: {
-                                      type: "password",
-                                      name: "password",
-                                      "icon-no-border": "",
-                                      icon: "icon icon-lock",
-                                      "icon-pack": "feather",
-                                      "label-placeholder": "Password"
-                                    },
-                                    model: {
-                                      value: _vm.password,
-                                      callback: function($$v) {
-                                        _vm.password = $$v
+                                  },
+                                  [
+                                    _c("vs-input", {
+                                      staticClass: "w-full",
+                                      attrs: {
+                                        name: "email",
+                                        "icon-no-border": "",
+                                        icon: "icon icon-user",
+                                        "icon-pack": "feather",
+                                        "label-placeholder": "Email"
                                       },
-                                      expression: "password"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "flex flex-wrap justify-between my-5"
-                                    },
-                                    [
-                                      _c(
-                                        "vs-checkbox",
-                                        {
-                                          staticClass: "mb-3",
-                                          model: {
-                                            value: _vm.checkbox_remember_me,
-                                            callback: function($$v) {
-                                              _vm.checkbox_remember_me = $$v
-                                            },
-                                            expression: "checkbox_remember_me"
-                                          }
+                                      model: {
+                                        value: _vm.email,
+                                        callback: function($$v) {
+                                          _vm.email = $$v
                                         },
-                                        [_vm._v("Recordarme")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("router-link", { attrs: { to: "" } }, [
-                                        _vm._v("¿Olvidó su Contraseña?")
-                                      ])
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "vs-button",
-                                    {
-                                      attrs: { type: "border" },
-                                      on: { click: _vm.registro }
-                                    },
-                                    [_vm._v("Registro")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "vs-button",
-                                    {
-                                      staticClass: "float-right",
-                                      on: { click: _vm.doLogin }
-                                    },
-                                    [_vm._v("Ingresar")]
-                                  )
-                                ],
-                                1
-                              )
+                                        expression: "email"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("vs-input", {
+                                      staticClass: "w-full mt-6",
+                                      attrs: {
+                                        type: "password",
+                                        name: "password",
+                                        "icon-no-border": "",
+                                        icon: "icon icon-lock",
+                                        "icon-pack": "feather",
+                                        "label-placeholder": "Password"
+                                      },
+                                      model: {
+                                        value: _vm.password,
+                                        callback: function($$v) {
+                                          _vm.password = $$v
+                                        },
+                                        expression: "password"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "flex flex-wrap justify-between my-5"
+                                      },
+                                      [
+                                        _c(
+                                          "vs-checkbox",
+                                          {
+                                            staticClass: "mb-3",
+                                            model: {
+                                              value: _vm.checkbox_remember_me,
+                                              callback: function($$v) {
+                                                _vm.checkbox_remember_me = $$v
+                                              },
+                                              expression: "checkbox_remember_me"
+                                            }
+                                          },
+                                          [_vm._v("Recordarme")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "router-link",
+                                          { attrs: { to: "" } },
+                                          [_vm._v("¿Olvidó su Contraseña?")]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "vs-button",
+                                      {
+                                        attrs: { type: "border" },
+                                        on: { click: _vm.registro }
+                                      },
+                                      [_vm._v("Registro")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "vs-button",
+                                      {
+                                        staticClass: "float-right",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.doLogin()
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Ingresar")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
                             ],
                             1
                           )
