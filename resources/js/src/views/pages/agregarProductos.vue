@@ -204,7 +204,7 @@
                               <img
                                 :src="'data:image/png;base64,' + item.image"
                                 alt="content-img"
-                                class="responsive card-img-top size"
+                                class="responsive card-img-top h-48 w-48"
                               />
                             </div>
                           </div>

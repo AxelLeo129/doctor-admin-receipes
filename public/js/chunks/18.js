@@ -1105,7 +1105,7 @@ var render = function() {
                                                         [
                                                           _c("img", {
                                                             staticClass:
-                                                              "responsive card-img-top size",
+                                                              "responsive card-img-top h-48 w-48",
                                                             attrs: {
                                                               src:
                                                                 "data:image/png;base64," +

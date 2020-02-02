@@ -277,6 +277,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -317,7 +359,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     getRol: function getRol() {
-      this.rol = localStorage.getItem('ru');
+      this.rol = localStorage.getItem("ru");
     },
     handleFileSelect: function handleFileSelect(evt) {
       var files = evt.target.files;
@@ -473,7 +515,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this3.alertas = true;
         }
 
-        if (Response.data.success.image == '') {
+        if (Response.data.success.image == "") {
           _this3.image = "images/medicamentos/avatar-s-23.jpg";
         } else {
           _this3.image = "data:image/png;base64," + Response.data.success.image;
@@ -1056,6 +1098,117 @@ var render = function() {
                                   _c(
                                     "div",
                                     [
+                                      _c("div", { staticClass: "vx-row" }, [
+                                        _c(
+                                          "div",
+                                          { staticClass: "vx-col w-full" },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "flex items-start flex-col sm:flex-row"
+                                              },
+                                              [
+                                                _c("img", {
+                                                  staticClass:
+                                                    "mr-8 rounded h-24 w-24",
+                                                  attrs: { src: _vm.image }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("div", [
+                                                  _c(
+                                                    "p",
+                                                    {
+                                                      staticClass:
+                                                        "text-lg font-medium mb-2 mt-4 sm:mt-0"
+                                                    },
+                                                    [_vm._v("Logo Clínica")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("input", {
+                                                    ref: "update_avatar_input",
+                                                    staticClass: "hidden",
+                                                    attrs: {
+                                                      type: "file",
+                                                      accept: "image/*"
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("input", {
+                                                    staticClass: "fileInput",
+                                                    attrs: {
+                                                      accept: "image/*",
+                                                      type: "file",
+                                                      color: "warning",
+                                                      id: "image",
+                                                      name: "image"
+                                                    },
+                                                    on: {
+                                                      change: function($event) {
+                                                        return _vm.handleFileSelect(
+                                                          $event
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "label",
+                                                    {
+                                                      staticClass: "subir",
+                                                      attrs: { for: "image" }
+                                                    },
+                                                    [
+                                                      _c("vs-icon", {
+                                                        attrs: { icon: "edit" }
+                                                      })
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("div", {
+                                                    attrs: { id: "info1" }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span")
+                                                ]),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "vs-alert",
+                                                  {
+                                                    staticStyle: {
+                                                      width: "70%"
+                                                    },
+                                                    attrs: {
+                                                      color: "danger",
+                                                      title: "Error",
+                                                      active: _vm.activado,
+                                                      closable: "",
+                                                      "icon-pack": "feather",
+                                                      "close-icon": "icon-x"
+                                                    },
+                                                    on: {
+                                                      "update:active": function(
+                                                        $event
+                                                      ) {
+                                                        _vm.activado = $event
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "Error en el servidor, por favor intentelo más tarde."
+                                                    )
+                                                  ]
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
                                       _c("vs-input", {
                                         staticClass: "w-full mt-4",
                                         attrs: {

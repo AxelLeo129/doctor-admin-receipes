@@ -91,7 +91,7 @@
                       v-model="name"
                     />
                     <span class="text-danger text-sm" v-show="name === ''">{{ errors.campo }}</span>
-                    
+
                     <vs-input
                       class="w-full mt-4"
                       label="Teléfono"
@@ -119,7 +119,8 @@
                     />
                     <span class="text-danger text-sm" v-show="userName === ''">{{ errors.campo }}</span>
 
-                    <vs-input v-show="rol == 2"
+                    <vs-input
+                      v-show="rol == 2"
                       class="w-full mt-4"
                       label="No. Colegiado"
                       name="noCollegiate"
@@ -186,6 +187,47 @@
                     <!-- Col Content -->
                     <div>
                       <!-- DOB -->
+                      <div class="vx-row">
+                        <div class="vx-col w-full">
+                          <div class="flex items-start flex-col sm:flex-row">
+                            <img v-bind:src="image" class="mr-8 rounded h-24 w-24" />
+                            <!-- <vs-avatar :src="data.avatar" size="80px" class="mr-4" /> -->
+                            <div>
+                              <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">Logo Clínica</p>
+                              <input
+                                type="file"
+                                class="hidden"
+                                ref="update_avatar_input"
+                                accept="image/*"
+                              />
+
+                              <input
+                                accept="image/*"
+                                type="file"
+                                color="warning"
+                                id="image"
+                                name="image"
+                                @change="handleFileSelect($event)"
+                                class="fileInput"
+                              />
+                              <label for="image" class="subir">
+                                <vs-icon icon="edit"></vs-icon>
+                              </label>
+                              <div id="info1"></div>
+                              <span></span>
+                            </div>
+                            <vs-alert
+                              color="danger"
+                              title="Error"
+                              :active.sync="activado"
+                              closable
+                              style="width: 70%"
+                              icon-pack="feather"
+                              close-icon="icon-x"
+                            >Error en el servidor, por favor intentelo más tarde.</vs-alert>
+                          </div>
+                        </div>
+                      </div>
 
                       <vs-input
                         class="w-full mt-4"
@@ -297,8 +339,8 @@ export default {
     };
   },
   methods: {
-    getRol(){
-      this.rol = localStorage.getItem('ru');
+    getRol() {
+      this.rol = localStorage.getItem("ru");
     },
     handleFileSelect(evt) {
       let files = evt.target.files;
@@ -327,7 +369,7 @@ export default {
       } else {
         this.clinicalRecord = 1;
       }
-      
+
       if (this.alertas == false) {
         this.showAlerts = 0;
       } else {
@@ -439,9 +481,9 @@ export default {
           } else {
             this.alertas = true;
           }
-          if (Response.data.success.image == ''){
+          if (Response.data.success.image == "") {
             this.image = "images/medicamentos/avatar-s-23.jpg";
-          }else{
+          } else {
             this.image = "data:image/png;base64," + Response.data.success.image;
             this.base64textString = Response.data.success.image;
           }
