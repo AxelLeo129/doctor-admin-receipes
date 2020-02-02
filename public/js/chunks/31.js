@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[18],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[31],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/agregarProductos.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************!*\
@@ -18,11 +18,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var algoliasearch_lite__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(algoliasearch_lite__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
-//
-//
-//
-//
-//
 //
 //
 //
@@ -330,7 +325,6 @@ __webpack_require__.r(__webpack_exports__);
       descripcion: "",
       medicamentosList: [],
       popupActive: false,
-      numberData: 0,
       searchClient: algoliasearch_lite__WEBPACK_IMPORTED_MODULE_3___default()("latency", "6be0576ff61c053d5f9a3225e2a90f76"),
       // Filter Sidebar
       isFilterSidebarActive: true,
@@ -476,8 +470,6 @@ __webpack_require__.r(__webpack_exports__);
           element.quantity = parseInt(element.quantity);
 
           if (element.quantity > 0) {
-            _this4.numberData = _this4.numberData + 1;
-
             _this4.medicamentosList.push(element);
           }
         });
@@ -550,7 +542,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".size {\n  height: 206px;\n  width: 266px;\n}\n@media screen and (max-width: 1024px) {\n.size {\n    height: 140px;\n    width: 150px;\n}\n}\n#algolia-instant-search-demo .algolia-header .algolia-filters-label {\n  width: calc(260px + 2.4rem);\n}\n#algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  position: relative;\n}\n[dir=ltr] #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  float: left;\n}\n[dir=rtl] #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  float: right;\n}\n[dir] #algolia-instant-search-demo .algolia-search-input-right-aligned-icon {\n  padding: 1rem 1.5rem;\n}\n#algolia-instant-search-demo .algolia-price-slider {\n  min-width: unset;\n}\n#algolia-instant-search-demo .item-view-primary-action-btn {\n  color: #2c2c2c !important;\n  min-width: 50%;\n}\n[dir] #algolia-instant-search-demo .item-view-primary-action-btn {\n  background-color: #f6f6f6;\n}\n#algolia-instant-search-demo .item-view-secondary-action-btn {\n  min-width: 50%;\n}\n[dir] .theme-dark #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  background-color: #10163a;\n}\n@media (min-width: 992px) {\n[dir] .vs-sidebar-rounded .vs-sidebar {\n    border-radius: 0.5rem;\n}\n[dir] .vs-sidebar-rounded .vs-sidebar--items {\n    border-radius: 0.5rem;\n}\n}\n@media (max-width: 992px) {\n#algolia-content-container .vs-sidebar {\n    position: absolute !important;\n}\n[dir] #algolia-content-container .vs-sidebar {\n    float: none !important;\n}\n}", ""]);
+exports.push([module.i, ".size {\n  height: 206px;\n  width: 266px;\n}\n#algolia-instant-search-demo .algolia-header .algolia-filters-label {\n  width: calc(260px + 2.4rem);\n}\n#algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  position: relative;\n}\n[dir=ltr] #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  float: left;\n}\n[dir=rtl] #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  float: right;\n}\n[dir] #algolia-instant-search-demo .algolia-search-input-right-aligned-icon {\n  padding: 1rem 1.5rem;\n}\n#algolia-instant-search-demo .algolia-price-slider {\n  min-width: unset;\n}\n#algolia-instant-search-demo .item-view-primary-action-btn {\n  color: #2c2c2c !important;\n  min-width: 50%;\n}\n[dir] #algolia-instant-search-demo .item-view-primary-action-btn {\n  background-color: #f6f6f6;\n}\n#algolia-instant-search-demo .item-view-secondary-action-btn {\n  min-width: 50%;\n}\n[dir] .theme-dark #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  background-color: #10163a;\n}\n@media (min-width: 992px) {\n[dir] .vs-sidebar-rounded .vs-sidebar {\n    border-radius: 0.5rem;\n}\n[dir] .vs-sidebar-rounded .vs-sidebar--items {\n    border-radius: 0.5rem;\n}\n}\n@media (max-width: 992px) {\n#algolia-content-container .vs-sidebar {\n    position: absolute !important;\n}\n[dir] #algolia-content-container .vs-sidebar {\n    float: none !important;\n}\n}", ""]);
 
 // exports
 
@@ -675,14 +667,13 @@ var render = function() {
                           },
                           [
                             _c("ais-stats", [
-                              _c("p", {
-                                staticClass: "font-semibold md:block hidden",
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm.numberData + " resultados encontrados"
-                                  )
-                                }
-                              })
+                              _c(
+                                "p",
+                                {
+                                  staticClass: "font-semibold md:block hidden"
+                                },
+                                [_vm._v("12 resultados encontrados")]
+                              )
                             ]),
                             _vm._v(" "),
                             _c(
@@ -1095,26 +1086,16 @@ var render = function() {
                                                       slot: "no-body"
                                                     },
                                                     [
-                                                      _c(
-                                                        "div",
-                                                        {
-                                                          attrs: {
-                                                            align: "center"
-                                                          }
-                                                        },
-                                                        [
-                                                          _c("img", {
-                                                            staticClass:
-                                                              "responsive card-img-top size",
-                                                            attrs: {
-                                                              src:
-                                                                "data:image/png;base64," +
-                                                                item.image,
-                                                              alt: "content-img"
-                                                            }
-                                                          })
-                                                        ]
-                                                      )
+                                                      _c("img", {
+                                                        staticClass:
+                                                          "responsive card-img-top size",
+                                                        attrs: {
+                                                          src:
+                                                            "data:image/png;base64," +
+                                                            item.image,
+                                                          alt: "content-img"
+                                                        }
+                                                      })
                                                     ]
                                                   ),
                                                   _vm._v(" "),

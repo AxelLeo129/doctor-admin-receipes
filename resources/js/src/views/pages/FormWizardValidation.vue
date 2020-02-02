@@ -9,10 +9,14 @@
 
 
 <template>
-  <vx-card title="Datos del Paciente" code-toggler>
+  <vx-card title="Datos del Paciente">
     <p>Ingrese los datos del paciente.</p>
 
     <div class="mt-5">
+      <div align="center">
+        <h4>Paso</h4>
+        <h5><strong>1</strong> ... 2 ... 3 ... 4</h5>
+      </div>
       <form-wizard
         color="rgba(var(--vs-primary), 1)"
         :title="null"

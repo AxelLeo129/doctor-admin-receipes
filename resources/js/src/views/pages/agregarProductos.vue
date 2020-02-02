@@ -9,6 +9,13 @@
 
 <template>
   <div>
+    <div align="center">
+      <h4>Paso</h4>
+      <h5>
+        1 ...
+        <strong>2</strong> ... 3 ... 4
+      </h5>
+    </div>
     <form-wizard
       color="rgba(var(--vs-primary), 1)"
       :title="null"
@@ -40,9 +47,9 @@
                 <!-- Stats -->
                 <ais-stats>
                   <p
-                    slot-scope="{ hitsPerPage, nbPages, nbHits, query }"
                     class="font-semibold md:block hidden"
-                  >{{ nbHits }} resultados encontrados</p>
+                    v-text="numberData + ' resultados encontrados'"
+                  ></p>
                 </ais-stats>
                 <vs-button @click="formSubmitted">Siguiente</vs-button>
               </div>
@@ -123,12 +130,7 @@
                 <vs-divider />
 
                 <ais-clear-refinements class="flex justify-center">
-                  <vs-button
-                    class="w-full"
-                    slot-scope="{ canRefine, refine, createURL }"
-                    @click.prevent="refine"
-                    :disabled="!canRefine"
-                  >Limpiar Filtros</vs-button>
+                  <vs-button class="w-full">Limpiar Filtros</vs-button>
                 </ais-clear-refinements>
               </div>
             </vs-sidebar>
@@ -187,7 +189,7 @@
 
               <!-- SEARCH RESULT -->
               <ais-hits>
-                <div slot-scope="{ items }">
+                <div>
                   <!-- GRID VIEW -->
                   <template v-if="currentItemView == 'item-grid-view'">
                     <div class="vx-row">
@@ -198,11 +200,13 @@
                       >
                         <vx-card>
                           <div slot="no-body">
-                            <img
-                              :src="'data:image/png;base64,' + item.image"
-                              alt="content-img"
-                              class="responsive card-img-top size"
-                            />
+                            <div align="center">
+                              <img
+                                :src="'data:image/png;base64,' + item.image"
+                                alt="content-img"
+                                class="responsive card-img-top size"
+                              />
+                            </div>
                           </div>
                           <h5 class="mb-2">{{ item.precentation }}</h5>
                           <h6 class="mb-2">{{ item.name }}</h6>
@@ -254,29 +258,6 @@
                   <!-- LIST VIEW -->
                 </div>
               </ais-hits>
-
-              <!-- PAGINATION -->
-              <ais-pagination>
-                <div
-                  slot-scope="{
-                                currentRefinement,
-                                nbPages,
-                                pages,
-                                isFirstPage,
-                                isLastPage,
-                                refine,
-                                createURL
-                            }"
-                >
-                  <vs-pagination
-                    :total="nbPages"
-                    :max="7"
-                    :value="currentRefinement + 1"
-                    @input="(val) => { refine(val - 1) }"
-                  />
-                </div>
-              </ais-pagination>
-
               <!-- ALGOLIA LOGO -->
               <!-- <img class="flex mt-4 mx-auto h-8" src="@assets/images/pages/eCommerce/Algolia-logo.png" alt="algolia-logo"> -->
             </div>
@@ -341,6 +322,7 @@ export default {
       descripcion: "",
       medicamentosList: [],
       popupActive: false,
+      numberData: 0,
       searchClient: algoliasearch(
         "latency",
         "6be0576ff61c053d5f9a3225e2a90f76"
@@ -504,6 +486,7 @@ export default {
           Response.data.forEach(element => {
             element.quantity = parseInt(element.quantity);
             if (element.quantity > 0) {
+              this.numberData = this.numberData + 1;
               this.medicamentosList.push(element);
             }
           });
@@ -571,6 +554,13 @@ export default {
 .size {
   height: 206px;
   width: 266px;
+}
+
+@media screen and (max-width: 1024px) {
+  .size {
+    height: 140px;
+    width: 150px;
+  }
 }
 #algolia-instant-search-demo {
   .algolia-header {
