@@ -142,16 +142,16 @@ __webpack_require__.r(__webpack_exports__);
       description: null,
       quantity: null,
       price: null,
-      descartivado: true,
       id: null,
       laboratory: null,
       warehouse: null,
-      category: [6],
+      category: [],
       category1: null,
       message: "Error en el servidor, por favor inténtalo más tarde.",
       activado: false,
       base64textString: "",
-      categorias: []
+      categorias: [],
+      categories: []
     };
   },
   computed: {
@@ -182,77 +182,113 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this = this;
+    this.getData();
+  },
+  methods: {
+    getData: function getData() {
+      var _this = this;
 
-    this.getCategories();
-    this.openLoading();
-    this.id = this.$route.params.productId;
-    var token = localStorage.getItem("tu");
-    axios__WEBPACK_IMPORTED_MODULE_1___default()({
-      method: "get",
-      url: "http://127.0.0.1:8000/api/getProduct/" + this.id,
-      headers: {
-        authorization: "Bearer " + token,
-        "content-type": "application/json"
-      }
-    }).then(function (Response) {
-      if (Response.data.length == 0) {
+      this.openLoading();
+      this.category = [];
+      this.id = this.$route.params.productId;
+      var token = localStorage.getItem("tu");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getProduct/" + this.id,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        if (Response.data.length == 0) {
+          axios__WEBPACK_IMPORTED_MODULE_1___default()({
+            method: "get",
+            url: "http://127.0.0.1:8000/api/getProduct1/" + _this.id,
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          }).then(function (Response) {
+            if (Response.data.length == 0) {
+              _this.activeLoading = false;
+
+              _this.$vs.loading.close();
+
+              _this.$vs.notify({
+                title: "Atención",
+                text: "Producto no encontrado.",
+                color: "warning"
+              });
+
+              _this.$router.push("/consola");
+            } else {
+              _this.name = Response.data[0].name;
+              _this.imagen = "data:image/png;base64," + Response.data[0].image;
+              _this.base64textString = Response.data[0].image;
+              _this.quantity = Response.data[0].quantity;
+              _this.description = Response.data[0].description;
+              _this.precentation = Response.data[0].precentation;
+              _this.price = Response.data[0].price;
+              _this.laboratory = Response.data[0].laboratory;
+              _this.warehouse = Response.data[0].warehouse;
+              _this.activeLoading = false;
+
+              _this.$vs.loading.close();
+            }
+          }).catch(function (err) {
+            console.log(err);
+            _this.activeLoading = false;
+
+            _this.$vs.loading.close();
+
+            _this.$vs.notify({
+              title: "Precaución",
+              text: "Producto no encontrado.",
+              color: "warning"
+            });
+
+            _this.$router.push("/consola");
+          });
+        } else {
+          _this.name = Response.data[0].name;
+          _this.imagen = "data:image/png;base64," + Response.data[0].image;
+          _this.base64textString = Response.data[0].image;
+          _this.quantity = Response.data[0].quantity;
+          _this.description = Response.data[0].description;
+          _this.precentation = Response.data[0].precentation;
+          _this.price = Response.data[0].price;
+          _this.laboratory = Response.data[0].laboratory;
+          _this.category1 = Response.data[0].categories.split(",");
+
+          _this.category1.forEach(function (element) {
+            element = parseInt(element);
+
+            _this.categories.push(element);
+          });
+
+          _this.warehouse = Response.data[0].warehouse;
+
+          _this.getCategories();
+
+          _this.activeLoading = false;
+
+          _this.$vs.loading.close();
+        }
+      }).catch(function (err) {
+        console.log(err);
         _this.activeLoading = false;
 
         _this.$vs.loading.close();
 
         _this.$vs.notify({
-          title: "Atención",
+          title: "Precaución",
           text: "Producto no encontrado.",
           color: "warning"
         });
 
         _this.$router.push("/consola");
-      } else {
-        _this.name = Response.data[0].name;
-        _this.imagen = "data:image/png;base64," + Response.data[0].image;
-        _this.base64textString = Response.data[0].image;
-        _this.quantity = Response.data[0].quantity;
-        _this.description = Response.data[0].description;
-        _this.precentation = Response.data[0].precentation;
-        _this.price = Response.data[0].price;
-        _this.laboratory = Response.data[0].laboratory;
-        _this.category1 = Response.data[0].categories.split(",");
-        console.log(_this.categorias, _this.category1);
-
-        _this.category1.forEach(function (element) {
-          element = parseInt(element); //this.categories.forEach(element1 => {
-          //   console.log(element1);
-          //   if (element == element1.value) {
-          //     console.log(element1);
-          //     this.category.push({
-          //       label: element1.label,
-          //       value: element1.value
-          //     });
-          //   }
-          //});
-        });
-
-        _this.warehouse = Response.data[0].warehouse;
-        _this.activeLoading = false;
-
-        _this.$vs.loading.close();
-      }
-    }).catch(function (err) {
-      _this.activeLoading = false;
-
-      _this.$vs.loading.close();
-
-      _this.$vs.notify({
-        title: "Precaución",
-        text: "Producto no encontrado.",
-        color: "warning"
       });
-
-      _this.$router.push("/consola");
-    });
-  },
-  methods: {
+    },
     getCategories: function getCategories() {
       var _this2 = this;
 
@@ -272,6 +308,13 @@ __webpack_require__.r(__webpack_exports__);
               label: element.name,
               value: element.id
             });
+
+            if (_this2.categories.includes(element.id)) {
+              _this2.category.push({
+                label: element.name,
+                value: element.id
+              });
+            }
           }
         });
       }).catch(function (err) {
@@ -283,11 +326,10 @@ __webpack_require__.r(__webpack_exports__);
 
       this.openLoading();
       var token = localStorage.getItem("tu");
-
-      if (this.category1 != this.category) {
-        this.category1 = this.category.value;
-      }
-
+      var arrayFinal = [];
+      this.category.forEach(function (element) {
+        arrayFinal.push(element.value);
+      });
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "put",
         url: "http://127.0.0.1:8000/api/putProduct",
@@ -298,7 +340,6 @@ __webpack_require__.r(__webpack_exports__);
           description: this.description,
           price: this.price,
           precentation: this.precentation,
-          category: this.category1,
           laboratory: this.laboratory,
           warehouse: this.warehouse,
           quantity: this.quantity
@@ -308,16 +349,51 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this3.activeLoading = false;
+        axios__WEBPACK_IMPORTED_MODULE_1___default()({
+          method: "get",
+          url: "http://127.0.0.1:8000/api/deleteProdCate/" + _this3.id,
+          headers: {
+            authorization: "Bearer " + token,
+            "content-type": "application/json"
+          }
+        }).then(function (Response) {
+          axios__WEBPACK_IMPORTED_MODULE_1___default()({
+            method: "post",
+            url: "http://127.0.0.1:8000/api/postProdCate",
+            data: JSON.stringify({
+              categories: arrayFinal,
+              product_id: _this3.id
+            }),
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          }).then(function (Response) {
+            _this3.activeLoading = false;
 
-        _this3.$vs.loading.close();
+            _this3.$vs.loading.close();
 
-        _this3.$router.push("/consola");
+            _this3.$router.push("/consola");
 
-        _this3.$vs.notify({
-          title: "Actualizado",
-          text: "Producto actualizado exitosamente.",
-          color: "success"
+            _this3.$vs.notify({
+              title: "Actualizado",
+              text: "Producto actualizado exitosamente.",
+              color: "success"
+            });
+          }).catch(function (err) {
+            _this3.activeLoading = false;
+
+            _this3.$vs.loading.close();
+
+            activado = true; //console.log(err);
+          });
+        }).catch(function (err) {
+          _this3.activeLoading = false;
+
+          _this3.$vs.loading.close();
+
+          _this3.activado = true;
+          console.log(err);
         });
       }).catch(function (err) {
         _this3.activeLoading = false;
@@ -382,7 +458,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".fileInput {\n  width: 0.1px;\n  height: 0.1px;\n  opacity: 0;\n  overflow: hidden;\n  position: absolute;\n  z-index: -1;\n}\n.subir {\n  color: #fff;\n}\n[dir] .subir {\n  padding: 5px 10px;\n  background: #003DA5;\n  border: 0px solid #fff;\n  border-radius: 15px 15px 15px 15px;\n}\n.subir:hover {\n  color: #fff;\n}\n[dir] .subir:hover {\n  background: #003DA5;\n}\n[dir] .vs-textarea {\n  background-color: white;\n}", ""]);
+exports.push([module.i, ".fileInput {\n  width: 0.1px;\n  height: 0.1px;\n  opacity: 0;\n  overflow: hidden;\n  position: absolute;\n  z-index: -1;\n}\n.subir {\n  color: #fff;\n}\n[dir] .subir {\n  padding: 5px 10px;\n  background: #003da5;\n  border: 0px solid #fff;\n  border-radius: 15px 15px 15px 15px;\n}\n.subir:hover {\n  color: #fff;\n}\n[dir] .subir:hover {\n  background: #003da5;\n}\n[dir] .vs-textarea {\n  background-color: white;\n}", ""]);
 
 // exports
 
@@ -791,7 +867,6 @@ var render = function() {
                   attrs: {
                     color: "warning",
                     disabled:
-                      _vm.descartivado == true ||
                       _vm.name == "" ||
                       _vm.quantity == "" ||
                       _vm.description == "" ||
@@ -810,7 +885,8 @@ var render = function() {
                 "vs-button",
                 {
                   staticClass: "ml-4 mt-2",
-                  attrs: { type: "border", color: "danger" }
+                  attrs: { type: "border", color: "danger" },
+                  on: { click: _vm.getData }
                 },
                 [_vm._v("Resetear")]
               )

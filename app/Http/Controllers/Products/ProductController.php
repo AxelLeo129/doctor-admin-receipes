@@ -89,6 +89,17 @@ class ProductController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show1($id)
+    {
+        return Product::where('id', $id)->get();
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -114,10 +125,11 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->precentation = $request->precentation;
-        $product->category = $request->category;
         $product->laboratory = $request->laboratory;
         $product->warehouse = $request->warehouse;
         $product->quantity = $request->quantity;
+        $product->user_id = $product->user_id;
+
 
         if($product->save()){
             return ['result' => 'success', "mess"=>$product];
@@ -140,6 +152,26 @@ class ProductController extends Controller
             return ['result' => 'success'];
         } else {
             return ['result' => 'fail', "mess"=>$product];
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function destroyCategory($id)
+    {
+        $errores = 'Error';
+        $succes = 'Exelente';
+        $prod_cate = Products_category::where('product_id',$id);
+
+        if($prod_cate->delete()){
+            return ['result' => $succes];
+        }else{
+            return ['result' => $errores];
         }
     }
 }

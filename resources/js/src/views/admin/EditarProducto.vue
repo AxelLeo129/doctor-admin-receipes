@@ -96,9 +96,9 @@
               class="ml-auto mt-2"
               color="warning"
               @click="doUpdate"
-              :disabled="descartivado == true || name == '' || quantity == '' || description == '' || precentation == '' || price == '' || laboratory == '' || category == '' || warehouse == ''"
+              :disabled="name == '' || quantity == '' || description == '' || precentation == '' || price == '' || laboratory == '' || category == '' || warehouse == ''"
             >Guardar</vs-button>
-            <vs-button class="ml-4 mt-2" type="border" color="danger">Resetear</vs-button>
+            <vs-button class="ml-4 mt-2" type="border" @click="getData" color="danger">Resetear</vs-button>
           </div>
         </div>
       </div>
@@ -129,16 +129,16 @@ export default {
       description: null,
       quantity: null,
       price: null,
-      descartivado: true,
       id: null,
       laboratory: null,
       warehouse: null,
-      category: [6],
+      category: [],
       category1: null,
       message: "Error en el servidor, por favor inténtalo más tarde.",
       activado: false,
       base64textString: "",
-      categorias: []
+      categorias: [],
+      categories: []
     };
   },
   computed: {
@@ -169,69 +169,100 @@ export default {
     }
   },
   created() {
-    this.getCategories();
-    this.openLoading();
-    this.id = this.$route.params.productId;
-    let token = localStorage.getItem("tu");
-    axios({
-      method: "get",
-      url: "http://127.0.0.1:8000/api/getProduct/" + this.id,
-      headers: {
-        authorization: "Bearer " + token,
-        "content-type": "application/json"
-      }
-    })
-      .then(Response => {
-        if (Response.data.length == 0) {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      this.openLoading();
+      this.category = [];
+      this.id = this.$route.params.productId;
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getProduct/" + this.id,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          if (Response.data.length == 0) {
+            axios({
+              method: "get",
+              url: "http://127.0.0.1:8000/api/getProduct1/" + this.id,
+              headers: {
+                authorization: "Bearer " + token,
+                "content-type": "application/json"
+              }
+            })
+              .then(Response => {
+                if (Response.data.length == 0) {
+                  this.activeLoading = false;
+                  this.$vs.loading.close();
+                  this.$vs.notify({
+                    title: "Atención",
+                    text: "Producto no encontrado.",
+                    color: "warning"
+                  });
+                  this.$router.push("/consola");
+                } else {
+                  this.name = Response.data[0].name;
+                  this.imagen =
+                    "data:image/png;base64," + Response.data[0].image;
+                  this.base64textString = Response.data[0].image;
+                  this.quantity = Response.data[0].quantity;
+                  this.description = Response.data[0].description;
+                  this.precentation = Response.data[0].precentation;
+                  this.price = Response.data[0].price;
+                  this.laboratory = Response.data[0].laboratory;
+                  this.warehouse = Response.data[0].warehouse;
+                  this.activeLoading = false;
+                  this.$vs.loading.close();
+                }
+              })
+              .catch(err => {
+                console.log(err);
+                this.activeLoading = false;
+                this.$vs.loading.close();
+                this.$vs.notify({
+                  title: "Precaución",
+                  text: "Producto no encontrado.",
+                  color: "warning"
+                });
+                this.$router.push("/consola");
+              });
+          } else {
+            this.name = Response.data[0].name;
+            this.imagen = "data:image/png;base64," + Response.data[0].image;
+            this.base64textString = Response.data[0].image;
+            this.quantity = Response.data[0].quantity;
+            this.description = Response.data[0].description;
+            this.precentation = Response.data[0].precentation;
+            this.price = Response.data[0].price;
+            this.laboratory = Response.data[0].laboratory;
+            this.category1 = Response.data[0].categories.split(",");
+            this.category1.forEach(element => {
+              element = parseInt(element);
+              this.categories.push(element);
+            });
+            this.warehouse = Response.data[0].warehouse;
+            this.getCategories();
+            this.activeLoading = false;
+            this.$vs.loading.close();
+          }
+        })
+        .catch(err => {
+          console.log(err);
           this.activeLoading = false;
           this.$vs.loading.close();
           this.$vs.notify({
-            title: "Atención",
+            title: "Precaución",
             text: "Producto no encontrado.",
             color: "warning"
           });
           this.$router.push("/consola");
-        } else {
-          this.name = Response.data[0].name;
-          this.imagen = "data:image/png;base64," + Response.data[0].image;
-          this.base64textString = Response.data[0].image;
-          this.quantity = Response.data[0].quantity;
-          this.description = Response.data[0].description;
-          this.precentation = Response.data[0].precentation;
-          this.price = Response.data[0].price;
-          this.laboratory = Response.data[0].laboratory;
-          this.category1 = Response.data[0].categories.split(",");
-          console.log(this.categorias, this.category1);
-          this.category1.forEach(element => {
-            element = parseInt(element);
-            //this.categories.forEach(element1 => {
-            //   console.log(element1);
-            //   if (element == element1.value) {
-            //     console.log(element1);
-            //     this.category.push({
-            //       label: element1.label,
-            //       value: element1.value
-            //     });
-            //   }
-            //});
-          });
-          this.warehouse = Response.data[0].warehouse;
-          this.activeLoading = false;
-          this.$vs.loading.close();
-        }
-      })
-      .catch(err => {
-        this.activeLoading = false;
-        this.$vs.loading.close();
-        this.$vs.notify({
-          title: "Precaución",
-          text: "Producto no encontrado.",
-          color: "warning"
         });
-        this.$router.push("/consola");
-      });
-  },
-  methods: {
+    },
     getCategories() {
       let token = localStorage.getItem("tu");
       let idu = localStorage.getItem("ui");
@@ -250,6 +281,12 @@ export default {
                 label: element.name,
                 value: element.id
               });
+              if (this.categories.includes(element.id)) {
+                this.category.push({
+                  label: element.name,
+                  value: element.id
+                });
+              }
             }
           });
         })
@@ -260,9 +297,10 @@ export default {
     doUpdate() {
       this.openLoading();
       let token = localStorage.getItem("tu");
-      if (this.category1 != this.category) {
-        this.category1 = this.category.value;
-      }
+      let arrayFinal = [];
+      this.category.forEach(element => {
+        arrayFinal.push(element.value);
+      });
       axios({
         method: "put",
         url: "http://127.0.0.1:8000/api/putProduct",
@@ -273,7 +311,6 @@ export default {
           description: this.description,
           price: this.price,
           precentation: this.precentation,
-          category: this.category1,
           laboratory: this.laboratory,
           warehouse: this.warehouse,
           quantity: this.quantity
@@ -284,14 +321,50 @@ export default {
         }
       })
         .then(Response => {
-          this.activeLoading = false;
-          this.$vs.loading.close();
-          this.$router.push("/consola");
-          this.$vs.notify({
-            title: "Actualizado",
-            text: "Producto actualizado exitosamente.",
-            color: "success"
-          });
+          axios({
+            method: "get",
+            url: "http://127.0.0.1:8000/api/deleteProdCate/" + this.id,
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          })
+            .then(Response => {
+              axios({
+                method: "post",
+                url: "http://127.0.0.1:8000/api/postProdCate",
+                data: JSON.stringify({
+                  categories: arrayFinal,
+                  product_id: this.id
+                }),
+                headers: {
+                  authorization: "Bearer " + token,
+                  "content-type": "application/json"
+                }
+              })
+                .then(Response => {
+                  this.activeLoading = false;
+                  this.$vs.loading.close();
+                  this.$router.push("/consola");
+                  this.$vs.notify({
+                    title: "Actualizado",
+                    text: "Producto actualizado exitosamente.",
+                    color: "success"
+                  });
+                })
+                .catch(err => {
+                  this.activeLoading = false;
+                  this.$vs.loading.close();
+                  activado = true;
+                  //console.log(err);
+                });
+            })
+            .catch(err => {
+              this.activeLoading = false;
+              this.$vs.loading.close();
+              this.activado = true;
+              console.log(err);
+            });
         })
         .catch(err => {
           this.activeLoading = false;
@@ -358,7 +431,7 @@ export default {
 
 .subir {
   padding: 5px 10px;
-  background: #003DA5;
+  background: #003da5;
   color: #fff;
   border: 0px solid #fff;
   border-radius: 15px 15px 15px 15px;
@@ -366,7 +439,7 @@ export default {
 
 .subir:hover {
   color: #fff;
-  background: #003DA5;
+  background: #003da5;
 }
 
 .vs-textarea {

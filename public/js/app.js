@@ -56200,7 +56200,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/nuevoPaciente',
       name: 'extra-component-form-wizard',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! @/views/pages/nuevoPaciente.vue */ "./resources/js/src/views/pages/nuevoPaciente.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! @/views/pages/nuevoPaciente.vue */ "./resources/js/src/views/pages/nuevoPaciente.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56230,7 +56230,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/agregarProductos',
       name: 'ecommerce-shop',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(9), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ./views/pages/agregarProductos.vue */ "./resources/js/src/views/pages/agregarProductos.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ./views/pages/agregarProductos.vue */ "./resources/js/src/views/pages/agregarProductos.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
