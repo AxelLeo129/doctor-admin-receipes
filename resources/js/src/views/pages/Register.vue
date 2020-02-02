@@ -33,39 +33,39 @@
                 <div class="clearfix">
                   <vs-input
                     data-vv-validate-on="blur"
-                    label-placeholder="Nombres y Apellidos"
+                    label="Nombres y Apellidos"
                     name="name"
                     placeholder="Nombres y Apellidos"
                     class="w-full"
                     v-model="name"
                   />
-                  <span class="text-danger text-sm" v-show="name === ''">{{ errors.name }}</span>
+                  <span class="text-danger text-sm" v-if="name === ''">{{ errors.name }}</span>
 
                   <vs-input
                     data-vv-validate-on="blur"
                     name="email"
                     type="email"
                     v-model="email"
-                    label-placeholder="Email"
+                    label="Email"
                     placeholder="Email"
                     class="w-full mt-6"
                   />
-                  <span class="text-danger text-sm" v-show="email === ''">{{ errors.email }}</span>
+                  <span class="text-danger text-sm" v-if="email === ''">{{ errors.email }}</span>
                   <span
                     class="text-danger text-sm"
-                    v-show="bol === false && email !== ''"
+                    v-if="bol === false && email !== ''"
                   >{{ errors.email1 }}</span>
 
                   <vs-input
                     data-vv-validate-on="blur"
-                    label-placeholder="No.Colegiado"
+                    label="No.Colegiado"
                     name="userName"
                     v-model="userName"
                     type="number"
                     placeholder="No.Colegiado"
                     class="w-full"
                   />
-                  <span class="text-danger text-sm" v-show="userName === ''">{{ errors.userName }}</span>
+                  <span class="text-danger text-sm" v-if="userName === ''">{{ errors.userName }}</span>
 
                   <vs-input
                     ref="password"
@@ -73,14 +73,14 @@
                     data-vv-validate-on="blur"
                     name="password"
                     v-model="password"
-                    label-placeholder="Contraseña"
+                    label="Contraseña"
                     placeholder="Contraseña"
                     class="w-full mt-6"
                   />
-                  <span class="text-danger text-sm" v-show="password === ''">{{ errors.password }}</span>
+                  <span class="text-danger text-sm" v-if="password === ''">{{ errors.password }}</span>
                   <span
                     class="text-danger text-sm"
-                    v-show="bol1 === false && password !== ''"
+                    v-if="bol1 === false && password !== ''"
                   >{{ errors.password1 }}</span>
 
                   <vs-input
@@ -88,22 +88,22 @@
                     data-vv-validate-on="blur"
                     data-vv-as="password"
                     name="confirm_password"
-                    label-placeholder="Confirmar Contraseña"
+                    label="Confirmar Contraseña"
                     placeholder="Confirmar Contraseña"
                     class="w-full mt-6"
                     v-model="confirmPassword"
                   />
                   <span
                     class="text-danger text-sm"
-                    v-show="confirmPassword === ''"
+                    v-if="confirmPassword === ''"
                   >{{ errors.c_password }}</span>
                   <span
                     class="text-danger text-sm"
-                    v-show="bol2 === false && confirmPassword !== ''"
+                    v-if="bol2 === false && confirmPassword !== ''"
                   >{{ errors.c_password1 }}</span>
                   <span
                     class="text-danger text-sm"
-                    v-show="bol3 === false && confirmPassword !== '' && bol2 == true"
+                    v-if="bol3 === false && confirmPassword !== '' && bol2 == true"
                   >{{ errors.c_password2 }}</span>
 
                   <vs-checkbox class="mt-6">Acepto los términos & condiciones.</vs-checkbox>

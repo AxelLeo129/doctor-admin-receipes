@@ -1,6 +1,10 @@
 <template>
   <div class="flex">
-    <div class="search-full-container w-full h-full absolute left-0 top-0" :class="{'flex': showFullSearch}" v-show="showFullSearch">
+    <div
+      class="search-full-container w-full h-full absolute left-0 top-0"
+      :class="{'flex': showFullSearch}"
+      v-show="showFullSearch"
+    >
       <vx-auto-suggest
         ref="navbarSearch"
         :autoFocus="showFullSearch"
@@ -13,8 +17,8 @@
         placeholder="Buscar páginas..."
         @input="hnd_search_query_update"
         @selected="selected"
-        @closeSearchbar="showFullSearch = false">
-
+        @closeSearchbar="showFullSearch = false"
+      >
         <template v-slot:group="{ group_name }">
           <p class="font-semibold text-primary">{{ group_name }}</p>
         </template>
@@ -34,22 +38,26 @@
             <span>No se encuentran resultados.</span>
           </div>
         </template>
-
       </vx-auto-suggest>
 
       <div class="absolute right-0 h-full z-50">
         <feather-icon
           icon="XIcon"
           class="px-4 cursor-pointer h-full close-search-icon"
-          @click="showFullSearch = false" />
+          @click="showFullSearch = false"
+        />
       </div>
     </div>
-    <feather-icon icon="SearchIcon" @click="showFullSearch = true" class="cursor-pointer navbar-fuzzy-search mr-4" />
+    <feather-icon
+      icon="SearchIcon"
+      @click="showFullSearch = true"
+      class="cursor-pointer navbar-fuzzy-search mr-4"
+    />
   </div>
 </template>
 
 <script>
-import VxAutoSuggest from '@/components/vx-auto-suggest/VxAutoSuggest.vue';
+import VxAutoSuggest from "@/components/vx-auto-suggest/VxAutoSuggest.vue";
 
 export default {
   components: {
@@ -58,19 +66,33 @@ export default {
   data() {
     return {
       navbarSearchAndPinList: this.$store.state.navbarSearchAndPinList,
-      showFullSearch: false,
-    }
+      showFullSearch: false
+    };
+  },
+  created() {
+    //this.getUrl();
   },
   methods: {
+    getUrl() {
+      let idu = localStorage.getItem("ru");
+      let array = [];
+      this.navbarSearchAndPinList.pages.data.forEach(element => {
+        if (element.id == idu) {
+          array.push(element);
+        }
+      });
+      console.log(this.navbarSearchAndPinList);
+      console.log(array);
+      this.navbarSearchAndPinList.pages.data = array;
+    },
     selected(item) {
-      item.pages ?  this.$router.push(item.pages.url).catch(() => {}) : null
+      item.pages ? this.$router.push(item.pages.url).catch(() => {}) : null;
       this.showFullSearch = false;
     },
     hnd_search_query_update(query) {
       // Show overlay if any character is entered
-      this.$store.commit('TOGGLE_CONTENT_OVERLAY', query ? true : false)
+      this.$store.commit("TOGGLE_CONTENT_OVERLAY", query ? true : false);
     }
   }
-}
-
+};
 </script>

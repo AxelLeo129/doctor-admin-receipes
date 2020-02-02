@@ -35,8 +35,8 @@ export default [
   //Admin - Productos
   {
     url: "/nuevoProducto",
-    name: "Nuevo Producto",
-    slug: "nuevoProducto",
+    name: "Nuevo Medicamento",
+    slug: "nuevoMedicamento",
     icon: "PlusIcon",
     rol: 1
   },

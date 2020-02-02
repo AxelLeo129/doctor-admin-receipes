@@ -1703,6 +1703,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1714,14 +1722,28 @@ __webpack_require__.r(__webpack_exports__);
       showFullSearch: false
     };
   },
+  created: function created() {//this.getUrl();
+  },
   methods: {
+    getUrl: function getUrl() {
+      var idu = localStorage.getItem("ru");
+      var array = [];
+      this.navbarSearchAndPinList.pages.data.forEach(function (element) {
+        if (element.id == idu) {
+          array.push(element);
+        }
+      });
+      console.log(this.navbarSearchAndPinList);
+      console.log(array);
+      this.navbarSearchAndPinList.pages.data = array;
+    },
     selected: function selected(item) {
       item.pages ? this.$router.push(item.pages.url).catch(function () {}) : null;
       this.showFullSearch = false;
     },
     hnd_search_query_update: function hnd_search_query_update(query) {
       // Show overlay if any character is entered
-      this.$store.commit('TOGGLE_CONTENT_OVERLAY', query ? true : false);
+      this.$store.commit("TOGGLE_CONTENT_OVERLAY", query ? true : false);
     }
   }
 });
@@ -6894,8 +6916,8 @@ __webpack_require__.r(__webpack_exports__);
 }, //Admin - Productos
 {
   url: "/nuevoProducto",
-  name: "Nuevo Producto",
-  slug: "nuevoProducto",
+  name: "Nuevo Medicamento",
+  slug: "nuevoMedicamento",
   icon: "PlusIcon",
   rol: 1
 }, {

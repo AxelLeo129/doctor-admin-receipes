@@ -380,7 +380,7 @@ var render = function() {
                                 staticClass: "w-full",
                                 attrs: {
                                   "data-vv-validate-on": "blur",
-                                  "label-placeholder": "Nombres y Apellidos",
+                                  label: "Nombres y Apellidos",
                                   name: "name",
                                   placeholder: "Nombres y Apellidos"
                                 },
@@ -393,21 +393,13 @@ var render = function() {
                                 }
                               }),
                               _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: _vm.name === "",
-                                      expression: "name === ''"
-                                    }
-                                  ],
-                                  staticClass: "text-danger text-sm"
-                                },
-                                [_vm._v(_vm._s(_vm.errors.name))]
-                              ),
+                              _vm.name === ""
+                                ? _c(
+                                    "span",
+                                    { staticClass: "text-danger text-sm" },
+                                    [_vm._v(_vm._s(_vm.errors.name))]
+                                  )
+                                : _vm._e(),
                               _vm._v(" "),
                               _c("vs-input", {
                                 staticClass: "w-full mt-6",
@@ -415,7 +407,7 @@ var render = function() {
                                   "data-vv-validate-on": "blur",
                                   name: "email",
                                   type: "email",
-                                  "label-placeholder": "Email",
+                                  label: "Email",
                                   placeholder: "Email"
                                 },
                                 model: {
@@ -427,45 +419,27 @@ var render = function() {
                                 }
                               }),
                               _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: _vm.email === "",
-                                      expression: "email === ''"
-                                    }
-                                  ],
-                                  staticClass: "text-danger text-sm"
-                                },
-                                [_vm._v(_vm._s(_vm.errors.email))]
-                              ),
+                              _vm.email === ""
+                                ? _c(
+                                    "span",
+                                    { staticClass: "text-danger text-sm" },
+                                    [_vm._v(_vm._s(_vm.errors.email))]
+                                  )
+                                : _vm._e(),
                               _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value:
-                                        _vm.bol === false && _vm.email !== "",
-                                      expression:
-                                        "bol === false && email !== ''"
-                                    }
-                                  ],
-                                  staticClass: "text-danger text-sm"
-                                },
-                                [_vm._v(_vm._s(_vm.errors.email1))]
-                              ),
+                              _vm.bol === false && _vm.email !== ""
+                                ? _c(
+                                    "span",
+                                    { staticClass: "text-danger text-sm" },
+                                    [_vm._v(_vm._s(_vm.errors.email1))]
+                                  )
+                                : _vm._e(),
                               _vm._v(" "),
                               _c("vs-input", {
                                 staticClass: "w-full",
                                 attrs: {
                                   "data-vv-validate-on": "blur",
-                                  "label-placeholder": "No.Colegiado",
+                                  label: "No.Colegiado",
                                   name: "userName",
                                   type: "number",
                                   placeholder: "No.Colegiado"
@@ -479,21 +453,13 @@ var render = function() {
                                 }
                               }),
                               _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: _vm.userName === "",
-                                      expression: "userName === ''"
-                                    }
-                                  ],
-                                  staticClass: "text-danger text-sm"
-                                },
-                                [_vm._v(_vm._s(_vm.errors.userName))]
-                              ),
+                              _vm.userName === ""
+                                ? _c(
+                                    "span",
+                                    { staticClass: "text-danger text-sm" },
+                                    [_vm._v(_vm._s(_vm.errors.userName))]
+                                  )
+                                : _vm._e(),
                               _vm._v(" "),
                               _c("vs-input", {
                                 ref: "password",
@@ -502,7 +468,7 @@ var render = function() {
                                   type: "password",
                                   "data-vv-validate-on": "blur",
                                   name: "password",
-                                  "label-placeholder": "Contraseña",
+                                  label: "Contraseña",
                                   placeholder: "Contraseña"
                                 },
                                 model: {
@@ -514,40 +480,21 @@ var render = function() {
                                 }
                               }),
                               _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: _vm.password === "",
-                                      expression: "password === ''"
-                                    }
-                                  ],
-                                  staticClass: "text-danger text-sm"
-                                },
-                                [_vm._v(_vm._s(_vm.errors.password))]
-                              ),
+                              _vm.password === ""
+                                ? _c(
+                                    "span",
+                                    { staticClass: "text-danger text-sm" },
+                                    [_vm._v(_vm._s(_vm.errors.password))]
+                                  )
+                                : _vm._e(),
                               _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value:
-                                        _vm.bol1 === false &&
-                                        _vm.password !== "",
-                                      expression:
-                                        "bol1 === false && password !== ''"
-                                    }
-                                  ],
-                                  staticClass: "text-danger text-sm"
-                                },
-                                [_vm._v(_vm._s(_vm.errors.password1))]
-                              ),
+                              _vm.bol1 === false && _vm.password !== ""
+                                ? _c(
+                                    "span",
+                                    { staticClass: "text-danger text-sm" },
+                                    [_vm._v(_vm._s(_vm.errors.password1))]
+                                  )
+                                : _vm._e(),
                               _vm._v(" "),
                               _c("vs-input", {
                                 staticClass: "w-full mt-6",
@@ -556,7 +503,7 @@ var render = function() {
                                   "data-vv-validate-on": "blur",
                                   "data-vv-as": "password",
                                   name: "confirm_password",
-                                  "label-placeholder": "Confirmar Contraseña",
+                                  label: "Confirmar Contraseña",
                                   placeholder: "Confirmar Contraseña"
                                 },
                                 model: {
@@ -568,60 +515,31 @@ var render = function() {
                                 }
                               }),
                               _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: _vm.confirmPassword === "",
-                                      expression: "confirmPassword === ''"
-                                    }
-                                  ],
-                                  staticClass: "text-danger text-sm"
-                                },
-                                [_vm._v(_vm._s(_vm.errors.c_password))]
-                              ),
+                              _vm.confirmPassword === ""
+                                ? _c(
+                                    "span",
+                                    { staticClass: "text-danger text-sm" },
+                                    [_vm._v(_vm._s(_vm.errors.c_password))]
+                                  )
+                                : _vm._e(),
                               _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value:
-                                        _vm.bol2 === false &&
-                                        _vm.confirmPassword !== "",
-                                      expression:
-                                        "bol2 === false && confirmPassword !== ''"
-                                    }
-                                  ],
-                                  staticClass: "text-danger text-sm"
-                                },
-                                [_vm._v(_vm._s(_vm.errors.c_password1))]
-                              ),
+                              _vm.bol2 === false && _vm.confirmPassword !== ""
+                                ? _c(
+                                    "span",
+                                    { staticClass: "text-danger text-sm" },
+                                    [_vm._v(_vm._s(_vm.errors.c_password1))]
+                                  )
+                                : _vm._e(),
                               _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value:
-                                        _vm.bol3 === false &&
-                                        _vm.confirmPassword !== "" &&
-                                        _vm.bol2 == true,
-                                      expression:
-                                        "bol3 === false && confirmPassword !== '' && bol2 == true"
-                                    }
-                                  ],
-                                  staticClass: "text-danger text-sm"
-                                },
-                                [_vm._v(_vm._s(_vm.errors.c_password2))]
-                              ),
+                              _vm.bol3 === false &&
+                              _vm.confirmPassword !== "" &&
+                              _vm.bol2 == true
+                                ? _c(
+                                    "span",
+                                    { staticClass: "text-danger text-sm" },
+                                    [_vm._v(_vm._s(_vm.errors.c_password2))]
+                                  )
+                                : _vm._e(),
                               _vm._v(" "),
                               _c("vs-checkbox", { staticClass: "mt-6" }, [
                                 _vm._v("Acepto los términos & condiciones.")
