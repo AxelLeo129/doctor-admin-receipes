@@ -3568,7 +3568,9 @@ var render = function(_h, _vm) {
     [
       _c("span", [
         _vm._v("COPYRIGHT © " + _vm._s(new Date().getFullYear()) + " "),
-        _c("a", { attrs: { href: "#", rel: "nofollow" } }, [_vm._v("Merke")]),
+        _c("a", { attrs: { href: "#", rel: "nofollow" } }, [
+          _vm._v("PHARMAZone")
+        ]),
         _vm._v(", All rights Reserved")
       ]),
       _vm._v(" "),
@@ -3576,7 +3578,7 @@ var render = function(_h, _vm) {
         "span",
         { staticClass: "md:flex hidden items-center" },
         [
-          _c("span", [_vm._v("Merke")]),
+          _vm._m(0),
           _vm._v(" "),
           _c("feather-icon", {
             staticClass: "ml-2",
@@ -3591,7 +3593,17 @@ var render = function(_h, _vm) {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function(_h, _vm) {
+    var _c = _vm._c
+    return _c("span", [
+      _vm._v("Desarrollado por "),
+      _c("a", { attrs: { href: "https://merke.net/", target: "_blank" } }, [
+        _vm._v("Merke")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

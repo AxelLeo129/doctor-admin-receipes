@@ -11,9 +11,9 @@
 
 <template functional>
     <footer class="the-footer flex-wrap justify-between" :class="classes">
-        <span>COPYRIGHT &copy; {{ new Date().getFullYear() }} <a href="#" rel="nofollow">Merke</a>, All rights Reserved</span>
+        <span>COPYRIGHT &copy; {{ new Date().getFullYear() }} <a href="#" rel="nofollow">PHARMAZone</a>, All rights Reserved</span>
         <span class="md:flex hidden items-center">
-            <span>Merke</span>
+            <span>Desarrollado por <a href="https://merke.net/" target="_blank">Merke</a></span>
             <feather-icon icon="HeartIcon" svgClasses="stroke-current text-danger w-6 h-6" class="ml-2" />
         </span>
     </footer>
