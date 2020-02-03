@@ -283,6 +283,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -321,7 +331,7 @@ __webpack_require__.r(__webpack_exports__);
       precentacion: "",
       nuevaRecetaData: null,
       idMedicanto: "",
-      uso: "",
+      uso: null,
       nombre: "",
       descripcion: "",
       medicamentosList: [],
@@ -398,6 +408,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    getNum: function getNum() {
+      var num = JSON.parse(localStorage.getItem("nuevaRecetaData"));
+
+      if (num != null || num != "") {
+        this.mediNum = num.medicines.length; //console.log(num.medicines);
+      } else {
+        this.mediNum = 0;
+      }
+    },
     bCate: function bCate(id) {
       console.log(id);
       this.buscar = this.buscar + "," + id;
@@ -413,7 +432,7 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.nuevaRecetaData.medicines.push(this.idMedicanto);
       localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
-      this.uso = "";
+      this.uso = null;
       this.$router.push("/editarReceta");
     },
     agregarM: function agregarM() {
@@ -427,7 +446,7 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.nuevaRecetaData.medicines.push(this.idMedicanto);
       localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
-      this.uso = "";
+      this.uso = null;
       this.activar = false;
     },
     openLoading: function openLoading() {
@@ -531,6 +550,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
+    this.getNum();
     this.setSidebarWidth();
     this.getCategorias();
     this.getData();
@@ -551,7 +571,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".size {\n  height: 206px;\n  width: 266px;\n}\n@media screen and (max-width: 1024px) {\n.size {\n    height: 140px;\n    width: 150px;\n}\n}\n#algolia-instant-search-demo .algolia-header .algolia-filters-label {\n  width: calc(260px + 2.4rem);\n}\n#algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  position: relative;\n}\n[dir=ltr] #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  float: left;\n}\n[dir=rtl] #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  float: right;\n}\n[dir] #algolia-instant-search-demo .algolia-search-input-right-aligned-icon {\n  padding: 1rem 1.5rem;\n}\n#algolia-instant-search-demo .algolia-price-slider {\n  min-width: unset;\n}\n#algolia-instant-search-demo .item-view-primary-action-btn {\n  color: #2c2c2c !important;\n  min-width: 50%;\n}\n[dir] #algolia-instant-search-demo .item-view-primary-action-btn {\n  background-color: #f6f6f6;\n}\n#algolia-instant-search-demo .item-view-secondary-action-btn {\n  min-width: 50%;\n}\n[dir] .theme-dark #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  background-color: #10163a;\n}\n@media (min-width: 992px) {\n[dir] .vs-sidebar-rounded .vs-sidebar {\n    border-radius: 0.5rem;\n}\n[dir] .vs-sidebar-rounded .vs-sidebar--items {\n    border-radius: 0.5rem;\n}\n}\n@media (max-width: 992px) {\n#algolia-content-container .vs-sidebar {\n    position: absolute !important;\n}\n[dir] #algolia-content-container .vs-sidebar {\n    float: none !important;\n}\n}", ""]);
+exports.push([module.i, "[dir] .alineacion {\n  text-align: center;\n}\n.size {\n  height: 206px;\n  width: 266px;\n}\n@media screen and (max-width: 1024px) {\n.size {\n    height: 140px;\n    width: 150px;\n}\n}\n#algolia-instant-search-demo .algolia-header .algolia-filters-label {\n  width: calc(260px + 2.4rem);\n}\n#algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  position: relative;\n}\n[dir=ltr] #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  float: left;\n}\n[dir=rtl] #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  float: right;\n}\n[dir] #algolia-instant-search-demo .algolia-search-input-right-aligned-icon {\n  padding: 1rem 1.5rem;\n}\n#algolia-instant-search-demo .algolia-price-slider {\n  min-width: unset;\n}\n#algolia-instant-search-demo .item-view-primary-action-btn {\n  color: #2c2c2c !important;\n  min-width: 50%;\n}\n[dir] #algolia-instant-search-demo .item-view-primary-action-btn {\n  background-color: #f6f6f6;\n}\n#algolia-instant-search-demo .item-view-secondary-action-btn {\n  min-width: 50%;\n}\n[dir] .theme-dark #algolia-instant-search-demo #algolia-content-container .vs-sidebar {\n  background-color: #10163a;\n}\n@media (min-width: 992px) {\n[dir] .vs-sidebar-rounded .vs-sidebar {\n    border-radius: 0.5rem;\n}\n[dir] .vs-sidebar-rounded .vs-sidebar--items {\n    border-radius: 0.5rem;\n}\n}\n@media (max-width: 992px) {\n#algolia-content-container .vs-sidebar {\n    position: absolute !important;\n}\n[dir] #algolia-content-container .vs-sidebar {\n    float: none !important;\n}\n}", ""]);
 
 // exports
 
@@ -1061,7 +1081,7 @@ var render = function() {
                                             {
                                               key: item.id,
                                               staticClass:
-                                                "vx-col w-full sm:w-1/2 lg:w-1/3 mb-base"
+                                                "vx-col w-full sm:w-1/3 lg:w-1/3 mb-base"
                                             },
                                             [
                                               _c(
@@ -1102,6 +1122,12 @@ var render = function() {
                                                   _c(
                                                     "h5",
                                                     { staticClass: "mb-2" },
+                                                    [_vm._v(_vm._s(item.name))]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "h6",
+                                                    { staticClass: "mb-2" },
                                                     [
                                                       _vm._v(
                                                         _vm._s(
@@ -1109,12 +1135,6 @@ var render = function() {
                                                         )
                                                       )
                                                     ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "h6",
-                                                    { staticClass: "mb-2" },
-                                                    [_vm._v(_vm._s(item.name))]
                                                   ),
                                                   _vm._v(" "),
                                                   _c("p", {
@@ -1138,8 +1158,9 @@ var render = function() {
                                                     {
                                                       attrs: {
                                                         classContent:
-                                                          "popup-example",
-                                                        title: "Dosificación",
+                                                          "holamundo",
+                                                        title:
+                                                          "Medicamento Recetado",
                                                         active: _vm.activar
                                                       },
                                                       on: {
@@ -1169,7 +1190,7 @@ var render = function() {
                                                         staticClass: "mb-2",
                                                         domProps: {
                                                           textContent: _vm._s(
-                                                            _vm.descripcion
+                                                            _vm.precentacion
                                                           )
                                                         }
                                                       }),
@@ -1178,7 +1199,7 @@ var render = function() {
                                                         staticClass: "mb-2",
                                                         domProps: {
                                                           textContent: _vm._s(
-                                                            _vm.precentacion
+                                                            _vm.descripcion
                                                           )
                                                         }
                                                       }),
@@ -1203,49 +1224,127 @@ var render = function() {
                                                               },
                                                               expression: "uso"
                                                             }
-                                                          })
+                                                          }),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              directives: [
+                                                                {
+                                                                  name: "show",
+                                                                  rawName:
+                                                                    "v-show",
+                                                                  value:
+                                                                    _vm.uso ==
+                                                                    "",
+                                                                  expression:
+                                                                    "uso == ''"
+                                                                }
+                                                              ],
+                                                              staticClass:
+                                                                "text-danger text-sm"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                "Este campo es requerido."
+                                                              )
+                                                            ]
+                                                          )
                                                         ],
                                                         1
                                                       ),
                                                       _vm._v(" "),
                                                       _c(
-                                                        "vs-button",
+                                                        "div",
                                                         {
-                                                          attrs: {
-                                                            color: "primary",
-                                                            type: "filled"
-                                                          },
-                                                          on: {
-                                                            click: _vm.agregarM
-                                                          }
+                                                          staticClass: "vx-row"
                                                         },
                                                         [
-                                                          _vm._v(
-                                                            "Agregar & Continuar"
-                                                          )
-                                                        ]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "vs-button",
-                                                        {
-                                                          attrs: {
-                                                            color:
-                                                              "rgb(62, 201, 214)",
-                                                            type: "filled"
-                                                          },
-                                                          on: {
-                                                            click: _vm.agregarmF
-                                                          }
-                                                        },
-                                                        [
-                                                          _vm._v(
-                                                            "Agregar & Finalizar"
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base"
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "vs-button",
+                                                                {
+                                                                  attrs: {
+                                                                    color:
+                                                                      "rgb(62, 201, 214)",
+                                                                    type:
+                                                                      "filled",
+                                                                    disabled:
+                                                                      _vm.uso ==
+                                                                        null ||
+                                                                      _vm.uso ==
+                                                                        ""
+                                                                  },
+                                                                  on: {
+                                                                    click:
+                                                                      _vm.agregarmF
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Agregar & Finalizar"
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ],
+                                                            1
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base"
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "div",
+                                                                {
+                                                                  attrs: {
+                                                                    align:
+                                                                      "right"
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _c(
+                                                                    "vs-button",
+                                                                    {
+                                                                      attrs: {
+                                                                        color:
+                                                                          "primary",
+                                                                        type:
+                                                                          "filled",
+                                                                        disabled:
+                                                                          _vm.uso ==
+                                                                            null ||
+                                                                          _vm.uso ==
+                                                                            ""
+                                                                      },
+                                                                      on: {
+                                                                        click:
+                                                                          _vm.agregarM
+                                                                      }
+                                                                    },
+                                                                    [
+                                                                      _vm._v(
+                                                                        "Agregar & Continuar"
+                                                                      )
+                                                                    ]
+                                                                  )
+                                                                ],
+                                                                1
+                                                              )
+                                                            ]
                                                           )
                                                         ]
                                                       )
-                                                    ],
-                                                    1
+                                                    ]
                                                   ),
                                                   _vm._v(" "),
                                                   _c(
@@ -1259,12 +1358,7 @@ var render = function() {
                                                         "vs-button",
                                                         {
                                                           staticClass:
-                                                            "mt-4 mr-2 shadow-lg",
-                                                          attrs: {
-                                                            type: "gradient",
-                                                            "gradient-color-secondary":
-                                                              "#CE9FFC"
-                                                          },
+                                                            "mt-4 mr-2 shadow-lg alineacion",
                                                           on: {
                                                             click: function(
                                                               $event

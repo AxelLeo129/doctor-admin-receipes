@@ -668,7 +668,7 @@ var render = function() {
               [
                 _c("vs-textarea", {
                   staticClass: "vs-textarea",
-                  attrs: { label: "Descripción" },
+                  attrs: { label: "Nombre del Componente" },
                   model: {
                     value: _vm.description,
                     callback: function($$v) {

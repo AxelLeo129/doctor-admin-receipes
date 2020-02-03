@@ -88,6 +88,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -285,13 +292,25 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "vx-card",
-    { attrs: { title: "Datos Adicinales del Paciente", "code-toggler": "" } },
+    { attrs: { title: "Registro de la Consulta", "code-toggler": "" } },
     [
-      _c("p", [_vm._v("Ingrese algunos datos adicionales del paciente.")]),
+      _c("p", [
+        _vm._v(
+          "Ingrese información sobre los síntomas, diagnóstico y cualquier otra información de utilizadad para el seguimiento de su paciente."
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { attrs: { align: "center" } }, [
+        _c("h4", [_vm._v("Paso")]),
+        _vm._v(" "),
+        _c("h5", [
+          _vm._v("\n      1 ... 2 ...\n      3 ...\n      "),
+          _c("strong", [_vm._v("4")])
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "mt-5" },
         [
           _c(
             "form-wizard",

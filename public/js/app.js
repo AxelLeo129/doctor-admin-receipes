@@ -56119,9 +56119,9 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       beforeEnter: function beforeEnter(to, from, next) {
         var token = localStorage.getItem('tu');
         var idu = localStorage.getItem('ui');
-        var rol = localStorage.getItem('rol');
+        var rol = localStorage.getItem('ru');
 
-        if (token && idu && rol) {
+        if (token != null && token != "" && idu != null && idu != "" && rol != null && rol != "") {
           next();
         } else {
           next({

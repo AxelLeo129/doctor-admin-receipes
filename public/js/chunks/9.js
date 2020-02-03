@@ -76,6 +76,23 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    newData: function newData() {
+      var nuevaRecetaData = {
+        recipe_id: "",
+        name: "",
+        phone: "",
+        doctor_id: "",
+        symptom: "",
+        diagnostics: "",
+        observations: "",
+        nextAppointment: "",
+        status: 1,
+        dateIssue: "",
+        medicines: [],
+        medicamentos: []
+      };
+      localStorage.setItem("nuevaRecetaData", JSON.stringify(nuevaRecetaData));
+    },
     getDate: function getDate() {
       var f = new Date();
       this.fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
@@ -114,6 +131,7 @@ __webpack_require__.r(__webpack_exports__);
     TabContent: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["TabContent"]
   },
   created: function created() {
+    this.newData();
     this.getDate();
   }
 });

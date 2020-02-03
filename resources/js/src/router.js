@@ -150,8 +150,8 @@ const router = new Router({
           beforeEnter(to, from, next) {
             let token = localStorage.getItem('tu');
             let idu = localStorage.getItem('ui');
-            let rol = localStorage.getItem('rol');
-            if (token && idu && rol) {
+            let rol = localStorage.getItem('ru');
+            if (token != null && token != "" && idu != null && idu != "" && rol != null && rol != "") {
               next();
             } else {
               next({

@@ -41,7 +41,7 @@
           <vs-input class="w-full mt-4" label="Nombre" v-model="name" name="name" />
           <span class="text-danger text-sm" v-show="name === ''">{{ errors.campo }}</span>
           <div class="mt-4">
-            <vs-textarea class="vs-textarea" label="Descripción" v-model="description" />
+            <vs-textarea class="vs-textarea" label="Nombre del Componente" v-model="description" />
             <span class="text-danger text-sm" v-show="description === ''">{{ errors.campo }}</span>
           </div>
 

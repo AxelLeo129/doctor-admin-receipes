@@ -89,7 +89,7 @@
                   <div class="vx-col md:w-1/4 w-full">
                     <ul>
                       <li>
-                        <vs-checkbox v-model="registro">¿Desea usar registro Clínico?</vs-checkbox>
+                        <vs-checkbox v-if="rol == 2" v-model="registro">¿Desea usar registro Clínico?</vs-checkbox>
                       </li>
                     </ul>
                   </div>

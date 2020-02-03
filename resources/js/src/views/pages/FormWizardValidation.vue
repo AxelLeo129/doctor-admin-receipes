@@ -63,6 +63,26 @@ export default {
     };
   },
   methods: {
+    newData(){
+      let nuevaRecetaData = {
+          recipe_id: "",
+          name: "",
+          phone: "",
+          doctor_id: "",
+          symptom: "",
+          diagnostics: "",
+          observations: "",
+          nextAppointment: "",
+          status: 1,
+          dateIssue: "",
+          medicines: [],
+          medicamentos: []
+        };
+        localStorage.setItem(
+          "nuevaRecetaData",
+          JSON.stringify(nuevaRecetaData)
+        );
+    },
     getDate() {
       let f = new Date();
       this.fecha =
@@ -105,6 +125,7 @@ export default {
     TabContent
   },
   created() {
+    this.newData();
     this.getDate();
   }
 };

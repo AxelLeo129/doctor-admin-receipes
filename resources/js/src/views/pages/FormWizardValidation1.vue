@@ -9,10 +9,17 @@
 
 
 <template>
-  <vx-card title="Datos Adicinales del Paciente" code-toggler>
-    <p>Ingrese algunos datos adicionales del paciente.</p>
-
-    <div class="mt-5">
+  <vx-card title="Registro de la Consulta" code-toggler>
+    <p>Ingrese información sobre los síntomas, diagnóstico y cualquier otra información de utilizadad para el seguimiento de su paciente.</p>
+    <div align="center">
+      <h4>Paso</h4>
+      <h5>
+        1 ... 2 ...
+        3 ...
+        <strong>4</strong>
+      </h5>
+    </div>
+    <div>
       <form-wizard
         color="rgba(var(--vs-primary), 1)"
         :title="null"

@@ -91,6 +91,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -138,6 +156,9 @@ __webpack_require__.r(__webpack_exports__);
     this.getData();
   },
   methods: {
+    agregarmas: function agregarmas() {
+      this.$router.push("/agregarProductos");
+    },
     openLoading: function openLoading() {
       this.activeLoading = true;
       this.$vs.loading({
@@ -420,165 +441,217 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { attrs: { id: "ecommerce-checkout-demo" } },
-    [
-      _c(
-        "form-wizard",
-        {
-          ref: "checkoutWizard",
-          attrs: {
-            color: "rgba(var(--vs-primary), 1)",
-            title: null,
-            subtitle: null,
-            "hide-buttons": true
-          }
-        },
-        [
-          _c(
-            "tab-content",
-            {
-              staticClass: "mb-5",
-              attrs: { title: "Paso 3", icon: "feather icon-home" }
-            },
-            [
-              _c("div", { staticClass: "vx-row" }, [
-                _c("div", { staticClass: "vx-col lg:w-2/3 w-full relative" }, [
+  return _c("div", [
+    _c("div", { attrs: { align: "center" } }, [
+      _c("h4", [_vm._v("Paso")]),
+      _vm._v(" "),
+      _vm.nextStep == 0
+        ? _c("h5", [
+            _vm._v("\n      1 ... 2 ... "),
+            _c("strong", [_vm._v("3")])
+          ])
+        : _c("h5", [
+            _vm._v("\n      1 ... 2 ... "),
+            _c("strong", [_vm._v("3")]),
+            _vm._v(" ... 4\n    ")
+          ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { attrs: { id: "ecommerce-checkout-demo" } },
+      [
+        _c(
+          "form-wizard",
+          {
+            ref: "checkoutWizard",
+            attrs: {
+              color: "rgba(var(--vs-primary), 1)",
+              title: null,
+              subtitle: null,
+              "hide-buttons": true
+            }
+          },
+          [
+            _c(
+              "tab-content",
+              {
+                staticClass: "mb-5",
+                attrs: { title: "Paso 3", icon: "feather icon-home" }
+              },
+              [
+                _c("div", { staticClass: "vx-row" }, [
                   _c(
                     "div",
-                    { staticClass: "items-list-view" },
-                    _vm._l(_vm.nuevaRecetaData.medicamentos, function(
-                      item,
-                      index
-                    ) {
-                      return _c(
-                        "vx-card",
-                        { key: item.id, staticStyle: { height: "75%" } },
-                        [
-                          _c("div", { staticClass: "vx-row" }, [
-                            _c(
-                              "div",
-                              { staticClass: "vx-col md:w-1/2 w-full" },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    height: "75%",
-                                    src: "data:image/png;base64," + item.img,
-                                    alt: "image"
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "vx-col md:w-1/2 w-full" },
-                              [
-                                _c("h3", {
-                                  staticClass: "mb-3",
-                                  domProps: { textContent: _vm._s(item.nombre) }
-                                }),
-                                _vm._v(" "),
-                                _c("h5", {
-                                  staticClass: "mb-3",
-                                  domProps: {
-                                    textContent: _vm._s(item.precentacion)
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("br"),
+                    { staticClass: "vx-col lg:w-2/3 w-full relative" },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "items-list-view" },
+                        _vm._l(_vm.nuevaRecetaData.medicamentos, function(
+                          item,
+                          index
+                        ) {
+                          return _c(
+                            "vx-card",
+                            { key: item.id, staticStyle: { height: "75%" } },
+                            [
+                              _c("div", { staticClass: "vx-row" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "vx-col md:w-1/2 w-full" },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        height: "75%",
+                                        src:
+                                          "data:image/png;base64," + item.img,
+                                        alt: "image"
+                                      }
+                                    })
+                                  ]
+                                ),
                                 _vm._v(" "),
                                 _c(
-                                  "vs-button",
-                                  {
-                                    staticClass: "w-full",
-                                    attrs: { color: "danger" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.remover(index)
+                                  "div",
+                                  { staticClass: "vx-col md:w-1/2 w-full" },
+                                  [
+                                    _c("h3", {
+                                      staticClass: "mb-3",
+                                      domProps: {
+                                        textContent: _vm._s(item.nombre)
                                       }
-                                    }
-                                  },
-                                  [_vm._v("Remover")]
+                                    }),
+                                    _vm._v(" "),
+                                    _c("h5", {
+                                      staticClass: "mb-3",
+                                      domProps: {
+                                        textContent: _vm._s(item.precentacion)
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("p", {
+                                      staticClass: "mb-3",
+                                      domProps: {
+                                        textContent: _vm._s(
+                                          item.descripcion.slice(0, 10) + "..."
+                                        )
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "vs-button",
+                                      {
+                                        staticClass: "w-full",
+                                        attrs: { color: "danger" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.remover(index)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Remover")]
+                                    )
+                                  ],
+                                  1
                                 )
-                              ],
-                              1
-                            )
-                          ])
-                        ]
+                              ])
+                            ]
+                          )
+                        }),
+                        1
                       )
-                    }),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "vx-col lg:w-1/3 w-full" },
+                    [
+                      _c(
+                        "vx-card",
+                        [
+                          _c("p", { staticClass: "font-semibold mb-3" }, [
+                            _vm._v("Detalles del Paciente")
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-divider"),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "flex justify-between mb-2" },
+                            [
+                              _c("span", { staticClass: "text-grey" }, [
+                                _vm._v("Nombre")
+                              ]),
+                              _vm._v(" "),
+                              _c("span", [
+                                _vm._v(_vm._s(_vm.nuevaRecetaData.name))
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "flex justify-between mb-2" },
+                            [
+                              _c("span", { staticClass: "text-grey" }, [
+                                _vm._v("Teléfono")
+                              ]),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-success" }, [
+                                _vm._v(_vm._s(_vm.nuevaRecetaData.phone))
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("vs-divider"),
+                          _vm._v(" "),
+                          _vm.nextStep == 0
+                            ? _c(
+                                "vs-button",
+                                {
+                                  staticClass: "w-full mb-2",
+                                  on: { click: _vm.generarReceta }
+                                },
+                                [_vm._v("Finalizar")]
+                              )
+                            : _c(
+                                "vs-button",
+                                {
+                                  staticClass: "w-full mb-2",
+                                  on: { click: _vm.generarReceta }
+                                },
+                                [_vm._v("Siguiente")]
+                              ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-button",
+                            {
+                              staticClass: "w-full mb-2",
+                              attrs: { color: "rgb(71, 227, 228)" },
+                              on: { click: _vm.agregarmas }
+                            },
+                            [_vm._v("Seguir Recetando")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
                     1
                   )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "vx-col lg:w-1/3 w-full" },
-                  [
-                    _c(
-                      "vx-card",
-                      [
-                        _c("p", { staticClass: "font-semibold mb-3" }, [
-                          _vm._v("Detalles del Paciente")
-                        ]),
-                        _vm._v(" "),
-                        _c("vs-divider"),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "flex justify-between mb-2" },
-                          [
-                            _c("span", { staticClass: "text-grey" }, [
-                              _vm._v("Nombre")
-                            ]),
-                            _vm._v(" "),
-                            _c("span", [
-                              _vm._v(_vm._s(_vm.nuevaRecetaData.name))
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "flex justify-between mb-2" },
-                          [
-                            _c("span", { staticClass: "text-grey" }, [
-                              _vm._v("Teléfono")
-                            ]),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "text-success" }, [
-                              _vm._v(_vm._s(_vm.nuevaRecetaData.phone))
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("vs-divider"),
-                        _vm._v(" "),
-                        _c(
-                          "vs-button",
-                          {
-                            staticClass: "w-full",
-                            on: { click: _vm.generarReceta }
-                          },
-                          [_vm._v("Siguiente")]
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ])
-            ]
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+                ])
+              ]
+            )
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

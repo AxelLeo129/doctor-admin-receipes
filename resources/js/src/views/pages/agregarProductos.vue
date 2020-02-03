@@ -17,8 +17,8 @@
       </h5>
     </div>
     <div align="right">
-      <feather-icon icon="FileTextIcon" class="cursor-pointer mt-1 sm:mr-6 mr-2" :badge="mediNum" />  
-    </div> 
+      <feather-icon icon="FileTextIcon" class="cursor-pointer mt-1 sm:mr-6 mr-2" :badge="mediNum" />
+    </div>
     <form-wizard
       color="rgba(var(--vs-primary), 1)"
       :title="null"
@@ -84,10 +84,9 @@
                         v-for="item in categorias"
                         :key="item.value"
                         class="flex items-center cursor-pointer py-1"
-                        
                       >
-                      <!-- <vs-checkbox @click="bCate(item.id)">{{item.name}}</vs-checkbox> -->
-                      <vs-checkbox>{{item.name}}</vs-checkbox>
+                        <!-- <vs-checkbox @click="bCate(item.id)">{{item.name}}</vs-checkbox> -->
+                        <vs-checkbox>{{item.name}}</vs-checkbox>
                       </li>
                     </ul>
                   </div>
@@ -189,7 +188,7 @@
                   <template v-if="currentItemView == 'item-grid-view'">
                     <div class="vx-row">
                       <div
-                        class="vx-col w-full sm:w-1/2 lg:w-1/3 mb-base"
+                        class="vx-col w-full sm:w-1/3 lg:w-1/3 mb-base"
                         v-for="item in searchMedicina"
                         :key="item.id"
                       >
@@ -203,20 +202,20 @@
                               />
                             </div>
                           </div>
-                          <h5 class="mb-2">{{ item.precentation }}</h5>
-                          <h6 class="mb-2">{{ item.name }}</h6>
+                          <h5 class="mb-2">{{ item.name }}</h5>
+                          <h6 class="mb-2">{{ item.precentation }}</h6>
                           <p class="text-grey"></p>
                           <p class="text-grey">{{ item.description }}</p>
                           <vs-popup
-                            classContent="popup-example"
-                            title="Dosificación"
+                            classContent="holamundo"
+                            title="Medicamento Recetado"
                             :active.sync="activar"
                           >
                             <h4 class="mb-2">
                               <strong v-text="nombre"></strong>
                             </h4>
-                            <h5 class="mb-2" v-text="descripcion"></h5>
-                            <h6 class="mb-2" v-text="precentacion"></h6>
+                            <h5 class="mb-2" v-text="precentacion"></h5>
+                            <h6 class="mb-2" v-text="descripcion"></h6>
 
                             <div class="mt-4">
                               <vs-textarea
@@ -224,25 +223,36 @@
                                 label="Descripción de uso"
                                 v-model="uso"
                               />
+                              <span
+                                class="text-danger text-sm"
+                                v-show="uso == ''"
+                              >Este campo es requerido.</span>
                             </div>
-
-                            <vs-button
-                              color="primary"
-                              type="filled"
-                              @click="agregarM"
-                            >Agregar & Continuar</vs-button>
-                            <vs-button
-                              color="rgb(62, 201, 214)"
-                              @click="agregarmF"
-                              type="filled"
-                            >Agregar & Finalizar</vs-button>
+                            <div class="vx-row">
+                              <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+                                <vs-button
+                                  color="rgb(62, 201, 214)"
+                                  @click="agregarmF"
+                                  type="filled"
+                                  :disabled="uso == null || uso == ''"
+                                >Agregar & Finalizar</vs-button>
+                              </div>
+                              <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+                                <div align="right">
+                                  <vs-button
+                                    color="primary"
+                                    type="filled"
+                                    @click="agregarM"
+                                    :disabled="uso == null || uso == ''"
+                                  >Agregar & Continuar</vs-button>
+                                </div>
+                              </div>
+                            </div>
                           </vs-popup>
                           <div class="flex justify-between flex-wrap">
                             <vs-button
-                              class="mt-4 mr-2 shadow-lg"
-                              type="gradient"
+                              class="mt-4 mr-2 shadow-lg alineacion"
                               @click="activar=true, setData(item.id, item.name, item.description, item.precentation, item.image)"
-                              gradient-color-secondary="#CE9FFC"
                             >Agregar Medicamento</vs-button>
                           </div>
                         </vx-card>
@@ -313,7 +323,7 @@ export default {
       precentacion: "",
       nuevaRecetaData: null,
       idMedicanto: "",
-      uso: "",
+      uso: null,
       nombre: "",
       descripcion: "",
       medicamentosList: [],
@@ -397,7 +407,16 @@ export default {
     }
   },
   methods: {
-    bCate(id){
+    getNum() {
+      let num = JSON.parse(localStorage.getItem("nuevaRecetaData"));
+      if (num != null || num != "") {
+        this.mediNum = num.medicines.length;
+        //console.log(num.medicines);
+      } else {
+        this.mediNum = 0;
+      }
+    },
+    bCate(id) {
       console.log(id);
       this.buscar = this.buscar + "," + id;
     },
@@ -419,7 +438,7 @@ export default {
         "nuevaRecetaData",
         JSON.stringify(this.nuevaRecetaData)
       );
-      this.uso = "";
+      this.uso = null;
       this.$router.push("/editarReceta");
     },
     agregarM() {
@@ -440,7 +459,7 @@ export default {
         "nuevaRecetaData",
         JSON.stringify(this.nuevaRecetaData)
       );
-      this.uso = "";
+      this.uso = null;
       this.activar = false;
     },
     openLoading() {
@@ -544,6 +563,7 @@ export default {
     }
   },
   created() {
+    this.getNum();
     this.setSidebarWidth();
     this.getCategorias();
     this.getData();
@@ -553,6 +573,9 @@ export default {
 
 
 <style lang="scss">
+.alineacion {
+  text-align: center;
+}
 .size {
   height: 206px;
   width: 266px;

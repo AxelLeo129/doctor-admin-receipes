@@ -902,19 +902,25 @@ var render = function() {
                               _c(
                                 "li",
                                 [
-                                  _c(
-                                    "vs-checkbox",
-                                    {
-                                      model: {
-                                        value: _vm.registro,
-                                        callback: function($$v) {
-                                          _vm.registro = $$v
+                                  _vm.rol == 2
+                                    ? _c(
+                                        "vs-checkbox",
+                                        {
+                                          model: {
+                                            value: _vm.registro,
+                                            callback: function($$v) {
+                                              _vm.registro = $$v
+                                            },
+                                            expression: "registro"
+                                          }
                                         },
-                                        expression: "registro"
-                                      }
-                                    },
-                                    [_vm._v("¿Desea usar registro Clínico?")]
-                                  )
+                                        [
+                                          _vm._v(
+                                            "¿Desea usar registro Clínico?"
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e()
                                 ],
                                 1
                               )
