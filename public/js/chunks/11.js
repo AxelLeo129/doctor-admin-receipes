@@ -210,11 +210,6 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this.activeLoading = false;
-
-        _this.$vs.loading.close();
-
-        console.log(Response);
         _this.token = Response.data.success.token;
         _this.rol = Response.data.rol;
         _this.user_id = Response.data.id;
@@ -227,6 +222,10 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           _this.$router.push("/home");
         }
+
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
       }).catch(function (err) {
         _this.activeLoading = false;
 

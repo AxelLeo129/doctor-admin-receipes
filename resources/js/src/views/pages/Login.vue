@@ -198,9 +198,6 @@ export default {
         }
       })
         .then(Response => {
-          this.activeLoading = false;
-          this.$vs.loading.close();
-          console.log(Response);
           this.token = Response.data.success.token;
           this.rol = Response.data.rol;
           this.user_id = Response.data.id;
@@ -212,6 +209,8 @@ export default {
           } else {
             this.$router.push("/home");
           }
+          this.activeLoading = false;
+          this.$vs.loading.close();
         })
         .catch(err => {
           this.activeLoading = false;

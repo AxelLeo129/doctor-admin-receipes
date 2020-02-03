@@ -33,11 +33,11 @@
                   color="success"
                 >Guardar</vs-button>
                 <vs-button
-                  color="warning"
+                  color="danger"
                   type="border"
                   class="mb-2"
-                  @click="nombre =  null"
-                >Resetear</vs-button>
+                  @click="cancel"
+                >Cancel</vs-button>
               </div>
             </div>
           </form>
@@ -64,6 +64,9 @@ export default {
     };
   },
   methods: {
+    cancel(){
+      this.$router.push("/listadoCategorias");
+    },
     openLoading() {
       this.activeLoading = true;
       this.$vs.loading({

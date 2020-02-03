@@ -16,7 +16,8 @@ class ProductController extends Controller
      */
     public function list()
     {
-        return Product::all();
+        //return Product::all();
+        return \DB::select("SELECT prod.id, prod.name, prod.image, prod.description, prod.precentation, prod.price, prod.laboratory, prod.warehouse, prod.quantity, prod.user_id, GROUP_CONCAT(cat.id SEPARATOR ',') categories FROM products_categories pp INNER JOIN products prod ON pp.product_id=prod.id INNER JOIN categories cat ON pp.category_id=cat.id GROUP BY prod.id");
     }
 
     /**

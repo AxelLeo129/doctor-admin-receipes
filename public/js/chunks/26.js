@@ -75,6 +75,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    cancel: function cancel() {
+      this.$router.push("/listadoCategorias");
+    },
     openLoading: function openLoading() {
       this.activeLoading = true;
       this.$vs.loading({
@@ -247,14 +250,10 @@ var render = function() {
                         "vs-button",
                         {
                           staticClass: "mb-2",
-                          attrs: { color: "warning", type: "border" },
-                          on: {
-                            click: function($event) {
-                              _vm.nombre = null
-                            }
-                          }
+                          attrs: { color: "danger", type: "border" },
+                          on: { click: _vm.cancel }
                         },
-                        [_vm._v("Resetear")]
+                        [_vm._v("Cancel")]
                       )
                     ],
                     1

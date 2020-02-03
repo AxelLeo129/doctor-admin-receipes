@@ -16,6 +16,9 @@
         <strong>2</strong> ... 3 ... 4
       </h5>
     </div>
+    <div align="right">
+      <feather-icon icon="FileTextIcon" class="cursor-pointer mt-1 sm:mr-6 mr-2" :badge="mediNum" />  
+    </div> 
     <form-wizard
       color="rgba(var(--vs-primary), 1)"
       :title="null"
@@ -75,24 +78,16 @@
                 <!-- CATEGORIES -->
                 <h6 class="font-bold mb-4">Categorías</h6>
                 <ais-hierarchical-menu :attributes="algoliaCategories">
-                  <div
-                    slot-scope="{
-                              items,
-                              refine,
-                            }"
-                  >
+                  <div>
                     <ul>
                       <li
                         v-for="item in categorias"
                         :key="item.value"
                         class="flex items-center cursor-pointer py-1"
-                        @click="refine(item.value)"
+                        
                       >
-                        <feather-icon
-                          icon="CircleIcon"
-                          :svgClasses="[{ 'text-primary fill-current': item.isRefined}, 'h-5 w-5']"
-                        />
-                        <span class="ml-2" :class="{'text-primary': item.isRefined}">{{item.name}}</span>
+                      <!-- <vs-checkbox @click="bCate(item.id)">{{item.name}}</vs-checkbox> -->
+                      <vs-checkbox>{{item.name}}</vs-checkbox>
                       </li>
                     </ul>
                   </div>
@@ -311,6 +306,7 @@ export default {
   },
   data() {
     return {
+      mediNum: 0,
       buscar: "",
       image: "",
       activar: false,
@@ -379,7 +375,8 @@ export default {
       const filter = event =>
         event.name.toLowerCase().includes(texto) ||
         event.precentation.toLowerCase().includes(texto) ||
-        event.description.toLowerCase().includes(texto);
+        event.description.toLowerCase().includes(texto) ||
+        event.categories.toLowerCase().includes(texto);
 
       return result.filter(filter);
     },
@@ -400,6 +397,10 @@ export default {
     }
   },
   methods: {
+    bCate(id){
+      console.log(id);
+      this.buscar = this.buscar + "," + id;
+    },
     agregarmF() {
       this.activar = false;
       this.nuevaRecetaData = JSON.parse(
@@ -422,6 +423,7 @@ export default {
       this.$router.push("/editarReceta");
     },
     agregarM() {
+      this.mediNum = this.mediNum + 1;
       this.nuevaRecetaData = JSON.parse(
         localStorage.getItem("nuevaRecetaData")
       );

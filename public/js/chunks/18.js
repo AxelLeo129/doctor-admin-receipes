@@ -283,11 +283,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -319,6 +314,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      mediNum: 0,
       buscar: "",
       image: "",
       activar: false,
@@ -372,7 +368,7 @@ __webpack_require__.r(__webpack_exports__);
       var texto = this.buscar.toLowerCase();
 
       var filter = function filter(event) {
-        return event.name.toLowerCase().includes(texto) || event.precentation.toLowerCase().includes(texto) || event.description.toLowerCase().includes(texto);
+        return event.name.toLowerCase().includes(texto) || event.precentation.toLowerCase().includes(texto) || event.description.toLowerCase().includes(texto) || event.categories.toLowerCase().includes(texto);
       };
 
       return result.filter(filter);
@@ -402,6 +398,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    bCate: function bCate(id) {
+      console.log(id);
+      this.buscar = this.buscar + "," + id;
+    },
     agregarmF: function agregarmF() {
       this.activar = false;
       this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
@@ -417,6 +417,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push("/editarReceta");
     },
     agregarM: function agregarM() {
+      this.mediNum = this.mediNum + 1;
       this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
       this.nuevaRecetaData.medicamentos.push({
         nombre: this.nombre,
@@ -608,6 +609,18 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c(
+        "div",
+        { attrs: { align: "right" } },
+        [
+          _c("feather-icon", {
+            staticClass: "cursor-pointer mt-1 sm:mr-6 mr-2",
+            attrs: { icon: "FileTextIcon", badge: _vm.mediNum }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "form-wizard",
         {
           attrs: {
@@ -756,68 +769,36 @@ var render = function() {
                                 _vm._v("Categorías")
                               ]),
                               _vm._v(" "),
-                              _c("ais-hierarchical-menu", {
-                                attrs: { attributes: _vm.algoliaCategories },
-                                scopedSlots: _vm._u([
-                                  {
-                                    key: "default",
-                                    fn: function(ref) {
-                                      var items = ref.items
-                                      var refine = ref.refine
-                                      return _c("div", {}, [
-                                        _c(
-                                          "ul",
-                                          _vm._l(_vm.categorias, function(
-                                            item
-                                          ) {
-                                            return _c(
-                                              "li",
-                                              {
-                                                key: item.value,
-                                                staticClass:
-                                                  "flex items-center cursor-pointer py-1",
-                                                on: {
-                                                  click: function($event) {
-                                                    return refine(item.value)
-                                                  }
-                                                }
-                                              },
-                                              [
-                                                _c("feather-icon", {
-                                                  attrs: {
-                                                    icon: "CircleIcon",
-                                                    svgClasses: [
-                                                      {
-                                                        "text-primary fill-current":
-                                                          item.isRefined
-                                                      },
-                                                      "h-5 w-5"
-                                                    ]
-                                                  }
-                                                }),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass: "ml-2",
-                                                    class: {
-                                                      "text-primary":
-                                                        item.isRefined
-                                                    }
-                                                  },
-                                                  [_vm._v(_vm._s(item.name))]
-                                                )
-                                              ],
-                                              1
-                                            )
-                                          }),
-                                          0
+                              _c(
+                                "ais-hierarchical-menu",
+                                {
+                                  attrs: { attributes: _vm.algoliaCategories }
+                                },
+                                [
+                                  _c("div", [
+                                    _c(
+                                      "ul",
+                                      _vm._l(_vm.categorias, function(item) {
+                                        return _c(
+                                          "li",
+                                          {
+                                            key: item.value,
+                                            staticClass:
+                                              "flex items-center cursor-pointer py-1"
+                                          },
+                                          [
+                                            _c("vs-checkbox", [
+                                              _vm._v(_vm._s(item.name))
+                                            ])
+                                          ],
+                                          1
                                         )
-                                      ])
-                                    }
-                                  }
-                                ])
-                              }),
+                                      }),
+                                      0
+                                    )
+                                  ])
+                                ]
+                              ),
                               _vm._v(" "),
                               _c("vs-divider"),
                               _vm._v(" "),
