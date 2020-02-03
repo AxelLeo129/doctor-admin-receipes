@@ -241,6 +241,7 @@ export default {
               url: "http://127.0.0.1:8000/api/postReceProd",
               data: JSON.stringify({
                 medicines: this.nuevaRecetaData.medicines,
+                dispensing: this.nuevaRecetaData.dispensing,
                 recipe_id: this.Resid
               }),
               headers: {

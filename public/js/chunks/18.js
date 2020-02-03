@@ -431,6 +431,7 @@ __webpack_require__.r(__webpack_exports__);
         img: this.image
       });
       this.nuevaRecetaData.medicines.push(this.idMedicanto);
+      this.nuevaRecetaData.dispensing.push(this.uso);
       localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
       this.uso = null;
       this.$router.push("/editarReceta");
@@ -445,6 +446,7 @@ __webpack_require__.r(__webpack_exports__);
         img: this.image
       });
       this.nuevaRecetaData.medicines.push(this.idMedicanto);
+      this.nuevaRecetaData.dispensing.push(this.uso);
       localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
       this.uso = null;
       this.activar = false;

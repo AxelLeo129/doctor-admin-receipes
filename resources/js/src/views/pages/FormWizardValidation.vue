@@ -76,6 +76,7 @@ export default {
           status: 1,
           dateIssue: "",
           medicines: [],
+          dispensing: [],
           medicamentos: []
         };
         localStorage.setItem(
@@ -110,6 +111,7 @@ export default {
           status: 1,
           dateIssue: this.fecha,
           medicines: [],
+          dispensing: [],
           medicamentos: []
         };
         localStorage.setItem(

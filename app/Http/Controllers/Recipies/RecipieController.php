@@ -66,10 +66,14 @@ class RecipieController extends Controller
     {
         $errores = [];
         $succes = [];
+        $cont = 0;
         foreach($request->medicines as $element){
             $reci_prod = new Recipies_product();
             $reci_prod->recipe_id = $request->recipe_id;
             $reci_prod->product_id = $element;
+            $reci_prod->dispensing = $request->dispensing[$cont];
+            $cont = $cont + 1;
+            array_push($succes, $reci_prod);
             if($reci_prod->save()){
                 array_push($succes, $reci_prod);
             }else{

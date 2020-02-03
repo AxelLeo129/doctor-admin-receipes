@@ -434,6 +434,8 @@ export default {
 
       this.nuevaRecetaData.medicines.push(this.idMedicanto);
 
+      this.nuevaRecetaData.dispensing.push(this.uso);
+
       localStorage.setItem(
         "nuevaRecetaData",
         JSON.stringify(this.nuevaRecetaData)
@@ -454,6 +456,8 @@ export default {
       });
 
       this.nuevaRecetaData.medicines.push(this.idMedicanto);
+
+      this.nuevaRecetaData.dispensing.push(this.uso);
 
       localStorage.setItem(
         "nuevaRecetaData",

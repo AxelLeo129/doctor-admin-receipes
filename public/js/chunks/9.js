@@ -89,6 +89,7 @@ __webpack_require__.r(__webpack_exports__);
         status: 1,
         dateIssue: "",
         medicines: [],
+        dispensing: [],
         medicamentos: []
       };
       localStorage.setItem("nuevaRecetaData", JSON.stringify(nuevaRecetaData));
@@ -119,6 +120,7 @@ __webpack_require__.r(__webpack_exports__);
           status: 1,
           dateIssue: this.fecha,
           medicines: [],
+          dispensing: [],
           medicamentos: []
         };
         localStorage.setItem("nuevaRecetaData", JSON.stringify(nuevaRecetaData));

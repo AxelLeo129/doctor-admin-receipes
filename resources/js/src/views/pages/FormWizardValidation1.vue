@@ -131,6 +131,7 @@ export default {
           status: this.nuevaRecetaData.status,
           dateIssue: this.nuevaRecetaData.dateIssue,
           medicines: this.nuevaRecetaData.medicines,
+          dispensing: this.nuevaRecetaData.dispensing,
           medicamentos: this.nuevaRecetaData.medicamentos
         });
 
@@ -162,6 +163,7 @@ export default {
               url: "http://127.0.0.1:8000/api/postReceProd",
               data: JSON.stringify({
                 medicines: this.nuevaRecetaData.medicines,
+                dispensing: this.nuevaRecetaData.dispensing,
                 recipe_id: this.Resid
               }),
               headers: {

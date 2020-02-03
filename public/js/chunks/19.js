@@ -253,6 +253,7 @@ __webpack_require__.r(__webpack_exports__);
             url: "http://127.0.0.1:8000/api/postReceProd",
             data: JSON.stringify({
               medicines: _this3.nuevaRecetaData.medicines,
+              dispensing: _this3.nuevaRecetaData.dispensing,
               recipe_id: _this3.Resid
             }),
             headers: {

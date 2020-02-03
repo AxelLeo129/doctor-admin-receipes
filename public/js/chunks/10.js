@@ -153,6 +153,7 @@ __webpack_require__.r(__webpack_exports__);
           status: this.nuevaRecetaData.status,
           dateIssue: this.nuevaRecetaData.dateIssue,
           medicines: this.nuevaRecetaData.medicines,
+          dispensing: this.nuevaRecetaData.dispensing,
           medicamentos: this.nuevaRecetaData.medicamentos
         });
         localStorage.setItem("recetasData", JSON.stringify(this.recetasData));
@@ -181,6 +182,7 @@ __webpack_require__.r(__webpack_exports__);
             url: "http://127.0.0.1:8000/api/postReceProd",
             data: JSON.stringify({
               medicines: _this.nuevaRecetaData.medicines,
+              dispensing: _this.nuevaRecetaData.dispensing,
               recipe_id: _this.Resid
             }),
             headers: {
