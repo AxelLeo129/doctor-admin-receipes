@@ -95,6 +95,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -112,6 +169,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      subtotal1: 0,
+      subtotal2: 0,
+      medicines: [{
+        name: "Lunes 50 mg",
+        presentation: "Caja 20 tabletas",
+        price: "Q 50",
+        totale: "20",
+        unidad: "Tabletas"
+      }, {
+        name: "Bipark",
+        presentation: "Blister 10 tabletas",
+        price: "Q 20",
+        totale: "10",
+        unidad: "Tabletas"
+      }],
       popupActive2: false,
       nit: null,
       name: null,
@@ -803,7 +875,7 @@ var render = function() {
         {
           attrs: {
             fullscreen: "",
-            title: "Actualizar Categoría",
+            title: "Medicamentos",
             active: _vm.popupActive2
           },
           on: {
@@ -813,13 +885,208 @@ var render = function() {
           }
         },
         [
-          _c("p", [_vm._v("¿Está seguro de actualizar esta información?")]),
+          _c("p", [_vm._v("Seleccione los medicamentos a enviar.")]),
           _vm._v(" "),
           _c("br"),
           _vm._v(" "),
-          _c("vs-button", { attrs: { color: "primary", type: "filled" } }, [
-            _vm._v("Actualizar")
+          _c("div", { staticClass: "vx-row" }, [
+            _c(
+              "div",
+              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+              [
+                _c(
+                  "vx-card",
+                  [
+                    _c(
+                      "vs-table",
+                      {
+                        attrs: { data: _vm.medicines },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var data = ref.data
+                              return _vm._l(data, function(tr, indextr) {
+                                return _c(
+                                  "vs-tr",
+                                  { key: indextr },
+                                  [
+                                    _c(
+                                      "vs-td",
+                                      { attrs: { data: data[indextr].name } },
+                                      [_vm._v(_vm._s(data[indextr].name))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "vs-td",
+                                      {
+                                        attrs: {
+                                          data: data[indextr].presentation
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(data[indextr].presentation)
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "vs-td",
+                                      { attrs: { data: data[indextr].price } },
+                                      [_vm._v(_vm._s(data[indextr].price))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "vs-td",
+                                      [
+                                        _c("vs-input-number", {
+                                          model: {
+                                            value: _vm.subtotal2,
+                                            callback: function($$v) {
+                                              _vm.subtotal2 = $$v
+                                            },
+                                            expression: "subtotal2"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              })
+                            }
+                          }
+                        ])
+                      },
+                      [
+                        _c(
+                          "template",
+                          { slot: "thead" },
+                          [
+                            _c("vs-th", [_vm._v("Nombre")]),
+                            _vm._v(" "),
+                            _c("vs-th", [_vm._v("Precentación")]),
+                            _vm._v(" "),
+                            _c("vs-th", [_vm._v("Precio")]),
+                            _vm._v(" "),
+                            _c("vs-th", [_vm._v("Cantidad")])
+                          ],
+                          1
+                        )
+                      ],
+                      2
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+              [
+                _c(
+                  "vx-card",
+                  [
+                    _c("p", {
+                      domProps: {
+                        textContent: _vm._s("Total " + _vm.subtotal1)
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("vs-divider", { staticClass: "mb-0" }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("Tarjeta de Crédito")]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "vx-row" },
+                      [
+                        _c("vs-input", {
+                          staticClass: "mt-5 w-full",
+                          attrs: {
+                            label: "Nombre del Titular",
+                            name: "item-name"
+                          },
+                          model: {
+                            value: _vm.phone,
+                            callback: function($$v) {
+                              _vm.phone = $$v
+                            },
+                            expression: "phone"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "vx-row" },
+                      [
+                        _c("vs-input", {
+                          staticClass: "mt-5 w-full",
+                          attrs: {
+                            label: "Número de Tarjeta",
+                            type: "number",
+                            name: "item-name"
+                          },
+                          model: {
+                            value: _vm.phone,
+                            callback: function($$v) {
+                              _vm.phone = $$v
+                            },
+                            expression: "phone"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "vx-row" }, [
+                      _c(
+                        "div",
+                        [
+                          _c("vs-input", {
+                            staticClass: "mt-5 w-full",
+                            attrs: { label: "CVV", name: "item-name" },
+                            model: {
+                              value: _vm.phone,
+                              callback: function($$v) {
+                                _vm.phone = $$v
+                              },
+                              expression: "phone"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ],
+                  1
+                )
+              ],
+              1
+            )
           ]),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              attrs: { color: "primary", type: "filled" },
+              on: {
+                click: function($event) {
+                  ;(_vm.popupActive2 = false),
+                    (_vm.isSidebarActiveLocal = false)
+                }
+              }
+            },
+            [_vm._v("Realizar Pedido")]
+          ),
           _vm._v(" "),
           _c(
             "vs-button",
@@ -827,7 +1094,8 @@ var render = function() {
               attrs: { color: "danger", type: "filled" },
               on: {
                 click: function($event) {
-                  _vm.popupActive2 = false
+                  ;(_vm.popupActive2 = false),
+                    (_vm.isSidebarActiveLocal = false)
                 }
               }
             },

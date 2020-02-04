@@ -25,11 +25,68 @@
     </div>
     <vs-divider class="mb-0"></vs-divider>
 
-    <vs-popup fullscreen title="Actualizar Categoría" :active.sync="popupActive2">
-      <p>¿Está seguro de actualizar esta información?</p>
+    <vs-popup fullscreen title="Medicamentos" :active.sync="popupActive2">
+      <p>Seleccione los medicamentos a enviar.</p>
       <br />
-      <vs-button color="primary" type="filled">Actualizar</vs-button>
-      <vs-button @click="popupActive2=false" color="danger" type="filled">Cancelar</vs-button>
+
+      <div class="vx-row">
+        <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+          <vx-card>
+            <vs-table :data="medicines">
+              <template slot="thead">
+                <vs-th>Nombre</vs-th>
+                <vs-th>Precentación</vs-th>
+                <vs-th>Precio</vs-th>
+                <vs-th>Cantidad</vs-th>
+              </template>
+
+              <template slot-scope="{data}">
+                <vs-tr :key="indextr" v-for="(tr, indextr) in data">
+                  <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
+
+                  <vs-td :data="data[indextr].presentation">{{ data[indextr].presentation }}</vs-td>
+
+                  <vs-td :data="data[indextr].price">{{ data[indextr].price }}</vs-td>
+
+                  <vs-td><vs-input-number v-model="subtotal2"/></vs-td>
+                </vs-tr>
+              </template>
+            </vs-table>
+          </vx-card>
+        </div>
+        <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+          <vx-card>
+            <p v-text="'Total ' + subtotal1"></p>
+            <vs-divider class="mb-0"></vs-divider>
+            <p>Tarjeta de Crédito</p>
+            <div class="vx-row">
+              <vs-input
+                label="Nombre del Titular"
+                v-model="phone"
+                class="mt-5 w-full"
+                name="item-name"
+              />
+            </div>
+            <div class="vx-row">
+              <vs-input
+                label="Número de Tarjeta"
+                type="number"
+                v-model="phone"
+                class="mt-5 w-full"
+                name="item-name"
+              />
+            </div>
+            <div class="vx-row">
+              <div>
+                <vs-input label="CVV" v-model="phone" class="mt-5 w-full" name="item-name" />
+              </div>
+            </div>
+          </vx-card>
+        </div>
+      </div>
+
+      <vs-button @click="popupActive2=false, isSidebarActiveLocal = false" color="primary" type="filled">Realizar Pedido</vs-button>
+      <vs-button @click="popupActive2=false, isSidebarActiveLocal = false" color="danger" type="filled">Cancelar</vs-button>
     </vs-popup>
 
     <vx-card class="scroll-area--data-list-add-new">
@@ -101,6 +158,24 @@ export default {
   },
   data() {
     return {
+      subtotal1: 0,
+      subtotal2: 0,
+      medicines: [
+        {
+          name: "Lunes 50 mg",
+          presentation: "Caja 20 tabletas",
+          price: "Q 50",
+          totale: "20",
+          unidad: "Tabletas"
+        },
+        {
+          name: "Bipark",
+          presentation: "Blister 10 tabletas",
+          price: "Q 20",
+          totale: "10",
+          unidad: "Tabletas"
+        }
+      ],
       popupActive2: false,
       nit: null,
       name: null,
