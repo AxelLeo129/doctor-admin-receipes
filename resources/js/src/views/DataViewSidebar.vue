@@ -48,7 +48,7 @@
 
                   <vs-td :data="data[indextr].price">{{ data[indextr].price }}</vs-td>
 
-                  <vs-td><vs-input-number v-model="subtotal2"/></vs-td>
+                  <vs-td><vs-input-number/></vs-td>
                 </vs-tr>
               </template>
             </vs-table>

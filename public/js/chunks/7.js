@@ -937,21 +937,7 @@ var render = function() {
                                       [_vm._v(_vm._s(data[indextr].price))]
                                     ),
                                     _vm._v(" "),
-                                    _c(
-                                      "vs-td",
-                                      [
-                                        _c("vs-input-number", {
-                                          model: {
-                                            value: _vm.subtotal2,
-                                            callback: function($$v) {
-                                              _vm.subtotal2 = $$v
-                                            },
-                                            expression: "subtotal2"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                    _c("vs-td", [_c("vs-input-number")], 1)
                                   ],
                                   1
                                 )
