@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-02-2020 a las 08:29:23
+-- Tiempo de generación: 04-02-2020 a las 06:47:50
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.2.15
 
@@ -44,6 +44,31 @@ INSERT INTO `categories` (`id`, `name`, `user_id`, `created_at`, `updated_at`) V
 (6, 'Pediatría', 1, '2020-02-02 20:41:13', '2020-02-03 02:41:13'),
 (7, 'Gastroenterología', 1, '2020-01-28 03:40:03', '2020-01-28 09:40:03'),
 (8, 'Prueba', 10, '2020-01-28 07:15:51', '2020-01-28 07:15:51');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clients`
+--
+
+CREATE TABLE `clients` (
+  `client_id` int(11) NOT NULL,
+  `client_name` varchar(70) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `client_nit` varchar(70) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `client_addressf` varchar(70) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `client_addresse` varchar(70) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `client_phone` varchar(70) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `client_genre` varchar(70) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `client_email` varchar(70) COLLATE utf8mb4_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `clients`
+--
+
+INSERT INTO `clients` (`client_id`, `client_name`, `client_nit`, `client_addressf`, `client_addresse`, `client_phone`, `client_genre`, `client_email`) VALUES
+(1, 'Elma Barrera', '9530223', 'Villa Nueva, zona 1', 'Villa Nueva, zona 1', '12345678', 'female', 'elma@email.com'),
+(3, 'Elma de López', '9530223', 'Mixco Guatemala, zona 8', 'San Cristobal Mixco, zona 8', '12345678', 'female', 'elmal@email.com');
 
 -- --------------------------------------------------------
 
@@ -154,6 +179,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('819895ac85b7b89597ed373e588e93513ce09aa0449298cd0fee5f952de0c9fcf447e2670a132f95', 7, 3, 'MyApp', '[]', 0, '2020-02-02 23:01:52', '2020-02-02 23:01:52', '2021-02-02 17:01:52'),
 ('823b30ecd594ec4c92398d432bb58281764f6db4baf1cc6c21c3ade881a584b57dc258d62fa0e9d9', 1, 3, 'MyApp', '[]', 0, '2020-02-02 12:53:07', '2020-02-02 12:53:07', '2021-02-02 06:53:07'),
 ('839dfa2c65040d6cc9c089968b9787d46b2b9daf103e09c4f772a39aaf5d29a9fa421b92c5c12219', 1, 3, 'MyApp', '[]', 0, '2020-01-30 05:25:09', '2020-01-30 05:25:09', '2021-01-29 23:25:09'),
+('87209b7f8ec1f4778a0a9a3b35b8648f82beb4d2d8bde898d2de42b91dea432f1dc4942c25c343b9', 11, 3, 'MyApp', '[]', 0, '2020-02-04 06:08:36', '2020-02-04 06:08:36', '2021-02-04 00:08:36'),
 ('88161cb4d6a91eccbc4a6bc75218534c975b2e943641c66486f7e6345e2ac1735095437386f43de9', 14, 3, 'MyApp', '[]', 0, '2020-02-03 00:22:06', '2020-02-03 00:22:06', '2021-02-02 18:22:06'),
 ('88a2a065d181caa56ab6c6033c65265521deef1d28228a7ac3c7043dc0a3633ac845f30d4629f5b4', 1, 3, 'MyApp', '[]', 0, '2020-01-28 07:16:27', '2020-01-28 07:16:27', '2021-01-28 01:16:27'),
 ('8def5d18b83fe6f1115514be76acbe1e72073c63010e4f10570bddcbc3adbcfac2b182de2732b48a', 1, 3, 'MyApp', '[]', 0, '2020-01-30 08:53:37', '2020-01-30 08:53:37', '2021-01-30 02:53:37'),
@@ -509,6 +535,12 @@ ALTER TABLE `categories`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indices de la tabla `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`client_id`);
+
+--
 -- Indices de la tabla `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -612,6 +644,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
