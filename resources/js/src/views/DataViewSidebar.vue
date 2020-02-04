@@ -121,14 +121,12 @@
               <p class="mt-5">Pago contra Entrega</p>
             </div>
             <div class="vx-row">
-              <p class="mt-5">
-                Paga en efectivo en el momento de la entrega.
-              </p>
+              <p class="mt-5">Paga en efectivo en el momento de la entrega.</p>
             </div>
             <div class="vx-row">
               <vs-button
                 class="mt-5"
-                @click="popupActive2=false, isSidebarActiveLocal = false"
+                @click="popupActive2=false, isSidebarActiveLocal = false, notificacion()"
                 color="primary"
                 type="filled"
               >Realizar el Pedido</vs-button>
@@ -178,6 +176,25 @@
         <div class="vx-row">
           <vs-textarea label="Dirección de Envió" v-model="addresse" />
         </div>
+
+        <div class="vx-row">
+          <vx-tooltip class="mt-5 mr-4" text="Tarjeta de Crédito">
+            <vs-switch v-model="switch3" />
+          </vx-tooltip>
+          <p class="mt-5">¿Enviar a una dirección diferente?</p>
+        </div>
+
+        <div class="vx-row" v-if="switch3 == true">
+          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+            <vs-input label="Nombre de la Empresa" v-model="empresa" class="mt-5 w-full" name="item-name" />
+          </div>
+          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+            <vs-input label="Nombre Completo" v-model="name1" class="mt-5 w-full" name="item-name" />
+          </div>
+        </div>
+        <div class="vx-row" v-if="switch3 == true">
+          <vs-textarea label="Dirección de Envió" v-model="direccion" />
+        </div>
       </div>
     </vx-card>
 
@@ -207,6 +224,7 @@ export default {
   },
   data() {
     return {
+      switch3: false,
       switch2: false,
       switch1: true,
       nameT: null,
@@ -237,6 +255,9 @@ export default {
       popupActive2: false,
       nit: null,
       name: null,
+      name1: null,
+      empresa: null,
+      direccion: null,
       phone: null,
       email: null,
       genre: null,
@@ -316,6 +337,13 @@ export default {
     }
   },
   methods: {
+    notificacion() {
+      this.$vs.notify({
+        title: "Enviado",
+        text: "Pedido enviado correctamente",
+        color: "success"
+      });
+    },
     initValues() {
       if (this.data.id) return;
       this.dataId = null;

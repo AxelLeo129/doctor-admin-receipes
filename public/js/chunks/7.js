@@ -201,6 +201,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -218,6 +235,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      switch3: false,
       switch2: false,
       switch1: true,
       nameT: null,
@@ -245,6 +263,9 @@ __webpack_require__.r(__webpack_exports__);
       popupActive2: false,
       nit: null,
       name: null,
+      name1: null,
+      empresa: null,
+      direccion: null,
       phone: null,
       email: null,
       genre: null,
@@ -336,6 +357,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    notificacion: function notificacion() {
+      this.$vs.notify({
+        title: "Enviado",
+        text: "Pedido enviado correctamente",
+        color: "success"
+      });
+    },
     initValues: function initValues() {
       if (this.data.id) return;
       this.dataId = null;
@@ -598,7 +626,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       suggestions: [],
       doctors: [],
-      status: ["Chequeando", "Pendiente", "Empaquetando", "Entregando", "Entregado", "Cancelado"],
+      status: ["Nuevo", "Pendiente", "Empaquetando", "Entregando", "Entregado", "Cancelado"],
       recipes: [],
       selected: [],
       // products: [],
@@ -1259,9 +1287,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "vx-row" }, [
                       _c("p", { staticClass: "mt-5" }, [
-                        _vm._v(
-                          "\n              Paga en efectivo en el momento de la entrega.\n            "
-                        )
+                        _vm._v("Paga en efectivo en el momento de la entrega.")
                       ])
                     ]),
                     _vm._v(" "),
@@ -1277,7 +1303,8 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 ;(_vm.popupActive2 = false),
-                                  (_vm.isSidebarActiveLocal = false)
+                                  (_vm.isSidebarActiveLocal = false),
+                                  _vm.notificacion()
                               }
                             }
                           },
@@ -1443,7 +1470,103 @@ var render = function() {
               })
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "vx-row" },
+            [
+              _c(
+                "vx-tooltip",
+                {
+                  staticClass: "mt-5 mr-4",
+                  attrs: { text: "Tarjeta de Crédito" }
+                },
+                [
+                  _c("vs-switch", {
+                    model: {
+                      value: _vm.switch3,
+                      callback: function($$v) {
+                        _vm.switch3 = $$v
+                      },
+                      expression: "switch3"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("p", { staticClass: "mt-5" }, [
+                _vm._v("¿Enviar a una dirección diferente?")
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.switch3 == true
+            ? _c("div", { staticClass: "vx-row" }, [
+                _c(
+                  "div",
+                  { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+                  [
+                    _c("vs-input", {
+                      staticClass: "mt-5 w-full",
+                      attrs: {
+                        label: "Nombre de la Empresa",
+                        name: "item-name"
+                      },
+                      model: {
+                        value: _vm.empresa,
+                        callback: function($$v) {
+                          _vm.empresa = $$v
+                        },
+                        expression: "empresa"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+                  [
+                    _c("vs-input", {
+                      staticClass: "mt-5 w-full",
+                      attrs: { label: "Nombre Completo", name: "item-name" },
+                      model: {
+                        value: _vm.name1,
+                        callback: function($$v) {
+                          _vm.name1 = $$v
+                        },
+                        expression: "name1"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.switch3 == true
+            ? _c(
+                "div",
+                { staticClass: "vx-row" },
+                [
+                  _c("vs-textarea", {
+                    attrs: { label: "Dirección de Envió" },
+                    model: {
+                      value: _vm.direccion,
+                      callback: function($$v) {
+                        _vm.direccion = $$v
+                      },
+                      expression: "direccion"
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),

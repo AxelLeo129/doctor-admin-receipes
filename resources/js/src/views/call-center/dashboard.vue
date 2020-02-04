@@ -194,7 +194,7 @@ export default {
       suggestions: [],
       doctors: [],
       status: [
-        "Chequeando",
+        "Nuevo",
         "Pendiente",
         "Empaquetando",
         "Entregando",
