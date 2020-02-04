@@ -434,6 +434,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -443,6 +455,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      suggestions: [],
       doctors: [],
       status: ["Chequeando", "Pendiente", "Empaquetando", "Entregando", "Entregado", "Cancelado"],
       recipes: [],
@@ -471,8 +484,30 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    getUsers: function getUsers() {
+    handleSelected: function handleSelected(tr) {
       var _this = this;
+
+      this.suggestions = [];
+      var token = localStorage.getItem("tu");
+      var id = localStorage.getItem("ui");
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCliente/" + tr.phone,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        Response.data.forEach(function (element) {
+          _this.suggestions.push(element);
+        });
+        console.log(_this.suggestions);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    getUsers: function getUsers() {
+      var _this2 = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -485,7 +520,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this.doctors.push({
+          _this2.doctors.push({
             id: element.id,
             name: element.name
           });
@@ -495,7 +530,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getRecipes: function getRecipes() {
-      var _this2 = this;
+      var _this3 = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -511,15 +546,15 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          element.status = _this2.status[element.status - 1];
+          element.status = _this3.status[element.status - 1];
 
-          _this2.doctors.forEach(function (e) {
+          _this3.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
               element.doctor_id = e.name;
             }
           });
 
-          _this2.recipes.push(element);
+          _this3.recipes.push(element);
         });
       }).catch(function (err) {
         console.log(err);
@@ -716,13 +751,7 @@ var render = function() {
         "div",
         { staticClass: "mt-6 flex items-center justify-between px-6" },
         [
-          _c("h4", [
-            _vm._v(
-              _vm._s(
-                Object.entries(this.data).length === 0 ? "ADD NEW" : "UPDATE"
-              ) + " ITEM"
-            )
-          ]),
+          _c("h4", [_vm._v("Datos del Clíente")]),
           _vm._v(" "),
           _c("feather-icon", {
             staticClass: "cursor-pointer",
@@ -813,14 +842,6 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _c("vs-input", {
-                directives: [
-                  {
-                    name: "validate",
-                    rawName: "v-validate",
-                    value: "required",
-                    expression: "'required'"
-                  }
-                ],
                 staticClass: "mt-5 w-full",
                 attrs: { label: "Name", name: "item-name" },
                 model: {
@@ -1021,12 +1042,12 @@ var render = function() {
         {
           ref: "table",
           attrs: {
-            multiple: "",
             pagination: "",
             "max-items": _vm.itemsPerPage,
             search: "",
             data: _vm.recipes
           },
+          on: { selected: _vm.handleSelected },
           scopedSlots: _vm._u([
             {
               key: "default",
@@ -1094,42 +1115,86 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _c(
-                            "vs-td",
-                            { staticClass: "whitespace-no-wrap" },
+                            "template",
+                            { staticClass: "expand-user", slot: "expand" },
                             [
-                              _c("feather-icon", {
-                                attrs: {
-                                  icon: "PhoneOutgoingIcon",
-                                  svgClasses:
-                                    "w-5 h-5 hover:text-primary stroke-current"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    $event.stopPropagation()
-                                    return _vm.editData(tr)
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("feather-icon", {
-                                staticClass: "ml-2",
-                                attrs: {
-                                  icon: "TrashIcon",
-                                  svgClasses:
-                                    "w-5 h-5 hover:text-danger stroke-current"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    $event.stopPropagation()
-                                    return _vm.deleteData(tr.id)
-                                  }
-                                }
-                              })
-                            ],
-                            1
+                              _c(
+                                "div",
+                                { staticClass: "con-expand-users w-full" },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "con-btns-user flex items-center justify-between"
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "con-userx flex items-center justify-start"
+                                        },
+                                        [_c("span", [_vm._v("Nit")])]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "con-userx flex items-center justify-start"
+                                        },
+                                        [_c("span", [_vm._v(_vm._s(tr.name))])]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "con-userx flex items-center justify-start"
+                                        },
+                                        [_c("span", [_vm._v("Teléfono")])]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "con-userx flex items-center justify-start"
+                                        },
+                                        [_c("span", [_vm._v("Dirección")])]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "flex" },
+                                        [
+                                          _c("vs-button", {
+                                            staticClass: "mr-2",
+                                            attrs: {
+                                              type: "border",
+                                              size: "small",
+                                              "icon-pack": "feather",
+                                              icon: "icon-phone"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                $event.stopPropagation()
+                                                return _vm.editData(tr)
+                                              }
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
                           )
                         ],
-                        1
+                        2
                       )
                     }),
                     1
@@ -1425,10 +1490,8 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "order_status" } }, [
-                _vm._v("Etatus")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", [_vm._v("Acción")])
+                _vm._v("Estatus")
+              ])
             ],
             1
           )

@@ -17,12 +17,12 @@
 
     <vs-table
       ref="table"
-      multiple
       v-model="selected"
       pagination
       :max-items="itemsPerPage"
       search
       :data="recipes"
+      @selected="handleSelected"
     >
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
         <div class="flex flex-wrap-reverse items-center data-list-btn-container">
@@ -109,9 +109,7 @@
         <vs-th sort-key="category">Teléfono</vs-th>
         <vs-th sort-key="price">Médico</vs-th>
         <vs-th sort-key="popularity">Dosis Pendiente</vs-th>
-        <vs-th sort-key="order_status">Etatus</vs-th>
-
-        <vs-th>Acción</vs-th>
+        <vs-th sort-key="order_status">Estatus</vs-th>
       </template>
 
       <template slot-scope="{data}">
@@ -143,20 +141,34 @@
                 class="product-order-status"
               >{{ tr.status }}</vs-chip>
             </vs-td>
-
-            <vs-td class="whitespace-no-wrap">
-              <feather-icon
-                icon="PhoneOutgoingIcon"
-                svgClasses="w-5 h-5 hover:text-primary stroke-current"
-                @click.stop="editData(tr)"
-              />
-              <feather-icon
-                icon="TrashIcon"
-                svgClasses="w-5 h-5 hover:text-danger stroke-current"
-                class="ml-2"
-                @click.stop="deleteData(tr.id)"
-              />
-            </vs-td>
+            <template class="expand-user" slot="expand">
+              <div class="con-expand-users w-full">
+                <div class="con-btns-user flex items-center justify-between">
+                  <div class="con-userx flex items-center justify-start">
+                    <span>Nit</span>
+                  </div>
+                  <div class="con-userx flex items-center justify-start">
+                    <span>{{ tr.name }}</span>
+                  </div>
+                  <div class="con-userx flex items-center justify-start">
+                    <span>Teléfono</span>
+                  </div>
+                  <div class="con-userx flex items-center justify-start">
+                    <span>Dirección</span>
+                  </div>
+                  <div class="flex">
+                    <vs-button
+                      type="border"
+                      size="small"
+                      icon-pack="feather"
+                      icon="icon-phone"
+                      class="mr-2"
+                      @click.stop="editData(tr)"
+                    ></vs-button>
+                  </div>
+                </div>
+              </div>
+            </template>
           </vs-tr>
         </tbody>
       </template>
@@ -175,8 +187,16 @@ export default {
   },
   data() {
     return {
+      suggestions: [],
       doctors: [],
-      status: ["Chequeando", "Pendiente", "Empaquetando", "Entregando", "Entregado", "Cancelado"],
+      status: [
+        "Chequeando",
+        "Pendiente",
+        "Empaquetando",
+        "Entregando",
+        "Entregado",
+        "Cancelado"
+      ],
       recipes: [],
       selected: [],
       // products: [],
@@ -205,6 +225,28 @@ export default {
     }
   },
   methods: {
+    handleSelected(tr) {
+      this.suggestions = [];
+      let token = localStorage.getItem("tu");
+      let id = localStorage.getItem("ui");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCliente/" + tr.phone,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          Response.data.forEach(element => {
+            this.suggestions.push(element);
+          });
+          console.log(this.suggestions);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     getUsers() {
       let token = localStorage.getItem("tu");
       let id = localStorage.getItem("ui");
@@ -247,7 +289,7 @@ export default {
           Response.data.forEach(element => {
             element.status = this.status[element.status - 1];
             this.doctors.forEach(e => {
-              if(e.id == element.doctor_id){
+              if (e.id == element.doctor_id) {
                 element.doctor_id = e.name;
               }
             });

@@ -46,4 +46,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('putCategory', 'Categories\CategoryController@update');
     Route::get('getCategory/{id}', 'Categories\CategoryController@show');
     Route::get('deleteCategory/{id}', 'Categories\CategoryController@destroy');
+    //Clientes
+    Route::get('getClients', 'Clients\ClientController@index');
+    Route::get('getCliente/{id}', 'Clients\ClientController@show');
+
 });
