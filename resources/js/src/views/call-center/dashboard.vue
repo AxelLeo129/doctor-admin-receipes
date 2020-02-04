@@ -129,8 +129,8 @@
 
             <vs-td>
               <vs-progress
-                :percent="Number(100)"
-                :color="getPopularityColor(Number(100))"
+                :percent="Number(50)"
+                :color="getPopularityColor(Number(50))"
                 class="shadow-md"
               />
             </vs-td>
@@ -165,7 +165,7 @@
                       type="border"
                       size="small"
                       icon-pack="feather"
-                      icon="icon-phone"
+                      icon="icon-send"
                       class="mr-2"
                       @click.stop="editData(tr)"
                     ></vs-button>

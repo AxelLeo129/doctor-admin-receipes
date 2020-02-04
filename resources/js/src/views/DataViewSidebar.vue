@@ -30,63 +30,112 @@
       <br />
 
       <div class="vx-row">
-        <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+        <div class="vx-col w-full sm:w-2/3 lg:w-2/3 mb-base">
           <vx-card>
-            <vs-table :data="medicines">
-              <template slot="thead">
-                <vs-th>Nombre</vs-th>
-                <vs-th>Precentación</vs-th>
-                <vs-th>Precio</vs-th>
-                <vs-th>Cantidad</vs-th>
-              </template>
+            <div class="vx-row">
+              <vs-table :data="medicines">
+                <template slot="thead">
+                  <vs-th>Nombre</vs-th>
+                  <vs-th>Precentación</vs-th>
+                  <vs-th>Precio</vs-th>
+                  <vs-th>Cantidad</vs-th>
+                  <vs-th>Total Esperado</vs-th>
+                  <vs-th>Unidad</vs-th>
+                  <vs-th>Subtotal</vs-th>
+                </template>
 
-              <template slot-scope="{data}">
-                <vs-tr :key="indextr" v-for="(tr, indextr) in data">
-                  <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
+                <template slot-scope="{data}">
+                  <vs-tr :key="indextr" v-for="(tr, indextr) in data">
+                    <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
 
-                  <vs-td :data="data[indextr].presentation">{{ data[indextr].presentation }}</vs-td>
+                    <vs-td :data="data[indextr].presentation">{{ data[indextr].presentation }}</vs-td>
 
-                  <vs-td :data="data[indextr].price">{{ data[indextr].price }}</vs-td>
+                    <vs-td :data="data[indextr].price">{{ data[indextr].price }}</vs-td>
 
-                  <vs-td><vs-input-number/></vs-td>
-                </vs-tr>
-              </template>
-            </vs-table>
+                    <vs-td>
+                      <vs-input-number min="0" v-model="data[indextr].cantidad" />
+                    </vs-td>
+
+                    <vs-td :data="data[indextr].totale">{{ data[indextr].totale }}</vs-td>
+
+                    <vs-td :data="data[indextr].unidad">{{ data[indextr].unidad }}</vs-td>
+
+                    <vs-td
+                      :data="(data[indextr].subtotal = data[indextr].price * data[indextr].cantidad)"
+                    >{{ data[indextr].subtotal }}</vs-td>
+                  </vs-tr>
+                </template>
+              </vs-table>
+            </div>
+            <div class="vx-row">
+              <vs-button
+                class="mt-5"
+                @click="popupActive2=false, isSidebarActiveLocal = false"
+                color="warning"
+                type="filled"
+              >Regresar</vs-button>
+            </div>
           </vx-card>
         </div>
-        <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+        <div class="vx-col w-full sm:w-1/3 lg:w-1/3 mb-base">
           <vx-card>
-            <p v-text="'Total ' + subtotal1"></p>
+            <p v-text="'Total '"></p>
             <vs-divider class="mb-0"></vs-divider>
-            <p>Tarjeta de Crédito</p>
             <div class="vx-row">
+              <vx-tooltip class="mt-5 mr-4" text="Tarjeta de Crédito">
+                <vs-switch v-model="switch1" />
+              </vx-tooltip>
+              <p class="mt-5">Tarjeta de Crédito</p>
+            </div>
+            <div class="vx-row" v-if="switch1 == true">
               <vs-input
                 label="Nombre del Titular"
-                v-model="phone"
+                v-model="nameT"
                 class="mt-5 w-full"
                 name="item-name"
               />
             </div>
-            <div class="vx-row">
+            <div class="vx-row" v-if="switch1 == true">
               <vs-input
                 label="Número de Tarjeta"
                 type="number"
-                v-model="phone"
+                v-model="numberT"
                 class="mt-5 w-full"
                 name="item-name"
               />
             </div>
-            <div class="vx-row">
+            <div class="vx-row" v-if="switch1 == true">
               <div>
-                <vs-input label="CVV" v-model="phone" class="mt-5 w-full" name="item-name" />
+                <vs-input
+                  label="Número de Transacción"
+                  v-model="numberTr"
+                  class="mt-5 w-full"
+                  name="item-name"
+                />
               </div>
+            </div>
+            <div class="vx-row">
+              <vx-tooltip class="mt-5 mr-4" text="Pago contra Entrega">
+                <vs-switch v-model="switch2" />
+              </vx-tooltip>
+              <p class="mt-5">Pago contra Entrega</p>
+            </div>
+            <div class="vx-row">
+              <p class="mt-5">
+                Paga en efectivo en el momento de la entrega.
+              </p>
+            </div>
+            <div class="vx-row">
+              <vs-button
+                class="mt-5"
+                @click="popupActive2=false, isSidebarActiveLocal = false"
+                color="primary"
+                type="filled"
+              >Realizar el Pedido</vs-button>
             </div>
           </vx-card>
         </div>
       </div>
-
-      <vs-button @click="popupActive2=false, isSidebarActiveLocal = false" color="primary" type="filled">Realizar Pedido</vs-button>
-      <vs-button @click="popupActive2=false, isSidebarActiveLocal = false" color="danger" type="filled">Cancelar</vs-button>
     </vs-popup>
 
     <vx-card class="scroll-area--data-list-add-new">
@@ -158,22 +207,31 @@ export default {
   },
   data() {
     return {
+      switch2: false,
+      switch1: true,
+      nameT: null,
+      numberT: null,
+      numberTr: null,
       subtotal1: 0,
       subtotal2: 0,
       medicines: [
         {
           name: "Lunes 50 mg",
           presentation: "Caja 20 tabletas",
-          price: "Q 50",
+          price: 50,
           totale: "20",
-          unidad: "Tabletas"
+          unidad: "Tabletas",
+          cantidad: 0,
+          subtotal: 0
         },
         {
           name: "Bipark",
           presentation: "Blister 10 tabletas",
-          price: "Q 20",
+          price: 20,
           totale: "10",
-          unidad: "Tabletas"
+          unidad: "Tabletas",
+          cantidad: 0,
+          subtotal: 0
         }
       ],
       popupActive2: false,

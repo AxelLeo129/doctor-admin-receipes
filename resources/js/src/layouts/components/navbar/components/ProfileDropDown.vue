@@ -95,11 +95,11 @@ export default {
     }
   },
   methods: {
-    logout1(){
-      localStorage.removeItem('tu');
-      localStorage.removeItem('ru');
-      localStorage.removeItem('ui');
-      localStorage.removeItem('nuevaRecetaData');
+    logout1() {
+      localStorage.removeItem("tu");
+      localStorage.removeItem("ru");
+      localStorage.removeItem("ui");
+      localStorage.removeItem("nuevaRecetaData");
       this.$router.push("/");
     },
     getData() {
@@ -117,14 +117,18 @@ export default {
           let r = localStorage.getItem("ru");
           if (r == 1) {
             this.rol = "Admin";
-          } else {
+          } else if (r == 2) {
             this.rol = "Médico";
+          } else {
+            this.rol = "Call Center";
           }
-          if (Response.data.success.image == null || Response.data.success.image == "") {
+          if (
+            Response.data.success.image == null ||
+            Response.data.success.image == ""
+          ) {
             this.image = "/images/medicamentos/avatar.jpeg";
           } else {
             this.image = "data:image/png;base64," + Response.data.success.image;
-            
           }
         })
         .catch(err => {

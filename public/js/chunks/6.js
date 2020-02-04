@@ -1578,10 +1578,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     logout1: function logout1() {
-      localStorage.removeItem('tu');
-      localStorage.removeItem('ru');
-      localStorage.removeItem('ui');
-      localStorage.removeItem('nuevaRecetaData');
+      localStorage.removeItem("tu");
+      localStorage.removeItem("ru");
+      localStorage.removeItem("ui");
+      localStorage.removeItem("nuevaRecetaData");
       this.$router.push("/");
     },
     getData: function getData() {
@@ -1601,8 +1601,10 @@ __webpack_require__.r(__webpack_exports__);
 
         if (r == 1) {
           _this.rol = "Admin";
-        } else {
+        } else if (r == 2) {
           _this.rol = "Médico";
+        } else {
+          _this.rol = "Call Center";
         }
 
         if (Response.data.success.image == null || Response.data.success.image == "") {
