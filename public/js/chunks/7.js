@@ -153,9 +153,10 @@ __webpack_require__.r(__webpack_exports__);
       if (!val) return;
 
       if (Object.entries(this.data).length === 0) {
-        this.initValues();
-        this.$validator.reset();
+        this.initValues(); //this.$validator.reset()
       } else {
+        console.log(this.data);
+
         var _JSON$parse = JSON.parse(JSON.stringify(this.data)),
             category = _JSON$parse.category,
             id = _JSON$parse.id,
@@ -187,8 +188,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     },
-    isFormValid: function isFormValid() {
-      return !this.errors.any() && this.dataName && this.dataCategory && this.dataPrice > 0;
+    isFormValid: function isFormValid() {//return !this.errors.any() && this.dataName && this.dataCategory && (this.dataPrice > 0)
     },
     scrollbarTag: function scrollbarTag() {
       return this.$store.getters.scrollbarTag;
@@ -266,6 +266,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DataViewSidebar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DataViewSidebar.vue */ "./resources/js/src/views/DataViewSidebar.vue");
 /* harmony import */ var _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/store/data-list/moduleDataList.js */ "./resources/js/src/store/data-list/moduleDataList.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -405,6 +407,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -413,6 +443,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      doctors: [],
+      status: ["Chequeando", "Pendiente", "Empaquetando", "Entregando", "Entregado", "Cancelado"],
+      recipes: [],
       selected: [],
       // products: [],
       itemsPerPage: 4,
@@ -438,6 +471,60 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    getUsers: function getUsers() {
+      var _this = this;
+
+      var token = localStorage.getItem("tu");
+      var id = localStorage.getItem("ui");
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/listUsers",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        Response.data.forEach(function (element) {
+          _this.doctors.push({
+            id: element.id,
+            name: element.name
+          });
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    getRecipes: function getRecipes() {
+      var _this2 = this;
+
+      var token = localStorage.getItem("tu");
+      var id = localStorage.getItem("ui");
+      var f = new Date();
+      var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+      fecha = fecha.toString();
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getRecipes",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        Response.data.forEach(function (element) {
+          element.status = _this2.status[element.status - 1];
+
+          _this2.doctors.forEach(function (e) {
+            if (e.id == element.doctor_id) {
+              element.doctor_id = e.name;
+            }
+          });
+
+          _this2.recipes.push(element);
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
     addNewData: function addNewData() {
       this.sidebarData = {};
       this.toggleDataSidebar(true);
@@ -453,9 +540,12 @@ __webpack_require__.r(__webpack_exports__);
       this.toggleDataSidebar(true);
     },
     getOrderStatusColor: function getOrderStatusColor(status) {
-      if (status == 'on_hold') return "warning";
-      if (status == 'delivered') return "success";
-      if (status == 'canceled') return "danger";
+      if (status == "Chequeando") return "warning";
+      if (status == "Pendiente") return "warning";
+      if (status == "Empaquetando") return "warning";
+      if (status == "Entregando") return "warning";
+      if (status == "Entregado") return "success";
+      if (status == "Cancelado") return "danger";
       return "primary";
     },
     getPopularityColor: function getPopularityColor(num) {
@@ -471,8 +561,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
+    this.getUsers();
+    this.getRecipes();
+
     if (!_store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__["default"].isRegistered) {
-      this.$store.registerModule('dataList', _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+      this.$store.registerModule("dataList", _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
       _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__["default"].isRegistered = true;
     }
 
@@ -740,22 +833,6 @@ var render = function() {
               }),
               _vm._v(" "),
               _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.errors.has("item-name"),
-                      expression: "errors.has('item-name')"
-                    }
-                  ],
-                  staticClass: "text-danger text-sm"
-                },
-                [_vm._v(_vm._s(_vm.errors.first("item-name")))]
-              ),
-              _vm._v(" "),
-              _c(
                 "vs-select",
                 {
                   directives: [
@@ -783,22 +860,6 @@ var render = function() {
                   })
                 }),
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.errors.has("item-category"),
-                      expression: "errors.has('item-category')"
-                    }
-                  ],
-                  staticClass: "text-danger text-sm"
-                },
-                [_vm._v(_vm._s(_vm.errors.first("item-category")))]
               ),
               _vm._v(" "),
               _c(
@@ -847,22 +908,6 @@ var render = function() {
                   expression: "dataPrice"
                 }
               }),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.errors.has("item-price"),
-                      expression: "errors.has('item-price')"
-                    }
-                  ],
-                  staticClass: "text-danger text-sm"
-                },
-                [_vm._v(_vm._s(_vm.errors.first("item-price")))]
-              ),
               _vm._v(" "),
               !_vm.dataImg
                 ? _c(
@@ -980,7 +1025,7 @@ var render = function() {
             pagination: "",
             "max-items": _vm.itemsPerPage,
             search: "",
-            data: _vm.products
+            data: _vm.recipes
           },
           scopedSlots: _vm._u([
             {
@@ -1007,13 +1052,13 @@ var render = function() {
                           _vm._v(" "),
                           _c("vs-td", [
                             _c("p", { staticClass: "product-category" }, [
-                              _vm._v(_vm._s(_vm._f("title")(tr.category)))
+                              _vm._v(_vm._s(tr.phone))
                             ])
                           ]),
                           _vm._v(" "),
                           _c("vs-td", [
                             _c("p", { staticClass: "product-price" }, [
-                              _vm._v(_vm._s(tr.price))
+                              _vm._v(_vm._s(tr.doctor_id))
                             ])
                           ]),
                           _vm._v(" "),
@@ -1023,10 +1068,8 @@ var render = function() {
                               _c("vs-progress", {
                                 staticClass: "shadow-md",
                                 attrs: {
-                                  percent: Number(tr.popularity),
-                                  color: _vm.getPopularityColor(
-                                    Number(tr.popularity)
-                                  )
+                                  percent: Number(100),
+                                  color: _vm.getPopularityColor(Number(100))
                                 }
                               })
                             ],
@@ -1041,16 +1084,10 @@ var render = function() {
                                 {
                                   staticClass: "product-order-status",
                                   attrs: {
-                                    color: _vm.getOrderStatusColor(
-                                      tr.order_status
-                                    )
+                                    color: _vm.getOrderStatusColor(tr.status)
                                   }
                                 },
-                                [
-                                  _vm._v(
-                                    _vm._s(_vm._f("title")(tr.order_status))
-                                  )
-                                ]
+                                [_vm._v(_vm._s(tr.status))]
                               )
                             ],
                             1

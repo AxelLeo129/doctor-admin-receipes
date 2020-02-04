@@ -38,13 +38,13 @@
 
         <!-- NAME -->
         <vs-input label="Name" v-model="dataName" class="mt-5 w-full" name="item-name" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('item-name')">{{ errors.first('item-name') }}</span>
+        
 
         <!-- CATEGORY -->
         <vs-select v-model="dataCategory" label="Category" class="mt-5 w-full" name="item-category" v-validate="'required'">
           <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />
         </vs-select>
-        <span class="text-danger text-sm" v-show="errors.has('item-category')">{{ errors.first('item-category') }}</span>
+        
 
         <!-- ORDER STATUS -->
         <vs-select v-model="dataOrder_status" label="Order Status" class="mt-5 w-full">
@@ -60,7 +60,7 @@
           class="mt-5 w-full"
           v-validate="{ required: true, regex: /\d+(\.\d+)?$/ }"
           name="item-price" />
-        <span class="text-danger text-sm" v-show="errors.has('item-price')">{{ errors.first('item-price') }}</span>
+        
 
         <!-- Upload -->
         <!-- <vs-upload text="Upload Image" class="img-upload" ref="fileUpload" /> -->
@@ -130,8 +130,9 @@ export default {
       if(!val) return
       if(Object.entries(this.data).length === 0) {
         this.initValues()
-        this.$validator.reset()
+        //this.$validator.reset()
       }else {
+        console.log(this.data);
         let { category, id, img, name, order_status, price } = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.dataCategory = category
@@ -158,7 +159,7 @@ export default {
       }
     },
     isFormValid() {
-      return !this.errors.any() && this.dataName && this.dataCategory && (this.dataPrice > 0)
+      //return !this.errors.any() && this.dataName && this.dataCategory && (this.dataPrice > 0)
     },
     scrollbarTag() { return this.$store.getters.scrollbarTag }
   },

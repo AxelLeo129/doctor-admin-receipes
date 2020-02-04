@@ -22,6 +22,7 @@ Route::any('register', 'User\UserController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
     //User
+    Route::get('listUsers', "User\UserController@index");
     Route::get('details', 'User\UserController@details');
     Route::put('putUser1', 'User\UserController@update1');
     Route::put('putUser2', 'User\UserController@update2');

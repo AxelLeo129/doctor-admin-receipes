@@ -13,6 +13,17 @@ class UserController extends Controller
     
     public $successStatus = 200;
 
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return User::all();
+    }
+
     /** 
          * Register api 
          * 
