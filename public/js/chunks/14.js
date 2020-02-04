@@ -130,8 +130,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -187,11 +185,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    verReceta: function verReceta(id) {//this.$router.push("/showRecipe/" + id);
+    },
     getRecipes: function getRecipes() {
       var _this = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
+      var f = new Date();
+      var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+      fecha = fecha.toString();
       axios__WEBPACK_IMPORTED_MODULE_5___default()({
         method: "get",
         url: "http://127.0.0.1:8000/api/getRecipes",
@@ -201,11 +204,9 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          if (element.doctor_id == id) {
+          if (element.doctor_id == id && fecha == element.dateIssue) {
             _this.recipes.push(element);
           }
-
-          console.log(_this.recipes);
         });
       }).catch(function (err) {
         console.log(err);
@@ -223,8 +224,8 @@ __webpack_require__.r(__webpack_exports__);
 
     this.getRecipes();
     var data = JSON.parse(localStorage.getItem("recetas"));
-    this.medicamentosData = data;
-    console.log(this.medicamentosData); //  User Reward Card
+    this.medicamentosData = data; //console.log(this.medicamentosData);
+    //  User Reward Card
 
     this.$http.get("/api/user/checkpoint-reward").then(function (response) {
       _this2.checkpointReward = response.data;
@@ -518,30 +519,13 @@ var render = function() {
                                 "ul",
                                 { staticClass: "users-liked user-list" },
                                 [
-                                  _c(
-                                    "li",
-                                    [
-                                      _c(
-                                        "vx-tooltip",
-                                        { attrs: { position: "bottom" } },
-                                        [
-                                          _c("vs-avatar", {
-                                            staticClass:
-                                              "border-2 border-white border-solid -m-1",
-                                            attrs: { size: "30px" }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c("span", {
-                                        domProps: {
-                                          textContent: _vm._s(item.name)
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
+                                  _c("li", [
+                                    _c("span", {
+                                      domProps: {
+                                        textContent: _vm._s(item.name)
+                                      }
+                                    })
+                                  ])
                                 ]
                               )
                             ]),
@@ -554,9 +538,39 @@ var render = function() {
                               })
                             ]),
                             _vm._v(" "),
-                            _c("vs-td", [_c("span", [_vm._v("Por definir")])]),
+                            _c("vs-td", [
+                              item.nextAppointment == "" ||
+                              item.nextAppointment == null
+                                ? _c("span", [_vm._v("Por definir")])
+                                : _c("span", {
+                                    domProps: {
+                                      textContent: _vm._s(item.nextAppointment)
+                                    }
+                                  })
+                            ]),
                             _vm._v(" "),
-                            _c("vs-td", [_c("span", [_vm._v("Pendiente")])])
+                            _c(
+                              "vs-td",
+                              [
+                                _c(
+                                  "vs-button",
+                                  {
+                                    attrs: {
+                                      color: "rgb(62, 201, 214)",
+                                      type: "filled",
+                                      size: "small"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.verReceta(item.id)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Ver")]
+                                )
+                              ],
+                              1
+                            )
                           ],
                           1
                         )

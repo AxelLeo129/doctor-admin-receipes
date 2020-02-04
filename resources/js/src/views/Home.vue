@@ -87,9 +87,6 @@
                   <vs-td>
                     <ul class="users-liked user-list">
                       <li>
-                        <vx-tooltip position="bottom">
-                          <vs-avatar size="30px" class="border-2 border-white border-solid -m-1"></vs-avatar>
-                        </vx-tooltip>
                         <span v-text="item.name"></span>
                       </li>
                     </ul>
@@ -98,10 +95,11 @@
                     <span v-text="item.dateIssue"></span>
                   </vs-td>
                   <vs-td>
-                    <span>Por definir</span>
+                    <span v-if="item.nextAppointment == '' || item.nextAppointment == null">Por definir</span>
+                    <span v-else v-text="item.nextAppointment"></span>
                   </vs-td>
                   <vs-td>
-                    <span>Pendiente</span>
+                    <vs-button color="rgb(62, 201, 214)" type="filled" size="small" @click="verReceta(item.id)">Ver</vs-button>
                   </vs-td>
                 </vs-tr>
               </template>
@@ -179,9 +177,15 @@ export default {
     };
   },
   methods: {
+    verReceta(id){
+      //this.$router.push("/showRecipe/" + id);
+    },
     getRecipes(){
       let token = localStorage.getItem("tu");
       let id = localStorage.getItem("ui");
+      let f = new Date();
+      let fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+      fecha = fecha.toString();
       axios({
         method: "get",
         url: "http://127.0.0.1:8000/api/getRecipes",
@@ -192,10 +196,9 @@ export default {
       })
         .then(Response => {
           Response.data.forEach(element => {
-            if(element.doctor_id == id){
+            if(element.doctor_id == id && fecha == element.dateIssue){
               this.recipes.push(element);
             }
-            console.log(this.recipes);
           });
         })
         .catch(err => {
@@ -213,7 +216,7 @@ export default {
     this.getRecipes();
     let data = JSON.parse(localStorage.getItem("recetas"));
     this.medicamentosData = data;
-    console.log(this.medicamentosData);
+    //console.log(this.medicamentosData);
     //  User Reward Card
     this.$http
       .get("/api/user/checkpoint-reward")

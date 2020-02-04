@@ -56487,6 +56487,37 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           });
         }
       }
+    }, {
+      path: '/showRecipe/:recipeId',
+      name: 'showRecipe',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./views/pages/showRecipe.vue */ "./resources/js/src/views/pages/showRecipe.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next({
+            name: 'consola'
+          });
+        } else if (rol == 2) {
+          next();
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      }
     }, //Admin - Categorias
     {
       path: '/listadoCategorias',
