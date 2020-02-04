@@ -92,6 +92,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -109,6 +112,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      popupActive2: false,
+      nit: null,
+      name: null,
+      phone: null,
+      email: null,
+      genre: null,
+      addressf: null,
+      addresse: null,
       dataId: null,
       dataName: "",
       dataCategory: null,
@@ -116,40 +127,40 @@ __webpack_require__.r(__webpack_exports__);
       dataOrder_status: "pending",
       dataPrice: 0,
       category_choices: [{
-        text: 'Audio',
-        value: 'audio'
+        text: "Femenino",
+        value: "femenino"
       }, {
-        text: 'Computers',
-        value: 'computers'
-      }, {
-        text: 'Fitness',
-        value: 'fitness'
-      }, {
-        text: 'Appliance',
-        value: 'appliance'
+        text: "Masculino",
+        value: "masculino"
       }],
       order_status_choices: [{
-        text: 'Pending',
-        value: 'pending'
+        text: "Pending",
+        value: "pending"
       }, {
-        text: 'Canceled',
-        value: 'canceled'
+        text: "Canceled",
+        value: "canceled"
       }, {
-        text: 'Delivered',
-        value: 'delivered'
+        text: "Delivered",
+        value: "delivered"
       }, {
-        text: 'On Hold',
-        value: 'on_hold'
+        text: "On Hold",
+        value: "on_hold"
       }],
       settings: {
         // perfectscrollbar settings
         maxScrollbarLength: 60,
-        wheelSpeed: .60
+        wheelSpeed: 0.6
       }
     };
   },
   watch: {
     isSidebarActive: function isSidebarActive(val) {
+      this.nit = null;
+      this.name = null;
+      this.phone = null;
+      this.email = null;
+      this.addresse = null;
+      this.addressf = null;
       if (!val) return;
 
       if (Object.entries(this.data).length === 0) {
@@ -158,19 +169,19 @@ __webpack_require__.r(__webpack_exports__);
         console.log(this.data);
 
         var _JSON$parse = JSON.parse(JSON.stringify(this.data)),
-            category = _JSON$parse.category,
-            id = _JSON$parse.id,
-            img = _JSON$parse.img,
+            nit = _JSON$parse.nit,
             name = _JSON$parse.name,
-            order_status = _JSON$parse.order_status,
-            price = _JSON$parse.price;
+            phone = _JSON$parse.phone,
+            email = _JSON$parse.email,
+            addressf = _JSON$parse.addressf,
+            addresse = _JSON$parse.addresse;
 
-        this.dataId = id;
-        this.dataCategory = category;
-        this.dataImg = img;
-        this.dataName = name;
-        this.dataOrder_status = order_status;
-        this.dataPrice = price;
+        this.nit = nit;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.addresse = addresse;
+        this.addressf = addressf;
         this.initValues();
       } // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
 
@@ -183,7 +194,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       set: function set(val) {
         if (!val) {
-          this.$emit('closeSidebar'); // this.$validator.reset()
+          this.$emit("closeSidebar"); // this.$validator.reset()
           // this.initValues()
         }
       }
@@ -205,46 +216,42 @@ __webpack_require__.r(__webpack_exports__);
       this.dataImg = null;
     },
     submitData: function submitData() {
-      var _this = this;
-
-      this.$validator.validateAll().then(function (result) {
+      /*this.$validator.validateAll().then(result => {
         if (result) {
-          var obj = {
-            id: _this.dataId,
-            name: _this.dataName,
-            img: _this.dataImg,
-            category: _this.dataCategory,
-            order_status: _this.dataOrder_status,
-            price: _this.dataPrice
+          const obj = {
+            id: this.dataId,
+            name: this.dataName,
+            img: this.dataImg,
+            category: this.dataCategory,
+            order_status: this.dataOrder_status,
+            price: this.dataPrice
           };
-
-          if (_this.dataId !== null && _this.dataId >= 0) {
-            _this.$store.dispatch("dataList/updateItem", obj).catch(function (err) {
+            if (this.dataId !== null && this.dataId >= 0) {
+            this.$store.dispatch("dataList/updateItem", obj).catch(err => {
               console.error(err);
             });
           } else {
             delete obj.id;
             obj.popularity = 0;
-
-            _this.$store.dispatch("dataList/addItem", obj).catch(function (err) {
+            this.$store.dispatch("dataList/addItem", obj).catch(err => {
               console.error(err);
             });
           }
-
-          _this.$emit('closeSidebar');
-
-          _this.initValues();
+            this.$emit("closeSidebar");
+          this.initValues();
         }
-      });
+      });*/
+      //this.$router.push("/recetaFinal");
+      this.popupActive2 = true;
     },
     updateCurrImg: function updateCurrImg(input) {
-      var _this2 = this;
+      var _this = this;
 
       if (input.target.files && input.target.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-          _this2.dataImg = e.target.result;
+          _this.dataImg = e.target.result;
         };
 
         reader.readAsDataURL(input.target.files[0]);
@@ -268,6 +275,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/store/data-list/moduleDataList.js */ "./resources/js/src/store/data-list/moduleDataList.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
 //
 //
 //
@@ -485,29 +496,47 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     handleSelected: function handleSelected(tr) {
-      var _this = this;
-
       this.suggestions = [];
-      var token = localStorage.getItem("tu");
-      var id = localStorage.getItem("ui");
-      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+
+      if (tr.id == 1) {
+        this.suggestions = [{
+          client_nit: "2314260k",
+          client_name: "Elma Barrera",
+          client_addresse: "Villa Nueva, Zona 12",
+          client_phone: "12345678"
+        }, {
+          client_nit: "9530223",
+          client_name: "Elma de López",
+          client_addresse: "San Cristobal, Mixco Guatemala",
+          client_phone: "12345678"
+        }];
+      } else {
+        this.suggestions = [];
+      }
+      /*this.suggestions = [];
+      let token = localStorage.getItem("tu");
+      let id = localStorage.getItem("ui");
+      axios({
         method: "get",
         url: "http://127.0.0.1:8000/api/getCliente/" + tr.phone,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
-      }).then(function (Response) {
-        Response.data.forEach(function (element) {
-          _this.suggestions.push(element);
-        });
-        console.log(_this.suggestions);
-      }).catch(function (err) {
-        console.log(err);
-      });
+      })
+        .then(Response => {
+          Response.data.forEach(element => {
+            this.suggestions.push(element);
+          });
+          console.log(this.suggestions);
+        })
+        .catch(err => {
+          console.log(err);
+        });*/
+
     },
     getUsers: function getUsers() {
-      var _this2 = this;
+      var _this = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -520,7 +549,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this2.doctors.push({
+          _this.doctors.push({
             id: element.id,
             name: element.name
           });
@@ -530,7 +559,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getRecipes: function getRecipes() {
-      var _this3 = this;
+      var _this2 = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -546,15 +575,15 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          element.status = _this3.status[element.status - 1];
+          element.status = _this2.status[element.status - 1];
 
-          _this3.doctors.forEach(function (e) {
+          _this2.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
               element.doctor_id = e.name;
             }
           });
 
-          _this3.recipes.push(element);
+          _this2.recipes.push(element);
         });
       }).catch(function (err) {
         console.log(err);
@@ -770,198 +799,194 @@ var render = function() {
       _c("vs-divider", { staticClass: "mb-0" }),
       _vm._v(" "),
       _c(
-        _vm.scrollbarTag,
+        "vs-popup",
         {
-          key: _vm.$vs.rtl,
-          tag: "component",
-          staticClass: "scroll-area--data-list-add-new",
-          attrs: { settings: _vm.settings }
+          attrs: {
+            fullscreen: "",
+            title: "Actualizar Categoría",
+            active: _vm.popupActive2
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActive2 = $event
+            }
+          }
         },
         [
+          _c("p", [_vm._v("¿Está seguro de actualizar esta información?")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("vs-button", { attrs: { color: "primary", type: "filled" } }, [
+            _vm._v("Actualizar")
+          ]),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              attrs: { color: "danger", type: "filled" },
+              on: {
+                click: function($event) {
+                  _vm.popupActive2 = false
+                }
+              }
+            },
+            [_vm._v("Cancelar")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("vx-card", { staticClass: "scroll-area--data-list-add-new" }, [
+        _c("div", { staticClass: "p-3" }, [
+          _c("div", { staticClass: "vx-row" }, [
+            _c(
+              "div",
+              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+              [
+                _c("vs-input", {
+                  staticClass: "mt-5 w-full",
+                  attrs: { label: "Nit", name: "item-name" },
+                  model: {
+                    value: _vm.nit,
+                    callback: function($$v) {
+                      _vm.nit = $$v
+                    },
+                    expression: "nit"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+              [
+                _c("vs-input", {
+                  staticClass: "mt-5 w-full",
+                  attrs: { label: "Nombre Completo", name: "item-name" },
+                  model: {
+                    value: _vm.name,
+                    callback: function($$v) {
+                      _vm.name = $$v
+                    },
+                    expression: "name"
+                  }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "vx-row" }, [
+            _c(
+              "div",
+              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+              [
+                _c("vs-input", {
+                  staticClass: "mt-5 w-full",
+                  attrs: { label: "Teléfono", name: "item-name" },
+                  model: {
+                    value: _vm.phone,
+                    callback: function($$v) {
+                      _vm.phone = $$v
+                    },
+                    expression: "phone"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+              [
+                _c("vs-input", {
+                  staticClass: "mt-5 w-full",
+                  attrs: { label: "Email", name: "item-name" },
+                  model: {
+                    value: _vm.email,
+                    callback: function($$v) {
+                      _vm.email = $$v
+                    },
+                    expression: "email"
+                  }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "vx-row" }, [
+            _c(
+              "div",
+              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+              [
+                _c(
+                  "vs-select",
+                  {
+                    staticClass: "mt-5 w-full",
+                    attrs: { label: "Género", name: "item-category" },
+                    model: {
+                      value: _vm.genre,
+                      callback: function($$v) {
+                        _vm.genre = $$v
+                      },
+                      expression: "genre"
+                    }
+                  },
+                  _vm._l(_vm.category_choices, function(item) {
+                    return _c("vs-select-item", {
+                      key: item.value,
+                      attrs: { value: item.value, text: item.text }
+                    })
+                  }),
+                  1
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
           _c(
             "div",
-            { staticClass: "p-6" },
+            { staticClass: "vx-row" },
             [
-              _vm.dataImg
-                ? [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "img-container w-64 mx-auto flex items-center justify-center"
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "responsive",
-                          attrs: { src: _vm.dataImg, alt: "img" }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "modify-img flex justify-between mt-5" },
-                      [
-                        _c("input", {
-                          ref: "updateImgInput",
-                          staticClass: "hidden",
-                          attrs: { type: "file", accept: "image/*" },
-                          on: { change: _vm.updateCurrImg }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "vs-button",
-                          {
-                            staticClass: "mr-4",
-                            attrs: { type: "flat" },
-                            on: {
-                              click: function($event) {
-                                return _vm.$refs.updateImgInput.click()
-                              }
-                            }
-                          },
-                          [_vm._v("Update Image")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "vs-button",
-                          {
-                            attrs: { type: "flat", color: "#999" },
-                            on: {
-                              click: function($event) {
-                                _vm.dataImg = null
-                              }
-                            }
-                          },
-                          [_vm._v("Remove Image")]
-                        )
-                      ],
-                      1
-                    )
-                  ]
-                : _vm._e(),
-              _vm._v(" "),
-              _c("vs-input", {
-                staticClass: "mt-5 w-full",
-                attrs: { label: "Name", name: "item-name" },
+              _c("vs-textarea", {
+                attrs: { label: "Dirección de Facturación" },
                 model: {
-                  value: _vm.dataName,
+                  value: _vm.addressf,
                   callback: function($$v) {
-                    _vm.dataName = $$v
+                    _vm.addressf = $$v
                   },
-                  expression: "dataName"
+                  expression: "addressf"
                 }
-              }),
-              _vm._v(" "),
-              _c(
-                "vs-select",
-                {
-                  directives: [
-                    {
-                      name: "validate",
-                      rawName: "v-validate",
-                      value: "required",
-                      expression: "'required'"
-                    }
-                  ],
-                  staticClass: "mt-5 w-full",
-                  attrs: { label: "Category", name: "item-category" },
-                  model: {
-                    value: _vm.dataCategory,
-                    callback: function($$v) {
-                      _vm.dataCategory = $$v
-                    },
-                    expression: "dataCategory"
-                  }
-                },
-                _vm._l(_vm.category_choices, function(item) {
-                  return _c("vs-select-item", {
-                    key: item.value,
-                    attrs: { value: item.value, text: item.text }
-                  })
-                }),
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "vs-select",
-                {
-                  staticClass: "mt-5 w-full",
-                  attrs: { label: "Order Status" },
-                  model: {
-                    value: _vm.dataOrder_status,
-                    callback: function($$v) {
-                      _vm.dataOrder_status = $$v
-                    },
-                    expression: "dataOrder_status"
-                  }
-                },
-                _vm._l(_vm.order_status_choices, function(item) {
-                  return _c("vs-select-item", {
-                    key: item.value,
-                    attrs: { value: item.value, text: item.text }
-                  })
-                }),
-                1
-              ),
-              _vm._v(" "),
-              _c("vs-input", {
-                directives: [
-                  {
-                    name: "validate",
-                    rawName: "v-validate",
-                    value: { required: true, regex: /\d+(\.\d+)?$/ },
-                    expression: "{ required: true, regex: /\\d+(\\.\\d+)?$/ }"
-                  }
-                ],
-                staticClass: "mt-5 w-full",
-                attrs: {
-                  "icon-pack": "feather",
-                  icon: "icon-dollar-sign",
-                  label: "Price",
-                  name: "item-price"
-                },
-                model: {
-                  value: _vm.dataPrice,
-                  callback: function($$v) {
-                    _vm.dataPrice = $$v
-                  },
-                  expression: "dataPrice"
-                }
-              }),
-              _vm._v(" "),
-              !_vm.dataImg
-                ? _c(
-                    "div",
-                    { staticClass: "upload-img mt-5" },
-                    [
-                      _c("input", {
-                        ref: "uploadImgInput",
-                        staticClass: "hidden",
-                        attrs: { type: "file", accept: "image/*" },
-                        on: { change: _vm.updateCurrImg }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vs-button",
-                        {
-                          on: {
-                            click: function($event) {
-                              return _vm.$refs.uploadImgInput.click()
-                            }
-                          }
-                        },
-                        [_vm._v("Upload Image")]
-                      )
-                    ],
-                    1
-                  )
-                : _vm._e()
+              })
             ],
-            2
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "vx-row" },
+            [
+              _c("vs-textarea", {
+                attrs: { label: "Dirección de Envió" },
+                model: {
+                  value: _vm.addresse,
+                  callback: function($$v) {
+                    _vm.addresse = $$v
+                  },
+                  expression: "addresse"
+                }
+              })
+            ],
+            1
           )
-        ]
-      ),
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -973,26 +998,13 @@ var render = function() {
         [
           _c(
             "vs-button",
-            {
-              staticClass: "mr-6",
-              attrs: { disabled: !_vm.isFormValid },
-              on: { click: _vm.submitData }
-            },
-            [_vm._v("Submit")]
+            { staticClass: "mr-6", attrs: { color: "warning" } },
+            [_vm._v("Actualizar")]
           ),
           _vm._v(" "),
-          _c(
-            "vs-button",
-            {
-              attrs: { type: "border", color: "danger" },
-              on: {
-                click: function($event) {
-                  _vm.isSidebarActiveLocal = false
-                }
-              }
-            },
-            [_vm._v("Cancel")]
-          )
+          _c("vs-button", { on: { click: _vm.submitData } }, [
+            _vm._v("Nuevo Pedido")
+          ])
         ],
         1
       )
@@ -1121,10 +1133,11 @@ var render = function() {
                               _c(
                                 "div",
                                 { staticClass: "con-expand-users w-full" },
-                                [
-                                  _c(
+                                _vm._l(_vm.suggestions, function(item) {
+                                  return _c(
                                     "div",
                                     {
+                                      key: item.id,
                                       staticClass:
                                         "con-btns-user flex items-center justify-between"
                                     },
@@ -1135,7 +1148,15 @@ var render = function() {
                                           staticClass:
                                             "con-userx flex items-center justify-start"
                                         },
-                                        [_c("span", [_vm._v("Nit")])]
+                                        [
+                                          _c("span", {
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                item.client_nit
+                                              )
+                                            }
+                                          })
+                                        ]
                                       ),
                                       _vm._v(" "),
                                       _c(
@@ -1144,7 +1165,15 @@ var render = function() {
                                           staticClass:
                                             "con-userx flex items-center justify-start"
                                         },
-                                        [_c("span", [_vm._v(_vm._s(tr.name))])]
+                                        [
+                                          _c("span", {
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                item.client_name
+                                              )
+                                            }
+                                          })
+                                        ]
                                       ),
                                       _vm._v(" "),
                                       _c(
@@ -1153,7 +1182,13 @@ var render = function() {
                                           staticClass:
                                             "con-userx flex items-center justify-start"
                                         },
-                                        [_c("span", [_vm._v("Teléfono")])]
+                                        [
+                                          _c("span", {
+                                            domProps: {
+                                              textContent: _vm._s(item.phone)
+                                            }
+                                          })
+                                        ]
                                       ),
                                       _vm._v(" "),
                                       _c(
@@ -1162,7 +1197,13 @@ var render = function() {
                                           staticClass:
                                             "con-userx flex items-center justify-start"
                                         },
-                                        [_c("span", [_vm._v("Dirección")])]
+                                        [
+                                          _c("span", {
+                                            domProps: {
+                                              textContent: _vm._s(item.addresse)
+                                            }
+                                          })
+                                        ]
                                       ),
                                       _vm._v(" "),
                                       _c(
@@ -1189,7 +1230,8 @@ var render = function() {
                                       )
                                     ]
                                   )
-                                ]
+                                }),
+                                0
                               )
                             ]
                           )

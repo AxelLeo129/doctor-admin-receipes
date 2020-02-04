@@ -143,18 +143,22 @@
             </vs-td>
             <template class="expand-user" slot="expand">
               <div class="con-expand-users w-full">
-                <div class="con-btns-user flex items-center justify-between">
+                <div
+                  class="con-btns-user flex items-center justify-between"
+                  v-for="item in suggestions"
+                  :key="item.id"
+                >
                   <div class="con-userx flex items-center justify-start">
-                    <span>Nit</span>
+                    <span v-text="item.client_nit"></span>
                   </div>
                   <div class="con-userx flex items-center justify-start">
-                    <span>{{ tr.name }}</span>
+                    <span v-text="item.client_name"></span>
                   </div>
                   <div class="con-userx flex items-center justify-start">
-                    <span>Teléfono</span>
+                    <span v-text="item.phone"></span>
                   </div>
                   <div class="con-userx flex items-center justify-start">
-                    <span>Dirección</span>
+                    <span v-text="item.addresse"></span>
                   </div>
                   <div class="flex">
                     <vs-button
@@ -227,6 +231,25 @@ export default {
   methods: {
     handleSelected(tr) {
       this.suggestions = [];
+      if (tr.id == 1) {
+        this.suggestions = [
+          {
+            client_nit: "2314260k",
+            client_name: "Elma Barrera",
+            client_addresse: "Villa Nueva, Zona 12",
+            client_phone: "12345678"
+          },
+          {
+            client_nit: "9530223",
+            client_name: "Elma de López",
+            client_addresse: "San Cristobal, Mixco Guatemala",
+            client_phone: "12345678"
+          }
+        ];
+      } else {
+        this.suggestions = [];
+      }
+      /*this.suggestions = [];
       let token = localStorage.getItem("tu");
       let id = localStorage.getItem("ui");
       axios({
@@ -245,7 +268,7 @@ export default {
         })
         .catch(err => {
           console.log(err);
-        });
+        });*/
     },
     getUsers() {
       let token = localStorage.getItem("tu");
