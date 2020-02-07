@@ -231,8 +231,8 @@ export default {
   methods: {
     async handleSelected(tr) {
       this.suggestions = [];
-      console.log(tr.id);
-      if (tr.id == 1) {
+      //console.log(tr.id);
+      /*if (tr.id == 1) {
         this.suggestions = await [
           {
             client_nit: "2314260k",
@@ -251,7 +251,7 @@ export default {
       } else {
         this.suggestions = [];
       }
-      /*this.suggestions = [];
+      this.suggestions = [];*/
       let token = localStorage.getItem("tu");
       let id = localStorage.getItem("ui");
       axios({
@@ -270,7 +270,7 @@ export default {
         })
         .catch(err => {
           console.log(err);
-        });*/
+        });
     },
     getUsers() {
       let token = localStorage.getItem("tu");

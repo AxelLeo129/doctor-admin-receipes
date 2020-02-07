@@ -7,7 +7,7 @@
 /*! exports provided: default */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\DELL\\Desktop\\pharmazone.app\\resources\\js\\src\\views\\call-center\\dashboard.vue: Unexpected token (350:17)\n\n\u001b[0m \u001b[90m 348 | \u001b[39m    }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 349 | \u001b[39m    getPopularityColor(num) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 350 | \u001b[39m      \u001b[36mif\u001b[39m (num \u001b[33m==\u001b[39m ) \u001b[36mreturn\u001b[39m \u001b[32m\"success\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 351 | \u001b[39m      \u001b[90m//if (num > 70) return \"primary\";\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 352 | \u001b[39m      \u001b[36mif\u001b[39m (num \u001b[33m>=\u001b[39m \u001b[35m50\u001b[39m) \u001b[36mreturn\u001b[39m \u001b[32m\"warning\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 353 | \u001b[39m      \u001b[36mif\u001b[39m (num \u001b[33m<\u001b[39m \u001b[35m50\u001b[39m) \u001b[36mreturn\u001b[39m \u001b[32m\"danger\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n    at Parser.raise (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:7012:17)\n    at Parser.unexpected (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:8405:16)\n    at Parser.parseExprAtom (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9661:20)\n    at Parser.parseExprSubscripts (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9237:23)\n    at Parser.parseMaybeUnary (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9217:21)\n    at Parser.parseExprOpBaseRightExpr (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9177:34)\n    at Parser.parseExprOpRightExpr (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9170:21)\n    at Parser.parseExprOp (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9133:27)\n    at Parser.parseExprOps (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9093:17)\n    at Parser.parseMaybeConditional (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9056:23)\n    at Parser.parseMaybeAssign (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9015:21)\n    at Parser.parseExpression (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:8965:23)\n    at Parser.parseHeaderExpression (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10959:22)\n    at Parser.parseIfStatement (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:11043:22)\n    at Parser.parseStatementContent (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10735:21)\n    at Parser.parseStatement (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10690:17)\n    at Parser.parseBlockOrModuleBlockBody (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:11266:25)\n    at Parser.parseBlockBody (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:11253:10)\n    at Parser.parseBlock (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:11237:10)\n    at Parser.parseFunctionBody (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10256:24)\n    at Parser.parseFunctionBodyAndFinish (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10226:10)\n    at Parser.parseMethod (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10180:10)\n    at Parser.parseObjectMethod (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10096:19)\n    at Parser.parseObjPropValue (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10138:23)\n    at Parser.parseObjectMember (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10062:10)\n    at Parser.parseObj (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9982:25)\n    at Parser.parseExprAtom (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9604:28)\n    at Parser.parseExprSubscripts (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9237:23)\n    at Parser.parseMaybeUnary (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9217:21)\n    at Parser.parseExprOps (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9083:23)\n    at Parser.parseMaybeConditional (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9056:23)\n    at Parser.parseMaybeAssign (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9015:21)\n    at Parser.parseObjectProperty (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10113:101)\n    at Parser.parseObjPropValue (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10138:101)\n    at Parser.parseObjectMember (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10062:10)\n    at Parser.parseObj (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9982:25)");
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\DELL\\Desktop\\pharmazone.app\\resources\\js\\src\\views\\call-center\\dashboard.vue: Can not use keyword 'await' outside an async function (266:10)\n\n\u001b[0m \u001b[90m 264 | \u001b[39m      })\u001b[0m\n\u001b[0m \u001b[90m 265 | \u001b[39m        \u001b[33m.\u001b[39mthen(\u001b[33mResponse\u001b[39m \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 266 | \u001b[39m          await \u001b[33mResponse\u001b[39m\u001b[33m.\u001b[39mdata\u001b[33m.\u001b[39mforEach(element \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 267 | \u001b[39m            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39msuggestions\u001b[33m.\u001b[39mpush(element)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 268 | \u001b[39m          })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 269 | \u001b[39m          console\u001b[33m.\u001b[39mlog(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39msuggestions)\u001b[33m;\u001b[39m\u001b[0m\n    at Parser.raise (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:7012:17)\n    at Parser.checkReservedWord (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10405:14)\n    at Parser.parseIdentifierName (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10367:12)\n    at Parser.parseIdentifier (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10339:23)\n    at Parser.parseExprAtom (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9514:27)\n    at Parser.parseExprSubscripts (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9237:23)\n    at Parser.parseMaybeUnary (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9217:21)\n    at Parser.parseExprOps (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9083:23)\n    at Parser.parseMaybeConditional (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9056:23)\n    at Parser.parseMaybeAssign (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9015:21)\n    at Parser.parseExpression (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:8965:23)\n    at Parser.parseStatementContent (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10819:23)\n    at Parser.parseStatement (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10690:17)\n    at Parser.parseBlockOrModuleBlockBody (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:11266:25)\n    at Parser.parseBlockBody (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:11253:10)\n    at Parser.parseBlock (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:11237:10)\n    at Parser.parseFunctionBody (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10256:24)\n    at Parser.parseArrowExpression (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10197:10)\n    at Parser.parseExprAtom (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9535:18)\n    at Parser.parseExprSubscripts (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9237:23)\n    at Parser.parseMaybeUnary (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9217:21)\n    at Parser.parseExprOps (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9083:23)\n    at Parser.parseMaybeConditional (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9056:23)\n    at Parser.parseMaybeAssign (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9015:21)\n    at Parser.parseExprListItem (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10331:18)\n    at Parser.parseCallExpressionArguments (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9434:22)\n    at Parser.parseSubscript (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9342:29)\n    at Parser.parseSubscripts (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9258:19)\n    at Parser.parseExprSubscripts (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9247:17)\n    at Parser.parseMaybeUnary (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9217:21)\n    at Parser.parseExprOps (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9083:23)\n    at Parser.parseMaybeConditional (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9056:23)\n    at Parser.parseMaybeAssign (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:9015:21)\n    at Parser.parseExpression (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:8965:23)\n    at Parser.parseStatementContent (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10819:23)\n    at Parser.parseStatement (C:\\Users\\DELL\\Desktop\\pharmazone.app\\node_modules\\@babel\\parser\\lib\\index.js:10690:17)");
 
 /***/ }),
 
@@ -167,115 +167,121 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
-                          _c(
-                            "template",
-                            { staticClass: "expand-user", slot: "expand" },
-                            [
-                              _c(
-                                "div",
-                                { staticClass: "con-expand-users w-full" },
-                                _vm._l(_vm.suggestions, function(item) {
-                                  return _c(
+                          _vm.suggestions != []
+                            ? _c(
+                                "template",
+                                { staticClass: "expand-user", slot: "expand" },
+                                [
+                                  _c(
                                     "div",
-                                    {
-                                      key: item.id,
-                                      staticClass:
-                                        "con-btns-user flex items-center justify-between"
-                                    },
-                                    [
-                                      _c(
+                                    { staticClass: "con-expand-users w-full" },
+                                    _vm._l(_vm.suggestions, function(item) {
+                                      return _c(
                                         "div",
                                         {
+                                          key: item.id,
                                           staticClass:
-                                            "con-userx flex items-center justify-start"
+                                            "con-btns-user flex items-center justify-between"
                                         },
                                         [
-                                          _c("span", {
-                                            domProps: {
-                                              textContent: _vm._s(
-                                                item.client_nit
-                                              )
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "con-userx flex items-center justify-start"
-                                        },
-                                        [
-                                          _c("span", {
-                                            domProps: {
-                                              textContent: _vm._s(
-                                                item.client_name
-                                              )
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "con-userx flex items-center justify-start"
-                                        },
-                                        [
-                                          _c("span", {
-                                            domProps: {
-                                              textContent: _vm._s(item.phone)
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "con-userx flex items-center justify-start"
-                                        },
-                                        [
-                                          _c("span", {
-                                            domProps: {
-                                              textContent: _vm._s(item.addresse)
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "flex" },
-                                        [
-                                          _c("vs-button", {
-                                            staticClass: "mr-2",
-                                            attrs: {
-                                              type: "border",
-                                              size: "small",
-                                              "icon-pack": "feather",
-                                              icon: "icon-send"
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "con-userx flex items-center justify-start"
                                             },
-                                            on: {
-                                              click: function($event) {
-                                                $event.stopPropagation()
-                                                return _vm.editData(tr)
-                                              }
-                                            }
-                                          })
-                                        ],
-                                        1
+                                            [
+                                              _c("span", {
+                                                domProps: {
+                                                  textContent: _vm._s(
+                                                    item.client_nit
+                                                  )
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "con-userx flex items-center justify-start"
+                                            },
+                                            [
+                                              _c("span", {
+                                                domProps: {
+                                                  textContent: _vm._s(
+                                                    item.client_name
+                                                  )
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "con-userx flex items-center justify-start"
+                                            },
+                                            [
+                                              _c("span", {
+                                                domProps: {
+                                                  textContent: _vm._s(
+                                                    item.phone
+                                                  )
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "con-userx flex items-center justify-start"
+                                            },
+                                            [
+                                              _c("span", {
+                                                domProps: {
+                                                  textContent: _vm._s(
+                                                    item.addresse
+                                                  )
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            { staticClass: "flex" },
+                                            [
+                                              _c("vs-button", {
+                                                staticClass: "mr-2",
+                                                attrs: {
+                                                  type: "border",
+                                                  size: "small",
+                                                  "icon-pack": "feather",
+                                                  icon: "icon-send"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    $event.stopPropagation()
+                                                    return _vm.editData(tr)
+                                                  }
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ]
                                       )
-                                    ]
+                                    }),
+                                    0
                                   )
-                                }),
-                                0
+                                ]
                               )
-                            ]
-                          )
+                            : _vm._e()
                         ],
                         2
                       )

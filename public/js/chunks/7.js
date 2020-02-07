@@ -665,41 +665,55 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _handleSelected = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(tr) {
+        var _this = this;
+
+        var token, id;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                this.suggestions = [];
-                console.log(tr.id);
+                this.suggestions = []; //console.log(tr.id);
 
-                if (!(tr.id == 1)) {
-                  _context.next = 9;
-                  break;
+                /*if (tr.id == 1) {
+                  this.suggestions = await [
+                    {
+                      client_nit: "2314260k",
+                      client_name: "Elma Barrera",
+                      client_addresse: "Villa Nueva, Zona 12",
+                      client_phone: "12345678"
+                    },
+                    {
+                      client_nit: "9530223",
+                      client_name: "Elma de López",
+                      client_addresse: "San Cristobal, Mixco Guatemala",
+                      client_phone: "12345678"
+                    }
+                  ];
+                  console.log(this.suggestions);
+                } else {
+                  this.suggestions = [];
                 }
+                this.suggestions = [];*/
 
-                _context.next = 5;
-                return [{
-                  client_nit: "2314260k",
-                  client_name: "Elma Barrera",
-                  client_addresse: "Villa Nueva, Zona 12",
-                  client_phone: "12345678"
-                }, {
-                  client_nit: "9530223",
-                  client_name: "Elma de López",
-                  client_addresse: "San Cristobal, Mixco Guatemala",
-                  client_phone: "12345678"
-                }];
+                token = localStorage.getItem("tu");
+                id = localStorage.getItem("ui");
+                axios__WEBPACK_IMPORTED_MODULE_3___default()({
+                  method: "get",
+                  url: "http://127.0.0.1:8000/api/getCliente/" + tr.phone,
+                  headers: {
+                    authorization: "Bearer " + token,
+                    "content-type": "application/json"
+                  }
+                }).then(function (Response) {
+                  Response.data.forEach(function (element) {
+                    _this.suggestions.push(element);
+                  });
+                  console.log(_this.suggestions);
+                }).catch(function (err) {
+                  console.log(err);
+                });
 
-              case 5:
-                this.suggestions = _context.sent;
-                console.log(this.suggestions);
-                _context.next = 10;
-                break;
-
-              case 9:
-                this.suggestions = [];
-
-              case 10:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -714,7 +728,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return handleSelected;
     }(),
     getUsers: function getUsers() {
-      var _this = this;
+      var _this2 = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -727,7 +741,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this.doctors.push({
+          _this2.doctors.push({
             id: element.id,
             name: element.name
           });
@@ -737,7 +751,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     getRecipes: function getRecipes() {
-      var _this2 = this;
+      var _this3 = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -753,15 +767,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          element.status = _this2.status[element.status - 1];
+          element.status = _this3.status[element.status - 1];
 
-          _this2.doctors.forEach(function (e) {
+          _this3.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
               element.doctor_id = e.name;
             }
           });
 
-          _this2.recipes.push(element);
+          _this3.recipes.push(element);
         });
       }).catch(function (err) {
         console.log(err);
