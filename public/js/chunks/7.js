@@ -384,7 +384,7 @@ __webpack_require__.r(__webpack_exports__);
             order_status: this.dataOrder_status,
             price: this.dataPrice
           };
-            if (this.dataId !== null && this.dataId >= 0) {
+           if (this.dataId !== null && this.dataId >= 0) {
             this.$store.dispatch("dataList/updateItem", obj).catch(err => {
               console.error(err);
             });
@@ -395,7 +395,7 @@ __webpack_require__.r(__webpack_exports__);
               console.error(err);
             });
           }
-            this.$emit("closeSidebar");
+           this.$emit("closeSidebar");
           this.initValues();
         }
       });*/
