@@ -141,7 +141,7 @@
                 class="product-order-status"
               >{{ tr.status }}</vs-chip>
             </vs-td>
-            <template class="expand-user" slot="expand">
+            <template class="expand-user" v-if="suggestions != []" slot="expand">
               <div class="con-expand-users w-full">
                 <div
                   class="con-btns-user flex items-center justify-between"
@@ -229,10 +229,11 @@ export default {
     }
   },
   methods: {
-    handleSelected(tr) {
+    async handleSelected(tr) {
       this.suggestions = [];
+      console.log(tr.id);
       if (tr.id == 1) {
-        this.suggestions = [
+        this.suggestions = await [
           {
             client_nit: "2314260k",
             client_name: "Elma Barrera",
@@ -246,6 +247,7 @@ export default {
             client_phone: "12345678"
           }
         ];
+        console.log(this.suggestions);
       } else {
         this.suggestions = [];
       }

@@ -429,10 +429,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DataViewSidebar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DataViewSidebar.vue */ "./resources/js/src/views/DataViewSidebar.vue");
-/* harmony import */ var _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/store/data-list/moduleDataList.js */ "./resources/js/src/store/data-list/moduleDataList.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _DataViewSidebar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../DataViewSidebar.vue */ "./resources/js/src/views/DataViewSidebar.vue");
+/* harmony import */ var _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/store/data-list/moduleDataList.js */ "./resources/js/src/store/data-list/moduleDataList.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -620,7 +628,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    DataViewSidebar: _DataViewSidebar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    DataViewSidebar: _DataViewSidebar_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -653,52 +661,64 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    handleSelected: function handleSelected(tr) {
-      this.suggestions = [];
+    handleSelected: function () {
+      var _handleSelected = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(tr) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.suggestions = [];
+                console.log(tr.id);
 
-      if (tr.id == 1) {
-        this.suggestions = [{
-          client_nit: "2314260k",
-          client_name: "Elma Barrera",
-          client_addresse: "Villa Nueva, Zona 12",
-          client_phone: "12345678"
-        }, {
-          client_nit: "9530223",
-          client_name: "Elma de López",
-          client_addresse: "San Cristobal, Mixco Guatemala",
-          client_phone: "12345678"
-        }];
-      } else {
-        this.suggestions = [];
+                if (!(tr.id == 1)) {
+                  _context.next = 9;
+                  break;
+                }
+
+                _context.next = 5;
+                return [{
+                  client_nit: "2314260k",
+                  client_name: "Elma Barrera",
+                  client_addresse: "Villa Nueva, Zona 12",
+                  client_phone: "12345678"
+                }, {
+                  client_nit: "9530223",
+                  client_name: "Elma de López",
+                  client_addresse: "San Cristobal, Mixco Guatemala",
+                  client_phone: "12345678"
+                }];
+
+              case 5:
+                this.suggestions = _context.sent;
+                console.log(this.suggestions);
+                _context.next = 10;
+                break;
+
+              case 9:
+                this.suggestions = [];
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function handleSelected(_x) {
+        return _handleSelected.apply(this, arguments);
       }
-      /*this.suggestions = [];
-      let token = localStorage.getItem("tu");
-      let id = localStorage.getItem("ui");
-      axios({
-        method: "get",
-        url: "http://127.0.0.1:8000/api/getCliente/" + tr.phone,
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      })
-        .then(Response => {
-          Response.data.forEach(element => {
-            this.suggestions.push(element);
-          });
-          console.log(this.suggestions);
-        })
-        .catch(err => {
-          console.log(err);
-        });*/
 
-    },
+      return handleSelected;
+    }(),
     getUsers: function getUsers() {
       var _this = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
-      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+      axios__WEBPACK_IMPORTED_MODULE_3___default()({
         method: "get",
         url: "http://127.0.0.1:8000/api/listUsers",
         headers: {
@@ -724,7 +744,7 @@ __webpack_require__.r(__webpack_exports__);
       var f = new Date();
       var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
       fecha = fecha.toString();
-      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+      axios__WEBPACK_IMPORTED_MODULE_3___default()({
         method: "get",
         url: "http://127.0.0.1:8000/api/getRecipes",
         headers: {
@@ -786,9 +806,9 @@ __webpack_require__.r(__webpack_exports__);
     this.getUsers();
     this.getRecipes();
 
-    if (!_store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__["default"].isRegistered) {
-      this.$store.registerModule("dataList", _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
-      _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_1__["default"].isRegistered = true;
+    if (!_store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_2__["default"].isRegistered) {
+      this.$store.registerModule("dataList", _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_2__["default"]);
+      _store_data_list_moduleDataList_js__WEBPACK_IMPORTED_MODULE_2__["default"].isRegistered = true;
     }
 
     this.$store.dispatch("dataList/fetchDataListItems");
@@ -1708,115 +1728,121 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
-                          _c(
-                            "template",
-                            { staticClass: "expand-user", slot: "expand" },
-                            [
-                              _c(
-                                "div",
-                                { staticClass: "con-expand-users w-full" },
-                                _vm._l(_vm.suggestions, function(item) {
-                                  return _c(
+                          _vm.suggestions != []
+                            ? _c(
+                                "template",
+                                { staticClass: "expand-user", slot: "expand" },
+                                [
+                                  _c(
                                     "div",
-                                    {
-                                      key: item.id,
-                                      staticClass:
-                                        "con-btns-user flex items-center justify-between"
-                                    },
-                                    [
-                                      _c(
+                                    { staticClass: "con-expand-users w-full" },
+                                    _vm._l(_vm.suggestions, function(item) {
+                                      return _c(
                                         "div",
                                         {
+                                          key: item.id,
                                           staticClass:
-                                            "con-userx flex items-center justify-start"
+                                            "con-btns-user flex items-center justify-between"
                                         },
                                         [
-                                          _c("span", {
-                                            domProps: {
-                                              textContent: _vm._s(
-                                                item.client_nit
-                                              )
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "con-userx flex items-center justify-start"
-                                        },
-                                        [
-                                          _c("span", {
-                                            domProps: {
-                                              textContent: _vm._s(
-                                                item.client_name
-                                              )
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "con-userx flex items-center justify-start"
-                                        },
-                                        [
-                                          _c("span", {
-                                            domProps: {
-                                              textContent: _vm._s(item.phone)
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "con-userx flex items-center justify-start"
-                                        },
-                                        [
-                                          _c("span", {
-                                            domProps: {
-                                              textContent: _vm._s(item.addresse)
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "flex" },
-                                        [
-                                          _c("vs-button", {
-                                            staticClass: "mr-2",
-                                            attrs: {
-                                              type: "border",
-                                              size: "small",
-                                              "icon-pack": "feather",
-                                              icon: "icon-send"
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "con-userx flex items-center justify-start"
                                             },
-                                            on: {
-                                              click: function($event) {
-                                                $event.stopPropagation()
-                                                return _vm.editData(tr)
-                                              }
-                                            }
-                                          })
-                                        ],
-                                        1
+                                            [
+                                              _c("span", {
+                                                domProps: {
+                                                  textContent: _vm._s(
+                                                    item.client_nit
+                                                  )
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "con-userx flex items-center justify-start"
+                                            },
+                                            [
+                                              _c("span", {
+                                                domProps: {
+                                                  textContent: _vm._s(
+                                                    item.client_name
+                                                  )
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "con-userx flex items-center justify-start"
+                                            },
+                                            [
+                                              _c("span", {
+                                                domProps: {
+                                                  textContent: _vm._s(
+                                                    item.phone
+                                                  )
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "con-userx flex items-center justify-start"
+                                            },
+                                            [
+                                              _c("span", {
+                                                domProps: {
+                                                  textContent: _vm._s(
+                                                    item.addresse
+                                                  )
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            { staticClass: "flex" },
+                                            [
+                                              _c("vs-button", {
+                                                staticClass: "mr-2",
+                                                attrs: {
+                                                  type: "border",
+                                                  size: "small",
+                                                  "icon-pack": "feather",
+                                                  icon: "icon-send"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    $event.stopPropagation()
+                                                    return _vm.editData(tr)
+                                                  }
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ]
                                       )
-                                    ]
+                                    }),
+                                    0
                                   )
-                                }),
-                                0
+                                ]
                               )
-                            ]
-                          )
+                            : _vm._e()
                         ],
                         2
                       )
