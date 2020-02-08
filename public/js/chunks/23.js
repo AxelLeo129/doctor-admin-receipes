@@ -141,7 +141,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       errors: {
         name: "Este campo es requerido.",
-        userName: "Este campo es requerido.",
+        noCollegiate: "Este campo es requerido.",
         email: "Este campo es requerido.",
         email1: "Ingrese un email válido.",
         password: "Este campo es requerido.",
@@ -155,7 +155,7 @@ __webpack_require__.r(__webpack_exports__);
       bol2: null,
       bol3: null,
       name: null,
-      userName: null,
+      noCollegiate: null,
       email: null,
       password: null,
       confirmPassword: null,
@@ -184,7 +184,7 @@ __webpack_require__.r(__webpack_exports__);
           email: this.email,
           password: this.password,
           userName: this.name,
-          noCollegiate: this.userName,
+          noCollegiate: this.noCollegiate,
           c_password: this.confirmPassword,
           rol: "2"
         }),
@@ -207,13 +207,13 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.activado = true;
       }).catch(function (response) {
-        _this.message = response;
+        _this.message = "Ya existe un usuario con este email.";
         _this.activeLoading = false;
 
         _this.$vs.loading.close();
 
         _this.activado1 = true;
-        console.log(response.status);
+        console.log(response);
       });
     }
   },
@@ -440,24 +440,24 @@ var render = function() {
                                 attrs: {
                                   "data-vv-validate-on": "blur",
                                   label: "No.Colegiado",
-                                  name: "userName",
+                                  name: "noCollegiate",
                                   type: "number",
                                   placeholder: "No.Colegiado"
                                 },
                                 model: {
-                                  value: _vm.userName,
+                                  value: _vm.noCollegiate,
                                   callback: function($$v) {
-                                    _vm.userName = $$v
+                                    _vm.noCollegiate = $$v
                                   },
-                                  expression: "userName"
+                                  expression: "noCollegiate"
                                 }
                               }),
                               _vm._v(" "),
-                              _vm.userName === ""
+                              _vm.noCollegiate === ""
                                 ? _c(
                                     "span",
                                     { staticClass: "text-danger text-sm" },
-                                    [_vm._v(_vm._s(_vm.errors.userName))]
+                                    [_vm._v(_vm._s(_vm.errors.noCollegiate))]
                                   )
                                 : _vm._e(),
                               _vm._v(" "),
@@ -562,8 +562,8 @@ var render = function() {
                                     disabled:
                                       _vm.name == null ||
                                       _vm.name == "" ||
-                                      _vm.userName == null ||
-                                      _vm.userName == "" ||
+                                      _vm.noCollegiate == null ||
+                                      _vm.noCollegiate == "" ||
                                       _vm.email == "" ||
                                       _vm.email == null ||
                                       _vm.bol == false ||

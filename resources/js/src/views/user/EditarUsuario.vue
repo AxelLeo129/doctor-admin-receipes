@@ -538,6 +538,7 @@ export default {
           this.clinicPhone = Response.data.success.clinicPhone;
           this.clinicAddress = Response.data.success.clinicAddress;
           this.specialties = Response.data.success.specialties;
+          this.noCollegiate = Response.data.success.noCollegiate;
           if (Response.data.success.birthDate == "") {
             this.birthDate = null;
           } else {

@@ -51,3 +51,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('getCliente/{id}', 'Clients\ClientController@show');
 
 });
+
+Route::fallback(function(){
+    return response()->json([
+        'message' => 'Page Not Found. If error persists, contact axel@insayd.com'], 404);
+});

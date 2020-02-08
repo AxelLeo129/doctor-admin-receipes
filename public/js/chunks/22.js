@@ -567,6 +567,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.clinicPhone = Response.data.success.clinicPhone;
         _this3.clinicAddress = Response.data.success.clinicAddress;
         _this3.specialties = Response.data.success.specialties;
+        _this3.noCollegiate = Response.data.success.noCollegiate;
 
         if (Response.data.success.birthDate == "") {
           _this3.birthDate = null;
