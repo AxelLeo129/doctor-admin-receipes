@@ -107,7 +107,9 @@ const router = new Router({
               next({
                 name: 'ListCallCenter'
               });
-            } else {
+            }  else if (rol == 4) {
+                next({name: "visitador"});
+              } else {
               next({
                 name: 'page-login'
               });
@@ -652,6 +654,58 @@ const router = new Router({
             rule: 'editor'
           },
         },
+        //Visitador Medico
+        {
+            path: '/visitador',
+            name: 'visitador',
+            component: () => import('./views/visitador/dashboard.vue'),
+            meta: {
+                breadcrumb: [
+                  { title: 'Consola', url: '/consola' },
+                  { title: 'Listado de Médicos' },
+                  { title: 'Médicos', active: true },
+                ],
+                pageTitle: 'Listado de Médicos',
+                rule: 'editor'
+            },
+            beforeEnter(to, from, next) {
+                console.log("Estoy aca")
+                let rol = localStorage.getItem('ru');
+                let idu = localStorage.getItem('ui');
+                let token = localStorage.getItem('tu');
+                if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+                  next({
+                    name: 'page-login'
+                  });
+                } else if (rol == 1) {
+                  next({
+                    name: 'consola'
+                  });
+                } else if (rol == 2) {
+                  next({
+                    name: 'home'
+                  });
+                } else if (rol == 3) {
+                  next({
+                    name: 'ListCallCenter'
+                  });
+                } else if (rol == 4) {
+                    next();
+                  } else {
+                  next({
+                    name: 'page-login'
+                  });
+                }
+            },
+        },
+        /*
+        //Visitador Medico
+        {
+            path: '/visitador',
+            name: 'visitador',
+            component: () => import('./views/visitador/dashboard.vue')
+        },
+        */
       ],
     },
     // Redirect to 404 page, if no match found

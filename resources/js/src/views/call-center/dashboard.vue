@@ -170,6 +170,7 @@
                       @click.stop="editData(tr)"
                     ></vs-button>
                   </div>
+                  <hr>
                 </div>
               </div>
             </template>
