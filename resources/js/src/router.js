@@ -107,9 +107,9 @@ const router = new Router({
               next({
                 name: 'ListCallCenter'
               });
-            }  else if (rol == 4) {
-                next({name: "visitador"});
-              } else {
+            } else if (rol == 4) {
+              next({ name: "visitador" });
+            } else {
               next({
                 name: 'page-login'
               });
@@ -289,6 +289,20 @@ const router = new Router({
           path: '/page2',
           name: 'page-2',
           component: () => import('./views/Page2.vue')
+        },
+        {
+          path: '/apps/email',
+          redirect: '/apps/email/inbox',
+          name: 'email',
+        },
+        {
+          path: '/apps/email/:filter',
+          component: () => import('./views/email/Email.vue'),
+          meta: {
+            rule: 'editor',
+            parent: 'email',
+            no_scroll: true,
+          }
         },
         {
           path: '/nuevoPaciente',

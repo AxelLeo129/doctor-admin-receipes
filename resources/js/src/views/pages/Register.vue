@@ -59,13 +59,13 @@
                   <vs-input
                     data-vv-validate-on="blur"
                     label="No.Colegiado"
-                    name="userName"
-                    v-model="userName"
+                    name="noCollegiate"
+                    v-model="noCollegiate"
                     type="number"
                     placeholder="No.Colegiado"
                     class="w-full"
                   />
-                  <span class="text-danger text-sm" v-if="userName === ''">{{ errors.userName }}</span>
+                  <span class="text-danger text-sm" v-if="noCollegiate === ''">{{ errors.noCollegiate }}</span>
 
                   <vs-input
                     ref="password"
@@ -111,7 +111,7 @@
                   <vs-button
                     class="float-right mt-6"
                     @click="registrar"
-                    :disabled="name == null || name == '' || userName == null || userName == '' || email == '' || email == null || bol == false || bol == null || password == null || password == '' || bol1 == false || bol1 == null || confirmPassword == '' || confirmPassword == null || bol2 == false || bol2 == null || bol3 == false || bol3 == null"
+                    :disabled="name == null || name == '' || noCollegiate == null || noCollegiate == '' || email == '' || email == null || bol == false || bol == null || password == null || password == '' || bol1 == false || bol1 == null || confirmPassword == '' || confirmPassword == null || bol2 == false || bol2 == null || bol3 == false || bol3 == null"
                   >Registrar</vs-button>
                 </div>
               </div>
@@ -130,7 +130,7 @@ export default {
     return {
       errors: {
         name: "Este campo es requerido.",
-        userName: "Este campo es requerido.",
+        noCollegiate: "Este campo es requerido.",
         email: "Este campo es requerido.",
         email1: "Ingrese un email válido.",
         password: "Este campo es requerido.",
@@ -144,7 +144,7 @@ export default {
       bol2: null,
       bol3: null,
       name: null,
-      userName: null,
+      noCollegiate: null,
       email: null,
       password: null,
       confirmPassword: null,
@@ -171,7 +171,7 @@ export default {
           email: this.email,
           password: this.password,
           userName: this.name,
-          noCollegiate: this.userName,
+          noCollegiate: this.noCollegiate,
           c_password: this.confirmPassword,
           rol: "2"
         }),
@@ -194,11 +194,11 @@ export default {
           this.activado = true;
         })
         .catch(response => {
-          this.message = response;
+          this.message = "Ya existe un usuario con este email.";
           this.activeLoading = false;
           this.$vs.loading.close();
           this.activado1 = true;
-          console.log(response.status);
+          console.log(response);
         });
     }
   },

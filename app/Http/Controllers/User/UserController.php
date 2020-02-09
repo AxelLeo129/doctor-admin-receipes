@@ -33,7 +33,7 @@ class UserController extends Controller
         { 
             $validator = Validator::make($request->all(), [ 
                 'name' => 'required', 
-                'userName' => 'required',
+                'noCollegiate' => 'required',
                 'email' => 'required|email', 
                 'password' => 'required', 
                 'c_password' => 'required|same:password', 
@@ -48,6 +48,7 @@ class UserController extends Controller
             $success['token'] =  $user->createToken('MyApp')-> accessToken; 
             $success['name'] =  $user->name;
             return response()->json(['success'=>$success], $this-> successStatus); 
+            //return response()->json(['request'=>$request->all()]);
         }
         /** 
          * login api 
