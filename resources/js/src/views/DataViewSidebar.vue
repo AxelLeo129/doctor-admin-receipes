@@ -168,13 +168,18 @@
               />
             </vs-select>
           </div>
+          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+            <vs-input label="Fecha de Nacimiento" v-model="date" class="mt-5 w-full" name="date" type="date" />
+          </div>
         </div>
         <!-- CATEGORY -->
         <div class="vx-row">
           <vs-textarea label="Dirección de Facturación" v-model="addressf" />
         </div>
         <div class="vx-row">
-          <vs-textarea label="Dirección de Envió" v-model="addresse" />
+          <vs-checkbox v-model="checkBox1" class="mt-5 w-full">Dirección envio igual a facturación</vs-checkbox>
+          <vs-textarea label="Dirección de Envió" v-model="addresse" v-show="checkBox1 == false" class="mt-5 w-full" />
+          <vs-textarea label="Dirección de Envió" v-model="addressc" v-show="checkBox1 == true" class="mt-5 w-full" />
         </div>
 
         <div class="vx-row">
@@ -224,6 +229,7 @@ export default {
   },
   data() {
     return {
+      checkBox1: true,
       switch3: false,
       switch2: false,
       switch1: true,
@@ -260,9 +266,11 @@ export default {
       direccion: null,
       phone: null,
       email: null,
+      date: null,
       genre: null,
       addressf: null,
       addresse: null,
+      addressc: null,
       dataId: null,
       dataName: "",
       dataCategory: null,
@@ -302,15 +310,16 @@ export default {
         //this.$validator.reset()
       } else {
         console.log(this.data);
-        let { nit, name, phone, email, addressf, addresse } = JSON.parse(
+        let { client_nit, client_name, client_phone, client_email, client_addressf, client_addresse } = JSON.parse(
           JSON.stringify(this.data)
         );
-        this.nit = nit;
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.addresse = addresse;
-        this.addressf = addressf;
+        this.nit = client_nit;
+        this.name = client_name;
+        this.phone = client_phone;
+        this.email = client_email;
+        this.addresse = client_addresse;
+        this.addressf = client_addressf;
+        this.addressc = this.addressf;
         this.initValues();
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -337,6 +346,9 @@ export default {
     }
   },
   methods: {
+    getMedicines(){
+      
+    },
     notificacion() {
       this.$vs.notify({
         title: "Enviado",

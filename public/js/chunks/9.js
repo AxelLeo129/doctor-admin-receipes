@@ -218,6 +218,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -235,6 +240,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      checkBox1: true,
       switch3: false,
       switch2: false,
       switch1: true,
@@ -268,9 +274,11 @@ __webpack_require__.r(__webpack_exports__);
       direccion: null,
       phone: null,
       email: null,
+      date: null,
       genre: null,
       addressf: null,
       addresse: null,
+      addressc: null,
       dataId: null,
       dataName: "",
       dataCategory: null,
@@ -320,19 +328,20 @@ __webpack_require__.r(__webpack_exports__);
         console.log(this.data);
 
         var _JSON$parse = JSON.parse(JSON.stringify(this.data)),
-            nit = _JSON$parse.nit,
-            name = _JSON$parse.name,
-            phone = _JSON$parse.phone,
-            email = _JSON$parse.email,
-            addressf = _JSON$parse.addressf,
-            addresse = _JSON$parse.addresse;
+            client_nit = _JSON$parse.client_nit,
+            client_name = _JSON$parse.client_name,
+            client_phone = _JSON$parse.client_phone,
+            client_email = _JSON$parse.client_email,
+            client_addressf = _JSON$parse.client_addressf,
+            client_addresse = _JSON$parse.client_addresse;
 
-        this.nit = nit;
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.addresse = addresse;
-        this.addressf = addressf;
+        this.nit = client_nit;
+        this.name = client_name;
+        this.phone = client_phone;
+        this.email = client_email;
+        this.addresse = client_addresse;
+        this.addressf = client_addressf;
+        this.addressc = this.addressf;
         this.initValues();
       } // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
 
@@ -357,6 +366,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    getMedicines: function getMedicines() {},
     notificacion: function notificacion() {
       this.$vs.notify({
         title: "Enviado",
@@ -603,12 +613,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      users: [],
+      popupActive2: false,
       addNewDataSidebar: false,
       sidebarData: {},
       status: ["Nuevo", "Pendiente", "Empaquetando", "Entregando", "Entregado", "Cancelado"],
@@ -652,10 +707,40 @@ __webpack_require__.r(__webpack_exports__);
     this.getRecipes();
   },
   methods: {
+    editData: function editData(data) {
+      this.popupActive2 = false; // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
+
+      this.sidebarData = data;
+      this.toggleDataSidebar(true);
+    },
     openModal: function openModal(phone) {
-      alert(phone);
+      var _this = this;
+
+      this.users = [];
+      var token = localStorage.getItem("tu");
+      var id = localStorage.getItem("ui");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCliente/" + phone,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        Response.data.forEach(function (element) {
+          _this.users.push(element);
+        });
+        _this.popupActive2 = true;
+      }).catch(function (err) {
+        console.log(err);
+      });
     },
     addNewData: function addNewData() {
+      this.sidebarData = {};
+      this.toggleDataSidebar(true);
+    },
+    addNewData1: function addNewData1() {
+      this.popupActive2 = false;
       this.sidebarData = {};
       this.toggleDataSidebar(true);
     },
@@ -671,7 +756,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getUsers: function getUsers() {
-      var _this = this;
+      var _this2 = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -684,7 +769,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this.doctors.push({
+          _this2.doctors.push({
             id: element.id,
             name: element.name
           });
@@ -703,7 +788,7 @@ __webpack_require__.r(__webpack_exports__);
       return "primary";
     },
     getRecipes: function getRecipes() {
-      var _this2 = this;
+      var _this3 = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -719,25 +804,25 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          element.color = _this2.colore(element.status);
-          element.status = _this2.status[element.status - 1]; //console.log(element.status);
+          element.color = _this3.colore(element.status);
+          element.status = _this3.status[element.status - 1]; //console.log(element.status);
 
-          _this2.doctors.forEach(function (e) {
+          _this3.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
               element.doctor_id = e.name;
             }
           });
 
-          _this2.recipes.push(element);
+          _this3.recipes.push(element);
         });
-        _this2.activeLoading = false;
+        _this3.activeLoading = false;
 
-        _this2.$vs.loading.close();
+        _this3.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
-        _this2.activeLoading = false;
+        _this3.activeLoading = false;
 
-        _this2.$vs.loading.close();
+        _this3.$vs.loading.close();
       });
     }
   }
@@ -1378,6 +1463,29 @@ var render = function() {
                 )
               ],
               1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+              [
+                _c("vs-input", {
+                  staticClass: "mt-5 w-full",
+                  attrs: {
+                    label: "Fecha de Nacimiento",
+                    name: "date",
+                    type: "date"
+                  },
+                  model: {
+                    value: _vm.date,
+                    callback: function($$v) {
+                      _vm.date = $$v
+                    },
+                    expression: "date"
+                  }
+                })
+              ],
+              1
             )
           ]),
           _vm._v(" "),
@@ -1403,7 +1511,31 @@ var render = function() {
             "div",
             { staticClass: "vx-row" },
             [
+              _c(
+                "vs-checkbox",
+                {
+                  staticClass: "mt-5 w-full",
+                  model: {
+                    value: _vm.checkBox1,
+                    callback: function($$v) {
+                      _vm.checkBox1 = $$v
+                    },
+                    expression: "checkBox1"
+                  }
+                },
+                [_vm._v("Dirección envio igual a facturación")]
+              ),
+              _vm._v(" "),
               _c("vs-textarea", {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.checkBox1 == false,
+                    expression: "checkBox1 == false"
+                  }
+                ],
+                staticClass: "mt-5 w-full",
                 attrs: { label: "Dirección de Envió" },
                 model: {
                   value: _vm.addresse,
@@ -1411,6 +1543,26 @@ var render = function() {
                     _vm.addresse = $$v
                   },
                   expression: "addresse"
+                }
+              }),
+              _vm._v(" "),
+              _c("vs-textarea", {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.checkBox1 == true,
+                    expression: "checkBox1 == true"
+                  }
+                ],
+                staticClass: "mt-5 w-full",
+                attrs: { label: "Dirección de Envió" },
+                model: {
+                  value: _vm.addressc,
+                  callback: function($$v) {
+                    _vm.addressc = $$v
+                  },
+                  expression: "addressc"
                 }
               })
             ],
@@ -1569,6 +1721,134 @@ var render = function() {
       attrs: { id: "email-app" }
     },
     [
+      _c(
+        "vs-popup",
+        {
+          attrs: { title: "Posibles Clíentes", active: _vm.popupActive2 },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActive2 = $event
+            }
+          }
+        },
+        [
+          _c("p", [_vm._v("Listado de clíentes anteriores.")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "vs-table",
+            {
+              attrs: {
+                pagination: "",
+                "max-items": "3",
+                search: "",
+                data: _vm.users
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var data = ref.data
+                    return _vm._l(data, function(tr, indextr) {
+                      return _c(
+                        "vs-tr",
+                        { key: indextr },
+                        [
+                          _c(
+                            "vs-td",
+                            { attrs: { data: data[indextr].client_nit } },
+                            [_vm._v(_vm._s(data[indextr].client_nit))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: data[indextr].client_name } },
+                            [_vm._v(_vm._s(data[indextr].client_name))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: data[indextr].client_phone } },
+                            [_vm._v(_vm._s(data[indextr].client_phone))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: data[indextr].client_addresse } },
+                            [_vm._v(_vm._s(data[indextr].client_addresse))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            [
+                              _c("vs-button", {
+                                staticClass: "mr-2",
+                                attrs: {
+                                  type: "border",
+                                  size: "small",
+                                  "icon-pack": "feather",
+                                  icon: "icon-send"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    $event.stopPropagation()
+                                    return _vm.editData(tr)
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    })
+                  }
+                }
+              ])
+            },
+            [
+              _c(
+                "template",
+                { slot: "thead" },
+                [
+                  _c("vs-th", [_vm._v("NIT")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Nombre")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Teléfono")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Dirección")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Unir")])
+                ],
+                1
+              )
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "mr-3" },
+            [
+              _c(
+                "vs-button",
+                {
+                  staticClass: "bg-primary-gradient w-full",
+                  attrs: { "icon-pack": "feather", icon: "icon-plus" },
+                  on: { click: _vm.addNewData1 }
+                },
+                [_vm._v("Nuevo Cliente")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
       _c("data-view-sidebar", {
         attrs: {
           isSidebarActive: _vm.addNewDataSidebar,

@@ -3,6 +3,49 @@
     id="email-app"
     class="border border-solid d-theme-border-grey-light rounded relative overflow-hidden"
   >
+    <vs-popup title="Posibles Clíentes" :active.sync="popupActive2">
+      <p>Listado de clíentes anteriores.</p>
+      <br />
+      <vs-table pagination max-items="3" search :data="users">
+        <template slot="thead">
+          <vs-th>NIT</vs-th>
+          <vs-th>Nombre</vs-th>
+          <vs-th>Teléfono</vs-th>
+          <vs-th>Dirección</vs-th>
+          <vs-th>Unir</vs-th>
+        </template>
+
+        <template slot-scope="{data}">
+          <vs-tr :key="indextr" v-for="(tr, indextr) in data">
+            <vs-td :data="data[indextr].client_nit">{{ data[indextr].client_nit }}</vs-td>
+
+            <vs-td :data="data[indextr].client_name">{{ data[indextr].client_name }}</vs-td>
+
+            <vs-td :data="data[indextr].client_phone">{{ data[indextr].client_phone }}</vs-td>
+
+            <vs-td :data="data[indextr].client_addresse">{{ data[indextr].client_addresse }}</vs-td>
+            <vs-td>
+              <vs-button
+                type="border"
+                size="small"
+                icon-pack="feather"
+                icon="icon-send"
+                class="mr-2"
+                @click.stop="editData(tr)"
+              ></vs-button>
+            </vs-td>
+          </vs-tr>
+        </template>
+      </vs-table>
+      <div class="mr-3">
+        <vs-button
+          class="bg-primary-gradient w-full"
+          icon-pack="feather"
+          icon="icon-plus"
+          @click="addNewData1"
+        >Nuevo Cliente</vs-button>
+      </div>
+    </vs-popup>
     <data-view-sidebar
       :isSidebarActive="addNewDataSidebar"
       @closeSidebar="toggleDataSidebar"
@@ -175,6 +218,8 @@ import DataViewSidebar from "../DataViewSidebar.vue";
 export default {
   data() {
     return {
+      users: [],
+      popupActive2: false,
       addNewDataSidebar: false,
       sidebarData: {},
       status: [
@@ -223,10 +268,40 @@ export default {
     this.getRecipes();
   },
   methods: {
+    editData(data) {
+      this.popupActive2 = false;
+      // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
+      this.sidebarData = data;
+      this.toggleDataSidebar(true);
+    },
     openModal(phone) {
-      alert(phone);
+      this.users = [];
+      let token = localStorage.getItem("tu");
+      let id = localStorage.getItem("ui");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCliente/" + phone,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          Response.data.forEach(element => {
+            this.users.push(element);
+          });
+          this.popupActive2 = true;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     addNewData() {
+      this.sidebarData = {};
+      this.toggleDataSidebar(true);
+    },
+    addNewData1() {
+      this.popupActive2 = false;
       this.sidebarData = {};
       this.toggleDataSidebar(true);
     },
