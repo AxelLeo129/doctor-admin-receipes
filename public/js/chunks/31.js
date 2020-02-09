@@ -251,7 +251,13 @@ var render = function() {
       _c(
         "vs-table",
         {
-          attrs: { "max-items": "3", pagination: "", data: _vm.users },
+          attrs: {
+            multiple: "",
+            "max-items": "10",
+            search: "",
+            pagination: "",
+            data: _vm.users
+          },
           scopedSlots: _vm._u([
             {
               key: "default",
@@ -260,7 +266,7 @@ var render = function() {
                 return _vm._l(data, function(tr, indextr) {
                   return _c(
                     "vs-tr",
-                    { key: indextr },
+                    { key: indextr, attrs: { data: tr } },
                     [
                       _c(
                         "vs-td",
@@ -393,7 +399,14 @@ var render = function() {
                 })
               }
             }
-          ])
+          ]),
+          model: {
+            value: _vm.selected,
+            callback: function($$v) {
+              _vm.selected = $$v
+            },
+            expression: "selected"
+          }
         },
         [
           _c(

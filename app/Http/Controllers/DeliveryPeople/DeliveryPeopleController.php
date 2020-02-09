@@ -14,11 +14,17 @@ class DeliveryPeopleController extends Controller
     }
 
     public function store(Request $request){
-        $shipping = new Shipping();
-        $shipping->id_user = $request->delivery;
-        $shipping->id_recipie = $request->id_recipies;
-        $shipping->recipient_name = "";
-        $shipping->save();
+        $verEnvio = \DB::table('recipies')->where('id', $request->id_recipies)->first();
+        if($verEnvio->status == 1){
+            $shipping = new Shipping();
+            $shipping->id_user = $request->delivery;
+            $shipping->id_recipie = $request->id_recipies;
+            $shipping->recipient_name = "";
+            $shipping->save();
+            \DB::Table('recipies')->where('id', $request->id_recipies)->update([
+                "status"=> 2
+            ]);
+        }
         return ['result' => 'success'];
     }
 }
