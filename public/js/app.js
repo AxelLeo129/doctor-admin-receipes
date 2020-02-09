@@ -55983,7 +55983,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+      return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
     },
     children: [// =============================================================================
     // PAGES
@@ -56034,7 +56034,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/pages/error-404',
       name: 'page-error-404',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
       }
     }]
   }, {
@@ -56072,6 +56072,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         } else if (rol == 3) {
           next({
             name: 'ListCallCenter'
+          });
+        } else if (rol == 4) {
+          next({
+            name: "visitador"
           });
         } else {
           next({
@@ -56696,7 +56700,66 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         pageTitle: 'Listado Call-Center',
         rule: 'editor'
       }
-    }]
+    }, //Visitador Medico
+    {
+      path: '/visitador',
+      name: 'visitador',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./views/visitador/dashboard.vue */ "./resources/js/src/views/visitador/dashboard.vue"));
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Listado de pedidos'
+        }, {
+          title: 'Pedidos',
+          active: true
+        }],
+        pageTitle: 'Listado de pedidos',
+        rule: 'editor'
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        console.log("Estoy aca");
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next({
+            name: 'consola'
+          });
+        } else if (rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else if (rol == 4) {
+          next();
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      }
+    }
+    /*
+    //Visitador Medico
+    {
+        path: '/visitador',
+        name: 'visitador',
+        component: () => import('./views/visitador/dashboard.vue')
+    },
+    */
+    ]
   }, // Redirect to 404 page, if no match found
   {
     path: '*',

@@ -45,9 +45,24 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        return Client::where('client_phone', $id)->get();
+        $data = [];
+        $clients= \DB::table('clients')
+            ->join('recipies', 'clients.id_recipies', '=', 'recipies.id')
+            ->select('clients.client_id','clients.client_name', 'clients.client_phone', 'client_addressf', 'recipies.status', 'clients.id_recipies')
+            ->get();
+        foreach($clients as $client){
+            $medicinas = \DB::table("recipies_products")
+            ->join('products', 'recipies_products.product_id', '=', 'products.id')
+            ->select('products.name', 'recipies_products.dispensing')
+            ->where('recipies_products.recipe_id', $client->id_recipies)
+            ->get();
+            $datos = array("cliente" => $client, "medicamentos" => $medicinas);
+            array_push($data, $datos);
+        }
+
+        return $data;
     }
 
     /**

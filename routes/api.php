@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('postReceProd', 'Recipies\RecipieController@storeProduct');
     Route::get('getReceta/{id}', 'Recipies\RecipieController@show');
     Route::get('getRecipes', 'Recipies\RecipieController@index');
+    Route::get('getInfoRecipie/{id}', 'Recipies\RecipieController@getInfoRecipie');
     //Categorias
     Route::post('postCategory', 'Categories\CategoryController@store');
     Route::get('getCategories', 'Categories\CategoryController@index');
@@ -48,6 +49,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('deleteCategory/{id}', 'Categories\CategoryController@destroy');
     //Clientes
     Route::get('getClients', 'Clients\ClientController@index');
-    Route::get('getCliente/{id}', 'Clients\ClientController@show');
+    Route::get('getCliente', 'Clients\ClientController@show');
+    //Repartidores
+    Route::get('getDelivery', 'DeliveryPeople\DeliveryPeopleController@getDelivery');
+    Route::post('postShipping', 'DeliveryPeople\DeliveryPeopleController@store');
+
 
 });
