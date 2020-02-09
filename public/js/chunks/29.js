@@ -11,8 +11,6 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -169,78 +167,6 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (err) {
         console.log(err);
       });
-      axios__WEBPACK_IMPORTED_MODULE_0___default()({
-        method: "get",
-        url: "http://127.0.0.1:8000/api/getDelivery",
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      }).then(function (Response) {
-        Response.data.forEach(function (element) {
-          _this.deliveryP.push({
-            label: element.name,
-            value: element.id
-          });
-        });
-        console.log(_this.deliveryP);
-      }).catch(function (err) {
-        console.log(err);
-      });
-    },
-    setData: function setData(recipie) {
-      this.recipie = recipie;
-      console.log("Receta");
-      console.log(this.recipie);
-    },
-    openLoading: function openLoading() {
-      this.activeLoading = true;
-      this.$vs.loading({
-        type: "default"
-      });
-    },
-    inprogress: function inprogress(id_receta) {
-      var _this2 = this;
-
-      this.openLoading();
-      var token = localStorage.getItem("tu");
-      var idu = localStorage.getItem("ui");
-      axios__WEBPACK_IMPORTED_MODULE_0___default()({
-        method: "post",
-        url: "http://127.0.0.1:8000/api/postShipping",
-        data: JSON.stringify({
-          id_recipies: this.id_recipies,
-          delivery: this.select.value
-        }),
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      }).then(function (Response) {
-        _this2.activeLoading = false;
-
-        _this2.$vs.loading.close();
-
-        _this2.popupEnvio = false;
-
-        _this2.$router.push("/visitador");
-
-        _this2.$vs.notify({
-          title: "En proceso",
-          text: "La receta del cliente ahora está en proceso de envío.",
-          color: "success"
-        });
-      }).catch(function (err) {
-        _this2.popupEnvio = false;
-        _this2.activeLoading = false;
-
-        _this2.$vs.loading.close();
-
-        console.log(err);
-      });
-    },
-    setClient: function setClient(id) {
-      this.id_recipies = id;
     }
   },
   created: function created() {
