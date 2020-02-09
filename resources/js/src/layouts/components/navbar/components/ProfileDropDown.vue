@@ -119,8 +119,12 @@ export default {
             this.rol = "Admin";
           } else if (r == 2) {
             this.rol = "Médico";
-          } else {
+          } else if (r == 3){
             this.rol = "Call Center";
+          }else if(r == 4){
+            this.rol = "Despachador";
+          }else {
+            this.rol = "Mensajero";
           }
           if (
             Response.data.success.image == null ||

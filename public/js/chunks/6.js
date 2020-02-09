@@ -1603,8 +1603,12 @@ __webpack_require__.r(__webpack_exports__);
           _this.rol = "Admin";
         } else if (r == 2) {
           _this.rol = "Médico";
-        } else {
+        } else if (r == 3) {
           _this.rol = "Call Center";
+        } else if (r == 4) {
+          _this.rol = "Despachador";
+        } else {
+          _this.rol = "Mensajero";
         }
 
         if (Response.data.success.image == null || Response.data.success.image == "") {

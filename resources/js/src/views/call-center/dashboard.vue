@@ -62,12 +62,13 @@
       <template>
         <div class="email__email-sidebar h-full">
           <div class="m-6 clearfix">
-            <vs-button
+            <!-- <vs-button
               class="bg-primary-gradient w-full"
               icon-pack="feather"
               icon="icon-plus"
               @click="addNewData"
-            >Nuevo Cliente</vs-button>
+            >Nuevo Cliente</vs-button> -->
+            <h2>Listados</h2>
           </div>
 
           <!-- compose email -->
@@ -282,7 +283,7 @@ export default {
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getCliente/" + phone,
+        url: "http://127.0.0.1:8000/api/getCliente1/" + phone,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"

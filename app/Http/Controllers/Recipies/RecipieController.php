@@ -138,4 +138,9 @@ class RecipieController extends Controller
     {
         //
     }
+
+    //muestra los medicamentos que se le recetó al cliente
+    public function getInfoRecipie($id){
+        return \DB::table('recipies_products')->where('recipe_id', $id)->get();
+    }
 }
