@@ -65,6 +65,18 @@ class ClientController extends Controller
         return $data;
     }
 
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show1($id)
+    {
+        return Client::where('client_phone', $id)->get();
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

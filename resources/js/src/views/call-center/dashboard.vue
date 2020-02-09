@@ -31,7 +31,7 @@
                 icon-pack="feather"
                 icon="icon-send"
                 class="mr-2"
-                @click.stop="editData(tr)"
+                @click.stop="editData(tr, idRecipe)"
               ></vs-button>
             </vs-td>
           </vs-tr>
@@ -62,12 +62,13 @@
       <template>
         <div class="email__email-sidebar h-full">
           <div class="m-6 clearfix">
-            <vs-button
+            <!-- <vs-button
               class="bg-primary-gradient w-full"
               icon-pack="feather"
               icon="icon-plus"
               @click="addNewData"
-            >Nuevo Cliente</vs-button>
+            >Nuevo Cliente</vs-button> -->
+            <h2>Listados</h2>
           </div>
 
           <!-- compose email -->
@@ -165,7 +166,7 @@
             class="cursor-pointer email__mail-item"
             v-for="(mail, index) in searchRecipes"
             :key="mail.id"
-            @click="openModal(mail.phone)"
+            @click="openModal(mail.phone, mail.id)"
             :style="{transitionDelay: (index * 0.1) + 's'}"
           >
             <div class="mail__mail-item sm:px-4 px-2 py-6">
@@ -218,6 +219,7 @@ import DataViewSidebar from "../DataViewSidebar.vue";
 export default {
   data() {
     return {
+      idRecipe: null,
       users: [],
       popupActive2: false,
       addNewDataSidebar: false,
@@ -268,19 +270,20 @@ export default {
     this.getRecipes();
   },
   methods: {
-    editData(data) {
+    editData(data, id) {
       this.popupActive2 = false;
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
+      data.client_id = id;
       this.sidebarData = data;
       this.toggleDataSidebar(true);
     },
-    openModal(phone) {
+    openModal(phone, id) {
+      this.idRecipe = id;
       this.users = [];
       let token = localStorage.getItem("tu");
-      let id = localStorage.getItem("ui");
       axios({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getCliente/" + phone,
+        url: "http://127.0.0.1:8000/api/getCliente1/" + phone,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"

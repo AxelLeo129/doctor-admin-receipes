@@ -169,7 +169,13 @@
             </vs-select>
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input label="Fecha de Nacimiento" v-model="date" class="mt-5 w-full" name="date" type="date" />
+            <vs-input
+              label="Fecha de Nacimiento"
+              v-model="date"
+              class="mt-5 w-full"
+              name="date"
+              type="date"
+            />
           </div>
         </div>
         <!-- CATEGORY -->
@@ -178,8 +184,18 @@
         </div>
         <div class="vx-row">
           <vs-checkbox v-model="checkBox1" class="mt-5 w-full">Dirección envio igual a facturación</vs-checkbox>
-          <vs-textarea label="Dirección de Envió" v-model="addresse" v-show="checkBox1 == false" class="mt-5 w-full" />
-          <vs-textarea label="Dirección de Envió" v-model="addressc" v-show="checkBox1 == true" class="mt-5 w-full" />
+          <vs-textarea
+            label="Dirección de Envió"
+            v-model="addresse"
+            v-show="checkBox1 == false"
+            class="mt-5 w-full"
+          />
+          <vs-textarea
+            label="Dirección de Envió"
+            v-model="addressc"
+            v-show="checkBox1 == true"
+            class="mt-5 w-full"
+          />
         </div>
 
         <div class="vx-row">
@@ -191,7 +207,12 @@
 
         <div class="vx-row" v-if="switch3 == true">
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input label="Nombre de la Empresa" v-model="empresa" class="mt-5 w-full" name="item-name" />
+            <vs-input
+              label="Nombre de la Empresa"
+              v-model="empresa"
+              class="mt-5 w-full"
+              name="item-name"
+            />
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-input label="Nombre Completo" v-model="name1" class="mt-5 w-full" name="item-name" />
@@ -204,7 +225,6 @@
     </vx-card>
 
     <div class="flex flex-wrap items-center p-6" slot="footer">
-      <vs-button class="mr-6" color="warning">Actualizar</vs-button>
       <vs-button @click="submitData">Nuevo Pedido</vs-button>
     </div>
   </vs-sidebar>
@@ -212,6 +232,7 @@
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
+import axios from "axios";
 
 export default {
   props: {
@@ -229,6 +250,7 @@ export default {
   },
   data() {
     return {
+      idRecipe: null,
       checkBox1: true,
       switch3: false,
       switch2: false,
@@ -238,26 +260,8 @@ export default {
       numberTr: null,
       subtotal1: 0,
       subtotal2: 0,
-      medicines: [
-        {
-          name: "Lunes 50 mg",
-          presentation: "Caja 20 tabletas",
-          price: 50,
-          totale: "20",
-          unidad: "Tabletas",
-          cantidad: 0,
-          subtotal: 0
-        },
-        {
-          name: "Bipark",
-          presentation: "Blister 10 tabletas",
-          price: 20,
-          totale: "10",
-          unidad: "Tabletas",
-          cantidad: 0,
-          subtotal: 0
-        }
-      ],
+      medicines: [],
+      itms: [],
       popupActive2: false,
       nit: null,
       name: null,
@@ -310,9 +314,14 @@ export default {
         //this.$validator.reset()
       } else {
         console.log(this.data);
-        let { client_nit, client_name, client_phone, client_email, client_addressf, client_addresse } = JSON.parse(
-          JSON.stringify(this.data)
-        );
+        let {
+          client_nit,
+          client_name,
+          client_phone,
+          client_email,
+          client_addressf,
+          client_addresse
+        } = JSON.parse(JSON.stringify(this.data));
         this.nit = client_nit;
         this.name = client_name;
         this.phone = client_phone;
@@ -320,6 +329,7 @@ export default {
         this.addresse = client_addresse;
         this.addressf = client_addressf;
         this.addressc = this.addressf;
+        this.idRecipe = client_id;
         this.initValues();
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -346,8 +356,27 @@ export default {
     }
   },
   methods: {
-    getMedicines(){
-      
+    getReceProd(id) {
+      let token = localStorage.getItem("tu");
+      let rol = localStorage.getItem("ru");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getReceProd/" + id,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          console.log(Response);
+          /*Response.data.forEach(element => {
+            this.users.push(element);
+          });
+          this.popupActive2 = true;*/
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     notificacion() {
       this.$vs.notify({
@@ -365,36 +394,46 @@ export default {
       this.dataPrice = 0;
       this.dataImg = null;
     },
-    submitData() {
-      /*this.$validator.validateAll().then(result => {
-        if (result) {
-          const obj = {
-            id: this.dataId,
-            name: this.dataName,
-            img: this.dataImg,
-            category: this.dataCategory,
-            order_status: this.dataOrder_status,
-            price: this.dataPrice
-          };
-
-          if (this.dataId !== null && this.dataId >= 0) {
-            this.$store.dispatch("dataList/updateItem", obj).catch(err => {
-              console.error(err);
-            });
-          } else {
-            delete obj.id;
-            obj.popularity = 0;
-            this.$store.dispatch("dataList/addItem", obj).catch(err => {
-              console.error(err);
-            });
-          }
-
-          this.$emit("closeSidebar");
-          this.initValues();
+    getItem(id){
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getReceProd/" + id,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
         }
-      });*/
-      //this.$router.push("/recetaFinal");
-      this.popupActive2 = true;
+      })
+        .then(Response => {
+          Response.data.forEach(element => {
+            this.itms.push(element);
+          });
+          this.popupActive2 = true;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    submitData() {
+      //this.getItem(this.idRecipe);
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getProducts",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          Response.data.forEach(element => {
+            this.medicines.push(element);
+          });
+          this.popupActive2 = true;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     updateCurrImg(input) {
       if (input.target.files && input.target.files[0]) {

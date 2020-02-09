@@ -11,6 +11,28 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-perfect-scrollbar */ "./node_modules/vue-perfect-scrollbar/dist/index.js");
 /* harmony import */ var vue_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -224,6 +246,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     isSidebarActive: {
@@ -240,6 +263,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      idRecipe: null,
       checkBox1: true,
       switch3: false,
       switch2: false,
@@ -249,23 +273,8 @@ __webpack_require__.r(__webpack_exports__);
       numberTr: null,
       subtotal1: 0,
       subtotal2: 0,
-      medicines: [{
-        name: "Lunes 50 mg",
-        presentation: "Caja 20 tabletas",
-        price: 50,
-        totale: "20",
-        unidad: "Tabletas",
-        cantidad: 0,
-        subtotal: 0
-      }, {
-        name: "Bipark",
-        presentation: "Blister 10 tabletas",
-        price: 20,
-        totale: "10",
-        unidad: "Tabletas",
-        cantidad: 0,
-        subtotal: 0
-      }],
+      medicines: [],
+      itms: [],
       popupActive2: false,
       nit: null,
       name: null,
@@ -342,6 +351,7 @@ __webpack_require__.r(__webpack_exports__);
         this.addresse = client_addresse;
         this.addressf = client_addressf;
         this.addressc = this.addressf;
+        this.idRecipe = client_id;
         this.initValues();
       } // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
 
@@ -366,7 +376,26 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    getMedicines: function getMedicines() {},
+    getReceProd: function getReceProd(id) {
+      var token = localStorage.getItem("tu");
+      var rol = localStorage.getItem("ru");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getReceProd/" + id,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        console.log(Response);
+        /*Response.data.forEach(element => {
+          this.users.push(element);
+        });
+        this.popupActive2 = true;*/
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
     notificacion: function notificacion() {
       this.$vs.notify({
         title: "Enviado",
@@ -383,43 +412,55 @@ __webpack_require__.r(__webpack_exports__);
       this.dataPrice = 0;
       this.dataImg = null;
     },
-    submitData: function submitData() {
-      /*this.$validator.validateAll().then(result => {
-        if (result) {
-          const obj = {
-            id: this.dataId,
-            name: this.dataName,
-            img: this.dataImg,
-            category: this.dataCategory,
-            order_status: this.dataOrder_status,
-            price: this.dataPrice
-          };
-            if (this.dataId !== null && this.dataId >= 0) {
-            this.$store.dispatch("dataList/updateItem", obj).catch(err => {
-              console.error(err);
-            });
-          } else {
-            delete obj.id;
-            obj.popularity = 0;
-            this.$store.dispatch("dataList/addItem", obj).catch(err => {
-              console.error(err);
-            });
-          }
-            this.$emit("closeSidebar");
-          this.initValues();
+    getItem: function getItem(id) {
+      var _this = this;
+
+      var token = localStorage.getItem("tu");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getReceProd/" + id,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
         }
-      });*/
-      //this.$router.push("/recetaFinal");
-      this.popupActive2 = true;
+      }).then(function (Response) {
+        Response.data.forEach(function (element) {
+          _this.itms.push(element);
+        });
+        _this.popupActive2 = true;
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    submitData: function submitData() {
+      var _this2 = this;
+
+      //this.getItem(this.idRecipe);
+      var token = localStorage.getItem("tu");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getProducts",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        Response.data.forEach(function (element) {
+          _this2.medicines.push(element);
+        });
+        _this2.popupActive2 = true;
+      }).catch(function (err) {
+        console.log(err);
+      });
     },
     updateCurrImg: function updateCurrImg(input) {
-      var _this = this;
+      var _this3 = this;
 
       if (input.target.files && input.target.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-          _this.dataImg = e.target.result;
+          _this3.dataImg = e.target.result;
         };
 
         reader.readAsDataURL(input.target.files[0]);
@@ -656,12 +697,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      idRecipe: null,
       users: [],
       popupActive2: false,
       addNewDataSidebar: false,
@@ -707,21 +750,22 @@ __webpack_require__.r(__webpack_exports__);
     this.getRecipes();
   },
   methods: {
-    editData: function editData(data) {
+    editData: function editData(data, id) {
       this.popupActive2 = false; // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
 
+      data.client_id = id;
       this.sidebarData = data;
       this.toggleDataSidebar(true);
     },
-    openModal: function openModal(phone) {
+    openModal: function openModal(phone, id) {
       var _this = this;
 
+      this.idRecipe = id;
       this.users = [];
       var token = localStorage.getItem("tu");
-      var id = localStorage.getItem("ui");
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getCliente/" + phone,
+        url: "http://127.0.0.1:8000/api/getCliente1/" + phone,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
@@ -1675,12 +1719,6 @@ var render = function() {
           slot: "footer"
         },
         [
-          _c(
-            "vs-button",
-            { staticClass: "mr-6", attrs: { color: "warning" } },
-            [_vm._v("Actualizar")]
-          ),
-          _vm._v(" "),
           _c("vs-button", { on: { click: _vm.submitData } }, [
             _vm._v("Nuevo Pedido")
           ])
@@ -1793,7 +1831,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.stopPropagation()
-                                    return _vm.editData(tr)
+                                    return _vm.editData(tr, _vm.idRecipe)
                                   }
                                 }
                               })
@@ -1880,22 +1918,9 @@ var render = function() {
               "div",
               { staticClass: "email__email-sidebar h-full" },
               [
-                _c(
-                  "div",
-                  { staticClass: "m-6 clearfix" },
-                  [
-                    _c(
-                      "vs-button",
-                      {
-                        staticClass: "bg-primary-gradient w-full",
-                        attrs: { "icon-pack": "feather", icon: "icon-plus" },
-                        on: { click: _vm.addNewData }
-                      },
-                      [_vm._v("Nuevo Cliente")]
-                    )
-                  ],
-                  1
-                ),
+                _c("div", { staticClass: "m-6 clearfix" }, [
+                  _c("h2", [_vm._v("Listados")])
+                ]),
                 _vm._v(" "),
                 _c(
                   "vs-prompt",
@@ -2164,7 +2189,7 @@ var render = function() {
                       style: { transitionDelay: index * 0.1 + "s" },
                       on: {
                         click: function($event) {
-                          return _vm.openModal(mail.phone)
+                          return _vm.openModal(mail.phone, mail.id)
                         }
                       }
                     },
