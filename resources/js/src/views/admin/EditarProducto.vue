@@ -401,7 +401,7 @@ export default {
       this.imagen = "data:image/png;base64," + this.base64textString;
     },
     openLoading() {
-      this.activeLoading = true;
+      //this.activeLoading = true;
       this.$vs.loading({
         type: "default"
       });
