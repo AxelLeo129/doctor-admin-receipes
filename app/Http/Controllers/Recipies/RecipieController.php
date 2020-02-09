@@ -95,6 +95,17 @@ class RecipieController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getProduct($id)
+    {
+        return \DB::select("SELECT * FROM recipies_products WHERE recipe_id = $id");
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
