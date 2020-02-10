@@ -80,7 +80,7 @@
             <p>Seleccionar al encargado del envío:</p><br>
                 <p v-if="errors.length">
                     <ul>
-                    <li class="color:danger" v-for="error in errors">{{ error }}</li>
+                    <li class="text-danger" v-for="error in errors">{{ error }}</li>
                     </ul>
                 </p>
             <v-select
@@ -104,7 +104,7 @@
             <p>Seleccionar al encargado para los envíos:</p><br>
                 <p v-if="errorsEM.length">
                     <ul>
-                    <li class="color:danger" v-for="error in errorsEM">{{ error }}</li>
+                    <li class="text-danger" v-for="error in errorsEM">{{ error }}</li>
                     </ul>
                 </p>
             <v-select

@@ -56077,6 +56077,49 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           next({
             name: "visitador"
           });
+        } else if (rol == 5) {
+          next({
+            name: "boodskapper"
+          });
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      }
+    }, {
+      path: '/boodskapper',
+      name: 'boodskapper',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! @/views/mensajero/dashboard.vue */ "./resources/js/src/views/mensajero/dashboard.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next({
+            name: 'consola'
+          });
+        } else if (rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else if (rol == 4) {
+          next({
+            name: "visitador"
+          });
+        } else if (rol == 5) {
+          next();
         } else {
           next({
             name: 'page-login'
@@ -56107,6 +56150,14 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         } else if (rol == 3) {
           next({
             name: 'ListCallCenter'
+          });
+        } else if (rol == 4) {
+          next({
+            name: "visitador"
+          });
+        } else if (rol == 5) {
+          next({
+            name: "boodskapper"
           });
         } else {
           next({
@@ -57199,9 +57250,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuesax__WEBPACK_IMPORTED_MODULE_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\DELL\Desktop\pharmazone.app\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\Users\DELL\Desktop\pharmazone.app\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\Users\DELL\Desktop\pharmazone.app\resources\assets\css\main.css */"./resources/assets/css/main.css");
+__webpack_require__(/*! C:\Users\Merke\Desktop\pharmazone.app\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\Users\Merke\Desktop\pharmazone.app\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\Users\Merke\Desktop\pharmazone.app\resources\assets\css\main.css */"./resources/assets/css/main.css");
 
 
 /***/ })

@@ -206,7 +206,10 @@ export default {
           localStorage.setItem("ui", this.user_id);
           if (this.rol == 1) {
             this.$router.push("/consola");
-          } else {
+          } else if(this.rol==5){
+            this.$router.push("/boodskapper");
+          }
+          else {
             this.$router.push("/home");
           }
           this.activeLoading = false;
