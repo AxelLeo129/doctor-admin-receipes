@@ -295,6 +295,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -334,70 +365,70 @@ __webpack_require__.r(__webpack_exports__);
       //Demás variables
       totales: [],
       departamentos: [{
-        id: 1,
+        id: "Alta Verapaz",
         name: "Alta Verapaz"
       }, {
-        id: 2,
+        id: "Baja Verapaz",
         name: "Baja Verapaz"
       }, {
-        id: 3,
+        id: "Chimaltenango",
         name: "Chimaltenango"
       }, {
-        id: 4,
+        id: "Chiquimula",
         name: "Chiquimula"
       }, {
-        id: 5,
+        id: "El Progreso",
         name: "El Progreso"
       }, {
-        id: 6,
+        id: "Escuintla",
         name: "Escuintla"
       }, {
-        id: 7,
+        id: "Guatemala",
         name: "Guatemala"
       }, {
-        id: 8,
+        id: "Huehuetenango",
         name: "Huehuetenango"
       }, {
-        id: 9,
+        id: "Izabal",
         name: "Izabal"
       }, {
-        id: 10,
+        id: "Jalapa",
         name: "Jalapa"
       }, {
-        id: 11,
+        id: "Jutiapa",
         name: "Jutiapa"
       }, {
-        id: 12,
+        id: "Petén",
         name: "Petén"
       }, {
-        id: 13,
+        id: "Quetzaltenango",
         name: "Quetzaltenango"
       }, {
-        id: 14,
+        id: "Quiché",
         name: "Quiché"
       }, {
-        id: 15,
+        id: "Retalhuleu",
         name: "Retalhuleu"
       }, {
-        id: 16,
+        id: "Sacatepéquez",
         name: "Sacatepéquez"
       }, {
-        id: 17,
+        id: "San Marcos",
         name: "San Marcos"
       }, {
-        id: 18,
+        id: "Santa Rosa",
         name: "Santa Rosa"
       }, {
-        id: 19,
+        id: "Sololá",
         name: "Sololá"
       }, {
-        id: 20,
+        id: "Suchitepéquez",
         name: "Suchitepéquez"
       }, {
-        id: 21,
+        id: "Totonicapán",
         name: "Totonicapán"
       }, {
-        id: 22,
+        id: "Zacapa",
         name: "Zacapa"
       }],
       idRecipe: null,
@@ -479,12 +510,63 @@ __webpack_require__.r(__webpack_exports__);
             client_phone = _JSON$parse.client_phone,
             client_email = _JSON$parse.client_email,
             client_addressf = _JSON$parse.client_addressf,
-            client_addresse = _JSON$parse.client_addresse;
+            client_addresse = _JSON$parse.client_addresse,
+            client_genre = _JSON$parse.client_genre,
+            birthdate = _JSON$parse.birthdate,
+            paisf = _JSON$parse.paisf,
+            deparf = _JSON$parse.deparf,
+            callef = _JSON$parse.callef,
+            apartamentof = _JSON$parse.apartamentof,
+            municipiof = _JSON$parse.municipiof,
+            residenciaf = _JSON$parse.residenciaf,
+            codigof = _JSON$parse.codigof,
+            telefonof = _JSON$parse.telefonof,
+            paise = _JSON$parse.paise,
+            depare = _JSON$parse.depare,
+            callee = _JSON$parse.callee,
+            apartamentoe = _JSON$parse.apartamentoe,
+            municipioe = _JSON$parse.municipioe,
+            residenciae = _JSON$parse.residenciae,
+            codigoe = _JSON$parse.codigoe,
+            telefonoe = _JSON$parse.telefonoe;
 
         this.nit = client_nit;
         this.name = client_name;
         this.phone = client_phone;
         this.email = client_email;
+        this.genre = client_genre;
+
+        if (this.genre == undefined) {
+          this.genre = "masculino";
+        }
+
+        this.date = birthdate; //this.paisf = paisf;
+
+        this.deparf = deparf;
+
+        if (this.deparf == undefined) {
+          this.deparf = "Guatemala";
+        }
+
+        this.callef = callef;
+        this.apartamentof = apartamentof;
+        this.municipiof = municipiof;
+        this.residenciaf = residenciaf;
+        this.codigof = codigof;
+        this.telefonof = telefonof; //this.paise = paise;
+
+        this.depare = depare;
+
+        if (this.depare == undefined) {
+          this.depare = "Guatemala";
+        }
+
+        this.callee = callee;
+        this.apartamentoe = apartamentoe;
+        this.municipioe = municipioe;
+        this.residenciae = residenciae;
+        this.codigoe = codigoe;
+        this.telefonoe = telefonoe;
         this.addresse = client_addresse;
         this.addressf = client_addressf;
         this.addressc = this.addressf;
@@ -562,6 +644,9 @@ __webpack_require__.r(__webpack_exports__);
     submitData: function submitData() {
       var _this3 = this;
 
+      this.nameT = null;
+      this.numberT = null;
+      this.numberTr = null;
       this.getItem(this.idRecipe);
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -887,6 +972,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     editData: function editData(data, id) {
+      console.log(data);
       this.popupActive2 = false; // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
 
       var data1 = {
@@ -1450,7 +1536,23 @@ var render = function() {
                                 },
                                 expression: "nameT"
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.nameT === "",
+                                    expression: "nameT  === ''"
+                                  }
+                                ],
+                                staticClass: "text-danger text-sm"
+                              },
+                              [_vm._v("Este campo es requerido.")]
+                            )
                           ],
                           1
                         )
@@ -1475,7 +1577,23 @@ var render = function() {
                                 },
                                 expression: "numberT"
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.numberT === "",
+                                    expression: "numberT  === ''"
+                                  }
+                                ],
+                                staticClass: "text-danger text-sm"
+                              },
+                              [_vm._v("Este campo es requerido.")]
+                            )
                           ],
                           1
                         )
@@ -1490,7 +1608,8 @@ var render = function() {
                                 staticClass: "mt-5 w-full",
                                 attrs: {
                                   label: "Número de Transacción",
-                                  name: "item-name"
+                                  name: "item-name",
+                                  type: "number"
                                 },
                                 model: {
                                   value: _vm.numberTr,
@@ -1499,7 +1618,23 @@ var render = function() {
                                   },
                                   expression: "numberTr"
                                 }
-                              })
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.numberTr === "",
+                                      expression: "numberTr  === ''"
+                                    }
+                                  ],
+                                  staticClass: "text-danger text-sm"
+                                },
+                                [_vm._v("Este campo es requerido.")]
+                              )
                             ],
                             1
                           )
@@ -1524,7 +1659,18 @@ var render = function() {
                           "vs-button",
                           {
                             staticClass: "mt-5",
-                            attrs: { color: "primary", type: "filled" },
+                            attrs: {
+                              color: "primary",
+                              type: "filled",
+                              disabled:
+                                _vm.total > 0 ||
+                                _vm.nameT == "" ||
+                                _vm.nameT == null ||
+                                _vm.numberT == "" ||
+                                _vm.numberT == null ||
+                                _vm.numberTr == "" ||
+                                _vm.numberTr == null
+                            },
                             on: {
                               click: function($event) {
                                 ;(_vm.popupActive2 = false),
@@ -1565,7 +1711,23 @@ var render = function() {
                     },
                     expression: "nit"
                   }
-                })
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.nit === "",
+                        expression: "nit === ''"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v("Este campo es requerido.")]
+                )
               ],
               1
             ),
@@ -1584,7 +1746,23 @@ var render = function() {
                     },
                     expression: "name"
                   }
-                })
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.name === "",
+                        expression: "name === ''"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v("Este campo es requerido.")]
+                )
               ],
               1
             )
@@ -1597,7 +1775,11 @@ var render = function() {
               [
                 _c("vs-input", {
                   staticClass: "mt-5 w-full",
-                  attrs: { label: "Teléfono", name: "item-name" },
+                  attrs: {
+                    label: "Teléfono",
+                    type: "number",
+                    name: "item-name"
+                  },
                   model: {
                     value: _vm.phone,
                     callback: function($$v) {
@@ -1605,7 +1787,23 @@ var render = function() {
                     },
                     expression: "phone"
                   }
-                })
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.phone === "",
+                        expression: "phone === ''"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v("Este campo es requerido.")]
+                )
               ],
               1
             ),
@@ -1624,7 +1822,23 @@ var render = function() {
                     },
                     expression: "email"
                   }
-                })
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.email === "",
+                        expression: "email === ''"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v("Este campo es requerido.")]
+                )
               ],
               1
             )
@@ -1655,6 +1869,22 @@ var render = function() {
                     })
                   }),
                   1
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.genre === "",
+                        expression: "genre === ''"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v("Este campo es requerido.")]
                 )
               ],
               1
@@ -1678,7 +1908,23 @@ var render = function() {
                     },
                     expression: "date"
                   }
-                })
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.date === "",
+                        expression: "date === ''"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v("Este campo es requerido.")]
+                )
               ],
               1
             )
@@ -1706,7 +1952,23 @@ var render = function() {
                       },
                       expression: "paisf"
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.paisf === "",
+                          expression: "paisf === ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v("Este campo es requerido.")]
+                  )
                 ],
                 1
               ),
@@ -1735,6 +1997,22 @@ var render = function() {
                       })
                     }),
                     1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.deparf === "",
+                          expression: "deparf === ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v("Este campo es requerido.")]
                   )
                 ],
                 1
@@ -1754,7 +2032,23 @@ var render = function() {
                       },
                       expression: "callef"
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.callef === "",
+                          expression: "callef === ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v("Este campo es requerido.")]
+                  )
                 ],
                 1
               ),
@@ -1793,6 +2087,22 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.municipiof === "",
+                      expression: "municipiof === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              ),
+              _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
                 attrs: { label: "Residencial/Colonia", name: "residenciaf" },
@@ -1805,9 +2115,29 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.residenciaf === "",
+                      expression: "residenciaf  === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              ),
+              _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
-                attrs: { label: "Código Postal", name: "codigof" },
+                attrs: {
+                  label: "Código Postal",
+                  type: "number",
+                  name: "codigof"
+                },
                 model: {
                   value: _vm.codigof,
                   callback: function($$v) {
@@ -1817,9 +2147,25 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.codigof === "",
+                      expression: "codigof === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              ),
+              _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
-                attrs: { label: "Teléfono", name: "telefonof" },
+                attrs: { label: "Teléfono", type: "number", name: "telefonof" },
                 model: {
                   value: _vm.telefonof,
                   callback: function($$v) {
@@ -1827,7 +2173,23 @@ var render = function() {
                   },
                   expression: "telefonof"
                 }
-              })
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.telefonof === "",
+                      expression: "telefonof === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              )
             ],
             1
           ),
@@ -1910,7 +2272,23 @@ var render = function() {
                       },
                       expression: "paise"
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.paise === "",
+                          expression: "paise === ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v("Este campo es requerido.")]
+                  )
                 ],
                 1
               ),
@@ -1939,6 +2317,22 @@ var render = function() {
                       })
                     }),
                     1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.depare === "",
+                          expression: "depare === ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v("Este campo es requerido.")]
                   )
                 ],
                 1
@@ -1958,7 +2352,23 @@ var render = function() {
                       },
                       expression: "callee"
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.callee === "",
+                          expression: "callee === ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v("Este campo es requerido.")]
+                  )
                 ],
                 1
               ),
@@ -1997,6 +2407,22 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.municipioe === "",
+                      expression: "municipioe === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              ),
+              _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
                 attrs: { label: "Residencial/Colonia", name: "residenciae" },
@@ -2009,9 +2435,29 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.residenciae === "",
+                      expression: "residenciae === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              ),
+              _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
-                attrs: { label: "Código Postal", name: "codigoe" },
+                attrs: {
+                  label: "Código Postal",
+                  type: "number",
+                  name: "codigoe"
+                },
                 model: {
                   value: _vm.codigoe,
                   callback: function($$v) {
@@ -2021,9 +2467,25 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.codigoe === "",
+                      expression: "codigoe === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              ),
+              _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
-                attrs: { label: "Teléfono", name: "telefonoe" },
+                attrs: { label: "Teléfono", type: "number", name: "telefonoe" },
                 model: {
                   value: _vm.telefonoe,
                   callback: function($$v) {
@@ -2031,7 +2493,23 @@ var render = function() {
                   },
                   expression: "telefonoe"
                 }
-              })
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.telefonoe === "",
+                      expression: "telefonoe === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              )
             ],
             1
           )
@@ -2046,9 +2524,105 @@ var render = function() {
           slot: "footer"
         },
         [
-          _c("vs-button", { on: { click: _vm.submitData } }, [
-            _vm._v("Nuevo Pedido")
-          ])
+          _c(
+            "vs-button",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.checkBox1 == "false",
+                  expression: "checkBox1 == 'false'"
+                }
+              ],
+              attrs: {
+                disabled:
+                  _vm.nit == null ||
+                  _vm.nit == "" ||
+                  _vm.name == null ||
+                  _vm.name == "" ||
+                  _vm.phone == null ||
+                  _vm.phone == "" ||
+                  _vm.email == null ||
+                  _vm.email == "" ||
+                  _vm.genre == null ||
+                  _vm.date == null ||
+                  _vm.paisf == null ||
+                  _vm.paisf == "" ||
+                  _vm.deparf == null ||
+                  _vm.deparf == undefined ||
+                  _vm.callef == null ||
+                  _vm.callef == "" ||
+                  _vm.municipiof == null ||
+                  _vm.municipiof == "" ||
+                  _vm.residenciaf == null ||
+                  _vm.residenciaf == "" ||
+                  _vm.codigof == null ||
+                  _vm.codigof == "" ||
+                  _vm.telefonof == null ||
+                  _vm.telefonof == "" ||
+                  _vm.paise == null ||
+                  _vm.paise == "" ||
+                  _vm.depare == null ||
+                  _vm.depare == undefined ||
+                  _vm.callee == null ||
+                  _vm.callee == "" ||
+                  _vm.municipioe == null ||
+                  _vm.municipioe == "" ||
+                  _vm.residenciae == null ||
+                  _vm.residenciae == "" ||
+                  _vm.codigoe == null ||
+                  _vm.codigoe == "" ||
+                  _vm.telefonoe == null ||
+                  _vm.telefonoe == ""
+              },
+              on: { click: _vm.submitData }
+            },
+            [_vm._v("Nuevo Pedido")]
+          ),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.checkBox1 == "true",
+                  expression: "checkBox1 == 'true'"
+                }
+              ],
+              attrs: {
+                disabled:
+                  _vm.nit == null ||
+                  _vm.nit == "" ||
+                  _vm.name == null ||
+                  _vm.name == "" ||
+                  _vm.phone == null ||
+                  _vm.phone == "" ||
+                  _vm.email == null ||
+                  _vm.email == "" ||
+                  _vm.genre == null ||
+                  _vm.date == null ||
+                  _vm.paisf == null ||
+                  _vm.paisf == "" ||
+                  _vm.deparf == null ||
+                  _vm.deparf == undefined ||
+                  _vm.callef == null ||
+                  _vm.callef == "" ||
+                  _vm.municipiof == null ||
+                  _vm.municipiof == "" ||
+                  _vm.residenciaf == null ||
+                  _vm.residenciaf == "" ||
+                  _vm.codigof == null ||
+                  _vm.codigof == "" ||
+                  _vm.telefonof == null ||
+                  _vm.telefonof == ""
+              },
+              on: { click: _vm.submitData }
+            },
+            [_vm._v("Nuevo Pedido")]
+          )
         ],
         1
       )
@@ -2138,11 +2712,23 @@ var render = function() {
                             [_vm._v(_vm._s(data[indextr].client_phone))]
                           ),
                           _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            { attrs: { data: data[indextr].client_addresse } },
-                            [_vm._v(_vm._s(data[indextr].client_addresse))]
-                          ),
+                          _c("vs-td", {
+                            domProps: {
+                              textContent: _vm._s(
+                                tr.paise +
+                                  "," +
+                                  tr.depare +
+                                  " " +
+                                  tr.municipioe +
+                                  " " +
+                                  tr.callee +
+                                  " " +
+                                  tr.apartamentoe +
+                                  " " +
+                                  tr.residenciae
+                              )
+                            }
+                          }),
                           _vm._v(" "),
                           _c(
                             "vs-td",

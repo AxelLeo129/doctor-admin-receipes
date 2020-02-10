@@ -23,7 +23,7 @@
 
             <vs-td :data="data[indextr].client_phone">{{ data[indextr].client_phone }}</vs-td>
 
-            <vs-td :data="data[indextr].client_addresse">{{ data[indextr].client_addresse }}</vs-td>
+            <vs-td v-text="tr.paise + ',' + tr.depare + ' ' + tr.municipioe + ' ' + tr.callee + ' ' + tr.apartamentoe + ' ' + tr.residenciae"></vs-td>
             <vs-td>
               <vs-button
                 type="border"
@@ -271,6 +271,7 @@ export default {
   },
   methods: {
     editData(data, id) {
+      console.log(data);
       this.popupActive2 = false;
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
       let data1 = {

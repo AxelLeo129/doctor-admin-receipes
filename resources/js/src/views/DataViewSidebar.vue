@@ -53,7 +53,12 @@
                     <vs-td :data="data[indextr].price">{{ data[indextr].price }}</vs-td>
 
                     <vs-td>
-                      <vs-input-number min="0" v-model="data[indextr].cantidad" @input="sumar(data[indextr].cantidad, data[indextr].price, indextr)" @change="sumar(data[indextr].cantidad, data[indextr].price, indextr)"/>
+                      <vs-input-number
+                        min="0"
+                        v-model="data[indextr].cantidad"
+                        @input="sumar(data[indextr].cantidad, data[indextr].price, indextr)"
+                        @change="sumar(data[indextr].cantidad, data[indextr].price, indextr)"
+                      />
                     </vs-td>
 
                     <vs-td :data="data[indextr].totale">{{ data[indextr].totale }}</vs-td>
@@ -98,6 +103,7 @@
                 class="mt-5 w-full"
                 name="item-name"
               />
+              <span class="text-danger text-sm" v-show="nameT  === ''">Este campo es requerido.</span>
             </div>
             <div class="vx-row" v-if="switch1 == '1'">
               <vs-input
@@ -107,6 +113,7 @@
                 class="mt-5 w-full"
                 name="item-name"
               />
+              <span class="text-danger text-sm" v-show="numberT  === ''">Este campo es requerido.</span>
             </div>
             <div class="vx-row" v-if="switch1 == '1'">
               <div>
@@ -115,7 +122,9 @@
                   v-model="numberTr"
                   class="mt-5 w-full"
                   name="item-name"
+                  type="number"
                 />
+                <span class="text-danger text-sm" v-show="numberTr  === ''">Este campo es requerido.</span>
               </div>
             </div>
             <div class="vx-row" v-if="switch1 == '2'">
@@ -127,6 +136,7 @@
                 @click="popupActive2=false, isSidebarActiveLocal = false, notificacion()"
                 color="primary"
                 type="filled"
+                :disabled="total > 0 || nameT == '' || nameT == null || numberT == '' || numberT == null || numberTr == '' || numberTr == null"
               >Realizar el Pedido</vs-button>
             </div>
           </vx-card>
@@ -140,18 +150,22 @@
         <div class="vx-row">
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-input label="Nit" v-model="nit" class="mt-5 w-full" name="item-name" />
+            <span class="text-danger text-sm" v-show="nit === ''">Este campo es requerido.</span>
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-input label="Nombre Completo" v-model="name" class="mt-5 w-full" name="item-name" />
+            <span class="text-danger text-sm" v-show="name === ''">Este campo es requerido.</span>
           </div>
         </div>
 
         <div class="vx-row">
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input label="Teléfono" v-model="phone" class="mt-5 w-full" name="item-name" />
+            <vs-input label="Teléfono" type="number" v-model="phone" class="mt-5 w-full" name="item-name" />
+            <span class="text-danger text-sm" v-show="phone === ''">Este campo es requerido.</span>
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-input label="Email" v-model="email" class="mt-5 w-full" name="item-name" />
+            <span class="text-danger text-sm" v-show="email === ''">Este campo es requerido.</span>
           </div>
         </div>
 
@@ -165,6 +179,7 @@
                 v-for="item in generos"
               />
             </vs-select>
+            <span class="text-danger text-sm" v-show="genre === ''">Este campo es requerido.</span>
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-input
@@ -174,6 +189,7 @@
               name="date"
               type="date"
             />
+            <span class="text-danger text-sm" v-show="date === ''">Este campo es requerido.</span>
           </div>
         </div>
         <!-- CATEGORY -->
@@ -183,6 +199,7 @@
         <div class="vx-row">
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-input label="País" v-model="paisf" class="mt-5 w-full" name="paisf" disabled />
+            <span class="text-danger text-sm" v-show="paisf === ''">Este campo es requerido.</span>
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-select v-model="deparf" label="Departamento" class="mt-5 w-full" name="depaf">
@@ -193,9 +210,11 @@
                 v-for="item in departamentos"
               />
             </vs-select>
+            <span class="text-danger text-sm" v-show="deparf === ''">Este campo es requerido.</span>
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-input label="Calle o Avenida" v-model="callef" class="mt-5 w-full" name="callef" />
+            <span class="text-danger text-sm" v-show="callef === ''">Este campo es requerido.</span>
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-input
@@ -211,14 +230,18 @@
             class="mt-5 w-full"
             name="municipiof"
           />
+          <span class="text-danger text-sm" v-show="municipiof === ''">Este campo es requerido.</span>
           <vs-input
             label="Residencial/Colonia"
             v-model="residenciaf"
             class="mt-5 w-full"
             name="residenciaf"
           />
-          <vs-input label="Código Postal" v-model="codigof" class="mt-5 w-full" name="codigof" />
-          <vs-input label="Teléfono" v-model="telefonof" class="mt-5 w-full" name="telefonof" />
+          <span class="text-danger text-sm" v-show="residenciaf  === ''">Este campo es requerido.</span>
+          <vs-input label="Código Postal" type="number" v-model="codigof" class="mt-5 w-full" name="codigof" />
+          <span class="text-danger text-sm" v-show="codigof === ''">Este campo es requerido.</span>
+          <vs-input label="Teléfono" type="number" v-model="telefonof" class="mt-5 w-full" name="telefonof" />
+          <span class="text-danger text-sm" v-show="telefonof === ''">Este campo es requerido.</span>
         </div>
         <div class="vx-row">
           <ul class="centerx mt-5">
@@ -234,6 +257,7 @@
           <p class="mt-5">Dirección de Entrenga/Envío</p>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-input label="País" v-model="paise" class="mt-5 w-full" name="paise" disabled />
+            <span class="text-danger text-sm" v-show="paise === ''">Este campo es requerido.</span>
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-select v-model="depare" label="Departamento" class="mt-5 w-full" name="depare">
@@ -244,9 +268,11 @@
                 v-for="item in departamentos"
               />
             </vs-select>
+            <span class="text-danger text-sm" v-show="depare === ''">Este campo es requerido.</span>
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-input label="Calle o Avenida" v-model="callee" class="mt-5 w-full" name="callee" />
+            <span class="text-danger text-sm" v-show="callee === ''">Este campo es requerido.</span>
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-input
@@ -262,20 +288,25 @@
             class="mt-5 w-full"
             name="municipioe"
           />
+          <span class="text-danger text-sm" v-show="municipioe === ''">Este campo es requerido.</span>
           <vs-input
             label="Residencial/Colonia"
             v-model="residenciae"
             class="mt-5 w-full"
             name="residenciae"
           />
-          <vs-input label="Código Postal" v-model="codigoe" class="mt-5 w-full" name="codigoe" />
-          <vs-input label="Teléfono" v-model="telefonoe" class="mt-5 w-full" name="telefonoe" />
+          <span class="text-danger text-sm" v-show="residenciae === ''">Este campo es requerido.</span>
+          <vs-input label="Código Postal" type="number" v-model="codigoe" class="mt-5 w-full" name="codigoe" />
+          <span class="text-danger text-sm" v-show="codigoe === ''">Este campo es requerido.</span>
+          <vs-input label="Teléfono" type="number" v-model="telefonoe" class="mt-5 w-full" name="telefonoe" />
+          <span class="text-danger text-sm" v-show="telefonoe === ''">Este campo es requerido.</span>
         </div>
       </div>
     </vx-card>
 
     <div class="flex flex-wrap items-center p-6" slot="footer">
-      <vs-button @click="submitData">Nuevo Pedido</vs-button>
+      <vs-button @click="submitData" :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || telefonof == null || telefonof == '' || paise == null || paise == '' || depare == null || depare == undefined || callee == null || callee == '' ||  municipioe == null || municipioe == '' || residenciae == null || residenciae == '' || codigoe == null || codigoe == '' || telefonoe == null || telefonoe == ''" v-show="checkBox1 == 'false'">Nuevo Pedido</vs-button>
+      <vs-button @click="submitData" :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || telefonof == null || telefonof == ''" v-show="checkBox1 == 'true'">Nuevo Pedido</vs-button>
     </div>
   </vs-sidebar>
 </template>
@@ -322,91 +353,91 @@ export default {
       totales: [],
       departamentos: [
         {
-          id: 1,
+          id: "Alta Verapaz",
           name: "Alta Verapaz"
         },
         {
-          id: 2,
+          id: "Baja Verapaz",
           name: "Baja Verapaz"
         },
         {
-          id: 3,
+          id: "Chimaltenango",
           name: "Chimaltenango"
         },
         {
-          id: 4,
+          id: "Chiquimula",
           name: "Chiquimula"
         },
         {
-          id: 5,
+          id: "El Progreso",
           name: "El Progreso"
         },
         {
-          id: 6,
+          id: "Escuintla",
           name: "Escuintla"
         },
         {
-          id: 7,
+          id: "Guatemala",
           name: "Guatemala"
         },
         {
-          id: 8,
+          id: "Huehuetenango",
           name: "Huehuetenango"
         },
         {
-          id: 9,
+          id: "Izabal",
           name: "Izabal"
         },
         {
-          id: 10,
+          id: "Jalapa",
           name: "Jalapa"
         },
         {
-          id: 11,
+          id: "Jutiapa",
           name: "Jutiapa"
         },
         {
-          id: 12,
+          id: "Petén",
           name: "Petén"
         },
         {
-          id: 13,
+          id: "Quetzaltenango",
           name: "Quetzaltenango"
         },
         {
-          id: 14,
+          id: "Quiché",
           name: "Quiché"
         },
         {
-          id: 15,
+          id: "Retalhuleu",
           name: "Retalhuleu"
         },
         {
-          id: 16,
+          id: "Sacatepéquez",
           name: "Sacatepéquez"
         },
         {
-          id: 17,
+          id: "San Marcos",
           name: "San Marcos"
         },
         {
-          id: 18,
+          id: "Santa Rosa",
           name: "Santa Rosa"
         },
         {
-          id: 19,
+          id: "Sololá",
           name: "Sololá"
         },
         {
-          id: 20,
+          id: "Suchitepéquez",
           name: "Suchitepéquez"
         },
         {
-          id: 21,
+          id: "Totonicapán",
           name: "Totonicapán"
         },
         {
-          id: 22,
+          id: "Zacapa",
           name: "Zacapa"
         }
       ],
@@ -481,12 +512,57 @@ export default {
           client_phone,
           client_email,
           client_addressf,
-          client_addresse
+          client_addresse,
+          client_genre,
+          birthdate,
+          paisf,
+          deparf,
+          callef,
+          apartamentof,
+          municipiof,
+          residenciaf,
+          codigof,
+          telefonof,
+          paise,
+          depare,
+          callee,
+          apartamentoe,
+          municipioe,
+          residenciae,
+          codigoe,
+          telefonoe
         } = JSON.parse(JSON.stringify(this.data.data));
         this.nit = client_nit;
         this.name = client_name;
         this.phone = client_phone;
         this.email = client_email;
+        this.genre = client_genre;
+        if(this.genre == undefined){
+          this.genre = "masculino";
+        }
+        this.date = birthdate;
+        //this.paisf = paisf;
+        this.deparf = deparf;
+        if(this.deparf == undefined){
+          this.deparf = "Guatemala";
+        }
+        this.callef = callef;
+        this.apartamentof = apartamentof;
+        this.municipiof = municipiof;
+        this.residenciaf = residenciaf;
+        this.codigof = codigof;
+        this.telefonof = telefonof;
+        //this.paise = paise;
+        this.depare = depare;
+        if(this.depare == undefined){
+          this.depare = "Guatemala";
+        }
+        this.callee = callee;
+        this.apartamentoe = apartamentoe;
+        this.municipioe = municipioe;
+        this.residenciae = residenciae;
+        this.codigoe = codigoe;
+        this.telefonoe = telefonoe;
         this.addresse = client_addresse;
         this.addressf = client_addressf;
         this.addressc = this.addressf;
@@ -517,11 +593,11 @@ export default {
     }
   },
   methods: {
-    sumar(price, cantidad, index){
+    sumar(price, cantidad, index) {
       this.total = 0;
       price = parseFloat(price);
-      this.totales[index] = (price * cantidad);
-      this.totales.forEach(element =>{
+      this.totales[index] = price * cantidad;
+      this.totales.forEach(element => {
         //console.log(element);
         this.total = this.total + element;
       });
@@ -562,6 +638,9 @@ export default {
         });
     },
     submitData() {
+      this.nameT = null;
+      this.numberT = null;
+      this.numberTr = null;
       this.getItem(this.idRecipe);
       let token = localStorage.getItem("tu");
       axios({
