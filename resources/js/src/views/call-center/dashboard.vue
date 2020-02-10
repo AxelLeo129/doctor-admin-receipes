@@ -42,7 +42,7 @@
           class="bg-primary-gradient w-full"
           icon-pack="feather"
           icon="icon-plus"
-          @click="addNewData1"
+          @click="addNewData1(idRecipe)"
         >Nuevo Cliente</vs-button>
       </div>
     </vs-popup>
@@ -67,7 +67,7 @@
               icon-pack="feather"
               icon="icon-plus"
               @click="addNewData"
-            >Nuevo Cliente</vs-button> -->
+            >Nuevo Cliente</vs-button>-->
             <h2>Listados</h2>
           </div>
 
@@ -273,8 +273,12 @@ export default {
     editData(data, id) {
       this.popupActive2 = false;
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
-      data.client_id = id;
-      this.sidebarData = data;
+      let data1 = {
+        data: data,
+        idRecipies: id,
+      };
+      //console.log(data1);
+      this.sidebarData = data1;
       this.toggleDataSidebar(true);
     },
     openModal(phone, id) {
@@ -303,9 +307,13 @@ export default {
       this.sidebarData = {};
       this.toggleDataSidebar(true);
     },
-    addNewData1() {
+    addNewData1(id) {
+      let data = {
+        data: {},
+        idRecipies: id,
+      };
       this.popupActive2 = false;
-      this.sidebarData = {};
+      this.sidebarData = data;
       this.toggleDataSidebar(true);
     },
     toggleDataSidebar(val = false) {

@@ -245,6 +245,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -263,13 +313,101 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      //Dirección de facturación
+      paisf: "Guatemala",
+      deparf: null,
+      callef: null,
+      apartamentof: null,
+      municipiof: null,
+      residenciaf: null,
+      codigof: null,
+      telefonof: null,
+      //Dirección de envío
+      paise: "Guatemala",
+      depare: null,
+      callee: null,
+      apartamentoe: null,
+      municipioe: null,
+      residenciae: null,
+      codigoe: null,
+      telefonoe: null,
+      //Demás variables
+      totales: [],
+      departamentos: [{
+        id: 1,
+        name: "Alta Verapaz"
+      }, {
+        id: 2,
+        name: "Baja Verapaz"
+      }, {
+        id: 3,
+        name: "Chimaltenango"
+      }, {
+        id: 4,
+        name: "Chiquimula"
+      }, {
+        id: 5,
+        name: "El Progreso"
+      }, {
+        id: 6,
+        name: "Escuintla"
+      }, {
+        id: 7,
+        name: "Guatemala"
+      }, {
+        id: 8,
+        name: "Huehuetenango"
+      }, {
+        id: 9,
+        name: "Izabal"
+      }, {
+        id: 10,
+        name: "Jalapa"
+      }, {
+        id: 11,
+        name: "Jutiapa"
+      }, {
+        id: 12,
+        name: "Petén"
+      }, {
+        id: 13,
+        name: "Quetzaltenango"
+      }, {
+        id: 14,
+        name: "Quiché"
+      }, {
+        id: 15,
+        name: "Retalhuleu"
+      }, {
+        id: 16,
+        name: "Sacatepéquez"
+      }, {
+        id: 17,
+        name: "San Marcos"
+      }, {
+        id: 18,
+        name: "Santa Rosa"
+      }, {
+        id: 19,
+        name: "Sololá"
+      }, {
+        id: 20,
+        name: "Suchitepéquez"
+      }, {
+        id: 21,
+        name: "Totonicapán"
+      }, {
+        id: 22,
+        name: "Zacapa"
+      }],
       idRecipe: null,
-      checkBox1: true,
+      checkBox1: "true",
       switch3: false,
       switch2: false,
-      switch1: true,
+      switch1: "1",
       nameT: null,
       numberT: null,
+      total: 0,
       numberTr: null,
       subtotal1: 0,
       subtotal2: 0,
@@ -294,7 +432,7 @@ __webpack_require__.r(__webpack_exports__);
       dataImg: null,
       dataOrder_status: "pending",
       dataPrice: 0,
-      category_choices: [{
+      generos: [{
         text: "Femenino",
         value: "femenino"
       }, {
@@ -334,9 +472,8 @@ __webpack_require__.r(__webpack_exports__);
       if (Object.entries(this.data).length === 0) {
         this.initValues(); //this.$validator.reset()
       } else {
-        console.log(this.data);
-
-        var _JSON$parse = JSON.parse(JSON.stringify(this.data)),
+        //console.log(this.data);
+        var _JSON$parse = JSON.parse(JSON.stringify(this.data.data)),
             client_nit = _JSON$parse.client_nit,
             client_name = _JSON$parse.client_name,
             client_phone = _JSON$parse.client_phone,
@@ -351,7 +488,7 @@ __webpack_require__.r(__webpack_exports__);
         this.addresse = client_addresse;
         this.addressf = client_addressf;
         this.addressc = this.addressf;
-        this.idRecipe = client_id;
+        this.idRecipe = this.data.idRecipies;
         this.initValues();
       } // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
 
@@ -376,24 +513,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    getReceProd: function getReceProd(id) {
-      var token = localStorage.getItem("tu");
-      var rol = localStorage.getItem("ru");
-      axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        method: "get",
-        url: "http://127.0.0.1:8000/api/getReceProd/" + id,
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      }).then(function (Response) {
-        console.log(Response);
-        /*Response.data.forEach(element => {
-          this.users.push(element);
-        });
-        this.popupActive2 = true;*/
-      }).catch(function (err) {
-        console.log(err);
+    sumar: function sumar(price, cantidad, index) {
+      var _this = this;
+
+      this.total = 0;
+      price = parseFloat(price);
+      this.totales[index] = price * cantidad;
+      this.totales.forEach(function (element) {
+        //console.log(element);
+        _this.total = _this.total + element;
       });
     },
     notificacion: function notificacion() {
@@ -413,7 +541,7 @@ __webpack_require__.r(__webpack_exports__);
       this.dataImg = null;
     },
     getItem: function getItem(id) {
-      var _this = this;
+      var _this2 = this;
 
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -425,17 +553,16 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this.itms.push(element);
+          _this2.itms.push(element.product_id);
         });
-        _this.popupActive2 = true;
       }).catch(function (err) {
         console.log(err);
       });
     },
     submitData: function submitData() {
-      var _this2 = this;
+      var _this3 = this;
 
-      //this.getItem(this.idRecipe);
+      this.getItem(this.idRecipe);
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "get",
@@ -446,21 +573,30 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this2.medicines.push(element);
+          if (_this3.itms.includes(element.id)) {
+            _this3.medicines.push({
+              name: element.name,
+              precentation: element.precentation,
+              price: element.price,
+              cantidad: 0,
+              totale: 0,
+              unidad: "Pastillas"
+            });
+          }
         });
-        _this2.popupActive2 = true;
+        _this3.popupActive2 = true;
       }).catch(function (err) {
         console.log(err);
       });
     },
     updateCurrImg: function updateCurrImg(input) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (input.target.files && input.target.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-          _this3.dataImg = e.target.result;
+          _this4.dataImg = e.target.result;
         };
 
         reader.readAsDataURL(input.target.files[0]);
@@ -753,8 +889,12 @@ __webpack_require__.r(__webpack_exports__);
     editData: function editData(data, id) {
       this.popupActive2 = false; // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
 
-      data.client_id = id;
-      this.sidebarData = data;
+      var data1 = {
+        data: data,
+        idRecipies: id
+      }; //console.log(data1);
+
+      this.sidebarData = data1;
       this.toggleDataSidebar(true);
     },
     openModal: function openModal(phone, id) {
@@ -783,9 +923,13 @@ __webpack_require__.r(__webpack_exports__);
       this.sidebarData = {};
       this.toggleDataSidebar(true);
     },
-    addNewData1: function addNewData1() {
+    addNewData1: function addNewData1(id) {
+      var data = {
+        data: {},
+        idRecipies: id
+      };
       this.popupActive2 = false;
-      this.sidebarData = {};
+      this.sidebarData = data;
       this.toggleDataSidebar(true);
     },
     toggleDataSidebar: function toggleDataSidebar() {
@@ -1062,6 +1206,7 @@ var render = function() {
                       _c(
                         "vs-table",
                         {
+                          staticClass: "responsive",
                           attrs: { data: _vm.medicines },
                           scopedSlots: _vm._u([
                             {
@@ -1083,12 +1228,12 @@ var render = function() {
                                         "vs-td",
                                         {
                                           attrs: {
-                                            data: data[indextr].presentation
+                                            data: data[indextr].precentation
                                           }
                                         },
                                         [
                                           _vm._v(
-                                            _vm._s(data[indextr].presentation)
+                                            _vm._s(data[indextr].precentation)
                                           )
                                         ]
                                       ),
@@ -1106,6 +1251,22 @@ var render = function() {
                                         [
                                           _c("vs-input-number", {
                                             attrs: { min: "0" },
+                                            on: {
+                                              input: function($event) {
+                                                return _vm.sumar(
+                                                  data[indextr].cantidad,
+                                                  data[indextr].price,
+                                                  indextr
+                                                )
+                                              },
+                                              change: function($event) {
+                                                return _vm.sumar(
+                                                  data[indextr].cantidad,
+                                                  data[indextr].price,
+                                                  indextr
+                                                )
+                                              }
+                                            },
                                             model: {
                                               value: data[indextr].cantidad,
                                               callback: function($$v) {
@@ -1219,42 +1380,59 @@ var render = function() {
                 _c(
                   "vx-card",
                   [
-                    _c("p", { domProps: { textContent: _vm._s("Total ") } }),
+                    _c("p", {
+                      domProps: { textContent: _vm._s("Total: " + _vm.total) }
+                    }),
                     _vm._v(" "),
                     _c("vs-divider", { staticClass: "mb-0" }),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "vx-row" },
-                      [
+                    _c("div", { staticClass: "vx-row" }, [
+                      _c("ul", { staticClass: "centerx" }, [
                         _c(
-                          "vx-tooltip",
-                          {
-                            staticClass: "mt-5 mr-4",
-                            attrs: { text: "Tarjeta de Crédito" }
-                          },
+                          "li",
                           [
-                            _c("vs-switch", {
-                              model: {
-                                value: _vm.switch1,
-                                callback: function($$v) {
-                                  _vm.switch1 = $$v
-                                },
-                                expression: "switch1"
-                              }
-                            })
+                            _c(
+                              "vs-radio",
+                              {
+                                attrs: { "vs-value": "1" },
+                                model: {
+                                  value: _vm.switch1,
+                                  callback: function($$v) {
+                                    _vm.switch1 = $$v
+                                  },
+                                  expression: "switch1"
+                                }
+                              },
+                              [_vm._v("Tarjeta de Crédito")]
+                            )
                           ],
                           1
                         ),
                         _vm._v(" "),
-                        _c("p", { staticClass: "mt-5" }, [
-                          _vm._v("Tarjeta de Crédito")
-                        ])
-                      ],
-                      1
-                    ),
+                        _c(
+                          "li",
+                          [
+                            _c(
+                              "vs-radio",
+                              {
+                                attrs: { "vs-value": "2" },
+                                model: {
+                                  value: _vm.switch1,
+                                  callback: function($$v) {
+                                    _vm.switch1 = $$v
+                                  },
+                                  expression: "switch1"
+                                }
+                              },
+                              [_vm._v("Pago contra Entrega")]
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _vm.switch1 == true
+                    _vm.switch1 == "1"
                       ? _c(
                           "div",
                           { staticClass: "vx-row" },
@@ -1278,7 +1456,7 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.switch1 == true
+                    _vm.switch1 == "1"
                       ? _c(
                           "div",
                           { staticClass: "vx-row" },
@@ -1303,7 +1481,7 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.switch1 == true
+                    _vm.switch1 == "1"
                       ? _c("div", { staticClass: "vx-row" }, [
                           _c(
                             "div",
@@ -1328,42 +1506,15 @@ var render = function() {
                         ])
                       : _vm._e(),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "vx-row" },
-                      [
-                        _c(
-                          "vx-tooltip",
-                          {
-                            staticClass: "mt-5 mr-4",
-                            attrs: { text: "Pago contra Entrega" }
-                          },
-                          [
-                            _c("vs-switch", {
-                              model: {
-                                value: _vm.switch2,
-                                callback: function($$v) {
-                                  _vm.switch2 = $$v
-                                },
-                                expression: "switch2"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "mt-5" }, [
-                          _vm._v("Pago contra Entrega")
+                    _vm.switch1 == "2"
+                      ? _c("div", { staticClass: "vx-row" }, [
+                          _c("p", { staticClass: "mt-5" }, [
+                            _vm._v(
+                              "Paga en efectivo en el momento de la entrega."
+                            )
+                          ])
                         ])
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "vx-row" }, [
-                      _c("p", { staticClass: "mt-5" }, [
-                        _vm._v("Paga en efectivo en el momento de la entrega.")
-                      ])
-                    ]),
+                      : _vm._e(),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -1497,7 +1648,7 @@ var render = function() {
                       expression: "genre"
                     }
                   },
-                  _vm._l(_vm.category_choices, function(item) {
+                  _vm._l(_vm.generos, function(item) {
                     return _c("vs-select-item", {
                       key: item.value,
                       attrs: { value: item.value, text: item.text }
@@ -1533,181 +1684,357 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "vx-row" },
-            [
-              _c("vs-textarea", {
-                attrs: { label: "Dirección de Facturación" },
-                model: {
-                  value: _vm.addressf,
-                  callback: function($$v) {
-                    _vm.addressf = $$v
-                  },
-                  expression: "addressf"
-                }
-              })
-            ],
-            1
-          ),
+          _c("div", { staticClass: "vx-row" }, [
+            _c("p", [_vm._v("Dirección para la Factura")])
+          ]),
           _vm._v(" "),
           _c(
             "div",
             { staticClass: "vx-row" },
             [
               _c(
-                "vs-checkbox",
-                {
-                  staticClass: "mt-5 w-full",
-                  model: {
-                    value: _vm.checkBox1,
-                    callback: function($$v) {
-                      _vm.checkBox1 = $$v
-                    },
-                    expression: "checkBox1"
-                  }
-                },
-                [_vm._v("Dirección envio igual a facturación")]
+                "div",
+                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+                [
+                  _c("vs-input", {
+                    staticClass: "mt-5 w-full",
+                    attrs: { label: "País", name: "paisf", disabled: "" },
+                    model: {
+                      value: _vm.paisf,
+                      callback: function($$v) {
+                        _vm.paisf = $$v
+                      },
+                      expression: "paisf"
+                    }
+                  })
+                ],
+                1
               ),
               _vm._v(" "),
-              _c("vs-textarea", {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.checkBox1 == false,
-                    expression: "checkBox1 == false"
-                  }
+              _c(
+                "div",
+                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+                [
+                  _c(
+                    "vs-select",
+                    {
+                      staticClass: "mt-5 w-full",
+                      attrs: { label: "Departamento", name: "depaf" },
+                      model: {
+                        value: _vm.deparf,
+                        callback: function($$v) {
+                          _vm.deparf = $$v
+                        },
+                        expression: "deparf"
+                      }
+                    },
+                    _vm._l(_vm.departamentos, function(item) {
+                      return _c("vs-select-item", {
+                        key: item.id,
+                        attrs: { value: item.id, text: item.name }
+                      })
+                    }),
+                    1
+                  )
                 ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+                [
+                  _c("vs-input", {
+                    staticClass: "mt-5 w-full",
+                    attrs: { label: "Calle o Avenida", name: "callef" },
+                    model: {
+                      value: _vm.callef,
+                      callback: function($$v) {
+                        _vm.callef = $$v
+                      },
+                      expression: "callef"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+                [
+                  _c("vs-input", {
+                    staticClass: "mt-5 w-full",
+                    attrs: {
+                      label: "Apartamento, habitación, etc.",
+                      name: "apartamentof"
+                    },
+                    model: {
+                      value: _vm.apartamentof,
+                      callback: function($$v) {
+                        _vm.apartamentof = $$v
+                      },
+                      expression: "apartamentof"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("vs-input", {
                 staticClass: "mt-5 w-full",
-                attrs: { label: "Dirección de Envió" },
+                attrs: { label: "Ciudad/Municipio", name: "municipiof" },
                 model: {
-                  value: _vm.addresse,
+                  value: _vm.municipiof,
                   callback: function($$v) {
-                    _vm.addresse = $$v
+                    _vm.municipiof = $$v
                   },
-                  expression: "addresse"
+                  expression: "municipiof"
                 }
               }),
               _vm._v(" "),
-              _c("vs-textarea", {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.checkBox1 == true,
-                    expression: "checkBox1 == true"
-                  }
-                ],
+              _c("vs-input", {
                 staticClass: "mt-5 w-full",
-                attrs: { label: "Dirección de Envió" },
+                attrs: { label: "Residencial/Colonia", name: "residenciaf" },
                 model: {
-                  value: _vm.addressc,
+                  value: _vm.residenciaf,
                   callback: function($$v) {
-                    _vm.addressc = $$v
+                    _vm.residenciaf = $$v
                   },
-                  expression: "addressc"
+                  expression: "residenciaf"
+                }
+              }),
+              _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: { label: "Código Postal", name: "codigof" },
+                model: {
+                  value: _vm.codigof,
+                  callback: function($$v) {
+                    _vm.codigof = $$v
+                  },
+                  expression: "codigof"
+                }
+              }),
+              _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: { label: "Teléfono", name: "telefonof" },
+                model: {
+                  value: _vm.telefonof,
+                  callback: function($$v) {
+                    _vm.telefonof = $$v
+                  },
+                  expression: "telefonof"
                 }
               })
             ],
             1
           ),
           _vm._v(" "),
+          _c("div", { staticClass: "vx-row" }, [
+            _c("ul", { staticClass: "centerx mt-5" }, [
+              _c(
+                "li",
+                [
+                  _c(
+                    "vs-radio",
+                    {
+                      attrs: { "vs-value": "true" },
+                      model: {
+                        value: _vm.checkBox1,
+                        callback: function($$v) {
+                          _vm.checkBox1 = $$v
+                        },
+                        expression: "checkBox1"
+                      }
+                    },
+                    [_vm._v("Dirección envio igual a facturación.")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                [
+                  _c(
+                    "vs-radio",
+                    {
+                      attrs: { "vs-value": "false" },
+                      model: {
+                        value: _vm.checkBox1,
+                        callback: function($$v) {
+                          _vm.checkBox1 = $$v
+                        },
+                        expression: "checkBox1"
+                      }
+                    },
+                    [_vm._v("Enviar a una dirección diferente.")]
+                  )
+                ],
+                1
+              )
+            ])
+          ]),
+          _vm._v(" "),
           _c(
             "div",
-            { staticClass: "vx-row" },
-            [
-              _c(
-                "vx-tooltip",
+            {
+              directives: [
                 {
-                  staticClass: "mt-5 mr-4",
-                  attrs: { text: "Tarjeta de Crédito" }
-                },
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.checkBox1 == "false",
+                  expression: "checkBox1 == 'false'"
+                }
+              ],
+              staticClass: "vx-row"
+            },
+            [
+              _c("p", { staticClass: "mt-5" }, [
+                _vm._v("Dirección de Entrenga/Envío")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
                 [
-                  _c("vs-switch", {
+                  _c("vs-input", {
+                    staticClass: "mt-5 w-full",
+                    attrs: { label: "País", name: "paise", disabled: "" },
                     model: {
-                      value: _vm.switch3,
+                      value: _vm.paise,
                       callback: function($$v) {
-                        _vm.switch3 = $$v
+                        _vm.paise = $$v
                       },
-                      expression: "switch3"
+                      expression: "paise"
                     }
                   })
                 ],
                 1
               ),
               _vm._v(" "),
-              _c("p", { staticClass: "mt-5" }, [
-                _vm._v("¿Enviar a una dirección diferente?")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _vm.switch3 == true
-            ? _c("div", { staticClass: "vx-row" }, [
-                _c(
-                  "div",
-                  { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-                  [
-                    _c("vs-input", {
-                      staticClass: "mt-5 w-full",
-                      attrs: {
-                        label: "Nombre de la Empresa",
-                        name: "item-name"
-                      },
-                      model: {
-                        value: _vm.empresa,
-                        callback: function($$v) {
-                          _vm.empresa = $$v
-                        },
-                        expression: "empresa"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-                  [
-                    _c("vs-input", {
-                      staticClass: "mt-5 w-full",
-                      attrs: { label: "Nombre Completo", name: "item-name" },
-                      model: {
-                        value: _vm.name1,
-                        callback: function($$v) {
-                          _vm.name1 = $$v
-                        },
-                        expression: "name1"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.switch3 == true
-            ? _c(
+              _c(
                 "div",
-                { staticClass: "vx-row" },
+                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
                 [
-                  _c("vs-textarea", {
-                    attrs: { label: "Dirección de Envió" },
+                  _c(
+                    "vs-select",
+                    {
+                      staticClass: "mt-5 w-full",
+                      attrs: { label: "Departamento", name: "depare" },
+                      model: {
+                        value: _vm.depare,
+                        callback: function($$v) {
+                          _vm.depare = $$v
+                        },
+                        expression: "depare"
+                      }
+                    },
+                    _vm._l(_vm.departamentos, function(item) {
+                      return _c("vs-select-item", {
+                        key: item.id,
+                        attrs: { value: item.id, text: item.name }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+                [
+                  _c("vs-input", {
+                    staticClass: "mt-5 w-full",
+                    attrs: { label: "Calle o Avenida", name: "callee" },
                     model: {
-                      value: _vm.direccion,
+                      value: _vm.callee,
                       callback: function($$v) {
-                        _vm.direccion = $$v
+                        _vm.callee = $$v
                       },
-                      expression: "direccion"
+                      expression: "callee"
                     }
                   })
                 ],
                 1
-              )
-            : _vm._e()
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+                [
+                  _c("vs-input", {
+                    staticClass: "mt-5 w-full",
+                    attrs: {
+                      label: "Apartamento, habitación, etc.",
+                      name: "apartamentoe"
+                    },
+                    model: {
+                      value: _vm.apartamentoe,
+                      callback: function($$v) {
+                        _vm.apartamentoe = $$v
+                      },
+                      expression: "apartamentoe"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: { label: "Ciudad/Municipio", name: "municipioe" },
+                model: {
+                  value: _vm.municipioe,
+                  callback: function($$v) {
+                    _vm.municipioe = $$v
+                  },
+                  expression: "municipioe"
+                }
+              }),
+              _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: { label: "Residencial/Colonia", name: "residenciae" },
+                model: {
+                  value: _vm.residenciae,
+                  callback: function($$v) {
+                    _vm.residenciae = $$v
+                  },
+                  expression: "residenciae"
+                }
+              }),
+              _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: { label: "Código Postal", name: "codigoe" },
+                model: {
+                  value: _vm.codigoe,
+                  callback: function($$v) {
+                    _vm.codigoe = $$v
+                  },
+                  expression: "codigoe"
+                }
+              }),
+              _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: { label: "Teléfono", name: "telefonoe" },
+                model: {
+                  value: _vm.telefonoe,
+                  callback: function($$v) {
+                    _vm.telefonoe = $$v
+                  },
+                  expression: "telefonoe"
+                }
+              })
+            ],
+            1
+          )
         ])
       ]),
       _vm._v(" "),
@@ -1876,7 +2203,11 @@ var render = function() {
                 {
                   staticClass: "bg-primary-gradient w-full",
                   attrs: { "icon-pack": "feather", icon: "icon-plus" },
-                  on: { click: _vm.addNewData1 }
+                  on: {
+                    click: function($event) {
+                      return _vm.addNewData1(_vm.idRecipe)
+                    }
+                  }
                 },
                 [_vm._v("Nuevo Cliente")]
               )
