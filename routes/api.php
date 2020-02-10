@@ -55,6 +55,9 @@ Route::group(['middleware' => 'auth:api'], function(){
     //Repartidores
     Route::get('getDelivery', 'DeliveryPeople\DeliveryPeopleController@getDelivery');
     Route::post('postShipping', 'DeliveryPeople\DeliveryPeopleController@store');
+    Route::get('my-orderds/{id}', 'DeliveryPeople\DeliveryPeopleController@myOrders');
+    Route::post('confirm-order', 'DeliveryPeople\DeliveryPeopleController@confirmOrder');
+    Route::post('confirm-delivery', 'DeliveryPeople\DeliveryPeopleController@completeOrder');
 
 
 });

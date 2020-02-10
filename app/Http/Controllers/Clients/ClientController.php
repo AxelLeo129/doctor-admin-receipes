@@ -61,7 +61,6 @@ class ClientController extends Controller
             $datos = array("cliente" => $client, "medicamentos" => $medicinas);
             array_push($data, $datos);
         }
-
         return $data;
     }
 

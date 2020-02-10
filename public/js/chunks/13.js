@@ -219,6 +219,8 @@ __webpack_require__.r(__webpack_exports__);
 
         if (_this.rol == 1) {
           _this.$router.push("/consola");
+        } else if (_this.rol == 5) {
+          _this.$router.push("/boodskapper");
         } else {
           _this.$router.push("/home");
         }
