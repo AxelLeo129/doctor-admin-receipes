@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+//use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,13 +54,17 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('getClients', 'Clients\ClientController@index');
     Route::get('getCliente', 'Clients\ClientController@show');
     Route::get('getCliente1/{id}', 'Clients\ClientController@show1');
+    Route::post('postCliente', 'Clients\ClientController@store');
+    Route::put('putCliente', 'Clients\ClientController@update');
     //Repartidores
     Route::get('getDelivery', 'DeliveryPeople\DeliveryPeopleController@getDelivery');
     Route::post('postShipping', 'DeliveryPeople\DeliveryPeopleController@store');
     Route::get('my-orderds/{id}', 'DeliveryPeople\DeliveryPeopleController@myOrders');
     Route::post('confirm-order', 'DeliveryPeople\DeliveryPeopleController@confirmOrder');
     Route::post('confirm-delivery', 'DeliveryPeople\DeliveryPeopleController@completeOrder');
-
+    //Pedidos
+    Route::post('postOrder', 'Orders\OrderController@store');
+    Route::post('postOrderProd', 'Orders\OrderController@storeProducto');
 
 });
 

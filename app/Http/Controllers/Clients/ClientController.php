@@ -36,7 +36,33 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $client = new Client();
+        $client->client_name = $request->client_name;
+        $client->client_nit = $request->client_nit;
+        $client->client_phone = $request->client_phone;
+        $client->client_genre = $request->client_genre;
+        $client->client_email = $request->client_email;
+        $client->birthdate = $request->birthdate;
+        $client->paisf = $request->paisf;
+        $client->deparf = $request->deparf;
+        $client->callef = $request->callef;
+        $client->apartamentof = $request->apartamentof;
+        $client->municipiof = $request->municipiof;
+        $client->residenciaf = $request->residenciaf;
+        $client->codigof = $request->codigof;
+        $client->telefonof = $request->telefonof;
+        $client->paise = $request->paise;
+        $client->depare = $request->depare;
+        $client->callee = $request->callee;
+        $client->apartamentoe = $request->apartamentoe;
+        $client->municipioe = $request->municipioe;
+        $client->residenciae = $request->residenciae;
+        $client->codigoe = $request->codigoe;
+        $client->telefonoe = $request->telefonoe;
+        
+        if($client->save()){
+            return ['result' => 'success', "mess"=>$client];
+        }
     }
 
     /**
@@ -94,9 +120,35 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $client = Client::find($request->id);
+        $client->client_name = $request->client_name;
+        $client->client_nit = $request->client_nit;
+        $client->client_phone = $request->client_phone;
+        $client->client_genre = $request->client_genre;
+        $client->client_email = $request->client_email;
+        $client->birthdate = $request->birthdate;
+        $client->paisf = $request->paisf;
+        $client->deparf = $request->deparf;
+        $client->callef = $request->callef;
+        $client->apartamentof = $request->apartamentof;
+        $client->municipiof = $request->municipiof;
+        $client->residenciaf = $request->residenciaf;
+        $client->codigof = $request->codigof;
+        $client->telefonof = $request->telefonof;
+        $client->paise = $request->paise;
+        $client->depare = $request->depare;
+        $client->callee = $request->callee;
+        $client->apartamentoe = $request->apartamentoe;
+        $client->municipioe = $request->municipioe;
+        $client->residenciae = $request->residenciae;
+        $client->codigoe = $request->codigoe;
+        $client->telefonoe = $request->telefonoe;
+        
+        if($client->save()){
+            return ['result' => 'success', "mess"=>$client];
+        }
     }
 
     /**
