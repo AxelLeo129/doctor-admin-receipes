@@ -673,41 +673,6 @@ export default {
       this.medicines.forEach(element => {
         ids.push(element.id);
       });
-      console.log(
-        JSON.stringify({
-          id: this.idCliente,
-          client_name: this.name,
-          client_nit: this.nit,
-          client_phone: this.phone,
-          client_genre: this.genre,
-          client_email: this.email,
-          birthdate: this.date,
-          paisf: this.paisf,
-          deparf: this.deparf,
-          callef: this.callef,
-          apartamentof: this.apartamentof,
-          municipiof: this.municipiof,
-          residenciaf: this.residenciaf,
-          codigof: this.codigof,
-          telefonof: this.telefonof,
-          paise: this.paise,
-          depare: this.depare,
-          callee: this.callee,
-          apartamentoe: this.apartamentoe,
-          municipioe: this.municipioe,
-          residenciae: this.residenciae,
-          codigoe: this.codigoe,
-          telefonoe: this.telefonoe,
-
-          namet: this.nameT,
-          numbert: this.numberT,
-          numbertr: this.numberTr,
-          total: this.total,
-
-          cantidad: this.cantidades,
-          medicines: ids
-        })
-      );
       axios({
         method: "put",
         url: "http://127.0.0.1:8000/api/putCliente",
@@ -742,10 +707,12 @@ export default {
         }
       })
         .then(Response => {
+          console.log(Response);
           axios({
             method: "post",
             url: "http://127.0.0.1:8000/api/postOrder",
             data: JSON.stringify({
+              client_id: Response.data.mess.id,
               namet: this.nameT,
               numbert: this.numberT,
               numbertr: this.numberTr,
@@ -757,13 +724,35 @@ export default {
             }
           })
             .then(Response => {
-              this.activeLoading = false;
-              this.$vs.loading.close();
-              this.$vs.notify({
-                title: "Agregado",
-                text: "Categoría creada exitosamente.",
-                color: "success"
-              });
+              console.log(Response);
+              axios({
+                method: "post",
+                url: "http://127.0.0.1:8000/api/postOrderProd",
+                data: JSON.stringify({
+                  cantidad: this.cantidades,
+                  medicines: ids,
+                  order_id: Response.data.mess.id
+                }),
+                headers: {
+                  authorization: "Bearer " + token,
+                  "content-type": "application/json"
+                }
+              })
+                .then(Response => {
+                  this.activeLoading = false;
+                  this.$vs.loading.close();
+                  this.$vs.notify({
+                    title: "Satisfactorio",
+                    text: "Pedido enviado al despachador exitosamente.",
+                    color: "success"
+                  });
+                })
+                .catch(err => {
+                  this.activeLoading = false;
+                  this.$vs.loading.close();
+                  activado = true;
+                  //console.log(err);
+                });
             })
             .catch(err => {
               this.activeLoading = false;
@@ -778,14 +767,107 @@ export default {
           activado = true;
           console.log(err);
         });
-      /*this.$vs.notify({
-        title: "Enviado",
-        text: "Pedido enviado correctamente",
-        color: "success"
-      });*/
     },
     notificacion1() {
+      this.openLoading();
       let token = localStorage.getItem("tu");
+      let ids = [];
+      this.medicines.forEach(element => {
+        ids.push(element.id);
+      });
+      axios({
+        method: "put",
+        url: "http://127.0.0.1:8000/api/postCliente",
+        data: JSON.stringify({
+          client_name: this.name,
+          client_nit: this.nit,
+          client_phone: this.phone,
+          client_genre: this.genre,
+          client_email: this.email,
+          birthdate: this.date,
+          paisf: this.paisf,
+          deparf: this.deparf,
+          callef: this.callef,
+          apartamentof: this.apartamentof,
+          municipiof: this.municipiof,
+          residenciaf: this.residenciaf,
+          codigof: this.codigof,
+          telefonof: this.telefonof,
+          paise: this.paise,
+          depare: this.depare,
+          callee: this.callee,
+          apartamentoe: this.apartamentoe,
+          municipioe: this.municipioe,
+          residenciae: this.residenciae,
+          codigoe: this.codigoe,
+          telefonoe: this.telefonoe
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          console.log(Response);
+          axios({
+            method: "post",
+            url: "http://127.0.0.1:8000/api/postOrder",
+            data: JSON.stringify({
+              client_id: Response.data.mess.id,
+              namet: this.nameT,
+              numbert: this.numberT,
+              numbertr: this.numberTr,
+              total: this.total
+            }),
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          })
+            .then(Response => {
+              console.log(Response);
+              axios({
+                method: "post",
+                url: "http://127.0.0.1:8000/api/postOrderProd",
+                data: JSON.stringify({
+                  cantidad: this.cantidades,
+                  medicines: ids,
+                  order_id: Response.data.mess.id
+                }),
+                headers: {
+                  authorization: "Bearer " + token,
+                  "content-type": "application/json"
+                }
+              })
+                .then(Response => {
+                  this.activeLoading = false;
+                  this.$vs.loading.close();
+                  this.$vs.notify({
+                    title: "Satisfactorio",
+                    text: "Pedido enviado al despachador exitosamente.",
+                    color: "success"
+                  });
+                })
+                .catch(err => {
+                  this.activeLoading = false;
+                  this.$vs.loading.close();
+                  activado = true;
+                  //console.log(err);
+                });
+            })
+            .catch(err => {
+              this.activeLoading = false;
+              this.$vs.loading.close();
+              activado = true;
+              console.log(err);
+            });
+        })
+        .catch(err => {
+          this.activeLoading = false;
+          this.$vs.loading.close();
+          activado = true;
+          console.log(err);
+        });
     },
     initValues() {
       if (this.data.id) return;
@@ -817,6 +899,16 @@ export default {
     },
     updateData() {},
     submitData() {
+      if (this.checkBox1 == "true") {
+        this.paise = this.paisf;
+        this.depare = this.deparf;
+        this.callee = this.callef;
+        this.apartamentoe = this.apartamentof;
+        this.municipioe = this.municipiof;
+        this.residenciae = this.residenciaf;
+        this.codigoe = this.codigof;
+        this.telefonoe = this.telefonof;
+      }
       this.nameT = null;
       this.numberT = null;
       this.numberTr = null;
