@@ -56001,7 +56001,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
         if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
           next();
-        } else if (rol == 1 || rol == 2 || rol == 3) {
+        } else if (rol == 1 || rol == 2 || rol == 3 || rol == 4 || rol == 5 || rol == 6) {
           next({
             name: 'home'
           });
@@ -56022,7 +56022,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
         if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
           next();
-        } else if (rol == 1 || rol == 2 || rol == 3) {
+        } else if (rol == 1 || rol == 2 || rol == 3 || rol == 4 || rol == 5 || rol == 6) {
           next({
             name: 'home'
           });
@@ -56081,6 +56081,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           next({
             name: "boodskapper"
           });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
         } else {
           next({
             name: 'page-login'
@@ -56120,6 +56124,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           });
         } else if (rol == 5) {
           next();
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
         } else {
           next({
             name: 'page-login'
@@ -56158,6 +56166,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         } else if (rol == 5) {
           next({
             name: "boodskapper"
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
           });
         } else {
           next({
@@ -56222,6 +56234,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           next({
             name: 'ListCallCenter'
           });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
         } else {
           next({
             name: 'page-login'
@@ -56265,6 +56281,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         } else if (rol == 3) {
           next({
             name: 'ListCallCenter'
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
           });
         } else {
           next({
@@ -56310,6 +56330,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           next({
             name: 'ListCallCenter'
           });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
         } else {
           next({
             name: 'page-login'
@@ -56336,20 +56360,6 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
       }
     }, {
-      path: '/apps/email',
-      redirect: '/apps/email/inbox',
-      name: 'email'
-    }, {
-      path: '/apps/email/:filter',
-      component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(12), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ./views/email/Email.vue */ "./resources/js/src/views/email/Email.vue"));
-      },
-      meta: {
-        rule: 'editor',
-        parent: 'email',
-        no_scroll: true
-      }
-    }, {
       path: '/nuevoPaciente',
       name: 'extra-component-form-wizard',
       component: function component() {
@@ -56373,6 +56383,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         } else if (rol == 3) {
           next({
             name: 'ListCallCenter'
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
           });
         } else {
           next({
@@ -56418,6 +56432,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           next({
             name: 'ListCallCenter'
           });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
         } else {
           next({
             name: 'page-login'
@@ -56461,6 +56479,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         } else if (rol == 3) {
           next({
             name: 'ListCallCenter'
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
           });
         } else {
           next({
@@ -56506,6 +56528,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           next({
             name: 'ListCallCenter'
           });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
         } else {
           next({
             name: 'page-login'
@@ -56550,6 +56576,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           next({
             name: 'ListCallCenter'
           });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
         } else {
           next({
             name: 'page-login'
@@ -56580,6 +56610,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         } else if (rol == 3) {
           next({
             name: 'ListCallCenter'
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
           });
         } else {
           next({
@@ -56612,6 +56646,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         } else if (rol == 3) {
           next({
             name: 'ListCallCenter'
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
           });
         } else {
           next({
@@ -56657,6 +56695,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           next({
             name: 'ListCallCenter'
           });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
         } else {
           next({
             name: 'page-login'
@@ -56700,6 +56742,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         } else if (rol == 3) {
           next({
             name: 'ListCallCenter'
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
           });
         } else {
           next({
@@ -56746,6 +56792,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           });
         } else if (rol == 3) {
           next();
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
         } else {
           next({
             name: 'page-login'
@@ -56807,6 +56857,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           next({
             name: 'ListCallCenter'
           });
+        } else if (rol == 6) {
+          next({
+            name: '1visitador'
+          });
         } else if (rol == 4) {
           next();
         } else {
@@ -56815,16 +56869,60 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           });
         }
       }
-    }
-    /*
-    //Visitador Medico
+    }, //Visitador Medico
     {
-        path: '/visitador',
-        name: 'visitador',
-        component: () => import('./views/visitador/dashboard.vue')
-    },
-    */
-    ]
+      path: '/1visitador',
+      name: '1visitador',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 35).then(__webpack_require__.bind(null, /*! ./views/visitador1/dashboard.vue */ "./resources/js/src/views/visitador1/dashboard.vue"));
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Listado de Usuarios'
+        }, {
+          title: 'Usuarios',
+          active: true
+        }],
+        pageTitle: 'Listado de Usuarios',
+        rule: 'editor'
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next({
+            name: 'consola'
+          });
+        } else if (rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else if (rol == 4) {
+          next({
+            name: "visitador"
+          });
+        } else if (rol == 6) {
+          next();
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      }
+    }]
   }, // Redirect to 404 page, if no match found
   {
     path: '*',
