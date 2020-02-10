@@ -33,7 +33,7 @@
         <div class="vx-col w-full sm:w-2/3 lg:w-2/3 mb-base">
           <vx-card>
             <div class="vx-row">
-              <vs-table :data="medicines">
+              <vs-table :data="medicines" class="responsive">
                 <template slot="thead">
                   <vs-th>Nombre</vs-th>
                   <vs-th>Precentación</vs-th>
@@ -48,12 +48,12 @@
                   <vs-tr :key="indextr" v-for="(tr, indextr) in data">
                     <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
 
-                    <vs-td :data="data[indextr].presentation">{{ data[indextr].presentation }}</vs-td>
+                    <vs-td :data="data[indextr].precentation">{{ data[indextr].precentation }}</vs-td>
 
                     <vs-td :data="data[indextr].price">{{ data[indextr].price }}</vs-td>
 
                     <vs-td>
-                      <vs-input-number min="0" v-model="data[indextr].cantidad" />
+                      <vs-input-number min="0" v-model="data[indextr].cantidad" @input="sumar(data[indextr].cantidad, data[indextr].price, indextr)" @change="sumar(data[indextr].cantidad, data[indextr].price, indextr)"/>
                     </vs-td>
 
                     <vs-td :data="data[indextr].totale">{{ data[indextr].totale }}</vs-td>
@@ -79,15 +79,19 @@
         </div>
         <div class="vx-col w-full sm:w-1/3 lg:w-1/3 mb-base">
           <vx-card>
-            <p v-text="'Total '"></p>
+            <p v-text="'Total: ' + total"></p>
             <vs-divider class="mb-0"></vs-divider>
             <div class="vx-row">
-              <vx-tooltip class="mt-5 mr-4" text="Tarjeta de Crédito">
-                <vs-switch v-model="switch1" />
-              </vx-tooltip>
-              <p class="mt-5">Tarjeta de Crédito</p>
+              <ul class="centerx">
+                <li>
+                  <vs-radio v-model="switch1" vs-value="1">Tarjeta de Crédito</vs-radio>
+                </li>
+                <li>
+                  <vs-radio v-model="switch1" vs-value="2">Pago contra Entrega</vs-radio>
+                </li>
+              </ul>
             </div>
-            <div class="vx-row" v-if="switch1 == true">
+            <div class="vx-row" v-if="switch1 == '1'">
               <vs-input
                 label="Nombre del Titular"
                 v-model="nameT"
@@ -95,7 +99,7 @@
                 name="item-name"
               />
             </div>
-            <div class="vx-row" v-if="switch1 == true">
+            <div class="vx-row" v-if="switch1 == '1'">
               <vs-input
                 label="Número de Tarjeta"
                 type="number"
@@ -104,7 +108,7 @@
                 name="item-name"
               />
             </div>
-            <div class="vx-row" v-if="switch1 == true">
+            <div class="vx-row" v-if="switch1 == '1'">
               <div>
                 <vs-input
                   label="Número de Transacción"
@@ -114,13 +118,7 @@
                 />
               </div>
             </div>
-            <div class="vx-row">
-              <vx-tooltip class="mt-5 mr-4" text="Pago contra Entrega">
-                <vs-switch v-model="switch2" />
-              </vx-tooltip>
-              <p class="mt-5">Pago contra Entrega</p>
-            </div>
-            <div class="vx-row">
+            <div class="vx-row" v-if="switch1 == '2'">
               <p class="mt-5">Paga en efectivo en el momento de la entrega.</p>
             </div>
             <div class="vx-row">
@@ -164,7 +162,7 @@
                 :key="item.value"
                 :value="item.value"
                 :text="item.text"
-                v-for="item in category_choices"
+                v-for="item in generos"
               />
             </vs-select>
           </div>
@@ -180,46 +178,98 @@
         </div>
         <!-- CATEGORY -->
         <div class="vx-row">
-          <vs-textarea label="Dirección de Facturación" v-model="addressf" />
+          <p>Dirección para la Factura</p>
         </div>
         <div class="vx-row">
-          <vs-checkbox v-model="checkBox1" class="mt-5 w-full">Dirección envio igual a facturación</vs-checkbox>
-          <vs-textarea
-            label="Dirección de Envió"
-            v-model="addresse"
-            v-show="checkBox1 == false"
-            class="mt-5 w-full"
-          />
-          <vs-textarea
-            label="Dirección de Envió"
-            v-model="addressc"
-            v-show="checkBox1 == true"
-            class="mt-5 w-full"
-          />
-        </div>
-
-        <div class="vx-row">
-          <vx-tooltip class="mt-5 mr-4" text="Tarjeta de Crédito">
-            <vs-switch v-model="switch3" />
-          </vx-tooltip>
-          <p class="mt-5">¿Enviar a una dirección diferente?</p>
-        </div>
-
-        <div class="vx-row" v-if="switch3 == true">
+          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+            <vs-input label="País" v-model="paisf" class="mt-5 w-full" name="paisf" disabled />
+          </div>
+          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+            <vs-select v-model="deparf" label="Departamento" class="mt-5 w-full" name="depaf">
+              <vs-select-item
+                :key="item.id"
+                :value="item.id"
+                :text="item.name"
+                v-for="item in departamentos"
+              />
+            </vs-select>
+          </div>
+          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+            <vs-input label="Calle o Avenida" v-model="callef" class="mt-5 w-full" name="callef" />
+          </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
             <vs-input
-              label="Nombre de la Empresa"
-              v-model="empresa"
+              label="Apartamento, habitación, etc."
+              v-model="apartamentof"
               class="mt-5 w-full"
-              name="item-name"
+              name="apartamentof"
             />
           </div>
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input label="Nombre Completo" v-model="name1" class="mt-5 w-full" name="item-name" />
-          </div>
+          <vs-input
+            label="Ciudad/Municipio"
+            v-model="municipiof"
+            class="mt-5 w-full"
+            name="municipiof"
+          />
+          <vs-input
+            label="Residencial/Colonia"
+            v-model="residenciaf"
+            class="mt-5 w-full"
+            name="residenciaf"
+          />
+          <vs-input label="Código Postal" v-model="codigof" class="mt-5 w-full" name="codigof" />
+          <vs-input label="Teléfono" v-model="telefonof" class="mt-5 w-full" name="telefonof" />
         </div>
-        <div class="vx-row" v-if="switch3 == true">
-          <vs-textarea label="Dirección de Envió" v-model="direccion" />
+        <div class="vx-row">
+          <ul class="centerx mt-5">
+            <li>
+              <vs-radio v-model="checkBox1" vs-value="true">Dirección envio igual a facturación.</vs-radio>
+            </li>
+            <li>
+              <vs-radio v-model="checkBox1" vs-value="false">Enviar a una dirección diferente.</vs-radio>
+            </li>
+          </ul>
+        </div>
+        <div class="vx-row" v-show="checkBox1 == 'false'">
+          <p class="mt-5">Dirección de Entrenga/Envío</p>
+          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+            <vs-input label="País" v-model="paise" class="mt-5 w-full" name="paise" disabled />
+          </div>
+          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+            <vs-select v-model="depare" label="Departamento" class="mt-5 w-full" name="depare">
+              <vs-select-item
+                :key="item.id"
+                :value="item.id"
+                :text="item.name"
+                v-for="item in departamentos"
+              />
+            </vs-select>
+          </div>
+          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+            <vs-input label="Calle o Avenida" v-model="callee" class="mt-5 w-full" name="callee" />
+          </div>
+          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+            <vs-input
+              label="Apartamento, habitación, etc."
+              v-model="apartamentoe"
+              class="mt-5 w-full"
+              name="apartamentoe"
+            />
+          </div>
+          <vs-input
+            label="Ciudad/Municipio"
+            v-model="municipioe"
+            class="mt-5 w-full"
+            name="municipioe"
+          />
+          <vs-input
+            label="Residencial/Colonia"
+            v-model="residenciae"
+            class="mt-5 w-full"
+            name="residenciae"
+          />
+          <vs-input label="Código Postal" v-model="codigoe" class="mt-5 w-full" name="codigoe" />
+          <vs-input label="Teléfono" v-model="telefonoe" class="mt-5 w-full" name="telefonoe" />
         </div>
       </div>
     </vx-card>
@@ -250,13 +300,124 @@ export default {
   },
   data() {
     return {
+      //Dirección de facturación
+      paisf: "Guatemala",
+      deparf: null,
+      callef: null,
+      apartamentof: null,
+      municipiof: null,
+      residenciaf: null,
+      codigof: null,
+      telefonof: null,
+      //Dirección de envío
+      paise: "Guatemala",
+      depare: null,
+      callee: null,
+      apartamentoe: null,
+      municipioe: null,
+      residenciae: null,
+      codigoe: null,
+      telefonoe: null,
+      //Demás variables
+      totales: [],
+      departamentos: [
+        {
+          id: 1,
+          name: "Alta Verapaz"
+        },
+        {
+          id: 2,
+          name: "Baja Verapaz"
+        },
+        {
+          id: 3,
+          name: "Chimaltenango"
+        },
+        {
+          id: 4,
+          name: "Chiquimula"
+        },
+        {
+          id: 5,
+          name: "El Progreso"
+        },
+        {
+          id: 6,
+          name: "Escuintla"
+        },
+        {
+          id: 7,
+          name: "Guatemala"
+        },
+        {
+          id: 8,
+          name: "Huehuetenango"
+        },
+        {
+          id: 9,
+          name: "Izabal"
+        },
+        {
+          id: 10,
+          name: "Jalapa"
+        },
+        {
+          id: 11,
+          name: "Jutiapa"
+        },
+        {
+          id: 12,
+          name: "Petén"
+        },
+        {
+          id: 13,
+          name: "Quetzaltenango"
+        },
+        {
+          id: 14,
+          name: "Quiché"
+        },
+        {
+          id: 15,
+          name: "Retalhuleu"
+        },
+        {
+          id: 16,
+          name: "Sacatepéquez"
+        },
+        {
+          id: 17,
+          name: "San Marcos"
+        },
+        {
+          id: 18,
+          name: "Santa Rosa"
+        },
+        {
+          id: 19,
+          name: "Sololá"
+        },
+        {
+          id: 20,
+          name: "Suchitepéquez"
+        },
+        {
+          id: 21,
+          name: "Totonicapán"
+        },
+        {
+          id: 22,
+          name: "Zacapa"
+        }
+      ],
       idRecipe: null,
-      checkBox1: true,
+      checkBox1: "true",
       switch3: false,
       switch2: false,
-      switch1: true,
+      switch1: "1",
       nameT: null,
       numberT: null,
+      total: 0,
       numberTr: null,
       subtotal1: 0,
       subtotal2: 0,
@@ -282,7 +443,7 @@ export default {
       dataOrder_status: "pending",
       dataPrice: 0,
 
-      category_choices: [
+      generos: [
         { text: "Femenino", value: "femenino" },
         { text: "Masculino", value: "masculino" }
       ],
@@ -313,7 +474,7 @@ export default {
         this.initValues();
         //this.$validator.reset()
       } else {
-        console.log(this.data);
+        //console.log(this.data);
         let {
           client_nit,
           client_name,
@@ -321,7 +482,7 @@ export default {
           client_email,
           client_addressf,
           client_addresse
-        } = JSON.parse(JSON.stringify(this.data));
+        } = JSON.parse(JSON.stringify(this.data.data));
         this.nit = client_nit;
         this.name = client_name;
         this.phone = client_phone;
@@ -329,7 +490,7 @@ export default {
         this.addresse = client_addresse;
         this.addressf = client_addressf;
         this.addressc = this.addressf;
-        this.idRecipe = client_id;
+        this.idRecipe = this.data.idRecipies;
         this.initValues();
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -356,27 +517,14 @@ export default {
     }
   },
   methods: {
-    getReceProd(id) {
-      let token = localStorage.getItem("tu");
-      let rol = localStorage.getItem("ru");
-      axios({
-        method: "get",
-        url: "http://127.0.0.1:8000/api/getReceProd/" + id,
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      })
-        .then(Response => {
-          console.log(Response);
-          /*Response.data.forEach(element => {
-            this.users.push(element);
-          });
-          this.popupActive2 = true;*/
-        })
-        .catch(err => {
-          console.log(err);
-        });
+    sumar(price, cantidad, index){
+      this.total = 0;
+      price = parseFloat(price);
+      this.totales[index] = (price * cantidad);
+      this.totales.forEach(element =>{
+        //console.log(element);
+        this.total = this.total + element;
+      });
     },
     notificacion() {
       this.$vs.notify({
@@ -394,7 +542,7 @@ export default {
       this.dataPrice = 0;
       this.dataImg = null;
     },
-    getItem(id){
+    getItem(id) {
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
@@ -406,16 +554,15 @@ export default {
       })
         .then(Response => {
           Response.data.forEach(element => {
-            this.itms.push(element);
+            this.itms.push(element.product_id);
           });
-          this.popupActive2 = true;
         })
         .catch(err => {
           console.log(err);
         });
     },
     submitData() {
-      //this.getItem(this.idRecipe);
+      this.getItem(this.idRecipe);
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
@@ -427,7 +574,16 @@ export default {
       })
         .then(Response => {
           Response.data.forEach(element => {
-            this.medicines.push(element);
+            if (this.itms.includes(element.id)) {
+              this.medicines.push({
+                name: element.name,
+                precentation: element.precentation,
+                price: element.price,
+                cantidad: 0,
+                totale: 0,
+                unidad: "Pastillas"
+              });
+            }
           });
           this.popupActive2 = true;
         })

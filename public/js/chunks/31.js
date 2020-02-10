@@ -646,7 +646,7 @@ var render = function() {
                 _c(
                   "ul",
                   _vm._l(_vm.errors, function(error) {
-                    return _c("li", { staticClass: "text-danger" }, [
+                    return _c("li", { staticClass: "color:danger" }, [
                       _vm._v(_vm._s(error))
                     ])
                   }),
@@ -712,7 +712,7 @@ var render = function() {
                 _c(
                   "ul",
                   _vm._l(_vm.errorsEM, function(error) {
-                    return _c("li", { staticClass: "text-danger" }, [
+                    return _c("li", { staticClass: "color:danger" }, [
                       _vm._v(_vm._s(error))
                     ])
                   }),
