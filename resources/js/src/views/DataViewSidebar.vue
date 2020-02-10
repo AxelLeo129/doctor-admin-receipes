@@ -133,11 +133,20 @@
             <div class="vx-row">
               <vs-button
                 class="mt-5"
-                @click="popupActive2=false, isSidebarActiveLocal = false, notificacion()"
+                @click="popupActive2=false, isSidebarActiveLocal = false, notificacion1()"
                 color="primary"
                 type="filled"
+                v-if="tipe == 1"
                 :disabled="total > 0 || nameT == '' || nameT == null || numberT == '' || numberT == null || numberTr == '' || numberTr == null"
               >Realizar el Pedido</vs-button>
+              <vs-button
+                class="mt-5"
+                @click="popupActive2=false, isSidebarActiveLocal = false, notificacion()"
+                color="primary"
+                v-if="tipe == 2"
+                type="filled"
+                :disabled="total < 0 || nameT == '' || nameT == null || numberT == '' || numberT == null || numberTr == '' || numberTr == null"
+              >Realizar el Pedido Ac</vs-button>
             </div>
           </vx-card>
         </div>
@@ -160,7 +169,13 @@
 
         <div class="vx-row">
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input label="Teléfono" type="number" v-model="phone" class="mt-5 w-full" name="item-name" />
+            <vs-input
+              label="Teléfono"
+              type="number"
+              v-model="phone"
+              class="mt-5 w-full"
+              name="item-name"
+            />
             <span class="text-danger text-sm" v-show="phone === ''">Este campo es requerido.</span>
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
@@ -238,9 +253,21 @@
             name="residenciaf"
           />
           <span class="text-danger text-sm" v-show="residenciaf  === ''">Este campo es requerido.</span>
-          <vs-input label="Código Postal" type="number" v-model="codigof" class="mt-5 w-full" name="codigof" />
+          <vs-input
+            label="Código Postal"
+            type="number"
+            v-model="codigof"
+            class="mt-5 w-full"
+            name="codigof"
+          />
           <span class="text-danger text-sm" v-show="codigof === ''">Este campo es requerido.</span>
-          <vs-input label="Teléfono" type="number" v-model="telefonof" class="mt-5 w-full" name="telefonof" />
+          <vs-input
+            label="Teléfono"
+            type="number"
+            v-model="telefonof"
+            class="mt-5 w-full"
+            name="telefonof"
+          />
           <span class="text-danger text-sm" v-show="telefonof === ''">Este campo es requerido.</span>
         </div>
         <div class="vx-row">
@@ -296,17 +323,37 @@
             name="residenciae"
           />
           <span class="text-danger text-sm" v-show="residenciae === ''">Este campo es requerido.</span>
-          <vs-input label="Código Postal" type="number" v-model="codigoe" class="mt-5 w-full" name="codigoe" />
+          <vs-input
+            label="Código Postal"
+            type="number"
+            v-model="codigoe"
+            class="mt-5 w-full"
+            name="codigoe"
+          />
           <span class="text-danger text-sm" v-show="codigoe === ''">Este campo es requerido.</span>
-          <vs-input label="Teléfono" type="number" v-model="telefonoe" class="mt-5 w-full" name="telefonoe" />
+          <vs-input
+            label="Teléfono"
+            type="number"
+            v-model="telefonoe"
+            class="mt-5 w-full"
+            name="telefonoe"
+          />
           <span class="text-danger text-sm" v-show="telefonoe === ''">Este campo es requerido.</span>
         </div>
       </div>
     </vx-card>
 
     <div class="flex flex-wrap items-center p-6" slot="footer">
-      <vs-button @click="submitData" :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || telefonof == null || telefonof == '' || paise == null || paise == '' || depare == null || depare == undefined || callee == null || callee == '' ||  municipioe == null || municipioe == '' || residenciae == null || residenciae == '' || codigoe == null || codigoe == '' || telefonoe == null || telefonoe == ''" v-show="checkBox1 == 'false'">Nuevo Pedido</vs-button>
-      <vs-button @click="submitData" :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || telefonof == null || telefonof == ''" v-show="checkBox1 == 'true'">Nuevo Pedido</vs-button>
+      <vs-button
+        @click="submitData"
+        :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || telefonof == null || telefonof == '' || paise == null || paise == '' || depare == null || depare == undefined || callee == null || callee == '' ||  municipioe == null || municipioe == '' || residenciae == null || residenciae == '' || codigoe == null || codigoe == '' || telefonoe == null || telefonoe == ''"
+        v-show="checkBox1 == 'false'"
+      >Nuevo Pedido</vs-button>
+      <vs-button
+        @click="submitData"
+        :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || telefonof == null || telefonof == ''"
+        v-show="checkBox1 == 'true'"
+      >Nuevo Pedido</vs-button>
     </div>
   </vs-sidebar>
 </template>
@@ -350,6 +397,7 @@ export default {
       codigoe: null,
       telefonoe: null,
       //Demás variables
+      cantidades: [],
       totales: [],
       departamentos: [
         {
@@ -441,6 +489,7 @@ export default {
           name: "Zacapa"
         }
       ],
+      tipe: 0,
       idRecipe: null,
       checkBox1: "true",
       switch3: false,
@@ -455,6 +504,7 @@ export default {
       medicines: [],
       itms: [],
       popupActive2: false,
+      idCliente: null,
       nit: null,
       name: null,
       name1: null,
@@ -507,6 +557,7 @@ export default {
       } else {
         //console.log(this.data);
         let {
+          id,
           client_nit,
           client_name,
           client_phone,
@@ -532,18 +583,24 @@ export default {
           codigoe,
           telefonoe
         } = JSON.parse(JSON.stringify(this.data.data));
+        this.idCliente = id;
         this.nit = client_nit;
         this.name = client_name;
+        if (this.name == undefined) {
+          this.tipe = 1;
+        } else {
+          this.tipe = 2;
+        }
         this.phone = client_phone;
         this.email = client_email;
         this.genre = client_genre;
-        if(this.genre == undefined){
+        if (this.genre == undefined) {
           this.genre = "masculino";
         }
         this.date = birthdate;
         //this.paisf = paisf;
         this.deparf = deparf;
-        if(this.deparf == undefined){
+        if (this.deparf == undefined) {
           this.deparf = "Guatemala";
         }
         this.callef = callef;
@@ -554,7 +611,7 @@ export default {
         this.telefonof = telefonof;
         //this.paise = paise;
         this.depare = depare;
-        if(this.depare == undefined){
+        if (this.depare == undefined) {
           this.depare = "Guatemala";
         }
         this.callee = callee;
@@ -595,19 +652,140 @@ export default {
   methods: {
     sumar(price, cantidad, index) {
       this.total = 0;
-      price = parseFloat(price);
+      cantidad = parseFloat(cantidad);
+      this.cantidades[index] = price;
       this.totales[index] = price * cantidad;
       this.totales.forEach(element => {
         //console.log(element);
         this.total = this.total + element;
       });
     },
+    openLoading() {
+      this.activeLoading = true;
+      this.$vs.loading({
+        type: "default"
+      });
+    },
     notificacion() {
-      this.$vs.notify({
+      this.openLoading();
+      let token = localStorage.getItem("tu");
+      let ids = [];
+      this.medicines.forEach(element => {
+        ids.push(element.id);
+      });
+      console.log(
+        JSON.stringify({
+          id: this.idCliente,
+          client_name: this.name,
+          client_nit: this.nit,
+          client_phone: this.phone,
+          client_genre: this.genre,
+          client_email: this.email,
+          birthdate: this.date,
+          paisf: this.paisf,
+          deparf: this.deparf,
+          callef: this.callef,
+          apartamentof: this.apartamentof,
+          municipiof: this.municipiof,
+          residenciaf: this.residenciaf,
+          codigof: this.codigof,
+          telefonof: this.telefonof,
+          paise: this.paise,
+          depare: this.depare,
+          callee: this.callee,
+          apartamentoe: this.apartamentoe,
+          municipioe: this.municipioe,
+          residenciae: this.residenciae,
+          codigoe: this.codigoe,
+          telefonoe: this.telefonoe,
+
+          namet: this.nameT,
+          numbert: this.numberT,
+          numbertr: this.numberTr,
+          total: this.total,
+
+          cantidad: this.cantidades,
+          medicines: ids
+        })
+      );
+      axios({
+        method: "put",
+        url: "http://127.0.0.1:8000/api/putCliente",
+        data: JSON.stringify({
+          id: this.idCliente,
+          client_name: this.name,
+          client_nit: this.nit,
+          client_phone: this.phone,
+          client_genre: this.genre,
+          client_email: this.email,
+          birthdate: this.date,
+          paisf: this.paisf,
+          deparf: this.deparf,
+          callef: this.callef,
+          apartamentof: this.apartamentof,
+          municipiof: this.municipiof,
+          residenciaf: this.residenciaf,
+          codigof: this.codigof,
+          telefonof: this.telefonof,
+          paise: this.paise,
+          depare: this.depare,
+          callee: this.callee,
+          apartamentoe: this.apartamentoe,
+          municipioe: this.municipioe,
+          residenciae: this.residenciae,
+          codigoe: this.codigoe,
+          telefonoe: this.telefonoe
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          axios({
+            method: "post",
+            url: "http://127.0.0.1:8000/api/postOrder",
+            data: JSON.stringify({
+              namet: this.nameT,
+              numbert: this.numberT,
+              numbertr: this.numberTr,
+              total: this.total
+            }),
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          })
+            .then(Response => {
+              this.activeLoading = false;
+              this.$vs.loading.close();
+              this.$vs.notify({
+                title: "Agregado",
+                text: "Categoría creada exitosamente.",
+                color: "success"
+              });
+            })
+            .catch(err => {
+              this.activeLoading = false;
+              this.$vs.loading.close();
+              activado = true;
+              console.log(err);
+            });
+        })
+        .catch(err => {
+          this.activeLoading = false;
+          this.$vs.loading.close();
+          activado = true;
+          console.log(err);
+        });
+      /*this.$vs.notify({
         title: "Enviado",
         text: "Pedido enviado correctamente",
         color: "success"
-      });
+      });*/
+    },
+    notificacion1() {
+      let token = localStorage.getItem("tu");
     },
     initValues() {
       if (this.data.id) return;
@@ -637,6 +815,7 @@ export default {
           console.log(err);
         });
     },
+    updateData() {},
     submitData() {
       this.nameT = null;
       this.numberT = null;
@@ -655,6 +834,7 @@ export default {
           Response.data.forEach(element => {
             if (this.itms.includes(element.id)) {
               this.medicines.push({
+                id: element.id,
                 name: element.name,
                 precentation: element.precentation,
                 price: element.price,

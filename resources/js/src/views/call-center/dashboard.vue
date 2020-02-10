@@ -271,7 +271,6 @@ export default {
   },
   methods: {
     editData(data, id) {
-      console.log(data);
       this.popupActive2 = false;
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
       let data1 = {

@@ -326,6 +326,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -363,6 +410,7 @@ __webpack_require__.r(__webpack_exports__);
       codigoe: null,
       telefonoe: null,
       //Demás variables
+      cantidades: [],
       totales: [],
       departamentos: [{
         id: "Alta Verapaz",
@@ -431,6 +479,7 @@ __webpack_require__.r(__webpack_exports__);
         id: "Zacapa",
         name: "Zacapa"
       }],
+      tipe: 0,
       idRecipe: null,
       checkBox1: "true",
       switch3: false,
@@ -445,6 +494,7 @@ __webpack_require__.r(__webpack_exports__);
       medicines: [],
       itms: [],
       popupActive2: false,
+      idCliente: null,
       nit: null,
       name: null,
       name1: null,
@@ -505,6 +555,7 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         //console.log(this.data);
         var _JSON$parse = JSON.parse(JSON.stringify(this.data.data)),
+            id = _JSON$parse.id,
             client_nit = _JSON$parse.client_nit,
             client_name = _JSON$parse.client_name,
             client_phone = _JSON$parse.client_phone,
@@ -530,8 +581,16 @@ __webpack_require__.r(__webpack_exports__);
             codigoe = _JSON$parse.codigoe,
             telefonoe = _JSON$parse.telefonoe;
 
+        this.idCliente = id;
         this.nit = client_nit;
         this.name = client_name;
+
+        if (this.name == undefined) {
+          this.tipe = 1;
+        } else {
+          this.tipe = 2;
+        }
+
         this.phone = client_phone;
         this.email = client_email;
         this.genre = client_genre;
@@ -599,19 +658,140 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.total = 0;
-      price = parseFloat(price);
+      cantidad = parseFloat(cantidad);
+      this.cantidades[index] = price;
       this.totales[index] = price * cantidad;
       this.totales.forEach(function (element) {
         //console.log(element);
         _this.total = _this.total + element;
       });
     },
+    openLoading: function openLoading() {
+      this.activeLoading = true;
+      this.$vs.loading({
+        type: "default"
+      });
+    },
     notificacion: function notificacion() {
-      this.$vs.notify({
+      var _this2 = this;
+
+      this.openLoading();
+      var token = localStorage.getItem("tu");
+      var ids = [];
+      this.medicines.forEach(function (element) {
+        ids.push(element.id);
+      });
+      console.log(JSON.stringify({
+        id: this.idCliente,
+        client_name: this.name,
+        client_nit: this.nit,
+        client_phone: this.phone,
+        client_genre: this.genre,
+        client_email: this.email,
+        birthdate: this.date,
+        paisf: this.paisf,
+        deparf: this.deparf,
+        callef: this.callef,
+        apartamentof: this.apartamentof,
+        municipiof: this.municipiof,
+        residenciaf: this.residenciaf,
+        codigof: this.codigof,
+        telefonof: this.telefonof,
+        paise: this.paise,
+        depare: this.depare,
+        callee: this.callee,
+        apartamentoe: this.apartamentoe,
+        municipioe: this.municipioe,
+        residenciae: this.residenciae,
+        codigoe: this.codigoe,
+        telefonoe: this.telefonoe,
+        namet: this.nameT,
+        numbert: this.numberT,
+        numbertr: this.numberTr,
+        total: this.total,
+        cantidad: this.cantidades,
+        medicines: ids
+      }));
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "put",
+        url: "http://127.0.0.1:8000/api/putCliente",
+        data: JSON.stringify({
+          id: this.idCliente,
+          client_name: this.name,
+          client_nit: this.nit,
+          client_phone: this.phone,
+          client_genre: this.genre,
+          client_email: this.email,
+          birthdate: this.date,
+          paisf: this.paisf,
+          deparf: this.deparf,
+          callef: this.callef,
+          apartamentof: this.apartamentof,
+          municipiof: this.municipiof,
+          residenciaf: this.residenciaf,
+          codigof: this.codigof,
+          telefonof: this.telefonof,
+          paise: this.paise,
+          depare: this.depare,
+          callee: this.callee,
+          apartamentoe: this.apartamentoe,
+          municipioe: this.municipioe,
+          residenciae: this.residenciae,
+          codigoe: this.codigoe,
+          telefonoe: this.telefonoe
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default()({
+          method: "post",
+          url: "http://127.0.0.1:8000/api/postOrder",
+          data: JSON.stringify({
+            namet: _this2.nameT,
+            numbert: _this2.numberT,
+            numbertr: _this2.numberTr,
+            total: _this2.total
+          }),
+          headers: {
+            authorization: "Bearer " + token,
+            "content-type": "application/json"
+          }
+        }).then(function (Response) {
+          _this2.activeLoading = false;
+
+          _this2.$vs.loading.close();
+
+          _this2.$vs.notify({
+            title: "Agregado",
+            text: "Categoría creada exitosamente.",
+            color: "success"
+          });
+        }).catch(function (err) {
+          _this2.activeLoading = false;
+
+          _this2.$vs.loading.close();
+
+          activado = true;
+          console.log(err);
+        });
+      }).catch(function (err) {
+        _this2.activeLoading = false;
+
+        _this2.$vs.loading.close();
+
+        activado = true;
+        console.log(err);
+      });
+      /*this.$vs.notify({
         title: "Enviado",
         text: "Pedido enviado correctamente",
         color: "success"
-      });
+      });*/
+    },
+    notificacion1: function notificacion1() {
+      var token = localStorage.getItem("tu");
     },
     initValues: function initValues() {
       if (this.data.id) return;
@@ -623,7 +803,7 @@ __webpack_require__.r(__webpack_exports__);
       this.dataImg = null;
     },
     getItem: function getItem(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -635,14 +815,15 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this2.itms.push(element.product_id);
+          _this3.itms.push(element.product_id);
         });
       }).catch(function (err) {
         console.log(err);
       });
     },
+    updateData: function updateData() {},
     submitData: function submitData() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.nameT = null;
       this.numberT = null;
@@ -658,8 +839,9 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          if (_this3.itms.includes(element.id)) {
-            _this3.medicines.push({
+          if (_this4.itms.includes(element.id)) {
+            _this4.medicines.push({
+              id: element.id,
               name: element.name,
               precentation: element.precentation,
               price: element.price,
@@ -669,19 +851,19 @@ __webpack_require__.r(__webpack_exports__);
             });
           }
         });
-        _this3.popupActive2 = true;
+        _this4.popupActive2 = true;
       }).catch(function (err) {
         console.log(err);
       });
     },
     updateCurrImg: function updateCurrImg(input) {
-      var _this4 = this;
+      var _this5 = this;
 
       if (input.target.files && input.target.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-          _this4.dataImg = e.target.result;
+          _this5.dataImg = e.target.result;
         };
 
         reader.readAsDataURL(input.target.files[0]);
@@ -972,7 +1154,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     editData: function editData(data, id) {
-      console.log(data);
       this.popupActive2 = false; // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
 
       var data1 = {
@@ -1655,32 +1836,63 @@ var render = function() {
                       "div",
                       { staticClass: "vx-row" },
                       [
-                        _c(
-                          "vs-button",
-                          {
-                            staticClass: "mt-5",
-                            attrs: {
-                              color: "primary",
-                              type: "filled",
-                              disabled:
-                                _vm.total > 0 ||
-                                _vm.nameT == "" ||
-                                _vm.nameT == null ||
-                                _vm.numberT == "" ||
-                                _vm.numberT == null ||
-                                _vm.numberTr == "" ||
-                                _vm.numberTr == null
-                            },
-                            on: {
-                              click: function($event) {
-                                ;(_vm.popupActive2 = false),
-                                  (_vm.isSidebarActiveLocal = false),
-                                  _vm.notificacion()
-                              }
-                            }
-                          },
-                          [_vm._v("Realizar el Pedido")]
-                        )
+                        _vm.tipe == 1
+                          ? _c(
+                              "vs-button",
+                              {
+                                staticClass: "mt-5",
+                                attrs: {
+                                  color: "primary",
+                                  type: "filled",
+                                  disabled:
+                                    _vm.total > 0 ||
+                                    _vm.nameT == "" ||
+                                    _vm.nameT == null ||
+                                    _vm.numberT == "" ||
+                                    _vm.numberT == null ||
+                                    _vm.numberTr == "" ||
+                                    _vm.numberTr == null
+                                },
+                                on: {
+                                  click: function($event) {
+                                    ;(_vm.popupActive2 = false),
+                                      (_vm.isSidebarActiveLocal = false),
+                                      _vm.notificacion1()
+                                  }
+                                }
+                              },
+                              [_vm._v("Realizar el Pedido")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.tipe == 2
+                          ? _c(
+                              "vs-button",
+                              {
+                                staticClass: "mt-5",
+                                attrs: {
+                                  color: "primary",
+                                  type: "filled",
+                                  disabled:
+                                    _vm.total < 0 ||
+                                    _vm.nameT == "" ||
+                                    _vm.nameT == null ||
+                                    _vm.numberT == "" ||
+                                    _vm.numberT == null ||
+                                    _vm.numberTr == "" ||
+                                    _vm.numberTr == null
+                                },
+                                on: {
+                                  click: function($event) {
+                                    ;(_vm.popupActive2 = false),
+                                      (_vm.isSidebarActiveLocal = false),
+                                      _vm.notificacion()
+                                  }
+                                }
+                              },
+                              [_vm._v("Realizar el Pedido Ac")]
+                            )
+                          : _vm._e()
                       ],
                       1
                     )
