@@ -55983,7 +55983,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+      return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
     },
     children: [// =============================================================================
     // PAGES
@@ -55992,7 +55992,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'page-login',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
+        return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56013,7 +56013,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/register',
       name: 'register',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! @/views/pages/Register.vue */ "./resources/js/src/views/pages/Register.vue"));
+        return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! @/views/pages/Register.vue */ "./resources/js/src/views/pages/Register.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56034,7 +56034,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/pages/error-404',
       name: 'page-error-404',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+        return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
       }
     }]
   }, {
@@ -56043,7 +56043,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(8), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(7), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
     },
     children: [// =============================================================================
     // Theme Routes
@@ -56052,7 +56052,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/home',
       name: 'home',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(2), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(2), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56095,7 +56095,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/boodskapper',
       name: 'boodskapper',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! @/views/mensajero/dashboard.vue */ "./resources/js/src/views/mensajero/dashboard.vue"));
+        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! @/views/mensajero/dashboard.vue */ "./resources/js/src/views/mensajero/dashboard.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56138,7 +56138,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/consola',
       name: 'consola',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(2), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! @/views/admin/Dashboard.vue */ "./resources/js/src/views/admin/Dashboard.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(2), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! @/views/admin/Dashboard.vue */ "./resources/js/src/views/admin/Dashboard.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56181,7 +56181,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/user/profile',
       name: 'perfil',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(25)]).then(__webpack_require__.bind(null, /*! @/views/user/EditarUsuario.vue */ "./resources/js/src/views/user/EditarUsuario.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(23)]).then(__webpack_require__.bind(null, /*! @/views/user/EditarUsuario.vue */ "./resources/js/src/views/user/EditarUsuario.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var token = localStorage.getItem('tu');
@@ -56213,7 +56213,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/nuevoProducto',
       name: 'nuevoProducto',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! @/views/admin/NuevoProducto.vue */ "./resources/js/src/views/admin/NuevoProducto.vue"));
+        return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! @/views/admin/NuevoProducto.vue */ "./resources/js/src/views/admin/NuevoProducto.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56261,7 +56261,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/editarProducto/:productId',
       name: 'app-user-edit',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! @/views/admin/EditarProducto.vue */ "./resources/js/src/views/admin/EditarProducto.vue"));
+        return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! @/views/admin/EditarProducto.vue */ "./resources/js/src/views/admin/EditarProducto.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56309,7 +56309,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/listadoProductos',
       name: 'listadoProductos',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! @/views/admin/ListadoProductos.vue */ "./resources/js/src/views/admin/ListadoProductos.vue"));
+        return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! @/views/admin/ListadoProductos.vue */ "./resources/js/src/views/admin/ListadoProductos.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56357,13 +56357,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/page2',
       name: 'page-2',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
       }
     }, {
       path: '/nuevoPaciente',
       name: 'extra-component-form-wizard',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! @/views/pages/nuevoPaciente.vue */ "./resources/js/src/views/pages/nuevoPaciente.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! @/views/pages/nuevoPaciente.vue */ "./resources/js/src/views/pages/nuevoPaciente.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56411,7 +56411,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/agregarProductos',
       name: 'ecommerce-shop',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(21)]).then(__webpack_require__.bind(null, /*! ./views/pages/agregarProductos.vue */ "./resources/js/src/views/pages/agregarProductos.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ./views/pages/agregarProductos.vue */ "./resources/js/src/views/pages/agregarProductos.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56459,7 +56459,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/editarReceta',
       name: 'editarReceta',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(22)]).then(__webpack_require__.bind(null, /*! ./views/pages/checkOut.vue */ "./resources/js/src/views/pages/checkOut.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(20)]).then(__webpack_require__.bind(null, /*! ./views/pages/checkOut.vue */ "./resources/js/src/views/pages/checkOut.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56507,7 +56507,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/datosPaciente',
       name: 'datosPaciente',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./views/pages/paso4.vue */ "./resources/js/src/views/pages/paso4.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! ./views/pages/paso4.vue */ "./resources/js/src/views/pages/paso4.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56555,7 +56555,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/recetaFinal',
       name: 'recetaFinal',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/recetaFinal.vue */ "./resources/js/src/views/pages/recetaFinal.vue"));
+        return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/pages/recetaFinal.vue */ "./resources/js/src/views/pages/recetaFinal.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56590,7 +56590,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/showRecipe/:recipeId',
       name: 'showRecipe',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./views/pages/showRecipe.vue */ "./resources/js/src/views/pages/showRecipe.vue"));
+        return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./views/pages/showRecipe.vue */ "./resources/js/src/views/pages/showRecipe.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56626,7 +56626,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/listadoCategorias',
       name: 'listadoCategorias',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! @/views/admin/categories/ListadoCategorias.vue */ "./resources/js/src/views/admin/categories/ListadoCategorias.vue"));
+        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! @/views/admin/categories/ListadoCategorias.vue */ "./resources/js/src/views/admin/categories/ListadoCategorias.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56674,7 +56674,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/nuevaCategoria',
       name: 'nuevaCategoria',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! @/views/admin/categories/NuevaCategoria.vue */ "./resources/js/src/views/admin/categories/NuevaCategoria.vue"));
+        return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! @/views/admin/categories/NuevaCategoria.vue */ "./resources/js/src/views/admin/categories/NuevaCategoria.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56722,7 +56722,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/editarCategoria/:categoryId',
       name: 'category-edit',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! @/views/admin/categories/EditarCategoria.vue */ "./resources/js/src/views/admin/categories/EditarCategoria.vue"));
+        return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! @/views/admin/categories/EditarCategoria.vue */ "./resources/js/src/views/admin/categories/EditarCategoria.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56771,7 +56771,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/dashboardCallCenter',
       name: 'ListCallCenter',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ./views/call-center/dashboard.vue */ "./resources/js/src/views/call-center/dashboard.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ./views/call-center/dashboard.vue */ "./resources/js/src/views/call-center/dashboard.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56820,7 +56820,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/visitador',
       name: 'visitador',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./views/visitador/dashboard.vue */ "./resources/js/src/views/visitador/dashboard.vue"));
+        return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./views/visitador/dashboard.vue */ "./resources/js/src/views/visitador/dashboard.vue"));
       },
       meta: {
         breadcrumb: [{
@@ -56874,7 +56874,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/1visitador',
       name: '1visitador',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 35).then(__webpack_require__.bind(null, /*! ./views/visitador1/dashboard.vue */ "./resources/js/src/views/visitador1/dashboard.vue"));
+        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./views/visitador1/dashboard.vue */ "./resources/js/src/views/visitador1/dashboard.vue"));
       },
       meta: {
         breadcrumb: [{
@@ -56887,6 +56887,58 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           active: true
         }],
         pageTitle: 'Listado de Usuarios',
+        rule: 'editor'
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next({
+            name: 'consola'
+          });
+        } else if (rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else if (rol == 4) {
+          next({
+            name: "visitador"
+          });
+        } else if (rol == 6) {
+          next();
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      }
+    }, {
+      path: '/nuevoMedico',
+      name: 'nuevoMedico',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! ./views/visitador1/nuevoMedico.vue */ "./resources/js/src/views/visitador1/nuevoMedico.vue"));
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Nuevo Médico'
+        }, {
+          title: 'Nuevo Médico',
+          active: true
+        }],
+        pageTitle: 'Nuevo Médico',
         rule: 'editor'
       },
       beforeEnter: function beforeEnter(to, from, next) {

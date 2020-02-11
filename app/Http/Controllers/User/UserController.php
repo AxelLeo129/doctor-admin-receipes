@@ -24,6 +24,16 @@ class UserController extends Controller
         return User::all();
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getMedics($id)
+    {
+        return User::where('id_visitador', $id)->get();
+    }
+
     /** 
          * Register api 
          * 

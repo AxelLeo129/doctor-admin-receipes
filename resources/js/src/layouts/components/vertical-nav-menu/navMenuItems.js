@@ -68,5 +68,19 @@ export default [
     slug: "ListCallCenter",
     icon: "ListIcon",
     rol: 3
+  },
+  {
+    url: "/1visitador",
+    name: "Listado médicos",
+    slug: "ListMedicos",
+    icon: "ListIcon",
+    rol: 6
+  },
+  {
+    url: "/nuevoMedico",
+    name: "Nuevo Médico",
+    slug: "nuevoMedico",
+    icon: "PlusIcon",
+    rol: 6
   }
 ]

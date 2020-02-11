@@ -1607,6 +1607,8 @@ __webpack_require__.r(__webpack_exports__);
           _this.rol = "Call Center";
         } else if (r == 4) {
           _this.rol = "Despachador";
+        } else if (r == 6) {
+          _this.rol = "Visitador";
         } else {
           _this.rol = "Mensajero";
         }
@@ -6965,6 +6967,18 @@ __webpack_require__.r(__webpack_exports__);
   slug: "ListCallCenter",
   icon: "ListIcon",
   rol: 3
+}, {
+  url: "/1visitador",
+  name: "Listado médicos",
+  slug: "ListMedicos",
+  icon: "ListIcon",
+  rol: 6
+}, {
+  url: "/nuevoMedico",
+  name: "Nuevo Médico",
+  slug: "nuevoMedico",
+  icon: "PlusIcon",
+  rol: 6
 }]);
 
 /***/ }),

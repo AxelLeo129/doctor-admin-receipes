@@ -28,6 +28,9 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('details', 'User\UserController@details');
     Route::put('putUser1', 'User\UserController@update1');
     Route::put('putUser2', 'User\UserController@update2');
+    //Visitador
+    Route::get('getVisitador/{id}', "User\UserController@getMedics");
+    Route::any('register1', 'User\UserController@register');
     //Product
     Route::get('getProducts', 'Products\ProductController@list');
     Route::post('postProducts', 'Products\ProductController@store');

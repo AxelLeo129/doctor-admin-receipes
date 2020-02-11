@@ -123,6 +123,8 @@ export default {
             this.rol = "Call Center";
           }else if(r == 4){
             this.rol = "Despachador";
+          }else if(r == 6){
+            this.rol = "Visitador";
           }else {
             this.rol = "Mensajero";
           }

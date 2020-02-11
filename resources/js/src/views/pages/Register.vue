@@ -173,7 +173,8 @@ export default {
           userName: this.name,
           noCollegiate: this.noCollegiate,
           c_password: this.confirmPassword,
-          rol: "2"
+          rol: "2",
+          id_visitador: 1
         }),
         headers: {
           "content-type": "application/json"
