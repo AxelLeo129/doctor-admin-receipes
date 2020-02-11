@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     //Visitador
     Route::get('getVisitador/{id}', "User\UserController@getMedics");
     Route::any('register1', 'User\UserController@register');
+    Route::get('getUser/{id}', 'User\UserController@detailsUser');
     //Product
     Route::get('getProducts', 'Products\ProductController@list');
     Route::post('postProducts', 'Products\ProductController@store');

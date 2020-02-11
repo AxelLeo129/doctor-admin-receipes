@@ -86,7 +86,16 @@ class UserController extends Controller
             return response()->json(['success' => $user], $this-> successStatus); 
         }
 
-
+        /** 
+         * details api 
+         * 
+         * @return \Illuminate\Http\Response 
+         */ 
+        public function detailsUser($id) 
+        { 
+            return User::where('id', $id)->get();
+        }
+        
         public function update1(Request $request){
             $user = User::find($request->id);
             $user->name = $request->name;

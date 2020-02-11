@@ -56974,6 +56974,58 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           });
         }
       }
+    }, {
+      path: '/editarMedico/:idMedico',
+      name: 'editarMedico',
+      component: function component() {
+        return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(36)]).then(__webpack_require__.bind(null, /*! ./views/visitador1/editarMedico.vue */ "./resources/js/src/views/visitador1/editarMedico.vue"));
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Editar Médico'
+        }, {
+          title: 'Editar Médico',
+          active: true
+        }],
+        pageTitle: 'Editar Médico',
+        rule: 'editor'
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next({
+            name: 'consola'
+          });
+        } else if (rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else if (rol == 4) {
+          next({
+            name: "visitador"
+          });
+        } else if (rol == 6) {
+          next();
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      }
     }]
   }, // Redirect to 404 page, if no match found
   {

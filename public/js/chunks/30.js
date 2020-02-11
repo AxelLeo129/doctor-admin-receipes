@@ -49,7 +49,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     edit: function edit(id) {
-      console.log(id);
+      this.$router.push("/editarMedico/" + id);
     },
     getMedics: function getMedics() {
       var _this = this;

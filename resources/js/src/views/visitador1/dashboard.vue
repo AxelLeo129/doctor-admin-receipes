@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     edit(id) {
-      console.log(id);
+      this.$router.push("/editarMedico/" + id);
     },
     getMedics() {
       this.openLoading();
