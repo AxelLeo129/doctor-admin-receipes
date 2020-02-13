@@ -137,7 +137,7 @@ export default {
       this.$router.push('/nuevoPaciente');
     },
     verReceta(id){
-      //this.$router.push("/showRecipe/" + id);
+      this.$router.push("/receta/" + id);
     },
     getRecipes(){
       let token = localStorage.getItem("tu");

@@ -198,12 +198,11 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(Response);
-
-        if (Response.data.success.clinicalRecord == null || Response.data.success.clinicalRecord == "") {
+        //console.log(Response);
+        if (Response.data.success.clinicLogo == null || Response.data.success.clinicLogo == "") {
           _this.image = "/images/medicamentos/demol.PNG";
         } else {
-          _this.image = "data:image/png;base64," + Response.data.success.clinicalRecord;
+          _this.image = "data:image/png;base64," + Response.data.success.clinicLogo;
         }
 
         _this.drName = Response.data.success.name;

@@ -27,13 +27,6 @@
           icon="icon icon-file"
           @click="printInvoice"
         >Imprimir</vs-button>
-        <vs-button
-          class="mb-base mr-3"
-          color="warning"
-          icon-pack="feather"
-          icon="icon icon-check"
-          @click="finalizar"
-        >Finalizar</vs-button>
       </div>
     </div>
 
@@ -50,7 +43,7 @@
             <p>{{ invoiceDetails.invoiceNo }}</p>
 
             <h6 class="mt-4">Fecha Receta</h6>
-            <p v-text="nuevaRecetaData.dateIssue"></p> 
+            <p v-text="nuevaRecetaData.dateIssue"></p>
           </div>
         </div>
         <div class="vx-col w-full md:w-1/2 mt-12">
@@ -71,7 +64,9 @@
           <h5>{{ companyDetails.name }}</h5>
           <div class="invoice__company-info my-4">
             <p>Via 4 zona 4 Guatemala</p>
-            <p><strong v-text="drName"></strong></p>
+            <p>
+              <strong v-text="drName"></strong>
+            </p>
             <p>{{ companyDetails.zipcode }}</p>
           </div>
           <div class="invoice__company-contact">
@@ -113,11 +108,13 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   data() {
     return {
+      medicinas: [],
+      medicinas1: [],
       image: "/images/medicamentos/demol.PNG",
       drName: "",
       drEmail: "",
@@ -172,12 +169,84 @@ export default {
   },
   computed: {},
   created() {
+    this.getMendinas();
+    this.getProducts();
     this.getUser();
-    let data = JSON.parse(localStorage.getItem("nuevaRecetaData"));
-    this.nuevaRecetaData = data;
-    console.log(this.nuevaRecetaData);
+    this.getRecipe();
   },
   methods: {
+    getProducts(){
+        let token = localStorage.getItem("tu");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getProducts",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          console.log(Response);
+            
+        })
+        .catch(err => {
+          this.$vs.loading.close();
+          this.activado = true;
+          console.log(err);
+        });
+    },
+    getMendinas() {
+      let token = localStorage.getItem("tu");
+      let idu = this.$route.params.idReceta;
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getInfoRecipie/" + idu,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          Response.data.forEach(element => {
+              this.medicinas.push(element.dispensing);
+          });
+          console.log(this.medicinas);
+        })
+        .catch(err => {
+          console.log(err);
+          this.activeLoading = false;
+          this.$vs.loading.close();
+        });
+    },
+    getRecipe() {
+      let token = localStorage.getItem("tu");
+      let idu = this.$route.params.idReceta;
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getReceta/" + idu,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          console.log(Response);
+          let f = new Date();
+          let fecha =
+            f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+          this.nuevaRecetaData.dateIssue = fecha;
+          this.nuevaRecetaData.name = Response.data[0].name;
+          this.nuevaRecetaData.phone = Response.data[0].phone;
+        })
+        .catch(err => {
+          console.log(err);
+          this.activeLoading = false;
+          this.$vs.loading.close();
+        });
+    },
+    getMedicamentos() {
+      //nuevaRecetaData.medicamentos
+    },
     getUser() {
       let token = localStorage.getItem("tu");
       axios({
@@ -189,21 +258,25 @@ export default {
         }
       })
         .then(Response => {
-          //console.log(Response);
-          if(Response.data.success.clinicLogo == null || Response.data.success.clinicLogo == ""){
+          if (
+            Response.data.success.clinicLogo == null ||
+            Response.data.success.clinicLogo == ""
+          ) {
             this.image = "/images/medicamentos/demol.PNG";
-          }else{
-            this.image = "data:image/png;base64," + Response.data.success.clinicLogo;
+          } else {
+            this.image =
+              "data:image/png;base64," + Response.data.success.clinicLogo;
           }
           this.drName = Response.data.success.name;
           this.drEmail = Response.data.success.email;
-          if(Response.data.success.phone == null || Response.data.success.phone == ""){
-            this.drPhone = '+502: 8452-9862';
-          }else{
-            this.drPhone = '+502: ' + Response.data.success.phone;
+          if (
+            Response.data.success.phone == null ||
+            Response.data.success.phone == ""
+          ) {
+            this.drPhone = "+502: 8452-9862";
+          } else {
+            this.drPhone = "+502: " + Response.data.success.phone;
           }
-          this.activeLoading = false;
-          this.$vs.loading.close();
         })
         .catch(err => {
           console.log(err);
@@ -213,24 +286,6 @@ export default {
     },
     printInvoice() {
       window.print();
-    },
-    finalizar() {
-      let a = JSON.parse(localStorage.getItem("recetas"));
-      this.recetas = a;
-      if (this.recetas == null) {
-        this.recetas = [];
-      }
-      this.recetas.push({
-        nombrePaciente: this.nuevaRecetaData.nombrePaciente,
-        apellidoPaciente: this.nuevaRecetaData.apellidoPaciente,
-        genero: this.nuevaRecetaData.genero,
-        telefono: this.nuevaRecetaData.telefono,
-        medicamentos: this.nuevaRecetaData.medicamentos
-      });
-
-      localStorage.setItem("recetas", JSON.stringify(this.recetas));
-
-      location.href = "/home";
     }
   },
   components: {},

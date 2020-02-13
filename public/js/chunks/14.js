@@ -153,7 +153,8 @@ __webpack_require__.r(__webpack_exports__);
     nuevaReceta: function nuevaReceta() {
       this.$router.push('/nuevoPaciente');
     },
-    verReceta: function verReceta(id) {//this.$router.push("/showRecipe/" + id);
+    verReceta: function verReceta(id) {
+      this.$router.push("/receta/" + id);
     },
     getRecipes: function getRecipes() {
       var _this = this;
