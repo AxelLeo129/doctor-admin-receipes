@@ -126,6 +126,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -173,10 +183,14 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
-    setData: function setData(recipie) {
-      this.recipie = recipie;
-      console.log("Receta");
-      console.log(this.recipie);
+    setClient: function setClient(id_recipies, name) {
+      this.id_recipies = id_recipies;
+      this.name_client = name;
+    },
+    setData: function setData(recipie, address) {
+      this.id_recipies = recipie;
+      this.address = address;
+      console.log(this.address);
     },
     openLoading: function openLoading() {
       this.activeLoading = true;
@@ -190,6 +204,7 @@ __webpack_require__.r(__webpack_exports__);
       var token = localStorage.getItem("tu");
       var idu = localStorage.getItem("ui");
       this.openLoading();
+      console.log(this.id_recipies);
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: "post",
         url: "http://127.0.0.1:8000/api/confirm-order",
@@ -224,7 +239,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     setConfirm: function setConfirm(id) {
-      this.id_recipies = id;
+      this.id_order = id;
     },
     completarPedido: function completarPedido() {
       var _this3 = this;
@@ -241,7 +256,7 @@ __webpack_require__.r(__webpack_exports__);
           method: "post",
           url: "http://127.0.0.1:8000/api/confirm-delivery",
           data: JSON.stringify({
-            id_recipies: this.id_recipies,
+            id_recipies: this.id_order,
             name_recibed: this.nombre_confirmacion
           }),
           headers: {
@@ -284,7 +299,9 @@ __webpack_require__.r(__webpack_exports__);
       select: null,
       nombre_confirmacion: "",
       id_recipies: 0,
+      id_order: 0,
       name_client: "",
+      address: "",
       errors: [],
       errorsEM: [],
       selected: []
@@ -345,7 +362,7 @@ var render = function() {
                         [
                           _vm._v(
                             "\n                    " +
-                              _vm._s(data[indextr].cliente.client_id) +
+                              _vm._s(data[indextr].cliente.id) +
                               "\n                "
                           )
                         ]
@@ -375,19 +392,50 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "vs-td",
-                        {
-                          attrs: { data: data[indextr].cliente.client_addressf }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(data[indextr].cliente.client_addressf) +
-                              "\n                "
+                      data[indextr].cliente.client_addressf.length > 25
+                        ? _c(
+                            "vs-td",
+                            {
+                              attrs: {
+                                data: data[indextr].cliente.client_addressf
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(
+                                    data[
+                                      indextr
+                                    ].cliente.client_addressf.substring(0, 25) +
+                                      "..."
+                                  ) +
+                                  "\n                "
+                              )
+                            ]
                           )
-                        ]
-                      ),
+                        : _vm._e(),
+                      _vm._v(" "),
+                      data[indextr].cliente.client_addressf.length <= 25
+                        ? _c(
+                            "vs-td",
+                            {
+                              attrs: {
+                                data: data[indextr].cliente.client_addressf
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(
+                                    data[
+                                      indextr
+                                    ].cliente.client_addressf.substring(0, 25)
+                                  ) +
+                                  "\n                "
+                              )
+                            ]
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       data[indextr].cliente.status == 1
                         ? _c("vs-td", [
@@ -422,6 +470,20 @@ var render = function() {
                           ])
                         : _vm._e(),
                       _vm._v(" "),
+                      _c(
+                        "vs-td",
+                        {
+                          attrs: { data: data[indextr].cliente.delivery_date }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(data[indextr].cliente.delivery_date) +
+                              "\n                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
                       _c("vs-td", [
                         _c(
                           "div",
@@ -439,7 +501,10 @@ var render = function() {
                               on: {
                                 click: function($event) {
                                   ;(_vm.popupActive = true),
-                                    _vm.setData(data[indextr].medicamentos)
+                                    _vm.setData(
+                                      data[indextr].medicamentos,
+                                      data[indextr].cliente.client_addressf
+                                    )
                                 }
                               }
                             }),
@@ -461,7 +526,7 @@ var render = function() {
                                         click: function($event) {
                                           ;(_vm.popupEnvio = true),
                                             _vm.setClient(
-                                              data[indextr].cliente.id_recipies,
+                                              data[indextr].cliente.order_id,
                                               data[indextr].cliente.client_name
                                             )
                                         }
@@ -489,7 +554,7 @@ var render = function() {
                                         click: function($event) {
                                           ;(_vm.popupEntrega = true),
                                             _vm.setConfirm(
-                                              data[indextr].cliente.id_recipies
+                                              data[indextr].cliente.order_id
                                             )
                                         }
                                       }
@@ -525,6 +590,8 @@ var render = function() {
               _vm._v(" "),
               _c("vs-th", [_vm._v("Estatus")]),
               _vm._v(" "),
+              _c("vs-th", [_vm._v("Fecha/Hora de entrega")]),
+              _vm._v(" "),
               _c("vs-th", [_vm._v("Acciones")])
             ],
             1
@@ -556,13 +623,16 @@ var render = function() {
               _c("p", [
                 _c("strong", [_vm._v("- " + _vm._s(item.name))]),
                 _vm._v(
-                  "\n                (" +
-                    _vm._s(item.dispensing) +
-                    ")\n            "
+                  " (Cantidad: " + _vm._s(item.cantidad) + ")\n            "
                 )
               ])
             ])
-          })
+          }),
+          _c("br"),
+          _vm._v(" "),
+          _c("p", [_vm._v("Dirección exacta:")]),
+          _vm._v(" "),
+          _c("p", [_c("strong", [_vm._v(_vm._s(_vm.address))])])
         ],
         2
       ),

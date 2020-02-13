@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('deleteCategory/{id}', 'Categories\CategoryController@destroy');
     //Clientes
     Route::get('getClients', 'Clients\ClientController@index');
-    Route::get('getCliente', 'Clients\ClientController@show');
+    Route::get('getCliente', 'Orders\OrderController@show');
     Route::get('getCliente1/{id}', 'Clients\ClientController@show1');
     Route::post('postCliente', 'Clients\ClientController@store');
     Route::put('putCliente', 'Clients\ClientController@update');

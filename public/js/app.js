@@ -55983,7 +55983,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '',
     component: function component() {
+<<<<<<< HEAD
       return __webpack_require__.e(/*! import() */ 36).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+=======
+      return __webpack_require__.e(/*! import() */ 35).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
     },
     children: [// =============================================================================
     // PAGES
@@ -56013,7 +56017,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/register',
       name: 'register',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! @/views/pages/Register.vue */ "./resources/js/src/views/pages/Register.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! @/views/pages/Register.vue */ "./resources/js/src/views/pages/Register.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56034,7 +56042,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/pages/error-404',
       name: 'page-error-404',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 35).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
       }
     }]
   }, {
@@ -56095,7 +56107,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/boodskapper',
       name: 'boodskapper',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! @/views/mensajero/dashboard.vue */ "./resources/js/src/views/mensajero/dashboard.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! @/views/mensajero/dashboard.vue */ "./resources/js/src/views/mensajero/dashboard.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56181,7 +56197,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/user/profile',
       name: 'perfil',
       component: function component() {
+<<<<<<< HEAD
         return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! @/views/user/EditarUsuario.vue */ "./resources/js/src/views/user/EditarUsuario.vue"));
+=======
+        return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(23)]).then(__webpack_require__.bind(null, /*! @/views/user/EditarUsuario.vue */ "./resources/js/src/views/user/EditarUsuario.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var token = localStorage.getItem('tu');
@@ -56309,7 +56329,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/listadoProductos',
       name: 'listadoProductos',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! @/views/admin/ListadoProductos.vue */ "./resources/js/src/views/admin/ListadoProductos.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! @/views/admin/ListadoProductos.vue */ "./resources/js/src/views/admin/ListadoProductos.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56661,7 +56685,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/listadoCategorias',
       name: 'listadoCategorias',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! @/views/admin/categories/ListadoCategorias.vue */ "./resources/js/src/views/admin/categories/ListadoCategorias.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! @/views/admin/categories/ListadoCategorias.vue */ "./resources/js/src/views/admin/categories/ListadoCategorias.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56709,7 +56737,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/nuevaCategoria',
       name: 'nuevaCategoria',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! @/views/admin/categories/NuevaCategoria.vue */ "./resources/js/src/views/admin/categories/NuevaCategoria.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! @/views/admin/categories/NuevaCategoria.vue */ "./resources/js/src/views/admin/categories/NuevaCategoria.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56757,7 +56789,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/editarCategoria/:categoryId',
       name: 'category-edit',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! @/views/admin/categories/EditarCategoria.vue */ "./resources/js/src/views/admin/categories/EditarCategoria.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! @/views/admin/categories/EditarCategoria.vue */ "./resources/js/src/views/admin/categories/EditarCategoria.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -56855,7 +56891,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/visitador',
       name: 'visitador',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! ./views/visitador/dashboard.vue */ "./resources/js/src/views/visitador/dashboard.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! ./views/visitador/dashboard.vue */ "./resources/js/src/views/visitador/dashboard.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
       },
       meta: {
         breadcrumb: [{
@@ -56909,7 +56949,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/1visitador',
       name: '1visitador',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./views/visitador1/dashboard.vue */ "./resources/js/src/views/visitador1/dashboard.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./views/visitador1/dashboard.vue */ "./resources/js/src/views/visitador1/dashboard.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
       },
       meta: {
         breadcrumb: [{
@@ -56961,7 +57005,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/nuevoMedico',
       name: 'nuevoMedico',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! ./views/visitador1/nuevoMedico.vue */ "./resources/js/src/views/visitador1/nuevoMedico.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./views/visitador1/nuevoMedico.vue */ "./resources/js/src/views/visitador1/nuevoMedico.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
       },
       meta: {
         breadcrumb: [{
@@ -57013,7 +57061,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/editarMedico/:idMedico',
       name: 'editarMedico',
       component: function component() {
+<<<<<<< HEAD
         return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(25)]).then(__webpack_require__.bind(null, /*! ./views/visitador1/editarMedico.vue */ "./resources/js/src/views/visitador1/editarMedico.vue"));
+=======
+        return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! ./views/visitador1/editarMedico.vue */ "./resources/js/src/views/visitador1/editarMedico.vue"));
+>>>>>>> 1e3980de9ea1b7aab1a4d25673a91d07c1c1079c
       },
       meta: {
         breadcrumb: [{
@@ -57487,9 +57539,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuesax__WEBPACK_IMPORTED_MODULE_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\DELL\Desktop\pharmazone.app\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\Users\DELL\Desktop\pharmazone.app\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\Users\DELL\Desktop\pharmazone.app\resources\assets\css\main.css */"./resources/assets/css/main.css");
+__webpack_require__(/*! C:\Users\Merke\Desktop\pharmazone.app\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\Users\Merke\Desktop\pharmazone.app\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\Users\Merke\Desktop\pharmazone.app\resources\assets\css\main.css */"./resources/assets/css/main.css");
 
 
 /***/ })

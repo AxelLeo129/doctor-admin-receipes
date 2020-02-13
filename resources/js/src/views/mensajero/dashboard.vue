@@ -10,6 +10,7 @@
                 <vs-th>Teléfono</vs-th>
                 <vs-th>Dirección</vs-th>
                 <vs-th>Estatus</vs-th>
+                <vs-th>Fecha/Hora de entrega</vs-th>
                 <vs-th>Acciones</vs-th>
             </template>
 
@@ -17,7 +18,7 @@
                 <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
                     <vs-td :data="data[indextr].cliente.client_id">
-                        {{ data[indextr].cliente.client_id }}
+                        {{ data[indextr].cliente.id }}
                     </vs-td>
 
                     <vs-td :data="data[indextr].cliente.client_name">
@@ -28,8 +29,12 @@
                         {{ data[indextr].cliente.client_phone }}
                     </vs-td>
 
-                    <vs-td :data="data[indextr].cliente.client_addressf">
-                        {{ data[indextr].cliente.client_addressf }}
+                    <vs-td v-if="data[indextr].cliente.client_addressf.length > 25" :data="data[indextr].cliente.client_addressf">
+                        {{ data[indextr].cliente.client_addressf.substring(0,25) + "..." }}
+                    </vs-td>
+
+                    <vs-td v-if="data[indextr].cliente.client_addressf.length <= 25" :data="data[indextr].cliente.client_addressf">
+                        {{ data[indextr].cliente.client_addressf.substring(0,25) }}
                     </vs-td>
 
                     <vs-td v-if="data[indextr].cliente.status == 1">
@@ -47,15 +52,19 @@
                     <vs-td v-if="data[indextr].cliente.status == 4">
                         <i class="feather icon-check-circle text-success"></i>
                     </vs-td>
+                    
+                    <vs-td :data="data[indextr].cliente.delivery_date">
+                        {{ data[indextr].cliente.delivery_date }}
+                    </vs-td>
 
                     <vs-td>
                         <div class="row">
-                            <vs-button size="small" @click="popupActive=true, setData(data[indextr].medicamentos)" radius color="warning" type="filled" icon-pack="feather" icon="icon-eye"></vs-button>
+                            <vs-button size="small" @click="popupActive=true, setData(data[indextr].medicamentos, data[indextr].cliente.client_addressf)" radius color="warning" type="filled" icon-pack="feather" icon="icon-eye"></vs-button>
                             <div v-if="data[indextr].cliente.status == 2">
-                                <vs-button size="small" @click="popupEnvio=true, setClient(data[indextr].cliente.id_recipies, data[indextr].cliente.client_name)" radius color="primary" type="filled" icon-pack="feather" icon="icon-truck"></vs-button>
+                                <vs-button size="small" @click="popupEnvio=true, setClient(data[indextr].cliente.order_id, data[indextr].cliente.client_name)" radius color="primary" type="filled" icon-pack="feather" icon="icon-truck"></vs-button>
                             </div>
                             <div v-if="data[indextr].cliente.status == 3">
-                                <vs-button size="small" @click="popupEntrega=true, setConfirm(data[indextr].cliente.id_recipies)" radius color="success" type="filled" icon-pack="feather" icon="icon-check-circle"></vs-button>
+                                <vs-button size="small" @click="popupEntrega=true, setConfirm(data[indextr].cliente.order_id)" radius color="success" type="filled" icon-pack="feather" icon="icon-check-circle"></vs-button>
                             </div>
                         </div>
                     </vs-td>
@@ -68,10 +77,11 @@
             <p>Medicamentos recetados:</p><br>
             <div v-for="item in recipie">
                 <p>
-                    <strong>- {{item.name}}</strong>
-                    ({{item.dispensing}})
+                    <strong>- {{item.name}}</strong> (Cantidad: {{item.cantidad}})
                 </p>
-            </div>
+            </div><br>
+            <p>Dirección exacta:</p>
+            <p><strong>{{address}}</strong></p>
         </vs-popup>
 
         <!--PopUp para realizar el envío del cliente-->
@@ -164,10 +174,14 @@
                 });
 
             },
-            setData(recipie) {
-                this.recipie = recipie;
-                console.log("Receta");
-                console.log(this.recipie);
+            setClient(id_recipies, name){
+                this.id_recipies=id_recipies;
+                this.name_client = name;
+            },
+            setData(recipie, address) {
+                this.id_recipies = recipie;
+                this.address = address;
+                console.log(this.address);
             },
             openLoading() {
                 this.activeLoading = true;
@@ -179,6 +193,7 @@
                 let token = localStorage.getItem("tu");
                 let idu = localStorage.getItem("ui");
                 this.openLoading();
+                console.log(this.id_recipies);
                 axios({
                     method: "post",
                     url: "http://127.0.0.1:8000/api/confirm-order",
@@ -209,7 +224,7 @@
                 });
             },
             setConfirm(id){
-                this.id_recipies = id;
+                this.id_order = id;
             },
             completarPedido(){
                 if(this.nombre_confirmacion == ""){
@@ -224,7 +239,7 @@
                         method: "post",
                         url: "http://127.0.0.1:8000/api/confirm-delivery",
                         data: JSON.stringify({
-                        id_recipies: this.id_recipies,
+                        id_recipies: this.id_order,
                         name_recibed:this.nombre_confirmacion
                         }),
                             headers: {
@@ -262,7 +277,9 @@
             select: null,
             nombre_confirmacion: "",
             id_recipies : 0,
+            id_order : 0,
             name_client : "",
+            address : "",
             errors: [],
             errorsEM: [],
             selected: []

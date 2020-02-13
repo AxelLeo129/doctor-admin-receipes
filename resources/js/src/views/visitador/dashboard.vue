@@ -11,6 +11,7 @@
                 <vs-th>Teléfono</vs-th>
                 <vs-th>Dirección</vs-th>
                 <vs-th>Estatus</vs-th>
+                <vs-th>Fecha/Hora de entrega</vs-th>
                 <vs-th>Acciones</vs-th>
             </template>
 
@@ -29,8 +30,12 @@
                         {{ data[indextr].cliente.client_phone }}
                     </vs-td>
 
-                    <vs-td :data="data[indextr].cliente.client_addressf">
-                        {{ data[indextr].cliente.client_addressf }}
+                    <vs-td v-if="data[indextr].cliente.client_addressf.length > 25" :data="data[indextr].cliente.client_addressf">
+                        {{ data[indextr].cliente.client_addressf.substring(0,25) + "..." }}
+                    </vs-td>
+
+                    <vs-td v-if="data[indextr].cliente.client_addressf.length <= 25" :data="data[indextr].cliente.client_addressf">
+                        {{ data[indextr].cliente.client_addressf.substring(0,25) }}
                     </vs-td>
 
                     <vs-td v-if="data[indextr].cliente.status == 1">
@@ -49,14 +54,18 @@
                         Entregado
                     </vs-td>
 
+                    <vs-td :data="data[indextr].cliente.delivery_date">
+                        {{ data[indextr].cliente.delivery_date }}
+                    </vs-td>
+
                     <vs-td>
                         <div class="row">
-                            <vs-button size="small" @click="popupActive=true, setData(data[indextr].medicamentos)" radius color="warning" type="filled" icon-pack="feather" icon="icon-eye"></vs-button>
+                            <vs-button size="small" @click="popupActive=true, setData(data[indextr].medicamentos, data[indextr].cliente.client_addressf)" radius color="warning" type="filled" icon-pack="feather" icon="icon-eye"></vs-button>
                             <div v-if="data[indextr].cliente.status == 1">
-                                <vs-button size="small" @click="popupEnvio=true, setClient(data[indextr].cliente.id_recipies)" radius color="primary" type="filled" icon-pack="feather" icon="icon-truck"></vs-button>
+                                <vs-button size="small" @click="popupEnvio=true, setClient(data[indextr].cliente.order_id)" radius color="primary" type="filled" icon-pack="feather" icon="icon-truck"></vs-button>
                             </div>
                             <div v-else>
-                                <vs-button disabled size="small" @click="popupEnvio=true, setClient(data[indextr].cliente.id_recipies)" radius color="primary" type="filled" icon-pack="feather" icon="icon-truck"></vs-button>
+                                <vs-button disabled size="small" @click="popupEnvio=true, setClient(data[indextr].cliente.order_id)" radius color="primary" type="filled" icon-pack="feather" icon="icon-truck"></vs-button>
                             </div>
                         </div>
                     </vs-td>
@@ -69,10 +78,12 @@
             <p>Medicamentos recetados:</p><br>
             <div v-for="item in recipie">
                 <p>
-                    <strong>{{item.name}}</strong>
-                    ({{item.dispensing}})
+                    <strong>{{item.name}}</strong> (Cantidad: {{item.cantidad}})
+                    
                 </p>
-            </div>
+            </div><br>
+            <p>Dirección exacta:</p>
+            <p><strong>{{this.address}}</strong></p>
         </vs-popup>
 
         <!--PopUp para realizar el envío del cliente-->
@@ -180,8 +191,9 @@
                 });
 
             },
-            setData(recipie) {
+            setData(recipie, address) {
                 this.recipie = recipie;
+                this.address = address;
                 console.log("Receta");
                 console.log(this.recipie);
             },
@@ -204,7 +216,7 @@
                         method: "post",
                         url: "http://127.0.0.1:8000/api/postShipping",
                         data: JSON.stringify({
-                        id_recipies: this.id_recipies,
+                        id_recipies: id_receta,
                         delivery: this.select.value
                             }),
                             headers: {
@@ -243,7 +255,7 @@
                     this.openLoading();
                     for(var i =0; i<=(Object.keys(this.selected).length -1);i++){
                         console.log("Objeto No:"+i);
-                        this.crearPedido(this.selected[i].cliente.id_recipies);
+                        this.crearPedido(this.selected[i].cliente.order_id);
                     }
                     
                     this.getusers();
@@ -296,6 +308,7 @@
             select: null,
             mensajeroEM: null,
             id_recipies : 0,
+            address : "",
             errors: [],
             errorsEM: [],
             selected: []

@@ -15,14 +15,14 @@ class DeliveryPeopleController extends Controller
 
     //Crea una nueva orden a un mensajero
     public function store(Request $request){
-        $verEnvio = \DB::table('recipies')->where('id', $request->id_recipies)->first();
+        $verEnvio = \DB::table('orders')->where('order_id', $request->id_recipies)->first();
         if($verEnvio->status == 1){
             $shipping = new Shipping();
             $shipping->id_user = $request->delivery;
             $shipping->id_recipie = $request->id_recipies;
             $shipping->recipient_name = "";
             $shipping->save();
-            \DB::Table('recipies')->where('id', $request->id_recipies)->update([
+            \DB::Table('orders')->where('order_id', $request->id_recipies)->update([
                 "status"=> 2
             ]);
         }
@@ -32,52 +32,52 @@ class DeliveryPeopleController extends Controller
     //Retorna las ordenes asociadas a un repartidos
     public function myOrders($id){
         $data = [];
-        $clients_enviar= \DB::table('recipies')
-            ->join('shippings', 'shippings.id_recipie', '=', 'recipies.id')
-            ->join('clients', 'clients.id_recipies', '=', 'recipies.id')
+        $clients_enviar= \DB::table('orders')
+            ->join('shippings', 'shippings.id_recipie', '=', 'orders.order_id')
+            ->join('clients', 'clients.id', '=', 'orders.client_id')
             ->where('shippings.id_user', $id)
-            ->where('recipies.status', 3)
-            ->select('clients.client_id','clients.client_name', 'clients.client_phone', 'client_addressf', 'recipies.status', 'clients.id_recipies')
+            ->where('orders.status', 3)
+            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addressf', 'orders.status', 'orders.order_id', 'orders.delivery_date')
             ->get();
         foreach($clients_enviar as $client){
-            $medicinas = \DB::table("recipies_products")
-            ->join('products', 'recipies_products.product_id', '=', 'products.id')
-            ->select('products.name', 'recipies_products.dispensing')
-            ->where('recipies_products.recipe_id', $client->id_recipies)
+            $medicinas = \DB::table("orders_products")
+            ->join('products', 'orders_products.product_id', '=', 'products.id')
+            ->select('products.name', 'orders_products.cantidad')
+            ->where('orders_products.order_id', $client->order_id)
             ->get();
             $datos = array("cliente" => $client, "medicamentos" => $medicinas);
             array_push($data, $datos);
         }
-
-        $clients_asignado= \DB::table('recipies')
-            ->join('shippings', 'shippings.id_recipie', '=', 'recipies.id')
-            ->join('clients', 'clients.id_recipies', '=', 'recipies.id')
+        
+        $clients_enviar= \DB::table('orders')
+            ->join('shippings', 'shippings.id_recipie', '=', 'orders.order_id')
+            ->join('clients', 'clients.id', '=', 'orders.client_id')
             ->where('shippings.id_user', $id)
-            ->where('recipies.status', 2)
-            ->select('clients.client_id','clients.client_name', 'clients.client_phone', 'client_addressf', 'recipies.status', 'clients.id_recipies')
+            ->where('orders.status', 2)
+            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addressf', 'orders.status', 'orders.order_id', 'orders.delivery_date')
             ->get();
-        foreach($clients_asignado as $client){
-            $medicinas = \DB::table("recipies_products")
-            ->join('products', 'recipies_products.product_id', '=', 'products.id')
-            ->select('products.name', 'recipies_products.dispensing')
-            ->where('recipies_products.recipe_id', $client->id_recipies)
+        foreach($clients_enviar as $client){
+            $medicinas = \DB::table("orders_products")
+            ->join('products', 'orders_products.product_id', '=', 'products.id')
+            ->select('products.name', 'orders_products.cantidad')
+            ->where('orders_products.order_id', $client->order_id)
             ->get();
             $datos = array("cliente" => $client, "medicamentos" => $medicinas);
             array_push($data, $datos);
         }
-
-        $clients_complete= \DB::table('recipies')
-            ->join('shippings', 'shippings.id_recipie', '=', 'recipies.id')
-            ->join('clients', 'clients.id_recipies', '=', 'recipies.id')
+        
+        $clients_enviar= \DB::table('orders')
+            ->join('shippings', 'shippings.id_recipie', '=', 'orders.order_id')
+            ->join('clients', 'clients.id', '=', 'orders.client_id')
             ->where('shippings.id_user', $id)
-            ->where('recipies.status', 4)
-            ->select('clients.client_id','clients.client_name', 'clients.client_phone', 'client_addressf', 'recipies.status', 'clients.id_recipies')
+            ->where('orders.status', 4)
+            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addressf', 'orders.status', 'orders.order_id', 'orders.delivery_date')
             ->get();
-        foreach($clients_complete as $client){
-            $medicinas = \DB::table("recipies_products")
-            ->join('products', 'recipies_products.product_id', '=', 'products.id')
-            ->select('products.name', 'recipies_products.dispensing')
-            ->where('recipies_products.recipe_id', $client->id_recipies)
+        foreach($clients_enviar as $client){
+            $medicinas = \DB::table("orders_products")
+            ->join('products', 'orders_products.product_id', '=', 'products.id')
+            ->select('products.name', 'orders_products.cantidad')
+            ->where('orders_products.order_id', $client->order_id)
             ->get();
             $datos = array("cliente" => $client, "medicamentos" => $medicinas);
             array_push($data, $datos);
@@ -87,7 +87,7 @@ class DeliveryPeopleController extends Controller
 
     //cambia el estatus del envio de asignado a en proceso de envío
     public function confirmOrder(Request $request){
-        \DB::table('recipies')->where('id', $request->id_recipies)->update([
+        \DB::table('orders')->where('order_id', $request->id_recipies)->update([
             "status" => 3
         ]);
         return ['result' => 'success'];
@@ -98,8 +98,9 @@ class DeliveryPeopleController extends Controller
         \DB::table('shippings')->where('id_recipie', $request->id_recipies)->update([
             "recipient_name"=> $request->name_recibed
         ]);
-        \DB::table('recipies')->where('id', $request->id_recipies)->update([
-            "status"=>4
+        \DB::table('orders')->where('order_id', $request->id_recipies)->update([
+            "status"=>4,
+            "delivery_date" => date("Y-m-d H:m:s")
         ]);
         return ['result' => 'success'];
     }
