@@ -563,6 +563,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this3.base64textString1 = Response.data.success.clinicLogo;
         }
 
+        _this3.phone = Response.data.success.phone;
         _this3.clinicName = Response.data.success.clinicName;
         _this3.clinicPhone = Response.data.success.clinicPhone;
         _this3.clinicAddress = Response.data.success.clinicAddress;

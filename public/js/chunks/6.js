@@ -4160,10 +4160,6 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("search-bar"),
-            _vm._v(" "),
-            _c("notification-drop-down"),
-            _vm._v(" "),
             _c("profile-drop-down")
           ],
           1
@@ -4219,15 +4215,7 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _vm.windowWidth >= 992
-              ? _c("bookmarks", { attrs: { navbarColor: _vm.navbarColor } })
-              : _vm._e(),
-            _vm._v(" "),
             _c("vs-spacer"),
-            _vm._v(" "),
-            _c("search-bar"),
-            _vm._v(" "),
-            _c("notification-drop-down"),
             _vm._v(" "),
             _c("profile-drop-down")
           ],
@@ -4752,30 +4740,6 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("span", { staticClass: "ml-2" }, [_vm._v("Perfil")])
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      {
-                        staticClass:
-                          "flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white",
-                        on: {
-                          click: function($event) {
-                            _vm.$router.push("/apps/chat").catch(function() {})
-                          }
-                        }
-                      },
-                      [
-                        _c("feather-icon", {
-                          attrs: {
-                            icon: "MessageSquareIcon",
-                            svgClasses: "w-4 h-4"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "ml-2" }, [_vm._v("Chat")])
                       ],
                       1
                     ),
