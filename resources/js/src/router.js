@@ -364,6 +364,48 @@ const router = new Router({
           component: () => import('./views/Page2.vue')
         },
         {
+          path: '/listadoRecetas',
+          name: 'listadoRecetas',
+          component: () => import('@/views/pages/listadoRecetas.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next({
+                name: 'consola'
+              });
+            } else if (rol == 2) {
+              next();
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Recetas' },
+              { title: 'Listado Recetas', active: true },
+            ],
+            pageTitle: 'Listado Recetas',
+            rule: 'editor'
+          }
+        },
+        {
           path: '/nuevoPaciente',
           name: 'extra-component-form-wizard',
           component: () => import('@/views/pages/nuevoPaciente.vue'),

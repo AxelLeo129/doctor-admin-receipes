@@ -31,11 +31,11 @@
 
       <!-- CARD 2: SUBSCRIBERS GAINED -->
       <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
-        <a href="/apps/user/user-list">
+        <a href="/listadoRecetas">
           <statistics-card-line
             icon="ListIcon"
-            statistic="Pacientes"
-            statisticTitle="Busqueda de pacientes."
+            statistic="Recetas"
+            statisticTitle="Busqueda de Recetas."
             :chartData="ordersRecevied.series"
             color="warning"
             type="area"
@@ -44,7 +44,7 @@
       </div>
 
       <!-- CARD 3: ORDER RECIEVED -->
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <!-- <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
         <a href="/forms/form-wizard">
           <statistics-card-line
             icon="CalendarIcon"
@@ -54,7 +54,7 @@
             type="area"
           ></statistics-card-line>
         </a>
-      </div>
+      </div> -->
     </div>
 
     <div class="vx-row">

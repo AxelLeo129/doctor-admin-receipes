@@ -56360,6 +56360,54 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
       }
     }, {
+      path: '/listadoRecetas',
+      name: 'listadoRecetas',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 37).then(__webpack_require__.bind(null, /*! @/views/pages/listadoRecetas.vue */ "./resources/js/src/views/pages/listadoRecetas.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next({
+            name: 'consola'
+          });
+        } else if (rol == 2) {
+          next();
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Recetas'
+        }, {
+          title: 'Listado Recetas',
+          active: true
+        }],
+        pageTitle: 'Listado Recetas',
+        rule: 'editor'
+      }
+    }, {
       path: '/nuevoPaciente',
       name: 'extra-component-form-wizard',
       component: function component() {
