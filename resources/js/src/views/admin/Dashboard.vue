@@ -11,7 +11,7 @@
   <div id="dashboard-analytics">
     <div class="vx-row">
       <!-- CARD 1: CONGRATS -->
-      <div class="vx-col w-full lg:w-1/2 mb-base">
+      <div class="vx-col md:w-2/3 w-full lg:w-1/2 mb-base">
         <a href="nuevoProducto">
           <vx-card slot="no-body" class="text-center bg-light-gradient greet-user">
             <!-- <img src="@assets/images/elements/decore-left.png" class="decore-left" alt="Decore Left" width="200" >
@@ -33,7 +33,7 @@
       </div>
 
       <!-- CARD 2: SUBSCRIBERS GAINED -->
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <div class="vx-col w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 mb-base">
         <a href="listadoProductos">
           <statistics-card-line
             icon="ListIcon"
@@ -47,7 +47,7 @@
       </div>
 
       <!-- CARD 3: ORDER RECIEVED -->
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <!-- <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
         <a href="/forms/form-wizard">
           <statistics-card-line
             icon="CalendarIcon"
@@ -57,7 +57,7 @@
             type="area"
           ></statistics-card-line>
         </a>
-      </div>
+      </div> -->
     </div>
 
     <div class="vx-row">

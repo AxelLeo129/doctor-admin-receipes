@@ -342,7 +342,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "dashboard-analytics" } }, [
     _c("div", { staticClass: "vx-row" }, [
-      _c("div", { staticClass: "vx-col w-full lg:w-1/2 mb-base" }, [
+      _c("div", { staticClass: "vx-col md:w-2/3 w-full lg:w-1/2 mb-base" }, [
         _c(
           "a",
           { attrs: { href: "nuevoProducto" } },
@@ -391,7 +391,7 @@ var render = function() {
         "div",
         {
           staticClass:
-            "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base"
+            "vx-col w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 mb-base"
         },
         [
           _c(
@@ -405,33 +405,6 @@ var render = function() {
                   statisticTitle: "Listado de Medicamentos.",
                   chartData: _vm.ordersRecevied.series,
                   color: "warning",
-                  type: "area"
-                }
-              })
-            ],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base"
-        },
-        [
-          _c(
-            "a",
-            { attrs: { href: "/forms/form-wizard" } },
-            [
-              _c("statistics-card-line", {
-                attrs: {
-                  icon: "CalendarIcon",
-                  statistic: "Calendario",
-                  statisticTitle:
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit eaque, voluptatibus, aperiam, nesciunt laboriosam sint inventore odit consectetur nisi in accusamus libero dolores ducimus beatae perferendis quia. Veritatis, incidunt molestias?",
-                  chartData: _vm.subscribersGained.series,
                   type: "area"
                 }
               })
