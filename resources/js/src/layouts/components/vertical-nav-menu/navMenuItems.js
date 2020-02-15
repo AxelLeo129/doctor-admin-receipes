@@ -34,13 +34,6 @@ export default [
   },
   //Admin - Productos
   {
-    url: "/nuevoProducto",
-    name: "Nuevo Medicamento",
-    slug: "nuevoMedicamento",
-    icon: "PlusIcon",
-    rol: 1
-  },
-  {
     url: "/listadoProductos",
     name: "Listado Medicamentos",
     slug: "listadoProductos",
@@ -53,13 +46,6 @@ export default [
     name: "Listado Categorias",
     slug: "listadoCategorias",
     icon: "ListIcon",
-    rol: 1
-  },
-  {
-    url: "/nuevaCategoria",
-    name: "Nueva Categoria",
-    slug: "nuevaCategoria",
-    icon: "PlusIcon",
     rol: 1
   },
   {

@@ -119,6 +119,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -129,6 +139,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    nuevo: function nuevo() {
+      this.$router.push("/nuevoProducto");
+    },
     edit: function edit(id) {
       this.$router.push("/editarProducto/" + id);
     },
@@ -262,14 +275,46 @@ var render = function() {
         "div",
         { staticClass: "vx-col w-full" },
         [
-          _c("vx-card", { attrs: { title: "Top más vendidos" } }, [
+          _c("vx-card", [
+            _c("div", { staticClass: "vx-row" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 mb-base"
+                },
+                [_c("h4", [_vm._v("Top más vendidos")])]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 mb-base"
+                },
+                [
+                  _c(
+                    "div",
+                    { attrs: { align: "right" } },
+                    [
+                      _c(
+                        "vs-button",
+                        {
+                          attrs: { color: "primary", type: "filled" },
+                          on: { click: _vm.nuevo }
+                        },
+                        [_vm._v("Nuevo Medicamento")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
             _c(
               "div",
-              {
-                staticClass: "mt-4",
-                attrs: { slot: "no-body" },
-                slot: "no-body"
-              },
+              { staticClass: "mt-4" },
               [
                 _c(
                   "vs-table",

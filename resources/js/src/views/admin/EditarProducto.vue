@@ -48,14 +48,16 @@
           <span class="text-danger text-sm" v-show="description === ''">{{ errors.campo }}</span>
         </div>
 
-        <vs-input
-          class="w-full mt-4"
-          label="Precio"
-          v-model="price"
-          name="precio"
-          placeholder="Q"
-          type="number"
-        />
+        <label class="vs-input--label">Precio</label>
+        <vx-input-group class="mb-base">
+          <template slot="prepend">
+            <div class="prepend-text bg-primary">
+              <span>Q</span>
+            </div>
+          </template>
+
+          <vs-input v-model="price" placeholder="Price" />
+        </vx-input-group>
         <span class="text-danger text-sm" v-show="price === ''">{{ errors.campo }}</span>
 
         <div class="mt-4">
@@ -87,8 +89,9 @@
 
         <vs-input class="w-full mt-4" label="Laboratorio" v-model="laboratory" name="laboratorio" />
         <span class="text-danger text-sm" v-show="laboratory === ''">{{ errors.campo }}</span>
-
-        <vs-input class="w-full mt-4" label="Bodega de Despacho" v-model="warehouse" name="bodega" />
+        
+        <label class="vs-input--label">Proveedor</label>
+        <v-select class="w-full mt-4" :options="['NOVEMED']" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-model="warehouse"/>
         <span class="text-danger text-sm" v-show="warehouse === ''">{{ errors.campo }}</span>
       </div>
 
@@ -145,7 +148,7 @@ export default {
       base64textString: "",
       categorias: [],
       categories: [],
-      popupActive2: false,
+      popupActive2: false
     };
   },
   computed: {

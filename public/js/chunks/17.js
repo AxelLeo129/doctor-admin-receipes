@@ -126,6 +126,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -697,22 +700,31 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("vs-input", {
-              staticClass: "w-full mt-4",
-              attrs: {
-                label: "Precio",
-                name: "precio",
-                placeholder: "Q",
-                type: "number"
-              },
-              model: {
-                value: _vm.price,
-                callback: function($$v) {
-                  _vm.price = $$v
-                },
-                expression: "price"
-              }
-            }),
+            _c("label", { staticClass: "vs-input--label" }, [_vm._v("Precio")]),
+            _vm._v(" "),
+            _c(
+              "vx-input-group",
+              { staticClass: "mb-base" },
+              [
+                _c("template", { slot: "prepend" }, [
+                  _c("div", { staticClass: "prepend-text bg-primary" }, [
+                    _c("span", [_vm._v("Q")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("vs-input", {
+                  attrs: { placeholder: "Price" },
+                  model: {
+                    value: _vm.price,
+                    callback: function($$v) {
+                      _vm.price = $$v
+                    },
+                    expression: "price"
+                  }
+                })
+              ],
+              2
+            ),
             _vm._v(" "),
             _c(
               "span",
@@ -871,9 +883,13 @@ var render = function() {
               [_vm._v(_vm._s(_vm.errors.campo))]
             ),
             _vm._v(" "),
-            _c("vs-input", {
+            _c("label", { staticClass: "vs-input--label" }, [
+              _vm._v("Proveedor")
+            ]),
+            _vm._v(" "),
+            _c("v-select", {
               staticClass: "w-full mt-4",
-              attrs: { label: "Bodega de Despacho", name: "bodega" },
+              attrs: { options: ["NOVEMED"], dir: _vm.$vs.rtl ? "rtl" : "ltr" },
               model: {
                 value: _vm.warehouse,
                 callback: function($$v) {

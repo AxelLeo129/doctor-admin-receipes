@@ -6937,12 +6937,6 @@ __webpack_require__.r(__webpack_exports__);
   rol: 1
 }, //Admin - Productos
 {
-  url: "/nuevoProducto",
-  name: "Nuevo Medicamento",
-  slug: "nuevoMedicamento",
-  icon: "PlusIcon",
-  rol: 1
-}, {
   url: "/listadoProductos",
   name: "Listado Medicamentos",
   slug: "listadoProductos",
@@ -6954,12 +6948,6 @@ __webpack_require__.r(__webpack_exports__);
   name: "Listado Categorias",
   slug: "listadoCategorias",
   icon: "ListIcon",
-  rol: 1
-}, {
-  url: "/nuevaCategoria",
-  name: "Nueva Categoria",
-  slug: "nuevaCategoria",
-  icon: "PlusIcon",
   rol: 1
 }, {
   url: "/dashboardCallCenter",
