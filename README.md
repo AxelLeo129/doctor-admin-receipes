@@ -36,3 +36,4 @@ npm run dev (si es en ambiente de desarrollo)
 
 php artisan serve (solo en ambiente local)
 
+Es necesario cambiar la direccion de ip al dominio del servidor (no olvidar)
