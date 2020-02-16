@@ -6882,15 +6882,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ([//Medico
 {
   url: "/home",
-  name: "Pacientes",
+  name: "Home",
   slug: "home",
-  icon: "CircleIcon",
+  icon: "HomeIcon",
   rol: 2
 }, {
-  url: "/nuevoPaciente",
-  name: "Nueva Receta",
-  slug: "nuevaReceta",
-  icon: "PlusIcon",
+  url: "/listadoRecetas",
+  name: "Listado Recetas",
+  slug: "listadoRecetas",
+  icon: "ListIcon",
   rol: 2
 }, //Admin
 {

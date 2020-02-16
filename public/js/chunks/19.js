@@ -293,6 +293,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -324,6 +326,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      buscar1: [],
       mediNum: 0,
       buscar: "",
       image: "",
@@ -371,15 +374,21 @@ __webpack_require__.r(__webpack_exports__);
     searchMedicina: function searchMedicina() {
       var result = this.medicamentosList;
 
-      if (!this.buscar) {
+      if (!this.buscar && !this.buscar1) {
+        console.log(this.buscar);
+        console.log(this.buscar1);
         return result;
       }
 
       var texto = this.buscar.toLowerCase();
+      var texto1 = this.buscar1.toString();
+      var cateText = texto + ' ' + texto1;
+      console.log(cateText);
 
       var filter = function filter(event) {
-        return event.name.toLowerCase().includes(texto) || event.precentation.toLowerCase().includes(texto) || event.description.toLowerCase().includes(texto) || event.categories.toLowerCase().includes(texto);
-      };
+        return event.name.toLowerCase().includes(texto) || event.precentation.toLowerCase().includes(texto) || event.description.toLowerCase().includes(texto);
+      }; //event.categories.toLowerCase().includes(cateText);
+
 
       return result.filter(filter);
     },
@@ -417,9 +426,16 @@ __webpack_require__.r(__webpack_exports__);
         this.mediNum = 0;
       }
     },
-    bCate: function bCate(id) {
-      console.log(id);
-      this.buscar = this.buscar + "," + id;
+    bCate: function bCate(id, index, event) {
+      //console.log(event);
+      if (event == true) {
+        this.buscar1.push(id);
+        this.buscar1 = this.buscar1.sort();
+      } else {
+        var a = this.buscar1.indexOf(id);
+        this.buscar1.splice(a, 1);
+        this.buscar1 = this.buscar1.sort();
+      }
     },
     agregarmF: function agregarmF() {
       this.activar = false;
@@ -476,6 +492,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        //console.log(Response.data);
         _this3.categorias = Response.data;
       }).catch(function (err) {
         console.log(err);
@@ -628,8 +645,6 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm._m(0),
-      _vm._v(" "),
       _c(
         "div",
         { attrs: { align: "right" } },
@@ -800,7 +815,10 @@ var render = function() {
                                   _c("div", [
                                     _c(
                                       "ul",
-                                      _vm._l(_vm.categorias, function(item) {
+                                      _vm._l(_vm.categorias, function(
+                                        item,
+                                        index
+                                      ) {
                                         return _c(
                                           "li",
                                           {
@@ -809,9 +827,21 @@ var render = function() {
                                               "flex items-center cursor-pointer py-1"
                                           },
                                           [
-                                            _c("vs-checkbox", [
-                                              _vm._v(_vm._s(item.name))
-                                            ])
+                                            _c(
+                                              "vs-checkbox",
+                                              {
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.bCate(
+                                                      item.id,
+                                                      index,
+                                                      $event.target.checked
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v(_vm._s(item.name))]
+                                            )
                                           ],
                                           1
                                         )
@@ -1419,22 +1449,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { align: "center" } }, [
-      _c("h4", [_vm._v("Paso")]),
-      _vm._v(" "),
-      _c("h5", [
-        _vm._v("\n      1 ...\n      "),
-        _c("strong", [_vm._v("2")]),
-        _vm._v(" ... 3 ... 4\n    ")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
