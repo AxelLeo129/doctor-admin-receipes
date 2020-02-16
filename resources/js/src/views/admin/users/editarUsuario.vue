@@ -124,7 +124,7 @@ export default {
         }
       })
         .then(Response => {
-          console.log(Response);
+          //console.log(Response);
           this.name = Response.data[0].name;
           this.email = Response.data[0].email;
           this.noCollegiate = Response.data[0].noCollegiate;
@@ -179,15 +179,17 @@ export default {
     registrar() {
       this.openLoading();
       let token = localStorage.getItem("tu");
+      //console.log(token);
       let idu = localStorage.getItem("ui");
       axios({
-        method: "post",
-        url: "http://127.0.0.1:8000/api/register",
+        method: "put",
+        url: "http://127.0.0.1:8000/api/putUser3",
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         },
         data: JSON.stringify({
+          id: this.id,
           name: this.name,
           email: this.email,
           password: this.password,
@@ -196,10 +198,7 @@ export default {
           c_password: this.confirmPassword,
           rol: this.rol.value,
           id_visitador: idu
-        }),
-        headers: {
-          "content-type": "application/json"
-        }
+        })
       })
         .then(response => {
           this.name = null;

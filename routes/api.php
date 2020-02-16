@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('details', 'User\UserController@details');
     Route::put('putUser1', 'User\UserController@update1');
     Route::put('putUser2', 'User\UserController@update2');
+    Route::put('putUser3', 'User\UserController@update3');
     Route::get('getUser1/{id}', 'User\UserController@show');
     Route::get('getUser2/{id}', 'User\UserController@show1');
     //Visitador

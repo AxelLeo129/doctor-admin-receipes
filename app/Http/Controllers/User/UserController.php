@@ -130,6 +130,21 @@ class UserController extends Controller
             }
         }
 
+        public function update3(Request $request){
+            $user = User::find($request->id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->noCollegiate = $request->noCollegiate;
+            $user->rol = $request->rol;
+            $user->password = bcrypt($request->password);
+
+            if($user->save()){
+                return ['result' => 'success', "mess"=>$user];
+            }else{
+                return ['result' => 'fail', "mess"=>$user];
+            }
+        }
+
         /**
      * Store a newly created resource in storage.
      *
