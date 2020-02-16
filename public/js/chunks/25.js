@@ -333,6 +333,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -348,6 +355,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      categorias: [],
       rol: null,
       errors: {
         campo: "Este campo es requerido"
@@ -368,10 +376,63 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       clinicName: null,
       clinicPhone: null,
       clinicAddress: null,
-      specialties: null
-    }, _defineProperty(_ref, "email", null), _defineProperty(_ref, "clinicalRecord", null), _defineProperty(_ref, "showAlerts", null), _defineProperty(_ref, "base64textString", null), _defineProperty(_ref, "base64textString1", null), _defineProperty(_ref, "activado", false), _defineProperty(_ref, "activado1", false), _defineProperty(_ref, "clinicLogo", null), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "popupActive3", false), _ref;
+      specialties: []
+    }, _defineProperty(_ref, "email", null), _defineProperty(_ref, "clinicalRecord", null), _defineProperty(_ref, "showAlerts", null), _defineProperty(_ref, "base64textString", null), _defineProperty(_ref, "base64textString1", null), _defineProperty(_ref, "activado", false), _defineProperty(_ref, "activado1", false), _defineProperty(_ref, "clinicLogo", null), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "popupActive3", false), _defineProperty(_ref, "category1", []), _defineProperty(_ref, "categories", []), _ref;
   },
   methods: {
+    getCategories: function getCategories() {
+      var _this = this;
+
+      var token = localStorage.getItem("tu");
+      axios__WEBPACK_IMPORTED_MODULE_5___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCategories",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this.specialties = [];
+        Response.data.forEach(function (element) {
+          _this.categorias.push({
+            label: element.name,
+            value: element.id
+          });
+
+          if (_this.categories.includes(element.id)) {
+            _this.specialties.push({
+              label: element.name,
+              value: element.id
+            });
+          }
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    getCategories1: function getCategories1() {
+      var _this2 = this;
+
+      var token = localStorage.getItem("tu");
+      axios__WEBPACK_IMPORTED_MODULE_5___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCategories",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this2.specialties = [];
+        Response.data.forEach(function (element) {
+          _this2.categorias.push({
+            label: element.name,
+            value: element.id
+          });
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
     handleFileSelect: function handleFileSelect(evt) {
       var files = evt.target.files;
       var file = files[0];
@@ -407,7 +468,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.clinicLogo = "data:image/png;base64," + this.base64textString1;
     },
     update1: function update1() {
-      var _this = this;
+      var _this3 = this;
 
       this.popupActive2 = false;
       this.openLoading();
@@ -449,32 +510,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this.activeLoading = false;
+        _this3.activeLoading = false;
 
-        _this.$vs.loading.close();
+        _this3.$vs.loading.close();
 
-        _this.$vs.notify({
+        _this3.$vs.notify({
           title: "Actualizado",
           text: "Usuario actualizado exitosamente.",
           color: "success"
         });
 
-        _this.$router.push("/1visitador");
+        _this3.$router.push("/1visitador");
       }).catch(function (err) {
-        _this.activeLoading = false;
+        _this3.activeLoading = false;
 
-        _this.$vs.loading.close();
+        _this3.$vs.loading.close();
 
-        _this.activado = true;
+        _this3.activado = true;
         console.log(err);
       });
     },
     update2: function update2() {
-      var _this2 = this;
+      var _this4 = this;
 
       this.popupActive3 = false;
       this.openLoading();
       var token = localStorage.getItem("tu");
+      var arrayFinal = [];
+      this.specialties.forEach(function (element) {
+        arrayFinal.push(element.value);
+      });
       axios__WEBPACK_IMPORTED_MODULE_5___default()({
         method: "put",
         url: "http://127.0.0.1:8000/api/putUser2",
@@ -491,23 +556,58 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this2.activeLoading = false;
+        axios__WEBPACK_IMPORTED_MODULE_5___default()({
+          method: "get",
+          url: "http://127.0.0.1:8000/api/deleteUserCate/" + _this4.id,
+          headers: {
+            authorization: "Bearer " + token,
+            "content-type": "application/json"
+          }
+        }).then(function (Response) {
+          axios__WEBPACK_IMPORTED_MODULE_5___default()({
+            method: "post",
+            url: "http://127.0.0.1:8000/api/postUserCate",
+            data: JSON.stringify({
+              categories: arrayFinal,
+              user_id: _this4.id
+            }),
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          }).then(function (Response) {
+            _this4.activeLoading = false;
 
-        _this2.$vs.loading.close();
+            _this4.$vs.loading.close();
 
-        _this2.$vs.notify({
-          title: "Actualizado",
-          text: "Usuario actualizado exitosamente.",
-          color: "success"
+            _this4.$router.push("/1visitador");
+
+            _this4.$vs.notify({
+              title: "Actualizado",
+              text: "Producto actualizado exitosamente.",
+              color: "success"
+            });
+          }).catch(function (err) {
+            _this4.activeLoading = false;
+
+            _this4.$vs.loading.close();
+
+            activado = true; //console.log(err);
+          });
+        }).catch(function (err) {
+          _this4.activeLoading = false;
+
+          _this4.$vs.loading.close();
+
+          _this4.activado = true;
+          console.log(err);
         });
-
-        _this2.$router.push("/1visitador");
       }).catch(function (err) {
-        _this2.activeLoading = false;
+        _this4.activeLoading = false;
 
-        _this2.$vs.loading.close();
+        _this4.$vs.loading.close();
 
-        _this2.activado1 = true;
+        _this4.activado1 = true;
         console.log(err);
       });
     },
@@ -518,69 +618,145 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     getData: function getData() {
-      var _this3 = this;
+      var _this5 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_5___default()({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getUser/" + this.id,
+        url: "http://127.0.0.1:8000/api/getUser1/" + this.id,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this3.name = Response.data[0].name;
-        _this3.userName = Response.data[0].userName;
+        if (Response.data.length == 0) {
+          axios__WEBPACK_IMPORTED_MODULE_5___default()({
+            method: "get",
+            url: "http://127.0.0.1:8000/api/getUser2/" + _this5.id,
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          }).then(function (Response) {
+            _this5.getCategories1();
 
-        if (Response.data[0].clinicalRecord == 0) {
-          _this3.registro = false;
+            _this5.name = Response.data[0].name;
+            _this5.userName = Response.data[0].userName;
+
+            if (Response.data[0].clinicalRecord == 0) {
+              _this5.registro = false;
+            } else {
+              _this5.registro = true;
+            }
+
+            _this5.phone = Response.data[0].phone;
+
+            if (Response.data[0].showAlerts == 0) {
+              _this5.alertas = false;
+            } else {
+              _this5.alertas = true;
+            }
+
+            if (Response.data[0].image == null || Response.data[0].image == "") {
+              _this5.image = "/images/medicamentos/avatar.jpeg";
+            } else {
+              _this5.image = "data:image/png;base64," + Response.data[0].image;
+              _this5.base64textString = Response.data[0].image;
+            }
+
+            _this5.email = Response.data[0].email;
+
+            if (Response.data[0].clinicLogo == null || Response.data[0].clinicLogo == "") {
+              _this5.clinicLogo = "/images/medicamentos/demol.PNG";
+            } else {
+              _this5.clinicLogo = "data:image/png;base64," + Response.data[0].clinicLogo;
+              _this5.base64textString1 = Response.data[0].clinicLogo;
+            }
+
+            _this5.clinicName = Response.data[0].clinicName;
+            _this5.clinicPhone = Response.data[0].clinicPhone;
+            _this5.clinicAddress = Response.data[0].clinicAddress;
+            _this5.specialties = Response.data[0].specialties;
+            _this5.noCollegiate = Response.data[0].noCollegiate;
+
+            if (Response.data[0].birthDate == "") {
+              _this5.birthDate = null;
+            } else {
+              _this5.birthDate = Response.data[0].birthDate;
+            }
+
+            _this5.activeLoading = false;
+
+            _this5.$vs.loading.close();
+          }).catch(function (err) {
+            console.log(err);
+          });
         } else {
-          _this3.registro = true;
+          _this5.category1 = Response.data[0].categories.split(",");
+
+          _this5.category1.forEach(function (element) {
+            element = parseInt(element);
+
+            _this5.categories.push(element);
+          });
+
+          _this5.getCategories();
+
+          _this5.name = Response.data[0].name;
+          _this5.userName = Response.data[0].userName;
+
+          if (Response.data[0].clinicalRecord == 0) {
+            _this5.registro = false;
+          } else {
+            _this5.registro = true;
+          }
+
+          _this5.phone = Response.data[0].phone;
+
+          if (Response.data[0].showAlerts == 0) {
+            _this5.alertas = false;
+          } else {
+            _this5.alertas = true;
+          }
+
+          if (Response.data[0].image == null || Response.data[0].image == "") {
+            _this5.image = "/images/medicamentos/avatar.jpeg";
+          } else {
+            _this5.image = "data:image/png;base64," + Response.data[0].image;
+            _this5.base64textString = Response.data[0].image;
+          }
+
+          _this5.email = Response.data[0].email;
+
+          if (Response.data[0].clinicLogo == null || Response.data[0].clinicLogo == "") {
+            _this5.clinicLogo = "/images/medicamentos/demol.PNG";
+          } else {
+            _this5.clinicLogo = "data:image/png;base64," + Response.data[0].clinicLogo;
+            _this5.base64textString1 = Response.data[0].clinicLogo;
+          }
+
+          _this5.clinicName = Response.data[0].clinicName;
+          _this5.clinicPhone = Response.data[0].clinicPhone;
+          _this5.clinicAddress = Response.data[0].clinicAddress;
+          _this5.specialties = Response.data[0].specialties;
+          _this5.noCollegiate = Response.data[0].noCollegiate;
+
+          if (Response.data[0].birthDate == "") {
+            _this5.birthDate = null;
+          } else {
+            _this5.birthDate = Response.data[0].birthDate;
+          }
+
+          _this5.activeLoading = false;
+
+          _this5.$vs.loading.close();
         }
-
-        if (Response.data[0].showAlerts == 0) {
-          _this3.alertas = false;
-        } else {
-          _this3.alertas = true;
-        }
-
-        if (Response.data[0].image == null || Response.data[0].image == "") {
-          _this3.image = "/images/medicamentos/avatar.jpeg";
-        } else {
-          _this3.image = "data:image/png;base64," + Response.data[0].image;
-          _this3.base64textString = Response.data[0].image;
-        }
-
-        _this3.email = Response.data[0].email;
-
-        if (Response.data[0].clinicLogo == null || Response.data[0].clinicLogo == "") {
-          _this3.clinicLogo = "/images/medicamentos/demol.PNG";
-        } else {
-          _this3.clinicLogo = "data:image/png;base64," + Response.data[0].clinicLogo;
-          _this3.base64textString1 = Response.data[0].clinicLogo;
-        }
-
-        _this3.clinicName = Response.data[0].clinicName;
-        _this3.clinicPhone = Response.data[0].clinicPhone;
-        _this3.clinicAddress = Response.data[0].clinicAddress;
-        _this3.specialties = Response.data[0].specialties;
-        _this3.noCollegiate = Response.data[0].noCollegiate;
-
-        if (Response.data[0].birthDate == "") {
-          _this3.birthDate = null;
-        } else {
-          _this3.birthDate = Response.data[0].birthDate;
-        }
-
-        _this3.activeLoading = false;
-
-        _this3.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
-        _this3.activeLoading = false;
+        _this5.activeLoading = false;
 
-        _this3.$vs.loading.close();
+        _this5.$vs.loading.close();
       });
     }
   },
@@ -1399,8 +1575,19 @@ var render = function() {
                                 "div",
                                 { staticClass: "mt-4" },
                                 [
-                                  _c("vs-textarea", {
-                                    attrs: { label: "Lista Especialidades" },
+                                  _c(
+                                    "label",
+                                    { staticClass: "vs-input--label" },
+                                    [_vm._v("Lista Especialidades")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("v-select", {
+                                    attrs: {
+                                      multiple: "",
+                                      closeOnSelect: false,
+                                      options: _vm.categorias,
+                                      dir: _vm.$vs.rtl ? "rtl" : "ltr"
+                                    },
                                     model: {
                                       value: _vm.specialties,
                                       callback: function($$v) {

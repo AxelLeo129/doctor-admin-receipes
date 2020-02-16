@@ -28,10 +28,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('details', 'User\UserController@details');
     Route::put('putUser1', 'User\UserController@update1');
     Route::put('putUser2', 'User\UserController@update2');
+    Route::get('getUser1/{id}', 'User\UserController@show');
+    Route::get('getUser2/{id}', 'User\UserController@show1');
     //Visitador
     Route::get('getVisitador/{id}', "User\UserController@getMedics");
     Route::any('register1', 'User\UserController@register');
     Route::get('getUser/{id}', 'User\UserController@detailsUser');
+    Route::get('deleteUserCate/{id}', 'User\UserController@destroyCategory');
+    Route::any('postUserCate', 'User\UserController@storeCategory');
     //Product
     Route::get('getProducts', 'Products\ProductController@list');
     Route::post('postProducts', 'Products\ProductController@store');

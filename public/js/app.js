@@ -56181,7 +56181,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/user/profile',
       name: 'perfil',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! @/views/user/EditarUsuario.vue */ "./resources/js/src/views/user/EditarUsuario.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(38), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! @/views/user/EditarUsuario.vue */ "./resources/js/src/views/user/EditarUsuario.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var token = localStorage.getItem('tu');
@@ -56555,7 +56555,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/datosPaciente',
       name: 'datosPaciente',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! ./views/pages/paso4.vue */ "./resources/js/src/views/pages/paso4.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(38), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! ./views/pages/paso4.vue */ "./resources/js/src/views/pages/paso4.vue"));
       },
       beforeEnter: function beforeEnter(to, from, next) {
         var rol = localStorage.getItem('ru');
@@ -57061,7 +57061,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/editarMedico/:idMedico',
       name: 'editarMedico',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(25)]).then(__webpack_require__.bind(null, /*! ./views/visitador1/editarMedico.vue */ "./resources/js/src/views/visitador1/editarMedico.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(38), __webpack_require__.e(25)]).then(__webpack_require__.bind(null, /*! ./views/visitador1/editarMedico.vue */ "./resources/js/src/views/visitador1/editarMedico.vue"));
       },
       meta: {
         breadcrumb: [{

@@ -1,10 +1,10 @@
 <template>
-  <vs-table pagination max-items="3" search :data="users">
+  <vs-table pagination max-items="10" search :data="users">
     <template slot="thead">
       <vs-th sort-key="id">#</vs-th>
-      <vs-th sort-key="email">Email</vs-th>
       <vs-th sort-key="username">Nombre</vs-th>
       <vs-th sort-key="website">No. Colegiado</vs-th>
+      <vs-th sort-key="email">Email</vs-th>
       <vs-th sort-key="id">Acciones</vs-th>
     </template>
 
@@ -12,11 +12,11 @@
       <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
         <vs-td v-text="indextr + 1"></vs-td>
 
-        <vs-td :data="data[indextr].email">{{ data[indextr].email }}</vs-td>
-
         <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
 
         <vs-td :data="data[indextr].noCollegiate">{{ data[indextr].noCollegiate }}</vs-td>
+
+        <vs-td :data="data[indextr].email">{{ data[indextr].email }}</vs-td>
 
         <vs-td>
           <vs-button size="small" color="warning" @click="edit(tr.id)">Editar</vs-button>
