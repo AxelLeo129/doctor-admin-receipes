@@ -73,6 +73,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     //Pedidos
     Route::post('postOrder', 'Orders\OrderController@store');
     Route::post('postOrderProd', 'Orders\OrderController@storeProducto');
+    //Roles
+    Route::get('getRoles', 'Roles\RolController@index');
+    Route::post('postRol', 'Roles\RolController@store');
+    Route::get('getRol/{id}', 'Roles\RolController@show');
+    Route::put('putRol', 'Roles\RolController@update');
 
 });
 

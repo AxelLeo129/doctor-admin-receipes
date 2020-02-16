@@ -29,7 +29,7 @@ export default [
     url: "/consola",
     name: "Consola",
     slug: "consola",
-    icon: "CircleIcon",
+    icon: "HomeIcon",
     rol: 1
   },
   //Admin - Productos
@@ -45,6 +45,14 @@ export default [
     url: "/listadoCategorias",
     name: "Listado Categorias",
     slug: "listadoCategorias",
+    icon: "ListIcon",
+    rol: 1
+  },
+  //Admin - Usuarios
+  {
+    url: "/listadoUsurios",
+    name: "Listado Usurios",
+    slug: "listadoUsurios",
     icon: "ListIcon",
     rol: 1
   },

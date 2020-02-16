@@ -6897,7 +6897,7 @@ __webpack_require__.r(__webpack_exports__);
   url: "/consola",
   name: "Consola",
   slug: "consola",
-  icon: "CircleIcon",
+  icon: "HomeIcon",
   rol: 1
 }, //Admin - Productos
 {
@@ -6911,6 +6911,13 @@ __webpack_require__.r(__webpack_exports__);
   url: "/listadoCategorias",
   name: "Listado Categorias",
   slug: "listadoCategorias",
+  icon: "ListIcon",
+  rol: 1
+}, //Admin - Usuarios
+{
+  url: "/listadoUsurios",
+  name: "Listado Usurios",
+  slug: "listadoUsurios",
   icon: "ListIcon",
   rol: 1
 }, {
