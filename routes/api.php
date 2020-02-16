@@ -79,6 +79,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('postRol', 'Roles\RolController@store');
     Route::get('getRol/{id}', 'Roles\RolController@show');
     Route::put('putRol', 'Roles\RolController@update');
+    //Laboratorios
+    Route::get('getLabs', 'Labs\LabController@index');
+    Route::post('postLab', 'Labs\LabController@store');
+    Route::get('getLab/{id}', 'Labs\LabController@show');
+    Route::put('putLab', 'Labs\LabController@update');
 
 });
 

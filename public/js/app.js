@@ -56704,6 +56704,151 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           });
         }
       }
+    }, //Admin - Laboratorios
+    {
+      path: '/listadoLabs',
+      name: 'listadoLabs',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 44).then(__webpack_require__.bind(null, /*! @/views/admin/laboratorios/dashboard.vue */ "./resources/js/src/views/admin/laboratorios/dashboard.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next();
+        } else if (rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Laboratorios'
+        }, {
+          title: 'Listado Laboratorios',
+          active: true
+        }],
+        pageTitle: 'Listado Laboratorios',
+        rule: 'editor'
+      }
+    }, {
+      path: '/nuevoLab',
+      name: 'nuevoLab',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 45).then(__webpack_require__.bind(null, /*! @/views/admin/laboratorios/nuevoLab.vue */ "./resources/js/src/views/admin/laboratorios/nuevoLab.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next();
+        } else if (rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Laboratorios'
+        }, {
+          title: 'Nuevo Laboratorio',
+          active: true
+        }],
+        pageTitle: 'Nuevo Laboratorio',
+        rule: 'editor'
+      }
+    }, {
+      path: '/editarLab/:labId',
+      name: 'editarLab',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 46).then(__webpack_require__.bind(null, /*! @/views/admin/laboratorios/editLab.vue */ "./resources/js/src/views/admin/laboratorios/editLab.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next();
+        } else if (rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Laboratorio'
+        }, {
+          title: 'Editar Laboratorio',
+          active: true
+        }],
+        pageTitle: 'Editar Laboratorio',
+        rule: 'editor'
+      }
     }, //Admin - Users
     {
       path: '/listadoUsurios',

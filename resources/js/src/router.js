@@ -672,6 +672,133 @@ const router = new Router({
             }
           }
         },
+        //Admin - Laboratorios
+        {
+          path: '/listadoLabs',
+          name: 'listadoLabs',
+          component: () => import('@/views/admin/laboratorios/dashboard.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Laboratorios' },
+              { title: 'Listado Laboratorios', active: true },
+            ],
+            pageTitle: 'Listado Laboratorios',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/nuevoLab',
+          name: 'nuevoLab',
+          component: () => import('@/views/admin/laboratorios/nuevoLab.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Laboratorios' },
+              { title: 'Nuevo Laboratorio', active: true },
+            ],
+            pageTitle: 'Nuevo Laboratorio',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/editarLab/:labId',
+          name: 'editarLab',
+          component: () => import('@/views/admin/laboratorios/editLab.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Laboratorio' },
+              { title: 'Editar Laboratorio', active: true },
+            ],
+            pageTitle: 'Editar Laboratorio',
+            rule: 'editor'
+          }
+        },
         //Admin - Users
         {
           path: '/listadoUsurios',

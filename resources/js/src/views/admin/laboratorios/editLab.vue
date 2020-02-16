@@ -75,11 +75,11 @@ export default {
   methods: {
     getCategoria() {
       this.openLoading();
-      this.id = this.$route.params.rolId;
+      this.id = this.$route.params.labId;
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getRol/" + this.id,
+        url: "http://127.0.0.1:8000/api/getLab/" + this.id,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
@@ -91,10 +91,10 @@ export default {
             this.$vs.loading.close();
             this.$vs.notify({
               title: "Atención",
-              text: "Rol no encontrado.",
+              text: "Laboratorio no encontrado.",
               color: "warning"
             });
-            this.$router.push("/listadoRoles");
+            this.$router.push("/listadoLabs");
           } else {
             this.nombre = Response.data[0].name;
             this.activeLoading = false;
@@ -106,10 +106,10 @@ export default {
           this.$vs.loading.close();
           this.$vs.notify({
             title: "Precaución",
-            text: "Rol no encontrado.",
+            text: "Laboratorio no encontrado.",
             color: "warning"
           });
-          this.$router.push("/listadoRoles");
+          this.$router.push("/listadoLabs");
         });
     },
     openLoading() {
@@ -124,7 +124,7 @@ export default {
       let token = localStorage.getItem("tu");
       axios({
         method: "put",
-        url: "http://127.0.0.1:8000/api/putRol",
+        url: "http://127.0.0.1:8000/api/putLab",
         data: JSON.stringify({
           id: this.id,
           name: this.nombre
@@ -137,10 +137,10 @@ export default {
         .then(Response => {
           this.activeLoading = false;
           this.$vs.loading.close();
-          this.$router.push("/listadoRoles");
+          this.$router.push("/listadoLabs");
           this.$vs.notify({
             title: "Actualizado",
-            text: "Rol actualizado exitosamente.",
+            text: "Laboratorio actualizado exitosamente.",
             color: "success"
           });
         })

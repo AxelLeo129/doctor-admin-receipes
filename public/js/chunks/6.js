@@ -6920,6 +6920,13 @@ __webpack_require__.r(__webpack_exports__);
   slug: "listadoRoles",
   icon: "ListIcon",
   rol: 1
+}, //Admin - Laboratorios 
+{
+  url: "/listadoLabs",
+  name: "Listado Laboratorios",
+  slug: "listadoLabs",
+  icon: "ListIcon",
+  rol: 1
 }, //Admin - Usuarios
 {
   url: "/listadoUsurios",

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-02-2020 a las 17:57:57
+-- Tiempo de generación: 16-02-2020 a las 18:53:42
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.2.15
 
@@ -109,6 +109,28 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `labs`
+--
+
+CREATE TABLE `labs` (
+  `id` int(11) NOT NULL,
+  `name` varchar(70) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `labs`
+--
+
+INSERT INTO `labs` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Bayern', '2020-02-16 23:37:34', '2020-02-16 23:37:34'),
+(2, 'LAPROMED', '2020-02-16 23:38:01', '2020-02-16 23:38:36'),
+(3, 'Prueba', '2020-02-16 23:48:45', '2020-02-16 23:53:21');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `migrations`
 --
 
@@ -208,6 +230,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('4bcad42feaf0ec0d6c6e98158837f60809b75ac3dd94b5ecc0690674b69a59a5e1feee4197e70bb8', 12, 5, 'MyApp', '[]', 0, '2020-02-09 09:37:15', '2020-02-09 09:37:15', '2021-02-09 03:37:15'),
 ('4d409042f1fa15c8593acf8983ec260c6199aba4e3f64ff8420160b45a675e3ae11ad9e8fda837e1', 12, 5, 'MyApp', '[]', 0, '2020-02-09 10:01:22', '2020-02-09 10:01:22', '2021-02-09 04:01:22'),
 ('4e0983adca28c66f7596062517d36e7e717439ae03ed267d426c70969014311c4e965f61a01fad5b', 16, 5, 'MyApp', '[]', 0, '2020-02-11 02:33:33', '2020-02-11 02:33:33', '2021-02-10 20:33:33'),
+('4fcd408bfb107e075118422b388c8924def81a8a0b0c68846e7d48ee45760dcfa06e0eea570ba34f', 1, 5, 'MyApp', '[]', 0, '2020-02-16 23:08:57', '2020-02-16 23:08:57', '2021-02-16 17:08:57'),
 ('529bcacc4a23a7dda62ad5193d9ef69049810cae4c0d78adec7d70bec75d8e710e6df1292d1e44f1', 12, 5, 'MyApp', '[]', 0, '2020-02-09 10:03:49', '2020-02-09 10:03:49', '2021-02-09 04:03:49'),
 ('5a516f0ef98f660cc0081c45d52c197279f897160a3e558eaac724d041aa34e4235eb2ade09737e4', 11, 5, 'MyApp', '[]', 0, '2020-02-10 09:42:20', '2020-02-10 09:42:20', '2021-02-10 03:42:20'),
 ('5be618a45943b9a8d3c8a75548e97b5f7c42aa77f68ba0073c282f05b8d6306e1f465e6e210b6029', 1, 5, 'MyApp', '[]', 0, '2020-02-16 10:31:40', '2020-02-16 10:31:40', '2021-02-16 04:31:40'),
@@ -285,6 +308,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('efc1adea9a5d133a76a15eb60601245146933047d5680efaed1d6efc2e506df863ea9cdd89bf0041', 1, 5, 'MyApp', '[]', 0, '2020-02-16 03:48:29', '2020-02-16 03:48:29', '2021-02-15 21:48:29'),
 ('f25570554a976eb6371f60620bd5672e91f2ae3449202d900be388de27f927c3fe722351ab8186aa', 20, 5, 'MyApp', '[]', 0, '2020-02-16 12:18:42', '2020-02-16 12:18:42', '2021-02-16 06:18:42'),
 ('f4c481b02a1a4aa0eb1a1bd605a9e8edd16081d2f7e2e5b945e5ee225ba2c065af0b659be7ddb6ec', 1, 5, 'MyApp', '[]', 0, '2020-02-09 15:02:03', '2020-02-09 15:02:03', '2021-02-09 09:02:03'),
+('f7d09e7c8d1bd7764a793897ace69d466ce7e9a231ab225ac161ed09337030579c9e296518d7aee4', 1, 5, 'MyApp', '[]', 0, '2020-02-16 23:10:05', '2020-02-16 23:10:05', '2021-02-16 17:10:05'),
 ('f9e178c07601c0398a27b36e75a14d9628ef27ecb182045e8a73148a7266ff8a4655a4e8448a4825', 1, 3, 'MyApp', '[]', 0, '2020-02-03 04:58:46', '2020-02-03 04:58:46', '2021-02-02 22:58:46'),
 ('fc0c17a4471ffde4d51323427ca5d420223fc0055333d46e350f99133006b54a4344c6ef25abc497', 11, 3, 'MyApp', '[]', 0, '2020-01-29 09:28:26', '2020-01-29 09:28:26', '2021-01-29 03:28:26');
 
@@ -705,7 +729,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `userName`, `rol`, `image`, `clinicName`, `clinicLogo`, `clinicPhone`, `clinicAddress`, `specialties`, `noCollegiate`, `phone`, `birthDate`, `clinicalRecord`, `showAlerts`, `email`, `email_verified_at`, `password`, `remember_token`, `id_visitador`, `created_at`, `updated_at`) VALUES
-(1, 'Axel López', 'AxelLeo129', '1', NULL, NULL, '', NULL, NULL, NULL, NULL, 4125, NULL, 1, 1, 'atooleonardon129@gmail.com', NULL, '$2y$10$uV5gOasq/yDQGmZ6hz.DhOmVnssqT7UVRRnXzUG88TJWY4/KfWYxu', NULL, 1, '2020-01-13 09:48:59', '2020-02-16 04:44:25'),
+(1, 'Axel Leonardo', 'AxelLeo129', '1', NULL, NULL, '', NULL, NULL, NULL, 987654, 4125, NULL, 1, 1, 'atooleonardon129@gmail.com', NULL, '$2y$10$id584AfOoyOhZ9j3juxG1uBtySUICBkwvUZ8VX9nzbmmRqjE8AD6u', NULL, 1, '2020-01-13 09:48:59', '2020-02-16 23:22:32'),
 (2, 'Mario Medrano', 'Mario123', '2', NULL, '', '', '', '', '', NULL, NULL, NULL, 1, 1, 'mmedrano@medico.org', NULL, '$2y$10$z1ZjYFT/juNB3aLboPvGNeTBXA0qdJkwcfoP0n.KSiYrSPOayyK5u', NULL, 1, '2020-01-13 10:04:45', '2020-01-13 10:04:45'),
 (4, 'Mario Medrano', 'Prueba', '2', NULL, NULL, NULL, NULL, NULL, '[{\"label\":\"Pediatr\\u00eda\",\"value\":6},{\"label\":\"Gastroenterolog\\u00eda\",\"value\":7}]', 129, 34246738, NULL, 1, 1, 'mario@medico.org', NULL, '$2y$10$5r5jIgXqw0GUQP7AWtXvceZ8AMaaF8BJhm3ZZKySXyFVH9tKgPvke', NULL, 16, '2020-01-13 10:33:03', '2020-02-16 10:30:30'),
 (6, 'Prueba', '123', '2', NULL, '', '', '', '', '', NULL, NULL, NULL, 1, 1, 'prueba@gmail.com', NULL, '$2y$10$CEp17rxliqcIl36W3aQ3U.K66e1DjvFrOnrYzq82hdFMOG2gGGmpS', NULL, 1, '2020-01-14 05:07:56', '2020-01-14 05:07:56');
@@ -772,6 +796,12 @@ ALTER TABLE `clients`
 -- Indices de la tabla `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `labs`
+--
+ALTER TABLE `labs`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -920,6 +950,12 @@ ALTER TABLE `clients`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `labs`
+--
+ALTER TABLE `labs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
