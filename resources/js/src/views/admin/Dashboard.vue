@@ -98,9 +98,9 @@
 
                   <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
 
-                  <vs-td :data="data[indextr].laboratory">{{ data[indextr].laboratory }}</vs-td>
+                  <vs-td :data="data[indextr].lab">{{ data[indextr].lab }}</vs-td>
 
-                  <vs-td :data="data[indextr].precentation">{{ data[indextr].precentation }}</vs-td>
+                  <vs-td :data="data[indextr].precentacion">{{ data[indextr].precentacion }}</vs-td>
 
                   <vs-td :data="data[indextr].quantity">{{ data[indextr].quantity }}</vs-td>
 
@@ -110,13 +110,13 @@
                         color="warning"
                         type="filled"
                         size="small"
-                        @click="edit(item.id)"
+                        @click="edit(tr.id)"
                       >Editar</vs-button>
                       <vs-button
                         color="danger"
                         type="filled"
                         size="small"
-                        @click="popupActive3=true, iden=item.id"
+                        @click="popupActive3=true, iden=tr.id"
                       >Eliminar</vs-button>
                     </span>
                   </vs-td>

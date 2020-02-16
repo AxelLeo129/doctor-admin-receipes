@@ -393,14 +393,14 @@ var render = function() {
                           _vm._v(" "),
                           _c("vs-td", [
                             _c("span", {
-                              domProps: { textContent: _vm._s(item.laboratory) }
+                              domProps: { textContent: _vm._s(item.lab) }
                             })
                           ]),
                           _vm._v(" "),
                           _c("vs-td", [
                             _c("span", {
                               domProps: {
-                                textContent: _vm._s(item.precentation)
+                                textContent: _vm._s(item.precentacion)
                               }
                             })
                           ]),

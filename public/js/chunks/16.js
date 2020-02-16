@@ -561,16 +561,16 @@ var render = function() {
                                 _vm._v(" "),
                                 _c(
                                   "vs-td",
-                                  { attrs: { data: data[indextr].laboratory } },
-                                  [_vm._v(_vm._s(data[indextr].laboratory))]
+                                  { attrs: { data: data[indextr].lab } },
+                                  [_vm._v(_vm._s(data[indextr].lab))]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "vs-td",
                                   {
-                                    attrs: { data: data[indextr].precentation }
+                                    attrs: { data: data[indextr].precentacion }
                                   },
-                                  [_vm._v(_vm._s(data[indextr].precentation))]
+                                  [_vm._v(_vm._s(data[indextr].precentacion))]
                                 ),
                                 _vm._v(" "),
                                 _c(
@@ -593,7 +593,7 @@ var render = function() {
                                           },
                                           on: {
                                             click: function($event) {
-                                              return _vm.edit(_vm.item.id)
+                                              return _vm.edit(tr.id)
                                             }
                                           }
                                         },
@@ -611,7 +611,7 @@ var render = function() {
                                           on: {
                                             click: function($event) {
                                               ;(_vm.popupActive3 = true),
-                                                (_vm.iden = _vm.item.id)
+                                                (_vm.iden = tr.id)
                                             }
                                           }
                                         },

@@ -45,14 +45,16 @@
             <span class="text-danger text-sm" v-show="description === ''">{{ errors.campo }}</span>
           </div>
 
-          <vs-input
-            class="w-full mt-4"
-            label="Precio"
-            v-model="price"
-            name="precio"
-            placeholder="Q"
-            type="number"
-          />
+          <label class="vs-input--label">Precio</label>
+          <vx-input-group class="mb-base">
+            <template slot="prepend">
+              <div class="prepend-text bg-primary">
+                <span>Q</span>
+              </div>
+            </template>
+
+            <vs-input v-model="price" placeholder="Price" />
+          </vx-input-group>
           <span class="text-danger text-sm" v-show="price === ''">{{ errors.campo }}</span>
           <div class="mt-4">
             <label class="vs-input--label">Categoría</label>
@@ -77,28 +79,24 @@
           <span class="text-danger text-sm" v-show="quantity === ''">{{ errors.campo }}</span>
 
           <div class="mt-4">
-            <vs-textarea class="vs-textarea" label="Precentación" v-model="precentation" />
+            <label class="vs-input--label" style="color: gray;">Presentación</label>
+              <v-select v-model="precentation" :options="presentaciones" />
             <span class="text-danger text-sm" v-show="precentation === ''">{{ errors.campo }}</span>
           </div>
 
-          <vs-input
-            class="w-full mt-4"
-            label="Laboratorio"
-            v-model="laboratory"
-            name="laboratorio"
-          />
+          <div class="mt-4">
+            <div>
+              <label class="vs-input--label" style="color: gray;">Laboratorio</label>
+              <v-select v-model="laboratory" :options="laboratorios" />
+              <span class="text-danger text-sm" v-show="laboratory === ''">{{ errors.campo }}</span>
+            </div>
+          </div>
 
-
-
-          <span class="text-danger text-sm" v-show="laboratory === ''">{{ errors.campo }}</span>
-
-          <vs-input
-            class="w-full mt-4"
-            label="Bodega de Despacho"
-            v-model="warehouse"
-            name="bodega"
-          />
-          <span class="text-danger text-sm" v-show="warehouse === ''">{{ errors.campo }}</span>
+          <div class="mt-4">
+            <label class="vs-input--label">Proveedor</label>
+            <v-select :options="['NOVEMED']" v-model="warehouse" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+            <span class="text-danger text-sm" v-show="warehouse === ''">{{ errors.campo }}</span>
+          </div>
         </div>
 
         <div class="vx-row">
@@ -154,10 +152,37 @@ export default {
       base64textString: "",
       categorias: [],
       laboratorios: [],
+      presentaciones: [],
       Resid: null
     };
   },
   methods: {
+    getPre() {
+      let token = localStorage.getItem("tu");
+      let idu = localStorage.getItem("ui");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getPres",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          this.presentaciones = [];
+          Response.data.forEach(element => {
+            if (element.user_id == idu) {
+              this.presentaciones.push({
+                label: element.name + '-' + element.unidad + '-' + element.cantidad,
+                value: element.id
+              });
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     getLab() {
       let token = localStorage.getItem("tu");
       let idu = localStorage.getItem("ui");
@@ -170,16 +195,15 @@ export default {
         }
       })
         .then(Response => {
+          this.laboratorios = [];
           Response.data.forEach(element => {
             if (element.user_id == idu) {
-              console.log('hola');
               this.laboratorios.push({
                 label: element.name,
                 value: element.id
               });
             }
           });
-          console.log(this.laboratorios);
         })
         .catch(err => {
           console.log(err);
@@ -238,8 +262,8 @@ export default {
           image: this.base64textString,
           description: this.description,
           price: this.price,
-          precentation: this.precentation,
-          laboratory: this.laboratory,
+          precentation: this.precentation.value,
+          laboratory: this.laboratory.value,
           warehouse: this.warehouse,
           quantity: this.quantity,
           user_id: idu
@@ -309,6 +333,8 @@ export default {
   },
   created() {
     this.getCategories();
+    this.getLab();
+    this.getPre();
   }
 };
 </script>

@@ -76,10 +76,10 @@
                     <span v-text="item.name"></span>
                   </vs-td>
                   <vs-td>
-                    <span v-text="item.laboratory"></span>
+                    <span v-text="item.lab"></span>
                   </vs-td>
                   <vs-td>
-                    <span v-text="item.precentation"></span>
+                    <span v-text="item.precentacion"></span>
                   </vs-td>
                   <vs-td>
                     <span v-text="item.quantity"></span>
