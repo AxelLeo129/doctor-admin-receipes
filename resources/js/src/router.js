@@ -715,7 +715,91 @@ const router = new Router({
             rule: 'editor'
           }
         },
-        //Admin - Roles
+        {
+          path: '/nuevoUsuario',
+          name: 'nuevoUsuario',
+          component: () => import('@/views/admin/users/nuevoUsurio.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Usuarios' },
+              { title: 'Nuevo Usuario', active: true },
+            ],
+            pageTitle: 'Nuevo Usuario',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/editarUsuario/:idUsuario',
+          name: 'editarUsuario',
+          component: () => import('@/views/admin/users/editarUsuario.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Usuarios' },
+              { title: 'Editar Usuario', active: true },
+            ],
+            pageTitle: 'Editar Usuario',
+            rule: 'editor'
+          }
+        },
+        //Admin - Roles 
         {
           path: '/listadoRoles',
           name: 'listadoRoles',

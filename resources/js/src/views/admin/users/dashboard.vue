@@ -1,29 +1,38 @@
 <template>
-  <vs-table pagination max-items="10" search :data="users">
-    <template slot="thead">
-      <vs-th sort-key="id">#</vs-th>
-      <vs-th sort-key="username">Nombre</vs-th>
-      <vs-th sort-key="website">Rol</vs-th>
-      <vs-th sort-key="email">Email</vs-th>
-      <vs-th sort-key="id">Acciones</vs-th>
-    </template>
+  <div>
+    <div class="vx-row">
+      <div class="vx-col sm:w-1/2">
+        <div align="left">
+          <vs-button @click="nuevo" color="primary" size="small" type="filled">Nuevo Usuario</vs-button>
+        </div>
+      </div>
+    </div>
+    <vs-table pagination max-items="10" search :data="users">
+      <template slot="thead">
+        <vs-th sort-key="id">#</vs-th>
+        <vs-th sort-key="username">Nombre</vs-th>
+        <vs-th sort-key="website">Rol</vs-th>
+        <vs-th sort-key="email">Email</vs-th>
+        <vs-th sort-key="id">Acciones</vs-th>
+      </template>
 
-    <template slot-scope="{data}">
-      <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-        <vs-td v-text="indextr + 1"></vs-td>
+      <template slot-scope="{data}">
+        <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
+          <vs-td v-text="indextr + 1"></vs-td>
 
-        <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
+          <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
 
-        <vs-td :data="data[indextr].rol">{{ data[indextr].rol }}</vs-td>
+          <vs-td :data="data[indextr].rol">{{ data[indextr].rol }}</vs-td>
 
-        <vs-td :data="data[indextr].email">{{ data[indextr].email }}</vs-td>
+          <vs-td :data="data[indextr].email">{{ data[indextr].email }}</vs-td>
 
-        <vs-td>
-          <vs-button size="small" color="warning" @click="edit(tr.id)">Editar</vs-button>
-        </vs-td>
-      </vs-tr>
-    </template>
-  </vs-table>
+          <vs-td>
+            <vs-button size="small" color="warning" @click="edit(tr.id)">Editar</vs-button>
+          </vs-td>
+        </vs-tr>
+      </template>
+    </vs-table>
+  </div>
 </template>
 
 <script>
@@ -44,6 +53,9 @@ export default {
     };
   },
   methods: {
+    nuevo(){
+      this.$router.push('/nuevoUsuario');
+    },
     role(a) {
       if (a == "1") return "Administrador";
       if (a == "2") return "Médico";
@@ -54,7 +66,7 @@ export default {
       return "";
     },
     edit(id) {
-      this.$router.push("/editarMedico/" + id);
+      this.$router.push("/editarUsuario/" + id);
     },
     getMedics() {
       this.openLoading();
@@ -70,7 +82,7 @@ export default {
         .then(Response => {
           //console.log(Response);
           Response.data.forEach(element => {
-            element.rol = this.role(element.rol); 
+            element.rol = this.role(element.rol);
             this.users.push(element);
           });
           this.activeLoading = false;

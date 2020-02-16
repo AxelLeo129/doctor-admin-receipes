@@ -39,6 +39,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -48,6 +57,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    nuevo: function nuevo() {
+      this.$router.push('/nuevoUsuario');
+    },
     role: function role(a) {
       if (a == "1") return "Administrador";
       if (a == "2") return "Médico";
@@ -58,7 +70,7 @@ __webpack_require__.r(__webpack_exports__);
       return "";
     },
     edit: function edit(id) {
-      this.$router.push("/editarMedico/" + id);
+      this.$router.push("/editarUsuario/" + id);
     },
     getMedics: function getMedics() {
       var _this = this;
@@ -116,82 +128,117 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "vs-table",
-    {
-      attrs: { pagination: "", "max-items": "10", search: "", data: _vm.users },
-      scopedSlots: _vm._u([
+    "div",
+    [
+      _c("div", { staticClass: "vx-row" }, [
+        _c("div", { staticClass: "vx-col sm:w-1/2" }, [
+          _c(
+            "div",
+            { attrs: { align: "left" } },
+            [
+              _c(
+                "vs-button",
+                {
+                  attrs: { color: "primary", size: "small", type: "filled" },
+                  on: { click: _vm.nuevo }
+                },
+                [_vm._v("Nuevo Usuario")]
+              )
+            ],
+            1
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "vs-table",
         {
-          key: "default",
-          fn: function(ref) {
-            var data = ref.data
-            return _vm._l(data, function(tr, indextr) {
-              return _c(
-                "vs-tr",
-                { key: indextr, attrs: { data: tr } },
-                [
-                  _c("vs-td", {
-                    domProps: { textContent: _vm._s(indextr + 1) }
-                  }),
-                  _vm._v(" "),
-                  _c("vs-td", { attrs: { data: data[indextr].name } }, [
-                    _vm._v(_vm._s(data[indextr].name))
-                  ]),
-                  _vm._v(" "),
-                  _c("vs-td", { attrs: { data: data[indextr].rol } }, [
-                    _vm._v(_vm._s(data[indextr].rol))
-                  ]),
-                  _vm._v(" "),
-                  _c("vs-td", { attrs: { data: data[indextr].email } }, [
-                    _vm._v(_vm._s(data[indextr].email))
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "vs-td",
+          attrs: {
+            pagination: "",
+            "max-items": "10",
+            search: "",
+            data: _vm.users
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "default",
+              fn: function(ref) {
+                var data = ref.data
+                return _vm._l(data, function(tr, indextr) {
+                  return _c(
+                    "vs-tr",
+                    { key: indextr, attrs: { data: tr } },
                     [
+                      _c("vs-td", {
+                        domProps: { textContent: _vm._s(indextr + 1) }
+                      }),
+                      _vm._v(" "),
+                      _c("vs-td", { attrs: { data: data[indextr].name } }, [
+                        _vm._v(_vm._s(data[indextr].name))
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", { attrs: { data: data[indextr].rol } }, [
+                        _vm._v(_vm._s(data[indextr].rol))
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", { attrs: { data: data[indextr].email } }, [
+                        _vm._v(_vm._s(data[indextr].email))
+                      ]),
+                      _vm._v(" "),
                       _c(
-                        "vs-button",
-                        {
-                          attrs: { size: "small", color: "warning" },
-                          on: {
-                            click: function($event) {
-                              return _vm.edit(tr.id)
-                            }
-                          }
-                        },
-                        [_vm._v("Editar")]
+                        "vs-td",
+                        [
+                          _c(
+                            "vs-button",
+                            {
+                              attrs: { size: "small", color: "warning" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.edit(tr.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Editar")]
+                          )
+                        ],
+                        1
                       )
                     ],
                     1
                   )
-                ],
-                1
-              )
-            })
-          }
-        }
-      ])
-    },
-    [
-      _c(
-        "template",
-        { slot: "thead" },
+                })
+              }
+            }
+          ])
+        },
         [
-          _c("vs-th", { attrs: { "sort-key": "id" } }, [_vm._v("#")]),
-          _vm._v(" "),
-          _c("vs-th", { attrs: { "sort-key": "username" } }, [
-            _vm._v("Nombre")
-          ]),
-          _vm._v(" "),
-          _c("vs-th", { attrs: { "sort-key": "website" } }, [_vm._v("Rol")]),
-          _vm._v(" "),
-          _c("vs-th", { attrs: { "sort-key": "email" } }, [_vm._v("Email")]),
-          _vm._v(" "),
-          _c("vs-th", { attrs: { "sort-key": "id" } }, [_vm._v("Acciones")])
+          _c(
+            "template",
+            { slot: "thead" },
+            [
+              _c("vs-th", { attrs: { "sort-key": "id" } }, [_vm._v("#")]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "username" } }, [
+                _vm._v("Nombre")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "website" } }, [
+                _vm._v("Rol")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "email" } }, [
+                _vm._v("Email")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "id" } }, [_vm._v("Acciones")])
+            ],
+            1
+          )
         ],
-        1
+        2
       )
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []

@@ -48,10 +48,18 @@ export default [
     icon: "ListIcon",
     rol: 1
   },
+  //Admin - roles
+  {
+    url: "/listadoRoles",
+    name: "Listado Roles",
+    slug: "listadoRoles",
+    icon: "ListIcon",
+    rol: 1
+  },
   //Admin - Usuarios
   {
     url: "/listadoUsurios",
-    name: "Listado Usurios",
+    name: "Listado Usuarios",
     slug: "listadoUsurios",
     icon: "ListIcon",
     rol: 1

@@ -52,20 +52,18 @@
         <div class="vx-col sm:w-1/2 w-full mb-2">
           <div>
             <label class="vs-input--label" style="color: gray;">Roles</label>
-            <v-select
-              v-model="rol"
-              :options="roles"
-            />
+            <v-select v-model="rol" :options="roles" />
           </div>
         </div>
       </div>
       <div class="vx-row">
         <div class="vx-col w-full">
           <vs-button
+            color="warning"
             class="float-right mt-6"
             @click="registrar"
             :disabled="rol == null || rol == '' || name == null || name == '' || email == '' || email == null || bol == false || bol == null || password == null || password == '' || bol1 == false || bol1 == null || confirmPassword == '' || confirmPassword == null || bol2 == false || bol2 == null || bol3 == false || bol3 == null"
-          >Registrar</vs-button>
+          >Actualizar</vs-button>
           <vs-button color="danger" type="border" class="mb-2 mt-5">Cancelar</vs-button>
         </div>
       </div>
@@ -80,6 +78,7 @@ import vSelect from "vue-select";
 export default {
   data() {
     return {
+      id: "",
       errors: {
         name: "Este campo es requerido.",
         noCollegiate: "Este campo es requerido.",
@@ -109,11 +108,37 @@ export default {
   components: {
     "v-select": vSelect
   },
-  created(){
-      this.getRoles();
+  created() {
+    this.id = this.$route.params.idUsuario;
+    this.getUser();
   },
   methods: {
-    getRoles() {
+    getUser() {
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getUser/" + this.id,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          console.log(Response);
+          this.name = Response.data[0].name;
+          this.email = Response.data[0].email;
+          this.noCollegiate = Response.data[0].noCollegiate;
+          let r = parseInt(Response.data[0].rol);
+          this.getRoles(r);
+          this.rol = r;
+          this.activeLoading = false;
+          this.$vs.loading.close();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getRoles(r) {
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
@@ -124,13 +149,19 @@ export default {
         }
       })
         .then(Response => {
-          //console.log(Response);
           this.roles = [];
+          this.rol = [];
           Response.data.forEach(element => {
             this.roles.push({
               label: element.name,
               value: element.id
             });
+            if (r == element.id) {
+              this.rol.push({
+                label: element.name,
+                value: element.id
+              });
+            }
           });
           this.activeLoading = false;
           this.$vs.loading.close();

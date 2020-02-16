@@ -50,8 +50,8 @@
         </vx-card>
       </div>
       <div class="vx-col md:w-1/2 w-full">
-        <vx-card>
-          <h3>Edita la categoría del medicamentos ...</h3>
+        <vx-card style="height: 13rem;">
+          <h3>Edita los roles de los usuarioss ...</h3>
           <br />
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nobis quo sunt ducimus minima unde labore dolores saepe qui doloribus numquam, accusantium ad adipisci voluptates velit necessitatibus vel totam dolor?</p>
         </vx-card>

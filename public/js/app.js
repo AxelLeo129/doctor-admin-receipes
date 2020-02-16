@@ -56753,7 +56753,103 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         pageTitle: 'Listado Usuarios',
         rule: 'editor'
       }
-    }, //Admin - Roles
+    }, {
+      path: '/nuevoUsuario',
+      name: 'nuevoUsuario',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 42).then(__webpack_require__.bind(null, /*! @/views/admin/users/nuevoUsurio.vue */ "./resources/js/src/views/admin/users/nuevoUsurio.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next();
+        } else if (rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Usuarios'
+        }, {
+          title: 'Nuevo Usuario',
+          active: true
+        }],
+        pageTitle: 'Nuevo Usuario',
+        rule: 'editor'
+      }
+    }, {
+      path: '/editarUsuario/:idUsuario',
+      name: 'editarUsuario',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 44).then(__webpack_require__.bind(null, /*! @/views/admin/users/editarUsuario.vue */ "./resources/js/src/views/admin/users/editarUsuario.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next();
+        } else if (rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else if (rol == 3) {
+          next({
+            name: 'ListCallCenter'
+          });
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      },
+      meta: {
+        breadcrumb: [{
+          title: 'Consola',
+          url: '/consola'
+        }, {
+          title: 'Usuarios'
+        }, {
+          title: 'Editar Usuario',
+          active: true
+        }],
+        pageTitle: 'Editar Usuario',
+        rule: 'editor'
+      }
+    }, //Admin - Roles 
     {
       path: '/listadoRoles',
       name: 'listadoRoles',
