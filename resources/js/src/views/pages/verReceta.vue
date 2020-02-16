@@ -40,7 +40,7 @@
           <h1>Receta</h1>
           <div class="invoice__invoice-detail mt-6">
             <h6>Receta No.</h6>
-            <p>{{ invoiceDetails.invoiceNo }}</p>
+            <p v-text="rId"></p>
 
             <h6 class="mt-4">Fecha Receta</h6>
             <p v-text="nuevaRecetaData.dateIssue"></p>
@@ -49,9 +49,9 @@
         <div class="vx-col w-full md:w-1/2 mt-12">
           <h5>Paciente</h5>
           <div class="invoice__recipient-info my-4">
-            <p v-text="nuevaRecetaData.name"></p>
+            <p v-text="pName"></p>
             <p>Guatemala</p>
-            <p v-text="nuevaRecetaData.phone"></p>
+            <p v-text="pPhone"></p>
           </div>
           <div class="invoice__recipient-contact">
             <!-- <p class="flex items-center">
@@ -63,11 +63,11 @@
         <div class="vx-col w-full md:w-1/2 mt-base text-right mt-12">
           <h5>{{ companyDetails.name }}</h5>
           <div class="invoice__company-info my-4">
-            <p>Via 4 zona 4 Guatemala</p>
+            <p v-text="clAddress"></p>
             <p>
               <strong v-text="drName"></strong>
             </p>
-            <p>{{ companyDetails.zipcode }}</p>
+            <p v-text="clPhone"></p>
           </div>
           <div class="invoice__company-contact">
             <p class="flex items-center justify-end">
@@ -90,8 +90,8 @@
 
           <!-- DATA -->
           <template>
-            <vs-tr v-for="item in nuevaRecetaData.medicamentos" :key="item.nombre">
-              <vs-td v-text="item.nombre + ' ' + item.precentacion + ' ' + item.descripcion"></vs-td>
+            <vs-tr v-for="item in medicinas" :key="item.id">
+              <vs-td v-text="item.name + ' ' + item.precentation + ' ' + item.dispensing"></vs-td>
             </vs-tr>
           </template>
         </vs-table>
@@ -100,7 +100,7 @@
       <!-- INVOICE FOOTER -->
       <div class="invoice__footer text-right p-base">
         <div align="right">
-          <img class="h-24 w-64" :src="imagen64" alt />
+          <h6>PHARMAZone.app</h6>
         </div>
       </div>
     </vx-card>
@@ -113,6 +113,11 @@ import axios from "axios";
 export default {
   data() {
     return {
+      rId: '',
+      clAddress: '',
+      clPhone: '',
+      pName: '',
+      pPhone: '',
       medicinas: [],
       medicinas1: [],
       image: "/images/medicamentos/demol.PNG",
@@ -208,7 +213,7 @@ export default {
       })
         .then(Response => {
           Response.data.forEach(element => {
-              this.medicinas.push(element.dispensing);
+              this.medicinas.push(element);
           });
           console.log(this.medicinas);
         })
@@ -230,13 +235,13 @@ export default {
         }
       })
         .then(Response => {
-          console.log(Response);
           let f = new Date();
           let fecha =
             f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
           this.nuevaRecetaData.dateIssue = fecha;
-          this.nuevaRecetaData.name = Response.data[0].name;
-          this.nuevaRecetaData.phone = Response.data[0].phone;
+          this.pName = Response.data[0].name;
+          this.pPhone = Response.data[0].phone;
+          this.rId = Response.data[0].id;
         })
         .catch(err => {
           console.log(err);
@@ -268,6 +273,16 @@ export default {
               "data:image/png;base64," + Response.data.success.clinicLogo;
           }
           this.drName = Response.data.success.name;
+          if(Response.data.success.clinicPhone == null || Response.data.success.clinicPhone == ''){
+            this.clPhone = '+502: 8452-9862';
+          } else {
+            this.clPhone = Response.data.success.clinicPhone;
+          }
+          if(Response.data.success.clinicAddress == null || Response.data.success.clinicAddress == ''){
+            this.clAddress = 'Via 4 zona 4 Guatemala';
+          } else {
+            this.clAddress = Response.data.success.clinicAddress;
+          }
           this.drEmail = Response.data.success.email;
           if (
             Response.data.success.phone == null ||
