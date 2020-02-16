@@ -133,6 +133,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -163,12 +166,41 @@ __webpack_require__.r(__webpack_exports__);
       category: [],
       base64textString: "",
       categorias: [],
+      laboratorios: [],
       Resid: null
     };
   },
   methods: {
-    getCategories: function getCategories() {
+    getLab: function getLab() {
       var _this = this;
+
+      var token = localStorage.getItem("tu");
+      var idu = localStorage.getItem("ui");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getLabs",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        Response.data.forEach(function (element) {
+          if (element.user_id == idu) {
+            console.log('hola');
+
+            _this.laboratorios.push({
+              label: element.name,
+              value: element.id
+            });
+          }
+        });
+        console.log(_this.laboratorios);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    getCategories: function getCategories() {
+      var _this2 = this;
 
       var token = localStorage.getItem("tu");
       var idu = localStorage.getItem("ui");
@@ -182,7 +214,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         Response.data.forEach(function (element) {
           if (element.user_id == idu) {
-            _this.categorias.push({
+            _this2.categorias.push({
               label: element.name,
               value: element.id
             });
@@ -205,7 +237,7 @@ __webpack_require__.r(__webpack_exports__);
       this.bol = "";
     },
     doSave: function doSave() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -233,41 +265,41 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this2.Resid = Response.data.mess;
+        _this3.Resid = Response.data.mess;
         axios__WEBPACK_IMPORTED_MODULE_1___default()({
           method: "post",
           url: "http://127.0.0.1:8000/api/postProdCate",
           data: JSON.stringify({
             categories: arrayFinal,
-            product_id: _this2.Resid
+            product_id: _this3.Resid
           }),
           headers: {
             authorization: "Bearer " + token,
             "content-type": "application/json"
           }
         }).then(function (Response) {
-          _this2.activeLoading = false;
+          _this3.activeLoading = false;
 
-          _this2.$vs.loading.close();
+          _this3.$vs.loading.close();
 
-          _this2.$router.push("/consola");
+          _this3.$router.push("/consola");
 
-          _this2.$vs.notify({
+          _this3.$vs.notify({
             title: "Agregado",
             text: "Producto creado exitosamente.",
             color: "success"
           });
         }).catch(function (err) {
-          _this2.activeLoading = false;
+          _this3.activeLoading = false;
 
-          _this2.$vs.loading.close();
+          _this3.$vs.loading.close();
 
           activado = true; //console.log(err);
         });
       }).catch(function (err) {
-        _this2.activeLoading = false;
+        _this3.activeLoading = false;
 
-        _this2.$vs.loading.close();
+        _this3.$vs.loading.close();
 
         activado = true; //console.log(err);
       });
@@ -309,7 +341,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".fileInput {\n  width: 0.1px;\n  height: 0.1px;\n  opacity: 0;\n  overflow: hidden;\n  position: absolute;\n  z-index: -1;\n}\n.subir {\n  color: #fff;\n}\n[dir] .subir {\n  padding: 5px 10px;\n  background: #003DA5;\n  border: 0px solid #fff;\n  border-radius: 15px 15px 15px 15px;\n}\n.subir:hover {\n  color: #fff;\n}\n[dir] .subir:hover {\n  background: #003DA5;\n}\n[dir] .vs-textarea {\n  background-color: white;\n}", ""]);
+exports.push([module.i, ".fileInput {\n  width: 0.1px;\n  height: 0.1px;\n  opacity: 0;\n  overflow: hidden;\n  position: absolute;\n  z-index: -1;\n}\n.subir {\n  color: #fff;\n}\n[dir] .subir {\n  padding: 5px 10px;\n  background: #003da5;\n  border: 0px solid #fff;\n  border-radius: 15px 15px 15px 15px;\n}\n.subir:hover {\n  color: #fff;\n}\n[dir] .subir:hover {\n  background: #003da5;\n}\n[dir] .vs-textarea {\n  background-color: white;\n}", ""]);
 
 // exports
 

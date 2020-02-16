@@ -76,7 +76,8 @@ export default {
         method: "post",
         url: "http://127.0.0.1:8000/api/postLab",
         data: JSON.stringify({
-          name: this.nombre
+          name: this.nombre,
+          user_id: id
         }),
         headers: {
           authorization: "Bearer " + token,

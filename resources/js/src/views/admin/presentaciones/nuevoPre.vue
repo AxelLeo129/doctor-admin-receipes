@@ -98,7 +98,8 @@ export default {
         data: JSON.stringify({
           name: this.nombre,
           unidad: this.unidad,
-          cantidad: this.cantidad
+          cantidad: this.cantidad,
+          user_id: id
         }),
         headers: {
           authorization: "Bearer " + token,

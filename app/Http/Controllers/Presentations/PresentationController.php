@@ -41,6 +41,7 @@ class PresentationController extends Controller
         $pre->name = $request->name;
         $pre->unidad = $request->unidad;
         $pre->cantidad = $request->cantidad;
+        $pre->user_id = $request->user_id;
         if($pre->save()){
             return ['result' => 'success', "mess"=>$pre];
         }
@@ -81,6 +82,7 @@ class PresentationController extends Controller
         $pre->name = $request->name;
         $pre->unidad = $request->unidad;
         $pre->cantidad = $request->cantidad;
+        $pre->user_id = $request->user_id;
 
         if($pre->save()){
             return ['result' => 'success', "mess"=>$pre];

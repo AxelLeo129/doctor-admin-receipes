@@ -87,6 +87,9 @@
             v-model="laboratory"
             name="laboratorio"
           />
+
+
+
           <span class="text-danger text-sm" v-show="laboratory === ''">{{ errors.campo }}</span>
 
           <vs-input
@@ -150,10 +153,38 @@ export default {
       category: [],
       base64textString: "",
       categorias: [],
+      laboratorios: [],
       Resid: null
     };
   },
   methods: {
+    getLab() {
+      let token = localStorage.getItem("tu");
+      let idu = localStorage.getItem("ui");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getLabs",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          Response.data.forEach(element => {
+            if (element.user_id == idu) {
+              console.log('hola');
+              this.laboratorios.push({
+                label: element.name,
+                value: element.id
+              });
+            }
+          });
+          console.log(this.laboratorios);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     getCategories() {
       let token = localStorage.getItem("tu");
       let idu = localStorage.getItem("ui");
@@ -294,7 +325,7 @@ export default {
 
 .subir {
   padding: 5px 10px;
-  background: #003DA5;
+  background: #003da5;
   color: #fff;
   border: 0px solid #fff;
   border-radius: 15px 15px 15px 15px;
@@ -302,7 +333,7 @@ export default {
 
 .subir:hover {
   color: #fff;
-  background: #003DA5;
+  background: #003da5;
 }
 
 .vs-textarea {

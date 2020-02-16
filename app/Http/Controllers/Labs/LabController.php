@@ -38,6 +38,7 @@ class LabController extends Controller
     {
         $lab = new Lab();
         $lab->name = $request->name;
+        $lab->user_id = $request->user_id;
         if($lab->save()){
             return ['result' => 'success', "mess"=>$lab];
         }
@@ -76,6 +77,7 @@ class LabController extends Controller
     {
         $lab = Lab::find($request->id);
         $lab->name = $request->name;
+        $lab->user_id = $request->user_id;
 
         if($lab->save()){
             return ['result' => 'success', "mess"=>$lab];

@@ -51,7 +51,7 @@
       </div>
       <div class="vx-col md:w-1/2 w-full">
         <vx-card style="height: 13rem;">
-          <h3>Edita los roles de los usuarioss ...</h3>
+          <h3>Edita los laboratorios de las medicinas ...</h3>
           <br />
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nobis quo sunt ducimus minima unde labore dolores saepe qui doloribus numquam, accusantium ad adipisci voluptates velit necessitatibus vel totam dolor?</p>
         </vx-card>
@@ -122,12 +122,14 @@ export default {
       this.popupActive2=false;
       this.openLoading();
       let token = localStorage.getItem("tu");
+      let id  = localStorage.getItem('ru');
       axios({
         method: "put",
         url: "http://127.0.0.1:8000/api/putLab",
         data: JSON.stringify({
           id: this.id,
-          name: this.nombre
+          name: this.nombre,
+          user_id: id
         }),
         headers: {
           authorization: "Bearer " + token,

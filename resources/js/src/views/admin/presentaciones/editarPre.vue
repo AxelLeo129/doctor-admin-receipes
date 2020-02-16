@@ -44,7 +44,7 @@
                 <span>Cantidad</span>
               </div>
               <div class="vx-col sm:w-2/3 w-full">
-                <vs-input class="w-full" v-model="cantidad" />
+                <vs-input class="w-full" type="number" v-model="cantidad" />
                 <span class="text-danger text-sm" v-show="cantidad === ''">Este campo es requerido.</span>
               </div>
             </div>
@@ -144,6 +144,7 @@ export default {
       this.popupActive2=false;
       this.openLoading();
       let token = localStorage.getItem("tu");
+      let id = localStorage.getItem("ru");
       axios({
         method: "put",
         url: "http://127.0.0.1:8000/api/putPre",
@@ -151,7 +152,8 @@ export default {
           id: this.id,
           name: this.nombre,
           unidad: this.unidad,
-          cantidad: this.cantidad
+          cantidad: this.cantidad,
+          user_id: id
         }),
         headers: {
           authorization: "Bearer " + token,
