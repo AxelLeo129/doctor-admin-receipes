@@ -84,6 +84,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('postLab', 'Labs\LabController@store');
     Route::get('getLab/{id}', 'Labs\LabController@show');
     Route::put('putLab', 'Labs\LabController@update');
+    //Presentación
+    Route::get('getPres', 'Presentations\PresentationController@index');
+    Route::post('postPre', 'Presentations\PresentationController@store');
+    Route::get('getPre/{id}', 'Presentations\PresentationController@show');
+    Route::put('putPre', 'Presentations\PresentationController@update');
 
 });
 

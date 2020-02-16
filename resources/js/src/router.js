@@ -672,6 +672,133 @@ const router = new Router({
             }
           }
         },
+        //Admin - Presentación
+        {
+          path: '/listadoPres',
+          name: 'listadoPres',
+          component: () => import('@/views/admin/presentaciones/dashboard.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Presentaciones' },
+              { title: 'Listado Presentaciones', active: true },
+            ],
+            pageTitle: 'Listado Presentaciones',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/nuevaPre',
+          name: 'nuevaPre',
+          component: () => import('@/views/admin/presentaciones/nuevoPre.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Presentaciones' },
+              { title: 'Nueva Presentación', active: true },
+            ],
+            pageTitle: 'Nueva Presentación',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/editarPre/:preId',
+          name: 'editarPre',
+          component: () => import('@/views/admin/presentaciones/editarPre.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Presentaciones' },
+              { title: 'Editar Presentación', active: true },
+            ],
+            pageTitle: 'Editar Presentación',
+            rule: 'editor'
+          }
+        },
         //Admin - Laboratorios
         {
           path: '/listadoLabs',

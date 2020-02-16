@@ -64,6 +64,14 @@ export default [
     icon: "ListIcon",
     rol: 1
   },
+  //Admin - Presentaciones
+  {
+    url: "/listadoPres",
+    name: "Listado Presentaciones",
+    slug: "listadoPres",
+    icon: "ListIcon",
+    rol: 1
+  },
   //Admin - Usuarios
   {
     url: "/listadoUsurios",

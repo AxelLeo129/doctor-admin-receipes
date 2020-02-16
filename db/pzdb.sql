@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-02-2020 a las 18:53:42
+-- Tiempo de generación: 16-02-2020 a las 19:26:40
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.2.15
 
@@ -486,6 +486,30 @@ CREATE TABLE `patients` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `presentations`
+--
+
+CREATE TABLE `presentations` (
+  `id` int(11) NOT NULL,
+  `name` varchar(70) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `unidad` varchar(70) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `cantidad` varchar(11) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `presentations`
+--
+
+INSERT INTO `presentations` (`id`, `name`, `unidad`, `cantidad`, `created_at`, `updated_at`) VALUES
+(1, 'Caja', 'Blíster', '6', '2020-02-17 00:03:46', '2020-02-17 00:25:34'),
+(2, 'Jarabe', 'Bote', '1', '2020-02-17 00:04:32', '2020-02-17 00:05:18'),
+(3, 'Prueba', 'Prueba', '2', '2020-02-17 00:19:18', '2020-02-17 00:19:18');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `products`
 --
 
@@ -872,6 +896,12 @@ ALTER TABLE `patients`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `presentations`
+--
+ALTER TABLE `presentations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `products`
 --
 ALTER TABLE `products`
@@ -992,6 +1022,12 @@ ALTER TABLE `orders_products`
 --
 ALTER TABLE `patients`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `presentations`
+--
+ALTER TABLE `presentations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
