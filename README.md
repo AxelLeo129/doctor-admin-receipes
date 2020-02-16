@@ -2,7 +2,9 @@
 
 Laravel Proyect / Vuex
 
-Plataforma Web de gestión de cursos en video por suscripción, desarrollo en Larabel
+Plataforma Web de gestión de cursos en video por suscripción, desarrollo en Laravel
+
+
 
 composer install
 
@@ -16,16 +18,21 @@ sudo chmod -R o+rw bootstrap/cache
 
 sudo chmod -R o+rw storage
 
-npm install
-
-npm run prod
-
-npm run dev
-
-npm run watch
-
 php artisan migrate
 
 php artisan passport:install
 
-php artisan serve
+
+
+npm install
+
+npm audit fix (si da problema de librerias obsoletas)
+
+npm run watch (siempre antes de las siguientes instrucciones)
+
+npm run prod (si es en ambiente de Produccion)
+
+npm run dev (si es en ambiente de desarrollo)
+
+php artisan serve (solo en ambiente local)
+
