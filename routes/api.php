@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('getRecipes', 'Recipies\RecipieController@index');
     Route::get('getReceProd/{id}', 'Recipies\RecipieController@getProduct');
     Route::get('getInfoRecipie/{id}', 'Recipies\RecipieController@getInfoRecipie');
+    Route::put('putReceSta', 'Recipies\RecipieController@update');
     //Categorias
     Route::post('postCategory', 'Categories\CategoryController@store');
     Route::get('getCategories', 'Categories\CategoryController@index');

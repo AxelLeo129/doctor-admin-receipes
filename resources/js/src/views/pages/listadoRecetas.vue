@@ -3,7 +3,7 @@
     <div class="vx-row">
       <div class="vx-col md:w-1/2 w-full">
         <vx-input-group class="mb-base">
-          <vs-input placeholder="Nombre / Laboratorio / Precentación / Cantidad" v-model="buscar" />
+          <vs-input placeholder="Nombre / Fecha" v-model="buscar" />
 
           <template slot="append">
             <div class="append-text bg-primary">

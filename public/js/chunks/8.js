@@ -373,6 +373,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -744,14 +761,34 @@ __webpack_require__.r(__webpack_exports__);
               "content-type": "application/json"
             }
           }).then(function (Response) {
-            _this2.activeLoading = false;
+            axios__WEBPACK_IMPORTED_MODULE_1___default()({
+              method: "put",
+              url: "http://127.0.0.1:8000/api/putReceSta",
+              data: JSON.stringify({
+                id: _this2.idRecipe,
+                status: 2
+              }),
+              headers: {
+                authorization: "Bearer " + token,
+                "content-type": "application/json"
+              }
+            }).then(function (Response) {
+              _this2.activeLoading = false;
 
-            _this2.$vs.loading.close();
+              _this2.$vs.loading.close();
 
-            _this2.$vs.notify({
-              title: "Satisfactorio",
-              text: "Pedido enviado al despachador exitosamente.",
-              color: "success"
+              _this2.$vs.notify({
+                title: "Satisfactorio",
+                text: "Pedido enviado al despachador exitosamente.",
+                color: "success"
+              });
+            }).catch(function (err) {
+              _this2.activeLoading = false;
+
+              _this2.$vs.loading.close();
+
+              activado = true;
+              console.log(err);
             });
           }).catch(function (err) {
             _this2.activeLoading = false;
@@ -787,7 +824,7 @@ __webpack_require__.r(__webpack_exports__);
         ids.push(element.id);
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        method: "put",
+        method: "post",
         url: "http://127.0.0.1:8000/api/postCliente",
         data: JSON.stringify({
           client_name: this.name,
@@ -848,14 +885,34 @@ __webpack_require__.r(__webpack_exports__);
               "content-type": "application/json"
             }
           }).then(function (Response) {
-            _this3.activeLoading = false;
+            axios__WEBPACK_IMPORTED_MODULE_1___default()({
+              method: "put",
+              url: "http://127.0.0.1:8000/api/putReceSta",
+              data: JSON.stringify({
+                id: _this3.idRecipe,
+                status: 2
+              }),
+              headers: {
+                authorization: "Bearer " + token,
+                "content-type": "application/json"
+              }
+            }).then(function (Response) {
+              _this3.activeLoading = false;
 
-            _this3.$vs.loading.close();
+              _this3.$vs.loading.close();
 
-            _this3.$vs.notify({
-              title: "Satisfactorio",
-              text: "Pedido enviado al despachador exitosamente.",
-              color: "success"
+              _this3.$vs.notify({
+                title: "Satisfactorio",
+                text: "Pedido enviado al despachador exitosamente.",
+                color: "success"
+              });
+            }).catch(function (err) {
+              _this3.activeLoading = false;
+
+              _this3.$vs.loading.close();
+
+              activado = true;
+              console.log(err);
             });
           }).catch(function (err) {
             _this3.activeLoading = false;
@@ -937,12 +994,14 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        //console.log(Response.data);
+        _this5.medicines = [];
         Response.data.forEach(function (element) {
           if (_this5.itms.includes(element.id)) {
             _this5.medicines.push({
               id: element.id,
               name: element.name,
-              precentation: element.precentation,
+              precentation: element.precentacion,
               price: element.price,
               cantidad: 0,
               totale: 0,
@@ -1200,18 +1259,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      message: "",
       idRecipe: null,
       users: [],
       popupActive2: false,
       addNewDataSidebar: false,
       sidebarData: {},
-      status: ["Nuevo", "Pendiente", "Empaquetando", "Entregando", "Entregado", "Cancelado"],
+      status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado"],
       buscar: "",
       clickNotClose: true,
       isEmailSidebarActive: true,
@@ -1247,9 +1331,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.openLoading();
     this.getUsers();
-    this.getRecipes();
+    this.getRecipes("Nuevo");
   },
   methods: {
     editData: function editData(data, id) {
@@ -1263,27 +1346,30 @@ __webpack_require__.r(__webpack_exports__);
       this.sidebarData = data1;
       this.toggleDataSidebar(true);
     },
-    openModal: function openModal(phone, id) {
+    openModal: function openModal(phone, id, status) {
       var _this = this;
 
-      this.idRecipe = id;
-      this.users = [];
-      var token = localStorage.getItem("tu");
-      axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        method: "get",
-        url: "http://127.0.0.1:8000/api/getCliente1/" + phone,
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      }).then(function (Response) {
-        Response.data.forEach(function (element) {
-          _this.users.push(element);
+      //console.log(status);
+      if (status == "Nuevo") {
+        this.idRecipe = id;
+        this.users = [];
+        var token = localStorage.getItem("tu");
+        axios__WEBPACK_IMPORTED_MODULE_1___default()({
+          method: "get",
+          url: "http://127.0.0.1:8000/api/getCliente1/" + phone,
+          headers: {
+            authorization: "Bearer " + token,
+            "content-type": "application/json"
+          }
+        }).then(function (Response) {
+          Response.data.forEach(function (element) {
+            _this.users.push(element);
+          });
+          _this.popupActive2 = true;
+        }).catch(function (err) {
+          console.log(err);
         });
-        _this.popupActive2 = true;
-      }).catch(function (err) {
-        console.log(err);
-      });
+      }
     },
     addNewData: function addNewData() {
       this.sidebarData = {};
@@ -1341,9 +1427,10 @@ __webpack_require__.r(__webpack_exports__);
       if (a == 6) return "danger";
       return "primary";
     },
-    getRecipes: function getRecipes() {
+    getRecipes: function getRecipes(a) {
       var _this3 = this;
 
+      this.openLoading();
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
       var f = new Date();
@@ -1357,6 +1444,8 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        _this3.recipes = []; //console.log(Response.data);
+
         Response.data.forEach(function (element) {
           element.color = _this3.colore(element.status);
           element.status = _this3.status[element.status - 1]; //console.log(element.status);
@@ -1367,7 +1456,13 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
 
-          _this3.recipes.push(element);
+          if (element.status == a) {
+            _this3.recipes.push(element);
+          }
+
+          if (_this3.recipes.length == 0) {
+            _this3.message = "No hay resultados.";
+          }
         });
         _this3.activeLoading = false;
 
@@ -1609,7 +1704,11 @@ var render = function() {
                                         {
                                           attrs: { data: data[indextr].price }
                                         },
-                                        [_vm._v(_vm._s(data[indextr].price))]
+                                        [
+                                          _vm._v(
+                                            "Q " + _vm._s(data[indextr].price)
+                                          )
+                                        ]
                                       ),
                                       _vm._v(" "),
                                       _c(
@@ -1675,7 +1774,12 @@ var render = function() {
                                               data[indextr].cantidad)
                                           }
                                         },
-                                        [_vm._v(_vm._s(data[indextr].subtotal))]
+                                        [
+                                          _vm._v(
+                                            "Q " +
+                                              _vm._s(data[indextr].subtotal)
+                                          )
+                                        ]
                                       )
                                     ],
                                     1
@@ -1747,7 +1851,7 @@ var render = function() {
                   "vx-card",
                   [
                     _c("p", {
-                      domProps: { textContent: _vm._s("Total: " + _vm.total) }
+                      domProps: { textContent: _vm._s("Total: Q" + _vm.total) }
                     }),
                     _vm._v(" "),
                     _c("vs-divider", { staticClass: "mb-0" }),
@@ -1935,7 +2039,7 @@ var render = function() {
                       "div",
                       { staticClass: "vx-row" },
                       [
-                        _vm.tipe == 1
+                        _vm.tipe == 1 && _vm.switch1 == "1"
                           ? _c(
                               "vs-button",
                               {
@@ -1944,7 +2048,7 @@ var render = function() {
                                   color: "primary",
                                   type: "filled",
                                   disabled:
-                                    _vm.total > 0 ||
+                                    _vm.total <= 0 ||
                                     _vm.nameT == "" ||
                                     _vm.nameT == null ||
                                     _vm.numberT == "" ||
@@ -1964,7 +2068,7 @@ var render = function() {
                             )
                           : _vm._e(),
                         _vm._v(" "),
-                        _vm.tipe == 2
+                        _vm.tipe == 2 && _vm.switch1 == "1"
                           ? _c(
                               "vs-button",
                               {
@@ -1973,7 +2077,7 @@ var render = function() {
                                   color: "primary",
                                   type: "filled",
                                   disabled:
-                                    _vm.total < 0 ||
+                                    _vm.total <= 0 ||
                                     _vm.nameT == "" ||
                                     _vm.nameT == null ||
                                     _vm.numberT == "" ||
@@ -1989,7 +2093,51 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Realizar el Pedido Ac")]
+                              [_vm._v("Realizar el Pedido")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.tipe == 1 && _vm.switch1 == "2"
+                          ? _c(
+                              "vs-button",
+                              {
+                                staticClass: "mt-5",
+                                attrs: {
+                                  color: "primary",
+                                  type: "filled",
+                                  disabled: _vm.total <= 0
+                                },
+                                on: {
+                                  click: function($event) {
+                                    ;(_vm.popupActive2 = false),
+                                      (_vm.isSidebarActiveLocal = false),
+                                      _vm.notificacion1()
+                                  }
+                                }
+                              },
+                              [_vm._v("Realizar el Pedido")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.tipe == 2 && _vm.switch1 == "2"
+                          ? _c(
+                              "vs-button",
+                              {
+                                staticClass: "mt-5",
+                                attrs: {
+                                  color: "primary",
+                                  type: "filled",
+                                  disabled: _vm.total <= 0
+                                },
+                                on: {
+                                  click: function($event) {
+                                    ;(_vm.popupActive2 = false),
+                                      (_vm.isSidebarActiveLocal = false),
+                                      _vm.notificacion()
+                                  }
+                                }
+                              },
+                              [_vm._v("Realizar el Pedido")]
                             )
                           : _vm._e()
                       ],
@@ -3237,7 +3385,12 @@ var render = function() {
                         {
                           staticClass:
                             "flex justify-between items-center cursor-pointer",
-                          attrs: { tag: "span" }
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Nuevo")
+                            }
+                          }
                         },
                         [
                           _c(
@@ -3262,7 +3415,12 @@ var render = function() {
                         {
                           staticClass:
                             "flex items-center mt-4 mb-2 cursor-pointer",
-                          attrs: { tag: "span" }
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Empaquetando")
+                            }
+                          }
                         },
                         [
                           _c("feather-icon", {
@@ -3281,7 +3439,12 @@ var render = function() {
                         {
                           staticClass:
                             "flex justify-between items-center mt-4 cursor-pointer",
-                          attrs: { tag: "span" }
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Entregando")
+                            }
+                          }
                         },
                         [
                           _c(
@@ -3306,7 +3469,12 @@ var render = function() {
                         {
                           staticClass:
                             "flex items-center mt-4 mb-2 cursor-pointer",
-                          attrs: { tag: "span" }
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Entregado")
+                            }
+                          }
                         },
                         [
                           _c("feather-icon", { attrs: { icon: "MapPinIcon" } }),
@@ -3323,7 +3491,12 @@ var render = function() {
                         {
                           staticClass:
                             "flex items-center justify-between items-center mt-4 cursor-pointer",
-                          attrs: { tag: "span" }
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Cancelado")
+                            }
+                          }
                         },
                         [
                           _c(
@@ -3396,6 +3569,25 @@ var render = function() {
           _c("hr"),
           _vm._v(" "),
           _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.recipes.length == 0,
+                  expression: "recipes.length == 0"
+                }
+              ]
+            },
+            [
+              _c("div", { attrs: { align: "center" } }, [
+                _c("h4", { domProps: { textContent: _vm._s(_vm.message) } })
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
             "VuePerfectScrollbar",
             {
               staticClass: "email-content-scroll-area",
@@ -3417,7 +3609,7 @@ var render = function() {
                       style: { transitionDelay: index * 0.1 + "s" },
                       on: {
                         click: function($event) {
-                          return _vm.openModal(mail.phone, mail.id)
+                          return _vm.openModal(mail.phone, mail.id, mail.status)
                         }
                       }
                     },

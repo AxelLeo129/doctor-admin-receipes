@@ -654,38 +654,55 @@ var render = function() {
                         {
                           attrs: { data: data[indextr].cliente.delivery_date }
                         },
+                        [_vm._v("Nuevo Medicamento")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mt-4" },
+              [
+                _c(
+                  "vs-table",
+                  {
+                    staticClass: "table-dark-inverted",
+                    attrs: { data: _vm.dispatchedOrders }
+                  },
+                  [
+                    _c(
+                      "template",
+                      { slot: "thead" },
+                      [
+                        _c("vs-th", [_vm._v("NUMERO.")]),
+                        _vm._v(" "),
+                        _c("vs-th", [_vm._v("IMAGEN")]),
+                        _vm._v(" "),
+                        _c("vs-th", [_vm._v("NOMBRE")]),
+                        _vm._v(" "),
+                        _c("vs-th", [_vm._v("LABORATORIO")]),
+                        _vm._v(" "),
+                        _c("vs-th", [_vm._v("PRECENTACION")]),
+                        _vm._v(" "),
+                        _c("vs-th", [_vm._v("CANTIDAD")]),
+                        _vm._v(" "),
+                        _c("vs-th", [_vm._v("ACCIONES")])
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.searchPacientes, function(item, index) {
+                      return _c(
+                        "vs-tr",
+                        { key: index },
                         [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(data[indextr].cliente.delivery_date) +
-                              "\n                "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("vs-td", [
-                        _c(
-                          "span",
-                          { staticStyle: { float: "left" } },
-                          [
-                            _c("vs-button", {
-                              attrs: {
-                                size: "small",
-                                radius: "",
-                                color: "warning",
-                                type: "filled",
-                                "icon-pack": "feather",
-                                icon: "icon-eye"
-                              },
-                              on: {
-                                click: function($event) {
-                                  ;(_vm.popupActive = true),
-                                    _vm.setData(
-                                      data[indextr].medicamentos,
-                                      data[indextr].cliente.client_addresse
-                                    )
-                                }
-                              }
+                          _c("vs-td", [
+                            _c("span", {
+                              domProps: { textContent: _vm._s(item.id) }
                             })
                           ],
                           1
