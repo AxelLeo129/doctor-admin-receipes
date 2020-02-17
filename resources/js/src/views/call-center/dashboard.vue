@@ -190,7 +190,7 @@
             class="cursor-pointer email__mail-item"
             v-for="(mail, index) in searchRecipes"
             :key="mail.id"
-            @click="openModal(mail.phone, mail.id)"
+            @click="openModal(mail.phone, mail.id, mail.status)"
             :style="{transitionDelay: (index * 0.1) + 's'}"
           >
             <div class="mail__mail-item sm:px-4 px-2 py-6">
@@ -249,13 +249,7 @@ export default {
       popupActive2: false,
       addNewDataSidebar: false,
       sidebarData: {},
-      status: [
-        "Nuevo",
-        "Entregando",
-        "Empaquetando",
-        "Entregado",
-        "Cancelado"
-      ],
+      status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado"],
       buscar: "",
       clickNotClose: true,
       isEmailSidebarActive: true,
@@ -304,27 +298,30 @@ export default {
       this.sidebarData = data1;
       this.toggleDataSidebar(true);
     },
-    openModal(phone, id) {
-      this.idRecipe = id;
-      this.users = [];
-      let token = localStorage.getItem("tu");
-      axios({
-        method: "get",
-        url: "http://127.0.0.1:8000/api/getCliente1/" + phone,
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      })
-        .then(Response => {
-          Response.data.forEach(element => {
-            this.users.push(element);
-          });
-          this.popupActive2 = true;
+    openModal(phone, id, status) {
+      //console.log(status);
+      if (status == "Nuevo") {
+        this.idRecipe = id;
+        this.users = [];
+        let token = localStorage.getItem("tu");
+        axios({
+          method: "get",
+          url: "http://127.0.0.1:8000/api/getCliente1/" + phone,
+          headers: {
+            authorization: "Bearer " + token,
+            "content-type": "application/json"
+          }
         })
-        .catch(err => {
-          console.log(err);
-        });
+          .then(Response => {
+            Response.data.forEach(element => {
+              this.users.push(element);
+            });
+            this.popupActive2 = true;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     },
     addNewData() {
       this.sidebarData = {};

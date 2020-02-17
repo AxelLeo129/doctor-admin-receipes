@@ -50,7 +50,7 @@
 
                     <vs-td :data="data[indextr].precentation">{{ data[indextr].precentation }}</vs-td>
 
-                    <vs-td :data="data[indextr].price">{{ data[indextr].price }}</vs-td>
+                    <vs-td :data="data[indextr].price">Q {{ data[indextr].price }}</vs-td>
 
                     <vs-td>
                       <vs-input-number
@@ -67,7 +67,7 @@
 
                     <vs-td
                       :data="(data[indextr].subtotal = data[indextr].price * data[indextr].cantidad)"
-                    >{{ data[indextr].subtotal }}</vs-td>
+                    >Q {{ data[indextr].subtotal }}</vs-td>
                   </vs-tr>
                 </template>
               </vs-table>
@@ -84,7 +84,7 @@
         </div>
         <div class="vx-col w-full sm:w-1/3 lg:w-1/3 mb-base">
           <vx-card>
-            <p v-text="'Total: ' + total"></p>
+            <p v-text="'Total: Q' + total"></p>
             <vs-divider class="mb-0"></vs-divider>
             <div class="vx-row">
               <ul class="centerx">
@@ -136,16 +136,33 @@
                 @click="popupActive2=false, isSidebarActiveLocal = false, notificacion1()"
                 color="primary"
                 type="filled"
-                v-if="tipe == 1"
-                :disabled="total > 0 || nameT == '' || nameT == null || numberT == '' || numberT == null || numberTr == '' || numberTr == null"
+                v-if="tipe == 1 && switch1 == '1'"
+                :disabled="total <= 0 || nameT == '' || nameT == null || numberT == '' || numberT == null || numberTr == '' || numberTr == null"
               >Realizar el Pedido</vs-button>
               <vs-button
                 class="mt-5"
                 @click="popupActive2=false, isSidebarActiveLocal = false, notificacion()"
                 color="primary"
-                v-if="tipe == 2"
+                v-if="tipe == 2 && switch1 == '1'"
                 type="filled"
-                :disabled="total < 0 || nameT == '' || nameT == null || numberT == '' || numberT == null || numberTr == '' || numberTr == null"
+                :disabled="total <= 0 || nameT == '' || nameT == null || numberT == '' || numberT == null || numberTr == '' || numberTr == null"
+              >Realizar el Pedido</vs-button>
+
+              <vs-button
+                class="mt-5"
+                @click="popupActive2=false, isSidebarActiveLocal = false, notificacion1()"
+                color="primary"
+                type="filled"
+                v-if="tipe == 1 && switch1 == '2'"
+                :disabled="total <= 0"
+              >Realizar el Pedido</vs-button>
+              <vs-button
+                class="mt-5"
+                @click="popupActive2=false, isSidebarActiveLocal = false, notificacion()"
+                color="primary"
+                v-if="tipe == 2 && switch1 == '2'"
+                type="filled"
+                :disabled="total <= 0"
               >Realizar el Pedido</vs-button>
             </div>
           </vx-card>
@@ -739,13 +756,33 @@ export default {
                 }
               })
                 .then(Response => {
-                  this.activeLoading = false;
-                  this.$vs.loading.close();
-                  this.$vs.notify({
-                    title: "Satisfactorio",
-                    text: "Pedido enviado al despachador exitosamente.",
-                    color: "success"
-                  });
+                  axios({
+                    method: "put",
+                    url: "http://127.0.0.1:8000/api/putReceSta",
+                    data: JSON.stringify({
+                      id: this.idRecipe,
+                      status: 2
+                    }),
+                    headers: {
+                      authorization: "Bearer " + token,
+                      "content-type": "application/json"
+                    }
+                  })
+                    .then(Response => {
+                      this.activeLoading = false;
+                      this.$vs.loading.close();
+                      this.$vs.notify({
+                        title: "Satisfactorio",
+                        text: "Pedido enviado al despachador exitosamente.",
+                        color: "success"
+                      });
+                    })
+                    .catch(err => {
+                      this.activeLoading = false;
+                      this.$vs.loading.close();
+                      activado = true;
+                      console.log(err);
+                    });
                 })
                 .catch(err => {
                   this.activeLoading = false;
@@ -776,7 +813,7 @@ export default {
         ids.push(element.id);
       });
       axios({
-        method: "put",
+        method: "post",
         url: "http://127.0.0.1:8000/api/postCliente",
         data: JSON.stringify({
           client_name: this.name,
@@ -840,13 +877,33 @@ export default {
                 }
               })
                 .then(Response => {
-                  this.activeLoading = false;
-                  this.$vs.loading.close();
-                  this.$vs.notify({
-                    title: "Satisfactorio",
-                    text: "Pedido enviado al despachador exitosamente.",
-                    color: "success"
-                  });
+                  axios({
+                    method: "put",
+                    url: "http://127.0.0.1:8000/api/putReceSta",
+                    data: JSON.stringify({
+                      id: this.idRecipe,
+                      status: 2
+                    }),
+                    headers: {
+                      authorization: "Bearer " + token,
+                      "content-type": "application/json"
+                    }
+                  })
+                    .then(Response => {
+                      this.activeLoading = false;
+                      this.$vs.loading.close();
+                      this.$vs.notify({
+                        title: "Satisfactorio",
+                        text: "Pedido enviado al despachador exitosamente.",
+                        color: "success"
+                      });
+                    })
+                    .catch(err => {
+                      this.activeLoading = false;
+                      this.$vs.loading.close();
+                      activado = true;
+                      console.log(err);
+                    });
                 })
                 .catch(err => {
                   this.activeLoading = false;
