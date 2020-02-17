@@ -1,9 +1,27 @@
+<style>
+    #table-search{
+        margin-top:-55px;
+    }
+    @media only screen and (max-width:600px){
+        #table-search{
+            margin-top:0px;
+        }
+
+        #btn-envio{
+            float:left;
+            margin-top:10px;
+        }
+
+    }
+</style>
 <template>
-    <div class="">
+
+
+    <div>
         <h4>Información de los pedidos</h4><p>Seleccione más de un registro para hacer un envío múltiple.</p>
         <br>
-        <vs-button @click="popupEnvioMultiple=true" v-if="Object.keys(this.selected).length >= 2" color="primary" type="filled" icon-pack="feather" icon="icon-truck" icon-after>Enviar pedidos</vs-button>
-        <vs-table  multiple v-model="selected" max-items="10" search  pagination :data="users">
+        <vs-button id="btn-envio" @click="popupEnvioMultiple=true" v-if="Object.keys(this.selected).length >= 2" color="primary" type="filled" icon-pack="feather" icon="icon-truck" icon-after>Enviar pedidos</vs-button>
+        <vs-table id="table-search" multiple v-model="selected" max-items="10" search  pagination :data="users">
 
             <template slot="thead">
                 <vs-th>ID</vs-th>
@@ -59,17 +77,18 @@
                     </vs-td>
 
                     <vs-td>
-                        <div class="row">
+                        <span style="float:left;">
                             <vs-button size="small" @click="popupActive=true, setData(data[indextr].medicamentos, data[indextr].cliente.client_addressf)" radius color="warning" type="filled" icon-pack="feather" icon="icon-eye"></vs-button>
+                        </span>
+                        <span style="float:right;">
                             <div v-if="data[indextr].cliente.status == 1">
                                 <vs-button size="small" @click="popupEnvio=true, setClient(data[indextr].cliente.order_id)" radius color="primary" type="filled" icon-pack="feather" icon="icon-truck"></vs-button>
                             </div>
                             <div v-else>
                                 <vs-button disabled size="small" @click="popupEnvio=true, setClient(data[indextr].cliente.order_id)" radius color="primary" type="filled" icon-pack="feather" icon="icon-truck"></vs-button>
                             </div>
-                        </div>
+                        </span>
                     </vs-td>
-
                 </vs-tr>
             </template>
         </vs-table>

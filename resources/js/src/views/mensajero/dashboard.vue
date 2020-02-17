@@ -1,8 +1,19 @@
+<style>
+    #table-search{
+        margin-top:-65px;
+    }
+    @media only screen and (max-width:600px){
+        #table-search{
+            margin-top:0px;
+        }
+
+    }
+</style>
 <template>
     <div class="">
         <h4>Tus pedidos</h4>
         <br>
-        <vs-table max-items="10" search pagination :data="users">
+        <vs-table id="table-search" max-items="10" search pagination :data="users">
 
             <template slot="thead">
                 <vs-th>ID</vs-th>
@@ -58,17 +69,14 @@
                     </vs-td>
 
                     <vs-td>
-                        <div class="row">
-                            <vs-button size="small" @click="popupActive=true, setData(data[indextr].medicamentos, data[indextr].cliente.client_addressf)" radius color="warning" type="filled" icon-pack="feather" icon="icon-eye"></vs-button>
-                            <div v-if="data[indextr].cliente.status == 2">
-                                <vs-button size="small" @click="popupEnvio=true, setClient(data[indextr].cliente.order_id, data[indextr].cliente.client_name)" radius color="primary" type="filled" icon-pack="feather" icon="icon-truck"></vs-button>
-                            </div>
-                            <div v-if="data[indextr].cliente.status == 3">
-                                <vs-button size="small" @click="popupEntrega=true, setConfirm(data[indextr].cliente.order_id)" radius color="success" type="filled" icon-pack="feather" icon="icon-check-circle"></vs-button>
-                            </div>
+                        <vs-button style="float:left;" size="small" @click="popupActive=true, setData(data[indextr].medicamentos, data[indextr].cliente.client_addressf)" radius color="warning" type="filled" icon-pack="feather" icon="icon-eye"></vs-button>
+                        <div style="float:right;" v-if="data[indextr].cliente.status == 2">
+                            <vs-button size="small" @click="popupEnvio=true, setClient(data[indextr].cliente.order_id, data[indextr].cliente.client_name)" radius color="primary" type="filled" icon-pack="feather" icon="icon-truck"></vs-button>
+                        </div>
+                        <div style="float:right;" v-if="data[indextr].cliente.status == 3">
+                            <vs-button size="small" @click="popupEntrega=true, setConfirm(data[indextr].cliente.order_id)" radius color="success" type="filled" icon-pack="feather" icon="icon-check-circle"></vs-button>
                         </div>
                     </vs-td>
-
                 </vs-tr>
             </template>
         </vs-table>
@@ -250,7 +258,7 @@
                     .then(Response => {
                         this.activeLoading = false;
                         this.$vs.loading.close();
-                        this.popupEnvio = false;
+                        this.popupEntrega = false;
                         this.getusers();
                         this.$vs.notify({
                             title: "Entrega completada",
@@ -259,7 +267,7 @@
                         });
                         })
                     .catch(err => {
-                        this.popupEnvio = false;
+                        this.popupEntrega = false;
                         this.activeLoading = false;
                         this.$vs.loading.close();
                         console.log(err);
