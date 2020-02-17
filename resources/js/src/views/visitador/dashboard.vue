@@ -48,24 +48,24 @@
                         {{ data[indextr].cliente.client_phone }}
                     </vs-td>
 
-                    <vs-td v-if="data[indextr].cliente.client_addressf.length > 25" :data="data[indextr].cliente.client_addressf">
-                        {{ data[indextr].cliente.client_addressf.substring(0,25) + "..." }}
+                    <vs-td v-if="data[indextr].cliente.client_addresse.length > 25" :data="data[indextr].cliente.client_addresse">
+                        {{ data[indextr].cliente.client_addresse.substring(0,25) + "..." }}
                     </vs-td>
 
-                    <vs-td v-if="data[indextr].cliente.client_addressf.length <= 25" :data="data[indextr].cliente.client_addressf">
-                        {{ data[indextr].cliente.client_addressf.substring(0,25) }}
+                    <vs-td v-if="data[indextr].cliente.client_addresse.length <= 25" :data="data[indextr].cliente.client_addresse">
+                        {{ data[indextr].cliente.client_addresse.substring(0,25) }}
                     </vs-td>
 
                     <vs-td v-if="data[indextr].cliente.status == 1">
-                        No asignado
+                        Nuevo
                     </vs-td>
 
                     <vs-td v-if="data[indextr].cliente.status == 2">
-                        Asignado
+                        Empaquetando
                     </vs-td>
 
                     <vs-td v-if="data[indextr].cliente.status == 3">
-                        En entrega
+                        Entregando
                     </vs-td>
 
                     <vs-td v-if="data[indextr].cliente.status == 4">
@@ -78,7 +78,7 @@
 
                     <vs-td>
                         <span style="float:left;">
-                            <vs-button size="small" @click="popupActive=true, setData(data[indextr].medicamentos, data[indextr].cliente.client_addressf)" radius color="warning" type="filled" icon-pack="feather" icon="icon-eye"></vs-button>
+                            <vs-button size="small" @click="popupActive=true, setData(data[indextr].medicamentos, data[indextr].cliente.client_addresse)" radius color="warning" type="filled" icon-pack="feather" icon="icon-eye"></vs-button>
                         </span>
                         <span style="float:right;">
                             <div v-if="data[indextr].cliente.status == 1">
@@ -93,15 +93,62 @@
             </template>
         </vs-table>
         <!--PopUp para ver la receta que tiene el cliente-->
-        <vs-popup class="holamundo" title="Ver información de la receta" :active.sync="popupActive">
+        <vs-popup class="holamundo" fullscreen  title="Ver información de la receta" :active.sync="popupActive">
             <p>Medicamentos recetados:</p><br>
-            <div v-for="item in recipie">
-                <p>
-                    <strong>{{item.name}}</strong> (Cantidad: {{item.cantidad}})
-                    
-                </p>
-            </div><br>
+            <vs-table v-model="selected" max-items="10" :data="recipie">
+
+                <template slot="thead">
+                    <vs-th>Nombre del producto</vs-th>
+                    <vs-th>Descripción</vs-th>
+                    <vs-th>Presentación</vs-th>
+                    <vs-th>Laboratorio</vs-th>
+                    <vs-th>Almacén</vs-th>
+                    <vs-th>Cantidad</vs-th>
+                    <vs-th>Precio</vs-th>
+                    <vs-th>Subtotal</vs-th>
+                </template>
+
+                <template slot-scope="{data}">
+                    <vs-tr :key="indextr" v-for="(tr, indextr) in recipie">
+
+                        <vs-td :data="data[indextr].name">
+                            {{ data[indextr].name }}
+                        </vs-td>
+
+                        <vs-td :data="data[indextr].description">
+                            {{ data[indextr].description }}
+                        </vs-td>
+
+                        <vs-td :data="data[indextr].preName">
+                            {{ data[indextr].preName }} - {{data[indextr].unidad}} - {{data[indextr].preCantidad}}
+                        </vs-td>
+
+                        <vs-td :data="data[indextr].labName">
+                            {{ data[indextr].labName }}
+                        </vs-td>
+
+                        <vs-td :data="data[indextr].warehouse">
+                            {{ data[indextr].warehouse }}
+                        </vs-td>
+
+                        <vs-td :data="data[indextr].cantidad">
+                            {{ data[indextr].cantidad }}
+                        </vs-td>
+
+                        <vs-td :data="data[indextr].price">
+                            Q {{ data[indextr].price || numFormat('000,000.00') }}
+                        </vs-td>
+
+                        <vs-td :data="data[indextr].cantidad">
+                            Q {{ data[indextr].price * data[indextr].cantidad || numFormat('000,000.00')}}
+                        </vs-td>
+
+                    </vs-tr>
+                </template>
+            </vs-table>
+            <br>
             <p>Dirección exacta:</p>
+            <p v-if="address == ''"><strong>No se adjuntó la dirección</strong></p>
             <p><strong>{{this.address}}</strong></p>
         </vs-popup>
 
@@ -182,6 +229,7 @@
                     Response.data.forEach(element => {
                     this.users.push(element);
                 });
+                    console.log("USUARIO");
                     console.log(this.users);
                 })
                 .catch(err => {
@@ -213,8 +261,6 @@
             setData(recipie, address) {
                 this.recipie = recipie;
                 this.address = address;
-                console.log("Receta");
-                console.log(this.recipie);
             },
             openLoading() {
                 this.activeLoading = true;
@@ -316,6 +362,18 @@
                     console.log(err);
                 });
             },
+            format(input){
+                var num = input.value.replace(/\./g,'');
+                if(!isNaN(num)){
+                num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+                num = num.split('').reverse().join('').replace(/^[\.]/,'');
+                input.value = num;
+                }
+                
+                else{ alert('Solo se permiten numeros');
+                input.value = input.value.replace(/[^\d\.]*/g,'');
+                }
+            }
         },
         data: () => ({
             users: [],

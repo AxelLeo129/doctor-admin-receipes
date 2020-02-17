@@ -87,12 +87,14 @@ class OrderController extends Controller
         $data = [];
         $clients= \DB::table('clients')
             ->join('orders', 'orders.client_id', '=', 'clients.id')
-            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addressf', 'orders.status', 'orders.order_id', 'orders.delivery_date')
+            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addresse', 'orders.status', 'orders.order_id', 'orders.delivery_date')
             ->get();
         foreach($clients as $client){
             $medicinas = \DB::table("orders_products")
             ->join('products', 'orders_products.product_id', '=', 'products.id')
-            ->select('products.name', 'orders_products.cantidad')
+            ->join('presentations', 'presentations.id', '=', 'products.precentation')
+            ->join('labs', 'labs.id', '=', 'products.laboratory')
+            ->select('products.name', 'orders_products.cantidad', 'products.description', 'products.price','presentations.name as preName','presentations.unidad', 'presentations.cantidad as preCantidad', 'labs.name as labName', 'products.warehouse')
             ->where('orders_products.order_id', $client->order_id)
             ->get();
             $datos = array("cliente" => $client, "medicamentos" => $medicinas);
