@@ -79,7 +79,7 @@
               <template slot-scope="{data}">
                 <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
                   <vs-td>
-                    <span v-text="'# ' + (indextr + 1)"></span>
+                    <span v-text="tr.id"></span>
                   </vs-td>
 
                   <vs-td>

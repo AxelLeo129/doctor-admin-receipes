@@ -515,9 +515,7 @@ var render = function() {
                               [
                                 _c("vs-td", [
                                   _c("span", {
-                                    domProps: {
-                                      textContent: _vm._s("# " + (indextr + 1))
-                                    }
+                                    domProps: { textContent: _vm._s(tr.id) }
                                   })
                                 ]),
                                 _vm._v(" "),

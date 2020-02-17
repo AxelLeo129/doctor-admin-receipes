@@ -23,7 +23,9 @@
 
             <vs-td :data="data[indextr].client_phone">{{ data[indextr].client_phone }}</vs-td>
 
-            <vs-td v-text="tr.paise + ',' + tr.depare + ' ' + tr.municipioe + ' ' + tr.callee + ' ' + tr.apartamentoe + ' ' + tr.residenciae"></vs-td>
+            <vs-td
+              v-text="tr.paise + ',' + tr.depare + ' ' + tr.municipioe + ' ' + tr.callee + ' ' + tr.apartamentoe + ' ' + tr.residenciae"
+            ></vs-td>
             <vs-td>
               <vs-button
                 type="border"
@@ -95,7 +97,11 @@
           <VuePerfectScrollbar :settings="settings" class="email-filter-scroll-area">
             <div class="px-6 pb-2 flex flex-col">
               <!-- inbox -->
-              <li tag="span" class="flex justify-between items-center cursor-pointer">
+              <li
+                tag="span"
+                @click="getRecipes('Nuevo')"
+                class="flex justify-between items-center cursor-pointer"
+              >
                 <div class="flex items-center mb-2">
                   <feather-icon icon="PlusIcon"></feather-icon>
                   <span class="text-lg ml-3">Nuevos</span>
@@ -103,13 +109,21 @@
               </li>
 
               <!-- sent -->
-              <li tag="span" class="flex items-center mt-4 mb-2 cursor-pointer">
+              <li
+                tag="span"
+                @click="getRecipes('Empaquetando')"
+                class="flex items-center mt-4 mb-2 cursor-pointer"
+              >
                 <feather-icon icon="ArchiveIcon"></feather-icon>
                 <span class="text-lg ml-3">Empaquetando</span>
               </li>
 
               <!-- draft -->
-              <li tag="span" class="flex justify-between items-center mt-4 cursor-pointer">
+              <li
+                tag="span"
+                @click="getRecipes('Entregando')"
+                class="flex justify-between items-center mt-4 cursor-pointer"
+              >
                 <div class="flex items-center mb-2">
                   <feather-icon icon="TruckIcon"></feather-icon>
                   <span class="text-lg ml-3">Entregando</span>
@@ -117,13 +131,18 @@
               </li>
 
               <!-- starred -->
-              <li tag="span" class="flex items-center mt-4 mb-2 cursor-pointer">
+              <li
+                tag="span"
+                @click="getRecipes('Entregado')"
+                class="flex items-center mt-4 mb-2 cursor-pointer"
+              >
                 <feather-icon icon="MapPinIcon"></feather-icon>
                 <span class="text-lg ml-3">Entregados</span>
               </li>
 
               <!-- spam -->
               <li
+                @click="getRecipes('Cancelado')"
                 tag="span"
                 class="flex items-center justify-between items-center mt-4 cursor-pointer"
               >
@@ -160,6 +179,11 @@
       <hr />
 
       <!-- EMAILS LIST -->
+      <div v-show="recipes.length == 0">
+        <div align="center">
+          <h4 v-text="message"></h4>
+        </div>
+      </div>
       <VuePerfectScrollbar id="scrolll" class="email-content-scroll-area" :settings="settings">
         <transition-group name="list-enter-up" class="email__mails" tag="ul" appear>
           <li
@@ -219,6 +243,7 @@ import DataViewSidebar from "../DataViewSidebar.vue";
 export default {
   data() {
     return {
+      message: "",
       idRecipe: null,
       users: [],
       popupActive2: false,
@@ -226,9 +251,8 @@ export default {
       sidebarData: {},
       status: [
         "Nuevo",
-        "Pendiente",
-        "Empaquetando",
         "Entregando",
+        "Empaquetando",
         "Entregado",
         "Cancelado"
       ],
@@ -265,9 +289,8 @@ export default {
     }
   },
   created() {
-    this.openLoading();
     this.getUsers();
-    this.getRecipes();
+    this.getRecipes("Nuevo");
   },
   methods: {
     editData(data, id) {
@@ -275,7 +298,7 @@ export default {
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
       let data1 = {
         data: data,
-        idRecipies: id,
+        idRecipies: id
       };
       //console.log(data1);
       this.sidebarData = data1;
@@ -310,7 +333,7 @@ export default {
     addNewData1(id) {
       let data = {
         data: {},
-        idRecipies: id,
+        idRecipies: id
       };
       this.popupActive2 = false;
       this.sidebarData = data;
@@ -358,7 +381,8 @@ export default {
       if (a == 6) return "danger";
       return "primary";
     },
-    getRecipes() {
+    getRecipes(a) {
+      this.openLoading();
       let token = localStorage.getItem("tu");
       let id = localStorage.getItem("ui");
       let f = new Date();
@@ -374,6 +398,8 @@ export default {
         }
       })
         .then(Response => {
+          this.recipes = [];
+          //console.log(Response.data);
           Response.data.forEach(element => {
             element.color = this.colore(element.status);
             element.status = this.status[element.status - 1];
@@ -383,7 +409,12 @@ export default {
                 element.doctor_id = e.name;
               }
             });
-            this.recipes.push(element);
+            if (element.status == a) {
+              this.recipes.push(element);
+            }
+            if (this.recipes.length == 0) {
+              this.message = "No hay resultados.";
+            }
           });
           this.activeLoading = false;
           this.$vs.loading.close();

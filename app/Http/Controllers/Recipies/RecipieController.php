@@ -123,9 +123,16 @@ class RecipieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $recipe = Recipie::find($request->id);
+        $recipe->status = $request->status;
+
+        if($recipe->save()){
+            return ['result' => 'success', "mess"=>$recipe];
+        }else{
+            return ['result' => 'fail', "mess"=>$recipe];
+        }
     }
 
     /**

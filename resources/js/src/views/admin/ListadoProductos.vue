@@ -55,9 +55,9 @@
               </template>
 
               <template>
-                <vs-tr v-for="(item, index) in searchPacientes" :key="item.id">
+                <vs-tr v-for="(item, index) in searchPacientes" :key="index">
                   <vs-td>
-                    <span v-text="'# ' + (index + 1)"></span>
+                    <span v-text="item.id"></span>
                   </vs-td>
                   <vs-td>
                     <ul class="users-liked user-list">

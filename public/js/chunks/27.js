@@ -347,13 +347,11 @@ var render = function() {
                     _vm._l(_vm.searchPacientes, function(item, index) {
                       return _c(
                         "vs-tr",
-                        { key: item.id },
+                        { key: index },
                         [
                           _c("vs-td", [
                             _c("span", {
-                              domProps: {
-                                textContent: _vm._s("# " + (index + 1))
-                              }
+                              domProps: { textContent: _vm._s(item.id) }
                             })
                           ]),
                           _vm._v(" "),

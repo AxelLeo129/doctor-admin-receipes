@@ -302,15 +302,6 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { attrs: { align: "center" } }, [
-        _c("h4", [_vm._v("Paso")]),
-        _vm._v(" "),
-        _c("h5", [
-          _vm._v("\n      1 ... 2 ...\n      3 ...\n      "),
-          _c("strong", [_vm._v("4")])
-        ])
-      ]),
-      _vm._v(" "),
       _c(
         "div",
         [

@@ -937,12 +937,14 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        //console.log(Response.data);
+        _this5.medicines = [];
         Response.data.forEach(function (element) {
           if (_this5.itms.includes(element.id)) {
             _this5.medicines.push({
               id: element.id,
               name: element.name,
-              precentation: element.precentation,
+              precentation: element.precentacion,
               price: element.price,
               cantidad: 0,
               totale: 0,
@@ -1200,18 +1202,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      message: "",
       idRecipe: null,
       users: [],
       popupActive2: false,
       addNewDataSidebar: false,
       sidebarData: {},
-      status: ["Nuevo", "Pendiente", "Empaquetando", "Entregando", "Entregado", "Cancelado"],
+      status: ["Nuevo", "Entregando", "Empaquetando", "Entregado", "Cancelado"],
       buscar: "",
       clickNotClose: true,
       isEmailSidebarActive: true,
@@ -1247,9 +1274,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.openLoading();
     this.getUsers();
-    this.getRecipes();
+    this.getRecipes("Nuevo");
   },
   methods: {
     editData: function editData(data, id) {
@@ -1341,9 +1367,10 @@ __webpack_require__.r(__webpack_exports__);
       if (a == 6) return "danger";
       return "primary";
     },
-    getRecipes: function getRecipes() {
+    getRecipes: function getRecipes(a) {
       var _this3 = this;
 
+      this.openLoading();
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
       var f = new Date();
@@ -1357,6 +1384,8 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        _this3.recipes = []; //console.log(Response.data);
+
         Response.data.forEach(function (element) {
           element.color = _this3.colore(element.status);
           element.status = _this3.status[element.status - 1]; //console.log(element.status);
@@ -1367,7 +1396,13 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
 
-          _this3.recipes.push(element);
+          if (element.status == a) {
+            _this3.recipes.push(element);
+          }
+
+          if (_this3.recipes.length == 0) {
+            _this3.message = "No hay resultados.";
+          }
         });
         _this3.activeLoading = false;
 
@@ -1989,7 +2024,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Realizar el Pedido Ac")]
+                              [_vm._v("Realizar el Pedido")]
                             )
                           : _vm._e()
                       ],
@@ -3237,7 +3272,12 @@ var render = function() {
                         {
                           staticClass:
                             "flex justify-between items-center cursor-pointer",
-                          attrs: { tag: "span" }
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Nuevo")
+                            }
+                          }
                         },
                         [
                           _c(
@@ -3262,7 +3302,12 @@ var render = function() {
                         {
                           staticClass:
                             "flex items-center mt-4 mb-2 cursor-pointer",
-                          attrs: { tag: "span" }
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Empaquetando")
+                            }
+                          }
                         },
                         [
                           _c("feather-icon", {
@@ -3281,7 +3326,12 @@ var render = function() {
                         {
                           staticClass:
                             "flex justify-between items-center mt-4 cursor-pointer",
-                          attrs: { tag: "span" }
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Entregando")
+                            }
+                          }
                         },
                         [
                           _c(
@@ -3306,7 +3356,12 @@ var render = function() {
                         {
                           staticClass:
                             "flex items-center mt-4 mb-2 cursor-pointer",
-                          attrs: { tag: "span" }
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Entregado")
+                            }
+                          }
                         },
                         [
                           _c("feather-icon", { attrs: { icon: "MapPinIcon" } }),
@@ -3323,7 +3378,12 @@ var render = function() {
                         {
                           staticClass:
                             "flex items-center justify-between items-center mt-4 cursor-pointer",
-                          attrs: { tag: "span" }
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Cancelado")
+                            }
+                          }
                         },
                         [
                           _c(
@@ -3394,6 +3454,25 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("hr"),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.recipes.length == 0,
+                  expression: "recipes.length == 0"
+                }
+              ]
+            },
+            [
+              _c("div", { attrs: { align: "center" } }, [
+                _c("h4", { domProps: { textContent: _vm._s(_vm.message) } })
+              ])
+            ]
+          ),
           _vm._v(" "),
           _c(
             "VuePerfectScrollbar",

@@ -146,7 +146,7 @@
                 v-if="tipe == 2"
                 type="filled"
                 :disabled="total < 0 || nameT == '' || nameT == null || numberT == '' || numberT == null || numberTr == '' || numberTr == null"
-              >Realizar el Pedido Ac</vs-button>
+              >Realizar el Pedido</vs-button>
             </div>
           </vx-card>
         </div>
@@ -923,12 +923,14 @@ export default {
         }
       })
         .then(Response => {
+          //console.log(Response.data);
+          this.medicines = [];
           Response.data.forEach(element => {
             if (this.itms.includes(element.id)) {
               this.medicines.push({
                 id: element.id,
                 name: element.name,
-                precentation: element.precentation,
+                precentation: element.precentacion,
                 price: element.price,
                 cantidad: 0,
                 totale: 0,
