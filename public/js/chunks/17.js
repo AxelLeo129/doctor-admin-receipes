@@ -126,6 +126,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -144,12 +161,14 @@ __webpack_require__.r(__webpack_exports__);
       },
       imagen: "/images/medicamentos/demo.jpg",
       name: null,
-      precentation: null,
+      precentation: [],
+      precentation1: [],
       description: null,
       quantity: null,
       price: null,
       id: null,
-      laboratory: null,
+      laboratory: [],
+      laboratory1: [],
       warehouse: null,
       category: [],
       category1: null,
@@ -158,6 +177,8 @@ __webpack_require__.r(__webpack_exports__);
       base64textString: "",
       categorias: [],
       categories: [],
+      laboratorios: [],
+      presentaciones: [],
       popupActive2: false
     };
   },
@@ -192,8 +213,88 @@ __webpack_require__.r(__webpack_exports__);
     this.getData();
   },
   methods: {
-    getData: function getData() {
+    getRoles: function getRoles(r) {
       var _this = this;
+
+      var token = localStorage.getItem("tu");
+      var ide = localStorage.getItem("ui");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getLabs",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this.laboratorios = [];
+        _this.laboratory = []; //console.log(Response.data);
+
+        Response.data.forEach(function (element) {
+          if (element.user_id == ide) {
+            _this.laboratorios.push({
+              label: element.name,
+              value: element.id
+            });
+
+            if (r == element.id) {
+              _this.laboratory.push({
+                label: element.name,
+                value: element.id
+              });
+
+              _this.laboratory1 = element.id;
+            }
+          }
+        });
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    getPre: function getPre(r) {
+      var _this2 = this;
+
+      var token = localStorage.getItem("tu");
+      var ide = localStorage.getItem("ui");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getPres",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this2.presentaciones = [];
+        _this2.precentation = []; //console.log(Response.data);
+
+        Response.data.forEach(function (element) {
+          if (element.user_id == ide) {
+            _this2.presentaciones.push({
+              label: element.name + '-' + element.unidad + '-' + element.cantidad,
+              value: element.id
+            });
+
+            if (r == element.id) {
+              _this2.precentation.push({
+                label: element.name + '-' + element.unidad + '-' + element.cantidad,
+                value: element.id
+              });
+
+              _this2.precentation1 = element.id;
+            }
+          }
+        });
+        _this2.activeLoading = false;
+
+        _this2.$vs.loading.close();
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    getData: function getData() {
+      var _this3 = this;
 
       this.openLoading();
       this.category = [];
@@ -210,94 +311,106 @@ __webpack_require__.r(__webpack_exports__);
         if (Response.data.length == 0) {
           axios__WEBPACK_IMPORTED_MODULE_1___default()({
             method: "get",
-            url: "http://127.0.0.1:8000/api/getProduct1/" + _this.id,
+            url: "http://127.0.0.1:8000/api/getProduct1/" + _this3.id,
             headers: {
               authorization: "Bearer " + token,
               "content-type": "application/json"
             }
           }).then(function (Response) {
             if (Response.data.length == 0) {
-              _this.activeLoading = false;
+              _this3.activeLoading = false;
 
-              _this.$vs.loading.close();
+              _this3.$vs.loading.close();
 
-              _this.$vs.notify({
+              _this3.$vs.notify({
                 title: "Atención",
                 text: "Producto no encontrado.",
                 color: "warning"
               });
 
-              _this.$router.push("/consola");
+              _this3.$router.push("/consola");
             } else {
-              _this.name = Response.data[0].name;
-              _this.imagen = "data:image/png;base64," + Response.data[0].image;
-              _this.base64textString = Response.data[0].image;
-              _this.quantity = Response.data[0].quantity;
-              _this.description = Response.data[0].description;
-              _this.precentation = Response.data[0].precentation;
-              _this.price = Response.data[0].price;
-              _this.laboratory = Response.data[0].laboratory;
-              _this.warehouse = Response.data[0].warehouse;
-              _this.activeLoading = false;
+              _this3.name = Response.data[0].name;
+              _this3.imagen = "data:image/png;base64," + Response.data[0].image;
+              _this3.base64textString = Response.data[0].image;
+              _this3.quantity = Response.data[0].quantity;
+              _this3.description = Response.data[0].description;
+              var p = parseInt(Response.data[0].precentation);
 
-              _this.$vs.loading.close();
+              _this3.getPre(p);
+
+              _this3.price = Response.data[0].price;
+              var l = parseInt(Response.data[0].laboratory);
+
+              _this3.getRoles(l);
+
+              _this3.warehouse = Response.data[0].warehouse;
+              _this3.activeLoading = false;
+
+              _this3.$vs.loading.close();
             }
           }).catch(function (err) {
             console.log(err);
-            _this.activeLoading = false;
+            _this3.activeLoading = false;
 
-            _this.$vs.loading.close();
+            _this3.$vs.loading.close();
 
-            _this.$vs.notify({
+            _this3.$vs.notify({
               title: "Precaución",
               text: "Producto no encontrado.",
               color: "warning"
             });
 
-            _this.$router.push("/consola");
+            _this3.$router.push("/consola");
           });
         } else {
-          _this.name = Response.data[0].name;
-          _this.imagen = "data:image/png;base64," + Response.data[0].image;
-          _this.base64textString = Response.data[0].image;
-          _this.quantity = Response.data[0].quantity;
-          _this.description = Response.data[0].description;
-          _this.precentation = Response.data[0].precentation;
-          _this.price = Response.data[0].price;
-          _this.laboratory = Response.data[0].laboratory;
-          _this.category1 = Response.data[0].categories.split(",");
+          _this3.name = Response.data[0].name;
+          _this3.imagen = "data:image/png;base64," + Response.data[0].image;
+          _this3.base64textString = Response.data[0].image;
+          _this3.quantity = Response.data[0].quantity;
+          _this3.description = Response.data[0].description;
+          var p = parseInt(Response.data[0].precentation);
 
-          _this.category1.forEach(function (element) {
+          _this3.getPre(p);
+
+          _this3.price = Response.data[0].price;
+          var l = parseInt(Response.data[0].laboratory);
+
+          _this3.getRoles(l);
+
+          _this3.category1 = Response.data[0].categories.split(",");
+
+          _this3.category1.forEach(function (element) {
             element = parseInt(element);
 
-            _this.categories.push(element);
+            _this3.categories.push(element);
           });
 
-          _this.warehouse = Response.data[0].warehouse;
+          _this3.warehouse = Response.data[0].warehouse;
 
-          _this.getCategories();
+          _this3.getCategories();
 
-          _this.activeLoading = false;
+          _this3.activeLoading = false;
 
-          _this.$vs.loading.close();
+          _this3.$vs.loading.close();
         }
       }).catch(function (err) {
         console.log(err);
-        _this.activeLoading = false;
+        _this3.activeLoading = false;
 
-        _this.$vs.loading.close();
+        _this3.$vs.loading.close();
 
-        _this.$vs.notify({
+        _this3.$vs.notify({
           title: "Precaución",
           text: "Producto no encontrado.",
           color: "warning"
         });
 
-        _this.$router.push("/consola");
+        _this3.$router.push("/consola");
       });
     },
     getCategories: function getCategories() {
-      var _this2 = this;
+      var _this4 = this;
 
       var token = localStorage.getItem("tu");
       var idu = localStorage.getItem("ui");
@@ -311,13 +424,13 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         Response.data.forEach(function (element) {
           if (element.user_id == idu) {
-            _this2.categorias.push({
+            _this4.categorias.push({
               label: element.name,
               value: element.id
             });
 
-            if (_this2.categories.includes(element.id)) {
-              _this2.category.push({
+            if (_this4.categories.includes(element.id)) {
+              _this4.category.push({
                 label: element.name,
                 value: element.id
               });
@@ -329,7 +442,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     doUpdate: function doUpdate() {
-      var _this3 = this;
+      var _this5 = this;
 
       this.popupActive2 = false;
       this.openLoading();
@@ -338,6 +451,17 @@ __webpack_require__.r(__webpack_exports__);
       this.category.forEach(function (element) {
         arrayFinal.push(element.value);
       });
+      var p = this.precentation.value;
+      var l = this.laboratory.value;
+
+      if (p == undefined) {
+        p = this.precentation1;
+      }
+
+      if (l == undefined) {
+        l = this.laboratory1;
+      }
+
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "put",
         url: "http://127.0.0.1:8000/api/putProduct",
@@ -347,8 +471,8 @@ __webpack_require__.r(__webpack_exports__);
           image: this.base64textString,
           description: this.description,
           price: this.price,
-          precentation: this.precentation,
-          laboratory: this.laboratory,
+          precentation: p,
+          laboratory: l,
           warehouse: this.warehouse,
           quantity: this.quantity
         }),
@@ -359,7 +483,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         axios__WEBPACK_IMPORTED_MODULE_1___default()({
           method: "get",
-          url: "http://127.0.0.1:8000/api/deleteProdCate/" + _this3.id,
+          url: "http://127.0.0.1:8000/api/deleteProdCate/" + _this5.id,
           headers: {
             authorization: "Bearer " + token,
             "content-type": "application/json"
@@ -370,45 +494,45 @@ __webpack_require__.r(__webpack_exports__);
             url: "http://127.0.0.1:8000/api/postProdCate",
             data: JSON.stringify({
               categories: arrayFinal,
-              product_id: _this3.id
+              product_id: _this5.id
             }),
             headers: {
               authorization: "Bearer " + token,
               "content-type": "application/json"
             }
           }).then(function (Response) {
-            _this3.activeLoading = false;
+            _this5.activeLoading = false;
 
-            _this3.$vs.loading.close();
+            _this5.$vs.loading.close();
 
-            _this3.$router.push("/consola");
+            _this5.$router.push("/consola");
 
-            _this3.$vs.notify({
+            _this5.$vs.notify({
               title: "Actualizado",
               text: "Producto actualizado exitosamente.",
               color: "success"
             });
           }).catch(function (err) {
-            _this3.activeLoading = false;
+            _this5.activeLoading = false;
 
-            _this3.$vs.loading.close();
+            _this5.$vs.loading.close();
 
             activado = true; //console.log(err);
           });
         }).catch(function (err) {
-          _this3.activeLoading = false;
+          _this5.activeLoading = false;
 
-          _this3.$vs.loading.close();
+          _this5.$vs.loading.close();
 
-          _this3.activado = true;
+          _this5.activado = true;
           console.log(err);
         });
       }).catch(function (err) {
-        _this3.activeLoading = false;
+        _this5.activeLoading = false;
 
-        _this3.$vs.loading.close();
+        _this5.$vs.loading.close();
 
-        _this3.activado = true;
+        _this5.activado = true;
         console.log(err);
       });
     },
@@ -697,22 +821,31 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("vs-input", {
-              staticClass: "w-full mt-4",
-              attrs: {
-                label: "Precio",
-                name: "precio",
-                placeholder: "Q",
-                type: "number"
-              },
-              model: {
-                value: _vm.price,
-                callback: function($$v) {
-                  _vm.price = $$v
-                },
-                expression: "price"
-              }
-            }),
+            _c("label", { staticClass: "vs-input--label" }, [_vm._v("Precio")]),
+            _vm._v(" "),
+            _c(
+              "vx-input-group",
+              { staticClass: "mb-base" },
+              [
+                _c("template", { slot: "prepend" }, [
+                  _c("div", { staticClass: "prepend-text bg-primary" }, [
+                    _c("span", [_vm._v("Q")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("vs-input", {
+                  attrs: { placeholder: "Price" },
+                  model: {
+                    value: _vm.price,
+                    callback: function($$v) {
+                      _vm.price = $$v
+                    },
+                    expression: "price"
+                  }
+                })
+              ],
+              2
+            ),
             _vm._v(" "),
             _c(
               "span",
@@ -808,72 +941,101 @@ var render = function() {
               [_vm._v(_vm._s(_vm.errors.campo))]
             ),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "mt-4" },
-              [
-                _c("vs-textarea", {
-                  staticClass: "vs-textarea",
-                  attrs: { label: "Precentación" },
-                  model: {
-                    value: _vm.precentation,
-                    callback: function($$v) {
-                      _vm.precentation = $$v
+            _c("div", { staticClass: "mt-4" }, [
+              _c(
+                "div",
+                [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "vs-input--label",
+                      staticStyle: { color: "gray" }
                     },
-                    expression: "precentation"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.precentation === "",
-                        expression: "precentation === ''"
-                      }
-                    ],
-                    staticClass: "text-danger text-sm"
-                  },
-                  [_vm._v(_vm._s(_vm.errors.campo))]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("vs-input", {
-              staticClass: "w-full mt-4",
-              attrs: { label: "Laboratorio", name: "laboratorio" },
-              model: {
-                value: _vm.laboratory,
-                callback: function($$v) {
-                  _vm.laboratory = $$v
-                },
-                expression: "laboratory"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.laboratory === "",
-                    expression: "laboratory === ''"
-                  }
+                    [_vm._v("Presentación")]
+                  ),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    attrs: { options: _vm.presentaciones },
+                    model: {
+                      value: _vm.precentation,
+                      callback: function($$v) {
+                        _vm.precentation = $$v
+                      },
+                      expression: "precentation"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.precentation === "",
+                          expression: "precentation === ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v(_vm._s(_vm.errors.campo))]
+                  )
                 ],
-                staticClass: "text-danger text-sm"
-              },
-              [_vm._v(_vm._s(_vm.errors.campo))]
-            ),
+                1
+              )
+            ]),
             _vm._v(" "),
-            _c("vs-input", {
+            _c("div", { staticClass: "mt-4" }, [
+              _c(
+                "div",
+                [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "vs-input--label",
+                      staticStyle: { color: "gray" }
+                    },
+                    [_vm._v("Laboratorio")]
+                  ),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    attrs: { options: _vm.laboratorios },
+                    model: {
+                      value: _vm.laboratory,
+                      callback: function($$v) {
+                        _vm.laboratory = $$v
+                      },
+                      expression: "laboratory"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.laboratory === "",
+                          expression: "laboratory === ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v(_vm._s(_vm.errors.campo))]
+                  )
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("label", { staticClass: "vs-input--label" }, [
+              _vm._v("Proveedor")
+            ]),
+            _vm._v(" "),
+            _c("v-select", {
               staticClass: "w-full mt-4",
-              attrs: { label: "Bodega de Despacho", name: "bodega" },
+              attrs: { options: ["NOVEMED"], dir: _vm.$vs.rtl ? "rtl" : "ltr" },
               model: {
                 value: _vm.warehouse,
                 callback: function($$v) {
@@ -918,12 +1080,17 @@ var render = function() {
                       color: "warning",
                       disabled:
                         _vm.name == "" ||
+                        _vm.name == null ||
                         _vm.quantity == "" ||
+                        _vm.quantity == null ||
                         _vm.description == "" ||
                         _vm.precentation == "" ||
+                        _vm.precentation == null ||
                         _vm.price == "" ||
                         _vm.laboratory == "" ||
+                        _vm.laboratory == null ||
                         _vm.category == "" ||
+                        _vm.category == null ||
                         _vm.warehouse == ""
                     },
                     on: {

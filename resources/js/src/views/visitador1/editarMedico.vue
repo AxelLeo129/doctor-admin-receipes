@@ -275,7 +275,14 @@
                     <!-- Col Content -->
                     <div>
                       <div class="mt-4">
-                        <vs-textarea label="Lista Especialidades" v-model="specialties" />
+                        <label class="vs-input--label">Lista Especialidades</label>
+                        <v-select
+                          multiple
+                          :closeOnSelect="false"
+                          v-model="specialties"
+                          :options="categorias"
+                          :dir="$vs.rtl ? 'rtl' : 'ltr'"
+                        />
                       </div>
                     </div>
                   </div>
@@ -323,6 +330,7 @@ export default {
   },
   data() {
     return {
+      categorias: [],
       rol: null,
       errors: {
         campo: "Este campo es requerido"
@@ -343,7 +351,7 @@ export default {
       clinicName: null,
       clinicPhone: null,
       clinicAddress: null,
-      specialties: null,
+      specialties: [],
       email: null,
       clinicalRecord: null,
       showAlerts: null,
@@ -353,10 +361,64 @@ export default {
       activado1: false,
       clinicLogo: null,
       popupActive2: false,
-      popupActive3: false
+      popupActive3: false,
+      category1: [],
+      categories: []
     };
   },
   methods: {
+    getCategories() {
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCategories",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          this.specialties = [];
+          Response.data.forEach(element => {
+            this.categorias.push({
+              label: element.name,
+              value: element.id
+            });
+            if (this.categories.includes(element.id)) {
+              this.specialties.push({
+                label: element.name,
+                value: element.id
+              });
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getCategories1() {
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCategories",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          this.specialties = [];
+          Response.data.forEach(element => {
+            this.categorias.push({
+              label: element.name,
+              value: element.id
+            });
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     handleFileSelect(evt) {
       let files = evt.target.files;
       let file = files[0];
@@ -454,6 +516,10 @@ export default {
       this.popupActive3 = false;
       this.openLoading();
       let token = localStorage.getItem("tu");
+      let arrayFinal = [];
+      this.specialties.forEach(element => {
+        arrayFinal.push(element.value);
+      });
       axios({
         method: "put",
         url: "http://127.0.0.1:8000/api/putUser2",
@@ -471,14 +537,50 @@ export default {
         }
       })
         .then(Response => {
-          this.activeLoading = false;
-          this.$vs.loading.close();
-          this.$vs.notify({
-            title: "Actualizado",
-            text: "Usuario actualizado exitosamente.",
-            color: "success"
-          });
-          this.$router.push("/1visitador");
+          axios({
+            method: "get",
+            url: "http://127.0.0.1:8000/api/deleteUserCate/" + this.id,
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          })
+            .then(Response => {
+              axios({
+                method: "post",
+                url: "http://127.0.0.1:8000/api/postUserCate",
+                data: JSON.stringify({
+                  categories: arrayFinal,
+                  user_id: this.id
+                }),
+                headers: {
+                  authorization: "Bearer " + token,
+                  "content-type": "application/json"
+                }
+              })
+                .then(Response => {
+                  this.activeLoading = false;
+                  this.$vs.loading.close();
+                  this.$router.push("/1visitador");
+                  this.$vs.notify({
+                    title: "Actualizado",
+                    text: "Producto actualizado exitosamente.",
+                    color: "success"
+                  });
+                })
+                .catch(err => {
+                  this.activeLoading = false;
+                  this.$vs.loading.close();
+                  activado = true;
+                  //console.log(err);
+                });
+            })
+            .catch(err => {
+              this.activeLoading = false;
+              this.$vs.loading.close();
+              this.activado = true;
+              console.log(err);
+            });
         })
         .catch(err => {
           this.activeLoading = false;
@@ -498,55 +600,129 @@ export default {
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getUser/" + this.id,
+        url: "http://127.0.0.1:8000/api/getUser1/" + this.id,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
       })
         .then(Response => {
-          this.name = Response.data[0].name;
-          this.userName = Response.data[0].userName;
-          if (Response.data[0].clinicalRecord == 0) {
-            this.registro = false;
-          } else {
-            this.registro = true;
-          }
-          if (Response.data[0].showAlerts == 0) {
-            this.alertas = false;
-          } else {
-            this.alertas = true;
-          }
-          if (Response.data[0].image == null || Response.data[0].image == "") {
-            this.image = "/images/medicamentos/avatar.jpeg";
-          } else {
-            this.image = "data:image/png;base64," + Response.data[0].image;
-            this.base64textString = Response.data[0].image;
-          }
-          this.email = Response.data[0].email;
-          if (
-            Response.data[0].clinicLogo == null ||
-            Response.data[0].clinicLogo == ""
-          ) {
-            this.clinicLogo = "/images/medicamentos/demol.PNG";
-          } else {
-            this.clinicLogo =
-              "data:image/png;base64," + Response.data[0].clinicLogo;
-            this.base64textString1 = Response.data[0].clinicLogo;
-          }
+          if (Response.data.length == 0) {
+            axios({
+              method: "get",
+              url: "http://127.0.0.1:8000/api/getUser2/" + this.id,
+              headers: {
+                authorization: "Bearer " + token,
+                "content-type": "application/json"
+              }
+            })
+              .then(Response => {
+                this.getCategories1();
+                this.name = Response.data[0].name;
+                this.userName = Response.data[0].userName;
+                if (Response.data[0].clinicalRecord == 0) {
+                  this.registro = false;
+                } else {
+                  this.registro = true;
+                }
+                this.phone = Response.data[0].phone;
+                if (Response.data[0].showAlerts == 0) {
+                  this.alertas = false;
+                } else {
+                  this.alertas = true;
+                }
+                if (
+                  Response.data[0].image == null ||
+                  Response.data[0].image == ""
+                ) {
+                  this.image = "/images/medicamentos/avatar.jpeg";
+                } else {
+                  this.image =
+                    "data:image/png;base64," + Response.data[0].image;
+                  this.base64textString = Response.data[0].image;
+                }
+                this.email = Response.data[0].email;
+                if (
+                  Response.data[0].clinicLogo == null ||
+                  Response.data[0].clinicLogo == ""
+                ) {
+                  this.clinicLogo = "/images/medicamentos/demol.PNG";
+                } else {
+                  this.clinicLogo =
+                    "data:image/png;base64," + Response.data[0].clinicLogo;
+                  this.base64textString1 = Response.data[0].clinicLogo;
+                }
 
-          this.clinicName = Response.data[0].clinicName;
-          this.clinicPhone = Response.data[0].clinicPhone;
-          this.clinicAddress = Response.data[0].clinicAddress;
-          this.specialties = Response.data[0].specialties;
-          this.noCollegiate = Response.data[0].noCollegiate;
-          if (Response.data[0].birthDate == "") {
-            this.birthDate = null;
+                this.clinicName = Response.data[0].clinicName;
+                this.clinicPhone = Response.data[0].clinicPhone;
+                this.clinicAddress = Response.data[0].clinicAddress;
+                this.specialties = Response.data[0].specialties;
+                this.noCollegiate = Response.data[0].noCollegiate;
+                if (Response.data[0].birthDate == "") {
+                  this.birthDate = null;
+                } else {
+                  this.birthDate = Response.data[0].birthDate;
+                }
+                this.activeLoading = false;
+                this.$vs.loading.close();
+              })
+              .catch(err => {
+                console.log(err);
+              });
           } else {
-            this.birthDate = Response.data[0].birthDate;
+            this.category1 = Response.data[0].categories.split(",");
+            this.category1.forEach(element => {
+              element = parseInt(element);
+              this.categories.push(element);
+            });
+            this.getCategories();
+            this.name = Response.data[0].name;
+            this.userName = Response.data[0].userName;
+            if (Response.data[0].clinicalRecord == 0) {
+              this.registro = false;
+            } else {
+              this.registro = true;
+            }
+            this.phone = Response.data[0].phone;
+            if (Response.data[0].showAlerts == 0) {
+              this.alertas = false;
+            } else {
+              this.alertas = true;
+            }
+            if (
+              Response.data[0].image == null ||
+              Response.data[0].image == ""
+            ) {
+              this.image = "/images/medicamentos/avatar.jpeg";
+            } else {
+              this.image = "data:image/png;base64," + Response.data[0].image;
+              this.base64textString = Response.data[0].image;
+            }
+            this.email = Response.data[0].email;
+            if (
+              Response.data[0].clinicLogo == null ||
+              Response.data[0].clinicLogo == ""
+            ) {
+              this.clinicLogo = "/images/medicamentos/demol.PNG";
+            } else {
+              this.clinicLogo =
+                "data:image/png;base64," + Response.data[0].clinicLogo;
+              this.base64textString1 = Response.data[0].clinicLogo;
+            }
+
+            this.clinicName = Response.data[0].clinicName;
+            this.clinicPhone = Response.data[0].clinicPhone;
+            this.clinicAddress = Response.data[0].clinicAddress;
+            this.specialties = Response.data[0].specialties;
+            this.noCollegiate = Response.data[0].noCollegiate;
+            if (Response.data[0].birthDate == "") {
+              this.birthDate = null;
+            } else {
+              this.birthDate = Response.data[0].birthDate;
+            }
+            this.activeLoading = false;
+            this.$vs.loading.close();
           }
-          this.activeLoading = false;
-          this.$vs.loading.close();
         })
         .catch(err => {
           console.log(err);

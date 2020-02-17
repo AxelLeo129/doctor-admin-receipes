@@ -11,7 +11,7 @@
   <div id="dashboard-analytics">
     <div class="vx-row">
       <!-- CARD 1: CONGRATS -->
-      <div class="vx-col w-full lg:w-1/2 mb-base">
+      <div class="vx-col md:w-2/3 w-full lg:w-1/2 mb-base">
         <a href="nuevoProducto">
           <vx-card slot="no-body" class="text-center bg-light-gradient greet-user">
             <!-- <img src="@assets/images/elements/decore-left.png" class="decore-left" alt="Decore Left" width="200" >
@@ -33,7 +33,7 @@
       </div>
 
       <!-- CARD 2: SUBSCRIBERS GAINED -->
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <div class="vx-col w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 mb-base">
         <a href="listadoProductos">
           <statistics-card-line
             icon="ListIcon"
@@ -47,7 +47,7 @@
       </div>
 
       <!-- CARD 3: ORDER RECIEVED -->
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <!-- <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
         <a href="/forms/form-wizard">
           <statistics-card-line
             icon="CalendarIcon"
@@ -57,7 +57,7 @@
             type="area"
           ></statistics-card-line>
         </a>
-      </div>
+      </div>-->
     </div>
 
     <div class="vx-row">
@@ -65,7 +65,72 @@
       <div class="vx-col w-full">
         <vx-card title="Últimos productos agregados.">
           <div slot="no-body" class="mt-4">
-            <vs-table :data="dispatchedOrders" class="table-dark-inverted">
+            <vs-table pagination max-items="10" search :data="medicamentos">
+              <template slot="thead">
+                <vs-th>NUMERO.</vs-th>
+                <vs-th>IMAGEN</vs-th>
+                <vs-th>NOMBRE</vs-th>
+                <vs-th>LABORATORIO</vs-th>
+                <vs-th>PRECENTACION</vs-th>
+                <vs-th>CANTIDAD</vs-th>
+                <vs-th>ACCIONES</vs-th>
+              </template>
+
+              <template slot-scope="{data}">
+                <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
+                  <vs-td>
+                    <span v-text="'# ' + (indextr + 1)"></span>
+                  </vs-td>
+
+                  <vs-td>
+                    <ul class="users-liked user-list">
+                      <li>
+                        <vx-tooltip position="bottom">
+                          <vs-avatar
+                            size="30px"
+                            class="border-2 border-white border-solid -m-1"
+                            v-bind:src="'data:image/png;base64,'+tr.image"
+                          ></vs-avatar>
+                        </vx-tooltip>
+                      </li>
+                    </ul>
+                  </vs-td>
+
+                  <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
+
+                  <vs-td :data="data[indextr].lab">{{ data[indextr].lab }}</vs-td>
+
+                  <vs-td :data="data[indextr].precentacion">{{ data[indextr].precentacion }}</vs-td>
+
+                  <vs-td :data="data[indextr].quantity">{{ data[indextr].quantity }}</vs-td>
+
+                  <vs-td>
+                    <span>
+                      <vs-button
+                        color="warning"
+                        type="filled"
+                        size="small"
+                        @click="edit(tr.id)"
+                      >Editar</vs-button>
+                      <vs-button
+                        color="danger"
+                        type="filled"
+                        size="small"
+                        @click="popupActive3=true, iden=tr.id"
+                      >Eliminar</vs-button>
+                    </span>
+                  </vs-td>
+                </vs-tr>
+              </template>
+            </vs-table>
+            <vs-popup title="Eliminar Producto" :active.sync="popupActive3">
+              <p>¿Está seguro de eliminar este producto?</p>
+              <br />
+              <vs-button @click="deleteProduct(iden)" color="primary" type="filled">Aceptar</vs-button>
+              <vs-button @click="popupActive3=false" color="danger" type="filled">Cancelar</vs-button>
+            </vs-popup>
+
+            <!-- <vs-table :data="dispatchedOrders" class="table-dark-inverted">
               <template slot="thead">
                 <vs-th>NUMERO.</vs-th>
                 <vs-th>IMAGEN</vs-th>
@@ -130,7 +195,7 @@
                   </vs-popup>
                 </vs-tr>
               </template>
-            </vs-table>
+            </vs-table> -->
           </div>
         </vx-card>
       </div>

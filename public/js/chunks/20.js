@@ -443,21 +443,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { attrs: { align: "center" } }, [
-      _c("h4", [_vm._v("Paso")]),
-      _vm._v(" "),
-      _vm.nextStep == 0
-        ? _c("h5", [
-            _vm._v("\n      1 ... 2 ... "),
-            _c("strong", [_vm._v("3")])
-          ])
-        : _c("h5", [
-            _vm._v("\n      1 ... 2 ... "),
-            _c("strong", [_vm._v("3")]),
-            _vm._v(" ... 4\n    ")
-          ])
-    ]),
-    _vm._v(" "),
     _c(
       "div",
       { attrs: { id: "ecommerce-checkout-demo" } },
@@ -495,7 +480,7 @@ var render = function() {
                         ) {
                           return _c(
                             "vx-card",
-                            { key: item.id, staticStyle: { height: "75%" } },
+                            { key: item.id, staticStyle: { height: "14rem" } },
                             [
                               _c("div", { staticClass: "vx-row" }, [
                                 _c(

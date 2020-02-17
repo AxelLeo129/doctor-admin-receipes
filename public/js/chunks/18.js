@@ -133,6 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -163,12 +164,66 @@ __webpack_require__.r(__webpack_exports__);
       category: [],
       base64textString: "",
       categorias: [],
+      laboratorios: [],
+      presentaciones: [],
       Resid: null
     };
   },
   methods: {
-    getCategories: function getCategories() {
+    getPre: function getPre() {
       var _this = this;
+
+      var token = localStorage.getItem("tu");
+      var idu = localStorage.getItem("ui");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getPres",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this.presentaciones = [];
+        Response.data.forEach(function (element) {
+          if (element.user_id == idu) {
+            _this.presentaciones.push({
+              label: element.name + '-' + element.unidad + '-' + element.cantidad,
+              value: element.id
+            });
+          }
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    getLab: function getLab() {
+      var _this2 = this;
+
+      var token = localStorage.getItem("tu");
+      var idu = localStorage.getItem("ui");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getLabs",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this2.laboratorios = [];
+        Response.data.forEach(function (element) {
+          if (element.user_id == idu) {
+            _this2.laboratorios.push({
+              label: element.name,
+              value: element.id
+            });
+          }
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    getCategories: function getCategories() {
+      var _this3 = this;
 
       var token = localStorage.getItem("tu");
       var idu = localStorage.getItem("ui");
@@ -182,7 +237,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         Response.data.forEach(function (element) {
           if (element.user_id == idu) {
-            _this.categorias.push({
+            _this3.categorias.push({
               label: element.name,
               value: element.id
             });
@@ -205,7 +260,7 @@ __webpack_require__.r(__webpack_exports__);
       this.bol = "";
     },
     doSave: function doSave() {
-      var _this2 = this;
+      var _this4 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -222,8 +277,8 @@ __webpack_require__.r(__webpack_exports__);
           image: this.base64textString,
           description: this.description,
           price: this.price,
-          precentation: this.precentation,
-          laboratory: this.laboratory,
+          precentation: this.precentation.value,
+          laboratory: this.laboratory.value,
           warehouse: this.warehouse,
           quantity: this.quantity,
           user_id: idu
@@ -233,41 +288,41 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this2.Resid = Response.data.mess;
+        _this4.Resid = Response.data.mess;
         axios__WEBPACK_IMPORTED_MODULE_1___default()({
           method: "post",
           url: "http://127.0.0.1:8000/api/postProdCate",
           data: JSON.stringify({
             categories: arrayFinal,
-            product_id: _this2.Resid
+            product_id: _this4.Resid
           }),
           headers: {
             authorization: "Bearer " + token,
             "content-type": "application/json"
           }
         }).then(function (Response) {
-          _this2.activeLoading = false;
+          _this4.activeLoading = false;
 
-          _this2.$vs.loading.close();
+          _this4.$vs.loading.close();
 
-          _this2.$router.push("/consola");
+          _this4.$router.push("/consola");
 
-          _this2.$vs.notify({
+          _this4.$vs.notify({
             title: "Agregado",
             text: "Producto creado exitosamente.",
             color: "success"
           });
         }).catch(function (err) {
-          _this2.activeLoading = false;
+          _this4.activeLoading = false;
 
-          _this2.$vs.loading.close();
+          _this4.$vs.loading.close();
 
           activado = true; //console.log(err);
         });
       }).catch(function (err) {
-        _this2.activeLoading = false;
+        _this4.activeLoading = false;
 
-        _this2.$vs.loading.close();
+        _this4.$vs.loading.close();
 
         activado = true; //console.log(err);
       });
@@ -292,6 +347,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getCategories();
+    this.getLab();
+    this.getPre();
   }
 });
 
@@ -309,7 +366,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".fileInput {\n  width: 0.1px;\n  height: 0.1px;\n  opacity: 0;\n  overflow: hidden;\n  position: absolute;\n  z-index: -1;\n}\n.subir {\n  color: #fff;\n}\n[dir] .subir {\n  padding: 5px 10px;\n  background: #003DA5;\n  border: 0px solid #fff;\n  border-radius: 15px 15px 15px 15px;\n}\n.subir:hover {\n  color: #fff;\n}\n[dir] .subir:hover {\n  background: #003DA5;\n}\n[dir] .vs-textarea {\n  background-color: white;\n}", ""]);
+exports.push([module.i, ".fileInput {\n  width: 0.1px;\n  height: 0.1px;\n  opacity: 0;\n  overflow: hidden;\n  position: absolute;\n  z-index: -1;\n}\n.subir {\n  color: #fff;\n}\n[dir] .subir {\n  padding: 5px 10px;\n  background: #003da5;\n  border: 0px solid #fff;\n  border-radius: 15px 15px 15px 15px;\n}\n.subir:hover {\n  color: #fff;\n}\n[dir] .subir:hover {\n  background: #003da5;\n}\n[dir] .vs-textarea {\n  background-color: white;\n}", ""]);
 
 // exports
 
@@ -532,22 +589,33 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("vs-input", {
-                staticClass: "w-full mt-4",
-                attrs: {
-                  label: "Precio",
-                  name: "precio",
-                  placeholder: "Q",
-                  type: "number"
-                },
-                model: {
-                  value: _vm.price,
-                  callback: function($$v) {
-                    _vm.price = $$v
-                  },
-                  expression: "price"
-                }
-              }),
+              _c("label", { staticClass: "vs-input--label" }, [
+                _vm._v("Precio")
+              ]),
+              _vm._v(" "),
+              _c(
+                "vx-input-group",
+                { staticClass: "mb-base" },
+                [
+                  _c("template", { slot: "prepend" }, [
+                    _c("div", { staticClass: "prepend-text bg-primary" }, [
+                      _c("span", [_vm._v("Q")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-input", {
+                    attrs: { placeholder: "Price" },
+                    model: {
+                      value: _vm.price,
+                      callback: function($$v) {
+                        _vm.price = $$v
+                      },
+                      expression: "price"
+                    }
+                  })
+                ],
+                2
+              ),
               _vm._v(" "),
               _c(
                 "span",
@@ -631,9 +699,17 @@ var render = function() {
                 "div",
                 { staticClass: "mt-4" },
                 [
-                  _c("vs-textarea", {
-                    staticClass: "vs-textarea",
-                    attrs: { label: "Precentación" },
+                  _c(
+                    "label",
+                    {
+                      staticClass: "vs-input--label",
+                      staticStyle: { color: "gray" }
+                    },
+                    [_vm._v("Presentación")]
+                  ),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    attrs: { options: _vm.presentaciones },
                     model: {
                       value: _vm.precentation,
                       callback: function($$v) {
@@ -662,60 +738,89 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("vs-input", {
-                staticClass: "w-full mt-4",
-                attrs: { label: "Laboratorio", name: "laboratorio" },
-                model: {
-                  value: _vm.laboratory,
-                  callback: function($$v) {
-                    _vm.laboratory = $$v
-                  },
-                  expression: "laboratory"
-                }
-              }),
+              _c("div", { staticClass: "mt-4" }, [
+                _c(
+                  "div",
+                  [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "vs-input--label",
+                        staticStyle: { color: "gray" }
+                      },
+                      [_vm._v("Laboratorio")]
+                    ),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: { options: _vm.laboratorios },
+                      model: {
+                        value: _vm.laboratory,
+                        callback: function($$v) {
+                          _vm.laboratory = $$v
+                        },
+                        expression: "laboratory"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.laboratory === "",
+                            expression: "laboratory === ''"
+                          }
+                        ],
+                        staticClass: "text-danger text-sm"
+                      },
+                      [_vm._v(_vm._s(_vm.errors.campo))]
+                    )
+                  ],
+                  1
+                )
+              ]),
               _vm._v(" "),
               _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.laboratory === "",
-                      expression: "laboratory === ''"
+                "div",
+                { staticClass: "mt-4" },
+                [
+                  _c("label", { staticClass: "vs-input--label" }, [
+                    _vm._v("Proveedor")
+                  ]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    attrs: {
+                      options: ["NOVEMED"],
+                      dir: _vm.$vs.rtl ? "rtl" : "ltr"
+                    },
+                    model: {
+                      value: _vm.warehouse,
+                      callback: function($$v) {
+                        _vm.warehouse = $$v
+                      },
+                      expression: "warehouse"
                     }
-                  ],
-                  staticClass: "text-danger text-sm"
-                },
-                [_vm._v(_vm._s(_vm.errors.campo))]
-              ),
-              _vm._v(" "),
-              _c("vs-input", {
-                staticClass: "w-full mt-4",
-                attrs: { label: "Bodega de Despacho", name: "bodega" },
-                model: {
-                  value: _vm.warehouse,
-                  callback: function($$v) {
-                    _vm.warehouse = $$v
-                  },
-                  expression: "warehouse"
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
                     {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.warehouse === "",
-                      expression: "warehouse === ''"
-                    }
-                  ],
-                  staticClass: "text-danger text-sm"
-                },
-                [_vm._v(_vm._s(_vm.errors.campo))]
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.warehouse === "",
+                          expression: "warehouse === ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v(_vm._s(_vm.errors.campo))]
+                  )
+                ],
+                1
               )
             ],
             1

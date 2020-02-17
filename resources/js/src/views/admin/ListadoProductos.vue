@@ -31,8 +31,18 @@
     <div class="vx-row">
       <!-- CARD 9: DISPATCHED ORDERS -->
       <div class="vx-col w-full">
-        <vx-card title="Top más vendidos">
-          <div slot="no-body" class="mt-4">
+        <vx-card>
+          <div class="vx-row">
+            <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 mb-base">
+              <h4>Top más vendidos</h4>
+            </div>
+            <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 mb-base">
+              <div align="right">
+                <vs-button color="primary" type="filled" @click="nuevo">Nuevo Medicamento</vs-button>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4">
             <vs-table :data="dispatchedOrders" class="table-dark-inverted">
               <template slot="thead">
                 <vs-th>NUMERO.</vs-th>
@@ -66,10 +76,10 @@
                     <span v-text="item.name"></span>
                   </vs-td>
                   <vs-td>
-                    <span v-text="item.laboratory"></span>
+                    <span v-text="item.lab"></span>
                   </vs-td>
                   <vs-td>
-                    <span v-text="item.precentation"></span>
+                    <span v-text="item.precentacion"></span>
                   </vs-td>
                   <vs-td>
                     <span v-text="item.quantity"></span>
@@ -92,7 +102,7 @@
                   </vs-td>
                   <vs-popup title="Eliminar Producto" :active.sync="popupActive3">
                     <p>¿Está seguro de eliminar este producto?</p>
-                    <br>
+                    <br />
                     <vs-button @click="deleteProduct(item.id)" color="primary" type="filled">Aceptar</vs-button>
                     <vs-button @click="popupActive3=false" color="danger" type="filled">Cancelar</vs-button>
                   </vs-popup>
@@ -118,6 +128,9 @@ export default {
     };
   },
   methods: {
+    nuevo(){
+      this.$router.push("/nuevoProducto");
+    },
     edit(id) {
       this.$router.push("/editarProducto/" + id);
     },
@@ -134,7 +147,7 @@ export default {
       })
         .then(Response => {
           Response.data.forEach(element => {
-            if(element.user_id == id){
+            if (element.user_id == id) {
               this.medicamentos.push(element);
             }
           });

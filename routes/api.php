@@ -28,12 +28,18 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('details', 'User\UserController@details');
     Route::put('putUser1', 'User\UserController@update1');
     Route::put('putUser2', 'User\UserController@update2');
+    Route::put('putUser3', 'User\UserController@update3');
+    Route::get('getUser1/{id}', 'User\UserController@show');
+    Route::get('getUser2/{id}', 'User\UserController@show1');
     //Visitador
     Route::get('getVisitador/{id}', "User\UserController@getMedics");
     Route::any('register1', 'User\UserController@register');
     Route::get('getUser/{id}', 'User\UserController@detailsUser');
+    Route::get('deleteUserCate/{id}', 'User\UserController@destroyCategory');
+    Route::any('postUserCate', 'User\UserController@storeCategory');
     //Product
     Route::get('getProducts', 'Products\ProductController@list');
+    Route::get('getProducts1', 'Products\ProductController@list1');
     Route::post('postProducts', 'Products\ProductController@store');
     Route::get('getProduct/{id}', 'Products\ProductController@show');
     Route::get('getProduct1/{id}', 'Products\ProductController@show1');
@@ -69,6 +75,21 @@ Route::group(['middleware' => 'auth:api'], function(){
     //Pedidos
     Route::post('postOrder', 'Orders\OrderController@store');
     Route::post('postOrderProd', 'Orders\OrderController@storeProducto');
+    //Roles
+    Route::get('getRoles', 'Roles\RolController@index');
+    Route::post('postRol', 'Roles\RolController@store');
+    Route::get('getRol/{id}', 'Roles\RolController@show');
+    Route::put('putRol', 'Roles\RolController@update');
+    //Laboratorios
+    Route::get('getLabs', 'Labs\LabController@index');
+    Route::post('postLab', 'Labs\LabController@store');
+    Route::get('getLab/{id}', 'Labs\LabController@show');
+    Route::put('putLab', 'Labs\LabController@update');
+    //Presentación
+    Route::get('getPres', 'Presentations\PresentationController@index');
+    Route::post('postPre', 'Presentations\PresentationController@store');
+    Route::get('getPre/{id}', 'Presentations\PresentationController@show');
+    Route::put('putPre', 'Presentations\PresentationController@update');
 
 });
 

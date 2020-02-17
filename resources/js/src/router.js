@@ -364,6 +364,48 @@ const router = new Router({
           component: () => import('./views/Page2.vue')
         },
         {
+          path: '/listadoRecetas',
+          name: 'listadoRecetas',
+          component: () => import('@/views/pages/listadoRecetas.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next({
+                name: 'consola'
+              });
+            } else if (rol == 2) {
+              next();
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Recetas' },
+              { title: 'Listado Recetas', active: true },
+            ],
+            pageTitle: 'Listado Recetas',
+            rule: 'editor'
+          }
+        },
+        {
           path: '/nuevoPaciente',
           name: 'extra-component-form-wizard',
           component: () => import('@/views/pages/nuevoPaciente.vue'),
@@ -565,6 +607,39 @@ const router = new Router({
           }
         },
         {
+          path: '/receta/:idReceta',
+          name: 'receta',
+          component: () => import('./views/pages/verReceta.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next({
+                name: 'consola'
+              });
+            } else if (rol == 2) {
+              next();
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          }
+        },
+        {
           path: '/showRecipe/:recipeId',
           name: 'showRecipe',
           component: () => import('./views/pages/showRecipe.vue'),
@@ -595,6 +670,514 @@ const router = new Router({
                 name: 'page-login'
               });
             }
+          }
+        },
+        //Admin - Presentación
+        {
+          path: '/listadoPres',
+          name: 'listadoPres',
+          component: () => import('@/views/admin/presentaciones/dashboard.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Presentaciones' },
+              { title: 'Listado Presentaciones', active: true },
+            ],
+            pageTitle: 'Listado Presentaciones',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/nuevaPre',
+          name: 'nuevaPre',
+          component: () => import('@/views/admin/presentaciones/nuevoPre.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Presentaciones' },
+              { title: 'Nueva Presentación', active: true },
+            ],
+            pageTitle: 'Nueva Presentación',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/editarPre/:preId',
+          name: 'editarPre',
+          component: () => import('@/views/admin/presentaciones/editarPre.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Presentaciones' },
+              { title: 'Editar Presentación', active: true },
+            ],
+            pageTitle: 'Editar Presentación',
+            rule: 'editor'
+          }
+        },
+        //Admin - Laboratorios
+        {
+          path: '/listadoLabs',
+          name: 'listadoLabs',
+          component: () => import('@/views/admin/laboratorios/dashboard.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Laboratorios' },
+              { title: 'Listado Laboratorios', active: true },
+            ],
+            pageTitle: 'Listado Laboratorios',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/nuevoLab',
+          name: 'nuevoLab',
+          component: () => import('@/views/admin/laboratorios/nuevoLab.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Laboratorios' },
+              { title: 'Nuevo Laboratorio', active: true },
+            ],
+            pageTitle: 'Nuevo Laboratorio',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/editarLab/:labId',
+          name: 'editarLab',
+          component: () => import('@/views/admin/laboratorios/editLab.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Laboratorio' },
+              { title: 'Editar Laboratorio', active: true },
+            ],
+            pageTitle: 'Editar Laboratorio',
+            rule: 'editor'
+          }
+        },
+        //Admin - Users
+        {
+          path: '/listadoUsurios',
+          name: 'listadoUsurios',
+          component: () => import('@/views/admin/users/dashboard.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Usuarios' },
+              { title: 'Listado Usuarios', active: true },
+            ],
+            pageTitle: 'Listado Usuarios',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/nuevoUsuario',
+          name: 'nuevoUsuario',
+          component: () => import('@/views/admin/users/nuevoUsurio.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Usuarios' },
+              { title: 'Nuevo Usuario', active: true },
+            ],
+            pageTitle: 'Nuevo Usuario',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/editarUsuario/:idUsuario',
+          name: 'editarUsuario',
+          component: () => import('@/views/admin/users/editarUsuario.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Usuarios' },
+              { title: 'Editar Usuario', active: true },
+            ],
+            pageTitle: 'Editar Usuario',
+            rule: 'editor'
+          }
+        },
+        //Admin - Roles 
+        {
+          path: '/listadoRoles',
+          name: 'listadoRoles',
+          component: () => import('@/views/admin/roles/dashboard.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Roles' },
+              { title: 'Listado Roles', active: true },
+            ],
+            pageTitle: 'Listado Roles',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/nuevoRol',
+          name: 'nuevoRol',
+          component: () => import('@/views/admin/roles/nuevoRol.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Roles' },
+              { title: 'Nuevo Rol', active: true },
+            ],
+            pageTitle: 'Nuevo Rol',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/editarRol/:rolId',
+          name: 'editarRol',
+          component: () => import('@/views/admin/roles/editarRol.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next();
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: "1visitador"
+              });
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          },
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Roles' },
+              { title: 'Editar Rol', active: true },
+            ],
+            pageTitle: 'Editar Rol',
+            rule: 'editor'
           }
         },
         //Admin - Categorias

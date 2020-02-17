@@ -201,12 +201,6 @@ var render = function() {
       "div",
       { staticClass: "mt-5" },
       [
-        _c("div", { attrs: { align: "center" } }, [
-          _c("h4", [_vm._v("Paso")]),
-          _vm._v(" "),
-          _c("h5", [_c("strong", [_vm._v("1")]), _vm._v(" ... 2 ... 3 ... 4")])
-        ]),
-        _vm._v(" "),
         _c(
           "form-wizard",
           {

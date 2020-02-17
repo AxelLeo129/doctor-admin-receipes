@@ -533,7 +533,7 @@ export default {
               "data:image/png;base64," + Response.data.success.clinicLogo;
             this.base64textString1 = Response.data.success.clinicLogo;
           }
-
+          this.phone = Response.data.success.phone;
           this.clinicName = Response.data.success.clinicName;
           this.clinicPhone = Response.data.success.clinicPhone;
           this.clinicAddress = Response.data.success.clinicAddress;

@@ -129,6 +129,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      clPhone: '',
+      clAddress: '',
       image: "/images/medicamentos/demol.PNG",
       drName: "",
       drEmail: "",
@@ -198,16 +200,27 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(Response);
-
-        if (Response.data.success.clinicalRecord == null || Response.data.success.clinicalRecord == "") {
+        //console.log(Response);
+        if (Response.data.success.clinicLogo == null || Response.data.success.clinicLogo == "") {
           _this.image = "/images/medicamentos/demol.PNG";
         } else {
-          _this.image = "data:image/png;base64," + Response.data.success.clinicalRecord;
+          _this.image = "data:image/png;base64," + Response.data.success.clinicLogo;
         }
 
         _this.drName = Response.data.success.name;
         _this.drEmail = Response.data.success.email;
+
+        if (Response.data.success.clinicPhone == null || Response.data.success.clinicPhone == '') {
+          _this.clPhone = '+502: 8452-9862';
+        } else {
+          _this.clPhone = Response.data.success.clinicPhone;
+        }
+
+        if (Response.data.success.clinicAddress == null || Response.data.success.clinicAddress == '') {
+          _this.clAddress = 'Via 4 zona 4 Guatemala';
+        } else {
+          _this.clAddress = Response.data.success.clinicAddress;
+        }
 
         if (Response.data.success.phone == null || Response.data.success.phone == "") {
           _this.drPhone = '+502: 8452-9862';
@@ -415,10 +428,6 @@ var render = function() {
             _c("h1", [_vm._v("Receta")]),
             _vm._v(" "),
             _c("div", { staticClass: "invoice__invoice-detail mt-6" }, [
-              _c("h6", [_vm._v("Receta No.")]),
-              _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(_vm.invoiceDetails.invoiceNo))]),
-              _vm._v(" "),
               _c("h6", { staticClass: "mt-4" }, [_vm._v("Fecha Receta")]),
               _vm._v(" "),
               _c("p", {
@@ -452,7 +461,7 @@ var render = function() {
               _c("h5", [_vm._v(_vm._s(_vm.companyDetails.name))]),
               _vm._v(" "),
               _c("div", { staticClass: "invoice__company-info my-4" }, [
-                _c("p", [_vm._v("Via 4 zona 4 Guatemala")]),
+                _c("p", { domProps: { textContent: _vm._s(_vm.clAddress) } }),
                 _vm._v(" "),
                 _c("p", [
                   _c("strong", {
@@ -460,7 +469,7 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(_vm.companyDetails.zipcode))])
+                _c("p", { domProps: { textContent: _vm._s(_vm.clPhone) } })
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "invoice__company-contact" }, [
@@ -537,10 +546,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "invoice__footer text-right p-base" }, [
           _c("div", { attrs: { align: "right" } }, [
-            _c("img", {
-              staticClass: "h-24 w-64",
-              attrs: { src: _vm.imagen64, alt: "" }
-            })
+            _c("h6", [_vm._v("PHARMAZone.app")])
           ])
         ])
       ])

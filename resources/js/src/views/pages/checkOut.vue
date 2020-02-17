@@ -9,7 +9,7 @@
 
 <template>
   <div>
-    <div align="center">
+    <!-- <div align="center">
       <h4>Paso</h4>
       <h5 v-if="nextStep == 0">
         1 ... 2 ... <strong>3</strong>
@@ -17,7 +17,7 @@
       <h5 v-else>
         1 ... 2 ... <strong>3</strong> ... 4
       </h5>
-    </div>
+    </div> -->
     <div id="ecommerce-checkout-demo">
       <form-wizard
         ref="checkoutWizard"
@@ -36,7 +36,7 @@
                 <vx-card
                   v-for="(item, index) in nuevaRecetaData.medicamentos"
                   :key="item.id"
-                  style="height: 75%"
+                  style="height: 14rem;"
                 >
                   <div class="vx-row">
                     <div class="vx-col md:w-1/2 w-full">

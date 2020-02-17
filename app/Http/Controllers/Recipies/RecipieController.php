@@ -91,7 +91,7 @@ class RecipieController extends Controller
      */
     public function show($id)
     {
-        return \DB::select("SELECT reci.id, reci.name, reci.doctor_id, reci.symptom, reci.diagnostics, reci.observations, reci.nextAppointment, reci.status, GROUP_CONCAT(prod.id SEPARATOR ',') products FROM recipies_products pp INNER JOIN recipies reci ON pp.recipe_id=reci.id INNER JOIN products prod ON pp.product_id=prod.id WHERE reci.id = $id GROUP BY reci.id");
+        return \DB::select("SELECT reci.id, reci.phone, reci.name, reci.doctor_id, reci.symptom, reci.diagnostics, reci.observations, reci.nextAppointment, reci.status, GROUP_CONCAT(prod.id SEPARATOR ',') products FROM recipies_products pp INNER JOIN recipies reci ON pp.recipe_id=reci.id INNER JOIN products prod ON pp.product_id=prod.id WHERE reci.id = $id GROUP BY reci.id");
     }
 
     /**
@@ -141,6 +141,6 @@ class RecipieController extends Controller
 
     //muestra los medicamentos que se le recetó al cliente
     public function getInfoRecipie($id){
-        return \DB::table('recipies_products')->where('recipe_id', $id)->get();
+        return \DB::select("SELECT recipe_id, name, dispensing, (SELECT GROUP_CONCAT(name, '-', unidad, '-', cantidad) FROM presentations WHERE presentations.id = precentation) as presentacion FROM recipies_products INNER JOIN products ON recipies_products.product_id = products.id WHERE recipe_id = $id");
     }
 }

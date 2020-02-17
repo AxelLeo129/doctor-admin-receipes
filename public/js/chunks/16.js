@@ -157,6 +157,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -342,7 +407,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "dashboard-analytics" } }, [
     _c("div", { staticClass: "vx-row" }, [
-      _c("div", { staticClass: "vx-col w-full lg:w-1/2 mb-base" }, [
+      _c("div", { staticClass: "vx-col md:w-2/3 w-full lg:w-1/2 mb-base" }, [
         _c(
           "a",
           { attrs: { href: "nuevoProducto" } },
@@ -391,7 +456,7 @@ var render = function() {
         "div",
         {
           staticClass:
-            "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base"
+            "vx-col w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 mb-base"
         },
         [
           _c(
@@ -405,33 +470,6 @@ var render = function() {
                   statisticTitle: "Listado de Medicamentos.",
                   chartData: _vm.ordersRecevied.series,
                   color: "warning",
-                  type: "area"
-                }
-              })
-            ],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base"
-        },
-        [
-          _c(
-            "a",
-            { attrs: { href: "/forms/form-wizard" } },
-            [
-              _c("statistics-card-line", {
-                attrs: {
-                  icon: "CalendarIcon",
-                  statistic: "Calendario",
-                  statisticTitle:
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit eaque, voluptatibus, aperiam, nesciunt laboriosam sint inventore odit consectetur nisi in accusamus libero dolores ducimus beatae perferendis quia. Veritatis, incidunt molestias?",
-                  chartData: _vm.subscribersGained.series,
                   type: "area"
                 }
               })
@@ -459,8 +497,137 @@ var render = function() {
                 _c(
                   "vs-table",
                   {
-                    staticClass: "table-dark-inverted",
-                    attrs: { data: _vm.dispatchedOrders }
+                    attrs: {
+                      pagination: "",
+                      "max-items": "10",
+                      search: "",
+                      data: _vm.medicamentos
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(ref) {
+                          var data = ref.data
+                          return _vm._l(data, function(tr, indextr) {
+                            return _c(
+                              "vs-tr",
+                              { key: indextr, attrs: { data: tr } },
+                              [
+                                _c("vs-td", [
+                                  _c("span", {
+                                    domProps: {
+                                      textContent: _vm._s("# " + (indextr + 1))
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("vs-td", [
+                                  _c(
+                                    "ul",
+                                    { staticClass: "users-liked user-list" },
+                                    [
+                                      _c(
+                                        "li",
+                                        [
+                                          _c(
+                                            "vx-tooltip",
+                                            { attrs: { position: "bottom" } },
+                                            [
+                                              _c("vs-avatar", {
+                                                staticClass:
+                                                  "border-2 border-white border-solid -m-1",
+                                                attrs: {
+                                                  size: "30px",
+                                                  src:
+                                                    "data:image/png;base64," +
+                                                    tr.image
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  { attrs: { data: data[indextr].name } },
+                                  [_vm._v(_vm._s(data[indextr].name))]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  { attrs: { data: data[indextr].lab } },
+                                  [_vm._v(_vm._s(data[indextr].lab))]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  {
+                                    attrs: { data: data[indextr].precentacion }
+                                  },
+                                  [_vm._v(_vm._s(data[indextr].precentacion))]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  { attrs: { data: data[indextr].quantity } },
+                                  [_vm._v(_vm._s(data[indextr].quantity))]
+                                ),
+                                _vm._v(" "),
+                                _c("vs-td", [
+                                  _c(
+                                    "span",
+                                    [
+                                      _c(
+                                        "vs-button",
+                                        {
+                                          attrs: {
+                                            color: "warning",
+                                            type: "filled",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.edit(tr.id)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Editar")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "vs-button",
+                                        {
+                                          attrs: {
+                                            color: "danger",
+                                            type: "filled",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              ;(_vm.popupActive3 = true),
+                                                (_vm.iden = tr.id)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Eliminar")]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ])
+                              ],
+                              1
+                            )
+                          })
+                        }
+                      }
+                    ])
                   },
                   [
                     _c(
@@ -482,174 +649,58 @@ var render = function() {
                         _c("vs-th", [_vm._v("ACCIONES")])
                       ],
                       1
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.medicamentos, function(item, index) {
-                      return _c(
-                        "vs-tr",
-                        { key: item.id },
-                        [
-                          _c("vs-td", [
-                            _c("span", {
-                              domProps: {
-                                textContent: _vm._s("# " + (index + 1))
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("ul", { staticClass: "users-liked user-list" }, [
-                              _c(
-                                "li",
-                                [
-                                  _c(
-                                    "vx-tooltip",
-                                    { attrs: { position: "bottom" } },
-                                    [
-                                      _c("vs-avatar", {
-                                        staticClass:
-                                          "border-2 border-white border-solid -m-1",
-                                        attrs: {
-                                          size: "30px",
-                                          src:
-                                            "data:image/png;base64," +
-                                            item.image
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("span", {
-                              domProps: { textContent: _vm._s(item.name) }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("span", {
-                              domProps: { textContent: _vm._s(item.laboratory) }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("span", {
-                              domProps: {
-                                textContent: _vm._s(item.precentation)
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("span", {
-                              domProps: { textContent: _vm._s(item.quantity) }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c(
-                              "span",
-                              [
-                                _c(
-                                  "vs-button",
-                                  {
-                                    attrs: {
-                                      color: "warning",
-                                      type: "filled",
-                                      size: "small"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.edit(item.id)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Editar")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vs-button",
-                                  {
-                                    attrs: {
-                                      color: "danger",
-                                      type: "filled",
-                                      size: "small"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        ;(_vm.popupActive3 = true),
-                                          (_vm.iden = item.id)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Eliminar")]
-                                )
-                              ],
-                              1
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "vs-popup",
-                            {
-                              attrs: {
-                                title: "Eliminar Producto",
-                                active: _vm.popupActive3
-                              },
-                              on: {
-                                "update:active": function($event) {
-                                  _vm.popupActive3 = $event
-                                }
-                              }
-                            },
-                            [
-                              _c("p", [
-                                _vm._v(
-                                  "¿Está seguro de eliminar este producto?"
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c(
-                                "vs-button",
-                                {
-                                  attrs: { color: "primary", type: "filled" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleteProduct(_vm.iden)
-                                    }
-                                  }
-                                },
-                                [_vm._v("Aceptar")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "vs-button",
-                                {
-                                  attrs: { color: "danger", type: "filled" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.popupActive3 = false
-                                    }
-                                  }
-                                },
-                                [_vm._v("Cancelar")]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    })
+                    )
                   ],
                   2
+                ),
+                _vm._v(" "),
+                _c(
+                  "vs-popup",
+                  {
+                    attrs: {
+                      title: "Eliminar Producto",
+                      active: _vm.popupActive3
+                    },
+                    on: {
+                      "update:active": function($event) {
+                        _vm.popupActive3 = $event
+                      }
+                    }
+                  },
+                  [
+                    _c("p", [
+                      _vm._v("¿Está seguro de eliminar este producto?")
+                    ]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "vs-button",
+                      {
+                        attrs: { color: "primary", type: "filled" },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteProduct(_vm.iden)
+                          }
+                        }
+                      },
+                      [_vm._v("Aceptar")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "vs-button",
+                      {
+                        attrs: { color: "danger", type: "filled" },
+                        on: {
+                          click: function($event) {
+                            _vm.popupActive3 = false
+                          }
+                        }
+                      },
+                      [_vm._v("Cancelar")]
+                    )
+                  ],
+                  1
                 )
               ],
               1

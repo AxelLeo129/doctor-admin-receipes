@@ -13,10 +13,10 @@
     <p>Ingrese los datos del paciente.</p>
 
     <div class="mt-5">
-      <div align="center">
+      <!-- <div align="center">
         <h4>Paso</h4>
         <h5><strong>1</strong> ... 2 ... 3 ... 4</h5>
-      </div>
+      </div> -->
       <form-wizard
         color="rgba(var(--vs-primary), 1)"
         :title="null"

@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[24],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/visitador1/editarMedico.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/visitador1/editarMedico.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/user/EditarUsuario.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/user/EditarUsuario.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -23,8 +23,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
 //
 //
 //
@@ -372,6 +370,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }, _defineProperty(_ref, "email", null), _defineProperty(_ref, "clinicalRecord", null), _defineProperty(_ref, "showAlerts", null), _defineProperty(_ref, "base64textString", null), _defineProperty(_ref, "base64textString1", null), _defineProperty(_ref, "activado", false), _defineProperty(_ref, "activado1", false), _defineProperty(_ref, "clinicLogo", null), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "popupActive3", false), _ref;
   },
   methods: {
+    getRol: function getRol() {
+      this.rol = localStorage.getItem("ru");
+    },
     handleFileSelect: function handleFileSelect(evt) {
       var files = evt.target.files;
       var file = files[0];
@@ -453,13 +454,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.$vs.loading.close();
 
+        _this.getData();
+
         _this.$vs.notify({
           title: "Actualizado",
           text: "Usuario actualizado exitosamente.",
           color: "success"
         });
-
-        _this.$router.push("/1visitador");
       }).catch(function (err) {
         _this.activeLoading = false;
 
@@ -495,13 +496,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this2.$vs.loading.close();
 
+        _this2.getData();
+
         _this2.$vs.notify({
           title: "Actualizado",
           text: "Usuario actualizado exitosamente.",
           color: "success"
         });
-
-        _this2.$router.push("/1visitador");
       }).catch(function (err) {
         _this2.activeLoading = false;
 
@@ -524,53 +525,55 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_5___default()({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getUser/" + this.id,
+        url: "http://127.0.0.1:8000/api/details",
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this3.name = Response.data[0].name;
-        _this3.userName = Response.data[0].userName;
+        _this3.id = Response.data.success.id;
+        _this3.name = Response.data.success.name;
+        _this3.userName = Response.data.success.userName;
 
-        if (Response.data[0].clinicalRecord == 0) {
+        if (Response.data.success.clinicalRecord == 0) {
           _this3.registro = false;
         } else {
           _this3.registro = true;
         }
 
-        if (Response.data[0].showAlerts == 0) {
+        if (Response.data.success.showAlerts == 0) {
           _this3.alertas = false;
         } else {
           _this3.alertas = true;
         }
 
-        if (Response.data[0].image == null || Response.data[0].image == "") {
+        if (Response.data.success.image == null || Response.data.success.image == "") {
           _this3.image = "/images/medicamentos/avatar.jpeg";
         } else {
-          _this3.image = "data:image/png;base64," + Response.data[0].image;
-          _this3.base64textString = Response.data[0].image;
+          _this3.image = "data:image/png;base64," + Response.data.success.image;
+          _this3.base64textString = Response.data.success.image;
         }
 
-        _this3.email = Response.data[0].email;
+        _this3.email = Response.data.success.email;
 
-        if (Response.data[0].clinicLogo == null || Response.data[0].clinicLogo == "") {
+        if (Response.data.success.clinicLogo == null || Response.data.success.clinicLogo == "") {
           _this3.clinicLogo = "/images/medicamentos/demol.PNG";
         } else {
-          _this3.clinicLogo = "data:image/png;base64," + Response.data[0].clinicLogo;
-          _this3.base64textString1 = Response.data[0].clinicLogo;
+          _this3.clinicLogo = "data:image/png;base64," + Response.data.success.clinicLogo;
+          _this3.base64textString1 = Response.data.success.clinicLogo;
         }
 
-        _this3.clinicName = Response.data[0].clinicName;
-        _this3.clinicPhone = Response.data[0].clinicPhone;
-        _this3.clinicAddress = Response.data[0].clinicAddress;
-        _this3.specialties = Response.data[0].specialties;
-        _this3.noCollegiate = Response.data[0].noCollegiate;
+        _this3.phone = Response.data.success.phone;
+        _this3.clinicName = Response.data.success.clinicName;
+        _this3.clinicPhone = Response.data.success.clinicPhone;
+        _this3.clinicAddress = Response.data.success.clinicAddress;
+        _this3.specialties = Response.data.success.specialties;
+        _this3.noCollegiate = Response.data.success.noCollegiate;
 
-        if (Response.data[0].birthDate == "") {
+        if (Response.data.success.birthDate == "") {
           _this3.birthDate = null;
         } else {
-          _this3.birthDate = Response.data[0].birthDate;
+          _this3.birthDate = Response.data.success.birthDate;
         }
 
         _this3.activeLoading = false;
@@ -585,17 +588,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   created: function created() {
-    this.id = this.$route.params.idMedico;
+    this.getRol();
     this.getData();
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/visitador1/editarMedico.vue?vue&type=style&index=0&lang=scss&":
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/visitador1/editarMedico.vue?vue&type=style&index=0&lang=scss& ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/user/EditarUsuario.vue?vue&type=style&index=0&lang=scss&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/user/EditarUsuario.vue?vue&type=style&index=0&lang=scss& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -611,15 +614,15 @@ exports.push([module.i, ".fileInput {\n  width: 1px;\n  height: 0.1px;\n  opacit
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/visitador1/editarMedico.vue?vue&type=style&index=0&lang=scss&":
-/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/visitador1/editarMedico.vue?vue&type=style&index=0&lang=scss& ***!
-  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/user/EditarUsuario.vue?vue&type=style&index=0&lang=scss&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/user/EditarUsuario.vue?vue&type=style&index=0&lang=scss& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../../node_modules/css-loader!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editarMedico.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/visitador1/editarMedico.vue?vue&type=style&index=0&lang=scss&");
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../node_modules/vue-loader/lib??vue-loader-options!./EditarUsuario.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/user/EditarUsuario.vue?vue&type=style&index=0&lang=scss&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -641,10 +644,10 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/visitador1/editarMedico.vue?vue&type=template&id=fb9b708e&":
-/*!*************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/visitador1/editarMedico.vue?vue&type=template&id=fb9b708e& ***!
-  \*************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/user/EditarUsuario.vue?vue&type=template&id=10493c99&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/user/EditarUsuario.vue?vue&type=template&id=10493c99& ***!
+  \********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1050,6 +1053,14 @@ var render = function() {
                               ),
                               _vm._v(" "),
                               _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.rol == 2,
+                                    expression: "rol == 2"
+                                  }
+                                ],
                                 staticClass: "w-full mt-4",
                                 attrs: {
                                   label: "No. Colegiado",
@@ -1145,318 +1156,351 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "vs-tab",
-                  {
-                    attrs: {
-                      label: "Información Médica",
-                      "icon-pack": "feather",
-                      icon: "icon-info"
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "tab-text" }, [
-                      _c("div", { attrs: { id: "user-edit-tab-info" } }, [
-                        _c(
-                          "div",
-                          { staticClass: "vx-row" },
-                          [
-                            _c(
-                              "vs-alert",
-                              {
-                                staticStyle: { width: "70%" },
-                                attrs: {
-                                  color: "danger",
-                                  title: "Error",
-                                  active: _vm.activado1,
-                                  closable: "",
-                                  "icon-pack": "feather",
-                                  "close-icon": "icon-x"
-                                },
-                                on: {
-                                  "update:active": function($event) {
-                                    _vm.activado1 = $event
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "Error en el servidor, por favor intentelo más tarde."
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "vx-row" }, [
-                          _c("div", { staticClass: "vx-col w-full md:w-1/2" }, [
+                _vm.rol == 2
+                  ? _c(
+                      "vs-tab",
+                      {
+                        attrs: {
+                          label: "Información Médica",
+                          "icon-pack": "feather",
+                          icon: "icon-info"
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "tab-text" }, [
+                          _c("div", { attrs: { id: "user-edit-tab-info" } }, [
                             _c(
                               "div",
-                              { staticClass: "flex items-end" },
+                              { staticClass: "vx-row" },
                               [
-                                _c("feather-icon", {
-                                  staticClass: "mr-2",
-                                  attrs: {
-                                    icon: "HomeIcon",
-                                    svgClasses: "w-5 h-5"
-                                  }
-                                }),
-                                _vm._v(" "),
                                 _c(
-                                  "span",
-                                  { staticClass: "leading-none font-medium" },
-                                  [_vm._v("Clínica")]
+                                  "vs-alert",
+                                  {
+                                    staticStyle: { width: "70%" },
+                                    attrs: {
+                                      color: "danger",
+                                      title: "Error",
+                                      active: _vm.activado1,
+                                      closable: "",
+                                      "icon-pack": "feather",
+                                      "close-icon": "icon-x"
+                                    },
+                                    on: {
+                                      "update:active": function($event) {
+                                        _vm.activado1 = $event
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "Error en el servidor, por favor intentelo más tarde."
+                                    )
+                                  ]
                                 )
                               ],
                               1
                             ),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              [
-                                _c("div", { staticClass: "vx-row" }, [
-                                  _c("div", { staticClass: "vx-col w-full" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "flex items-start flex-col sm:flex-row mt-4"
-                                      },
-                                      [
-                                        _c("img", {
-                                          staticClass: "mr-8 rounded h-24 w-24",
-                                          attrs: { src: _vm.clinicLogo }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("div", [
-                                          _c(
-                                            "p",
-                                            {
-                                              staticClass:
-                                                "text-lg font-medium mb-2 mt-4 sm:mt-0"
-                                            },
-                                            [_vm._v("Logo Clínica")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("input", {
-                                            ref: "update_avatar_input",
-                                            staticClass: "hidden",
-                                            attrs: {
-                                              type: "file",
-                                              accept: "image/*"
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("input", {
-                                            staticClass: "fileInput",
-                                            attrs: {
-                                              accept: "image/*",
-                                              type: "file",
-                                              color: "warning",
-                                              id: "logo",
-                                              name: "logo"
-                                            },
-                                            on: {
-                                              change: function($event) {
-                                                return _vm.handleFileSelect1(
-                                                  $event
-                                                )
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass: "subir",
-                                              attrs: { for: "logo" }
-                                            },
-                                            [
-                                              _c("vs-icon", {
-                                                attrs: { icon: "edit" }
-                                              })
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c("div", { attrs: { id: "info2" } }),
-                                          _vm._v(" "),
-                                          _c("span")
-                                        ]),
-                                        _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "vx-row" }, [
+                              _c(
+                                "div",
+                                { staticClass: "vx-col w-full md:w-1/2" },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "flex items-end" },
+                                    [
+                                      _c("feather-icon", {
+                                        staticClass: "mr-2",
+                                        attrs: {
+                                          icon: "HomeIcon",
+                                          svgClasses: "w-5 h-5"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "leading-none font-medium"
+                                        },
+                                        [_vm._v("Clínica")]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    [
+                                      _c("div", { staticClass: "vx-row" }, [
                                         _c(
-                                          "vs-alert",
-                                          {
-                                            staticStyle: { width: "70%" },
-                                            attrs: {
-                                              color: "danger",
-                                              title: "Error",
-                                              active: _vm.activado,
-                                              closable: "",
-                                              "icon-pack": "feather",
-                                              "close-icon": "icon-x"
-                                            },
-                                            on: {
-                                              "update:active": function(
-                                                $event
-                                              ) {
-                                                _vm.activado = $event
-                                              }
-                                            }
-                                          },
+                                          "div",
+                                          { staticClass: "vx-col w-full" },
                                           [
-                                            _vm._v(
-                                              "Error en el servidor, por favor intentelo más tarde."
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "flex items-start flex-col sm:flex-row mt-4"
+                                              },
+                                              [
+                                                _c("img", {
+                                                  staticClass:
+                                                    "mr-8 rounded h-24 w-24",
+                                                  attrs: { src: _vm.clinicLogo }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("div", [
+                                                  _c(
+                                                    "p",
+                                                    {
+                                                      staticClass:
+                                                        "text-lg font-medium mb-2 mt-4 sm:mt-0"
+                                                    },
+                                                    [_vm._v("Logo Clínica")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("input", {
+                                                    ref: "update_avatar_input",
+                                                    staticClass: "hidden",
+                                                    attrs: {
+                                                      type: "file",
+                                                      accept: "image/*"
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("input", {
+                                                    staticClass: "fileInput",
+                                                    attrs: {
+                                                      accept: "image/*",
+                                                      type: "file",
+                                                      color: "warning",
+                                                      id: "logo",
+                                                      name: "logo"
+                                                    },
+                                                    on: {
+                                                      change: function($event) {
+                                                        return _vm.handleFileSelect1(
+                                                          $event
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "label",
+                                                    {
+                                                      staticClass: "subir",
+                                                      attrs: { for: "logo" }
+                                                    },
+                                                    [
+                                                      _c("vs-icon", {
+                                                        attrs: { icon: "edit" }
+                                                      })
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("div", {
+                                                    attrs: { id: "info2" }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span")
+                                                ]),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "vs-alert",
+                                                  {
+                                                    staticStyle: {
+                                                      width: "70%"
+                                                    },
+                                                    attrs: {
+                                                      color: "danger",
+                                                      title: "Error",
+                                                      active: _vm.activado,
+                                                      closable: "",
+                                                      "icon-pack": "feather",
+                                                      "close-icon": "icon-x"
+                                                    },
+                                                    on: {
+                                                      "update:active": function(
+                                                        $event
+                                                      ) {
+                                                        _vm.activado = $event
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "Error en el servidor, por favor intentelo más tarde."
+                                                    )
+                                                  ]
+                                                )
+                                              ],
+                                              1
                                             )
                                           ]
                                         )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("vs-input", {
+                                        staticClass: "w-full mt-4",
+                                        attrs: {
+                                          label: "Nombre Clínica",
+                                          name: "clinicName"
+                                        },
+                                        model: {
+                                          value: _vm.clinicName,
+                                          callback: function($$v) {
+                                            _vm.clinicName = $$v
+                                          },
+                                          expression: "clinicName"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("vs-input", {
+                                        staticClass: "w-full mt-4",
+                                        attrs: {
+                                          type: "number",
+                                          label: "Teléfono",
+                                          name: "clinicPhone"
+                                        },
+                                        model: {
+                                          value: _vm.clinicPhone,
+                                          callback: function($$v) {
+                                            _vm.clinicPhone = $$v
+                                          },
+                                          expression: "clinicPhone"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "mt-4" },
+                                        [
+                                          _c("vs-textarea", {
+                                            attrs: { label: "Dirección" },
+                                            model: {
+                                              value: _vm.clinicAddress,
+                                              callback: function($$v) {
+                                                _vm.clinicAddress = $$v
+                                              },
+                                              expression: "clinicAddress"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "vx-col w-full md:w-1/2" },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "flex items-end md:mt-0 mt-base"
+                                    },
+                                    [
+                                      _c("feather-icon", {
+                                        staticClass: "mr-2",
+                                        attrs: {
+                                          icon: "PlusIcon",
+                                          svgClasses: "w-5 h-5"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "leading-none font-medium"
+                                        },
+                                        [_vm._v("Especialidades")]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", [
+                                    _c(
+                                      "div",
+                                      { staticClass: "mt-4" },
+                                      [
+                                        _c("vs-textarea", {
+                                          attrs: {
+                                            label: "Lista Especialidades"
+                                          },
+                                          model: {
+                                            value: _vm.specialties,
+                                            callback: function($$v) {
+                                              _vm.specialties = $$v
+                                            },
+                                            expression: "specialties"
+                                          }
+                                        })
                                       ],
                                       1
                                     )
                                   ])
-                                ]),
-                                _vm._v(" "),
-                                _c("vs-input", {
-                                  staticClass: "w-full mt-4",
-                                  attrs: {
-                                    label: "Nombre Clínica",
-                                    name: "clinicName"
-                                  },
-                                  model: {
-                                    value: _vm.clinicName,
-                                    callback: function($$v) {
-                                      _vm.clinicName = $$v
-                                    },
-                                    expression: "clinicName"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("vs-input", {
-                                  staticClass: "w-full mt-4",
-                                  attrs: {
-                                    type: "number",
-                                    label: "Teléfono",
-                                    name: "clinicPhone"
-                                  },
-                                  model: {
-                                    value: _vm.clinicPhone,
-                                    callback: function($$v) {
-                                      _vm.clinicPhone = $$v
-                                    },
-                                    expression: "clinicPhone"
-                                  }
-                                }),
-                                _vm._v(" "),
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "vx-row" }, [
+                              _c("div", { staticClass: "vx-col w-full" }, [
                                 _c(
                                   "div",
-                                  { staticClass: "mt-4" },
+                                  {
+                                    staticClass:
+                                      "mt-8 flex flex-wrap items-center justify-end"
+                                  },
                                   [
-                                    _c("vs-textarea", {
-                                      attrs: { label: "Dirección" },
-                                      model: {
-                                        value: _vm.clinicAddress,
-                                        callback: function($$v) {
-                                          _vm.clinicAddress = $$v
+                                    _c(
+                                      "vs-button",
+                                      {
+                                        staticClass: "ml-auto mt-2",
+                                        attrs: { color: "warning" },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.popupActive3 = true
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Guardar Cambios")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "vs-button",
+                                      {
+                                        staticClass: "ml-4 mt-2",
+                                        attrs: {
+                                          type: "border",
+                                          color: "danger"
                                         },
-                                        expression: "clinicAddress"
-                                      }
-                                    })
+                                        on: { click: _vm.getData }
+                                      },
+                                      [_vm._v("Resetear")]
+                                    )
                                   ],
                                   1
                                 )
-                              ],
-                              1
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "vx-col w-full md:w-1/2" }, [
-                            _c(
-                              "div",
-                              { staticClass: "flex items-end md:mt-0 mt-base" },
-                              [
-                                _c("feather-icon", {
-                                  staticClass: "mr-2",
-                                  attrs: {
-                                    icon: "PlusIcon",
-                                    svgClasses: "w-5 h-5"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "span",
-                                  { staticClass: "leading-none font-medium" },
-                                  [_vm._v("Especialidades")]
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c("div", [
-                              _c(
-                                "div",
-                                { staticClass: "mt-4" },
-                                [
-                                  _c("vs-textarea", {
-                                    attrs: { label: "Lista Especialidades" },
-                                    model: {
-                                      value: _vm.specialties,
-                                      callback: function($$v) {
-                                        _vm.specialties = $$v
-                                      },
-                                      expression: "specialties"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
+                              ])
                             ])
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "vx-row" }, [
-                          _c("div", { staticClass: "vx-col w-full" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "mt-8 flex flex-wrap items-center justify-end"
-                              },
-                              [
-                                _c(
-                                  "vs-button",
-                                  {
-                                    staticClass: "ml-auto mt-2",
-                                    attrs: { color: "warning" },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.popupActive3 = true
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Guardar Cambios")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vs-button",
-                                  {
-                                    staticClass: "ml-4 mt-2",
-                                    attrs: { type: "border", color: "danger" },
-                                    on: { click: _vm.getData }
-                                  },
-                                  [_vm._v("Resetear")]
-                                )
-                              ],
-                              1
-                            )
-                          ])
                         ])
-                      ])
-                    ])
-                  ]
-                )
+                      ]
+                    )
+                  : _vm._e()
               ],
               1
             )
@@ -1475,18 +1519,18 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/src/views/visitador1/editarMedico.vue":
-/*!************************************************************!*\
-  !*** ./resources/js/src/views/visitador1/editarMedico.vue ***!
-  \************************************************************/
+/***/ "./resources/js/src/views/user/EditarUsuario.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/src/views/user/EditarUsuario.vue ***!
+  \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _editarMedico_vue_vue_type_template_id_fb9b708e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editarMedico.vue?vue&type=template&id=fb9b708e& */ "./resources/js/src/views/visitador1/editarMedico.vue?vue&type=template&id=fb9b708e&");
-/* harmony import */ var _editarMedico_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editarMedico.vue?vue&type=script&lang=js& */ "./resources/js/src/views/visitador1/editarMedico.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _editarMedico_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editarMedico.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/visitador1/editarMedico.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _EditarUsuario_vue_vue_type_template_id_10493c99___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditarUsuario.vue?vue&type=template&id=10493c99& */ "./resources/js/src/views/user/EditarUsuario.vue?vue&type=template&id=10493c99&");
+/* harmony import */ var _EditarUsuario_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditarUsuario.vue?vue&type=script&lang=js& */ "./resources/js/src/views/user/EditarUsuario.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _EditarUsuario_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EditarUsuario.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/user/EditarUsuario.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1497,9 +1541,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _editarMedico_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _editarMedico_vue_vue_type_template_id_fb9b708e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _editarMedico_vue_vue_type_template_id_fb9b708e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _EditarUsuario_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EditarUsuario_vue_vue_type_template_id_10493c99___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EditarUsuario_vue_vue_type_template_id_10493c99___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -1509,54 +1553,54 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/src/views/visitador1/editarMedico.vue"
+component.options.__file = "resources/js/src/views/user/EditarUsuario.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/src/views/visitador1/editarMedico.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/src/views/visitador1/editarMedico.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/src/views/user/EditarUsuario.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/src/views/user/EditarUsuario.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editarMedico_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editarMedico.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/visitador1/editarMedico.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editarMedico_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarUsuario_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./EditarUsuario.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/user/EditarUsuario.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarUsuario_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/visitador1/editarMedico.vue?vue&type=style&index=0&lang=scss&":
-/*!**********************************************************************************************!*\
-  !*** ./resources/js/src/views/visitador1/editarMedico.vue?vue&type=style&index=0&lang=scss& ***!
-  \**********************************************************************************************/
+/***/ "./resources/js/src/views/user/EditarUsuario.vue?vue&type=style&index=0&lang=scss&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/src/views/user/EditarUsuario.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_editarMedico_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editarMedico.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/visitador1/editarMedico.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_editarMedico_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_editarMedico_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_editarMedico_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_editarMedico_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_editarMedico_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarUsuario_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../node_modules/vue-loader/lib??vue-loader-options!./EditarUsuario.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/user/EditarUsuario.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarUsuario_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarUsuario_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarUsuario_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarUsuario_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarUsuario_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/visitador1/editarMedico.vue?vue&type=template&id=fb9b708e&":
-/*!*******************************************************************************************!*\
-  !*** ./resources/js/src/views/visitador1/editarMedico.vue?vue&type=template&id=fb9b708e& ***!
-  \*******************************************************************************************/
+/***/ "./resources/js/src/views/user/EditarUsuario.vue?vue&type=template&id=10493c99&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/src/views/user/EditarUsuario.vue?vue&type=template&id=10493c99& ***!
+  \**************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editarMedico_vue_vue_type_template_id_fb9b708e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editarMedico.vue?vue&type=template&id=fb9b708e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/visitador1/editarMedico.vue?vue&type=template&id=fb9b708e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editarMedico_vue_vue_type_template_id_fb9b708e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarUsuario_vue_vue_type_template_id_10493c99___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./EditarUsuario.vue?vue&type=template&id=10493c99& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/user/EditarUsuario.vue?vue&type=template&id=10493c99&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarUsuario_vue_vue_type_template_id_10493c99___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editarMedico_vue_vue_type_template_id_fb9b708e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarUsuario_vue_vue_type_template_id_10493c99___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

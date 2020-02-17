@@ -48,14 +48,16 @@
           <span class="text-danger text-sm" v-show="description === ''">{{ errors.campo }}</span>
         </div>
 
-        <vs-input
-          class="w-full mt-4"
-          label="Precio"
-          v-model="price"
-          name="precio"
-          placeholder="Q"
-          type="number"
-        />
+        <label class="vs-input--label">Precio</label>
+        <vx-input-group class="mb-base">
+          <template slot="prepend">
+            <div class="prepend-text bg-primary">
+              <span>Q</span>
+            </div>
+          </template>
+
+          <vs-input v-model="price" placeholder="Price" />
+        </vx-input-group>
         <span class="text-danger text-sm" v-show="price === ''">{{ errors.campo }}</span>
 
         <div class="mt-4">
@@ -80,15 +82,30 @@
           type="number"
         />
         <span class="text-danger text-sm" v-show="quantity === ''">{{ errors.campo }}</span>
+
         <div class="mt-4">
-          <vs-textarea class="vs-textarea" label="Precentación" v-model="precentation" />
-          <span class="text-danger text-sm" v-show="precentation === ''">{{ errors.campo }}</span>
+          <div>
+            <label class="vs-input--label" style="color: gray;">Presentación</label>
+            <v-select v-model="precentation" :options="presentaciones" />
+            <span class="text-danger text-sm" v-show="precentation === ''">{{ errors.campo }}</span>
+          </div>
         </div>
 
-        <vs-input class="w-full mt-4" label="Laboratorio" v-model="laboratory" name="laboratorio" />
-        <span class="text-danger text-sm" v-show="laboratory === ''">{{ errors.campo }}</span>
+        <div class="mt-4">
+          <div>
+            <label class="vs-input--label" style="color: gray;">Laboratorio</label>
+            <v-select v-model="laboratory" :options="laboratorios" />
+            <span class="text-danger text-sm" v-show="laboratory === ''">{{ errors.campo }}</span>
+          </div>
+        </div>
 
-        <vs-input class="w-full mt-4" label="Bodega de Despacho" v-model="warehouse" name="bodega" />
+        <label class="vs-input--label">Proveedor</label>
+        <v-select
+          class="w-full mt-4"
+          :options="['NOVEMED']"
+          :dir="$vs.rtl ? 'rtl' : 'ltr'"
+          v-model="warehouse"
+        />
         <span class="text-danger text-sm" v-show="warehouse === ''">{{ errors.campo }}</span>
       </div>
 
@@ -102,7 +119,7 @@
               class="ml-auto mt-2"
               color="warning"
               @click="popupActive2 = true"
-              :disabled="name == '' || quantity == '' || description == '' || precentation == '' || price == '' || laboratory == '' || category == '' || warehouse == ''"
+              :disabled="name == '' || name == null || quantity == '' || quantity == null || description == '' || precentation == '' || precentation == null || price == '' || laboratory == '' || laboratory == null || category == '' || category == null || warehouse == ''"
             >Guardar</vs-button>
             <vs-button class="ml-4 mt-2" type="border" @click="getData" color="danger">Resetear</vs-button>
           </div>
@@ -131,12 +148,14 @@ export default {
       },
       imagen: "/images/medicamentos/demo.jpg",
       name: null,
-      precentation: null,
+      precentation: [],
+      precentation1: [],
       description: null,
       quantity: null,
       price: null,
       id: null,
-      laboratory: null,
+      laboratory: [],
+      laboratory1: [],
       warehouse: null,
       category: [],
       category1: null,
@@ -145,7 +164,9 @@ export default {
       base64textString: "",
       categorias: [],
       categories: [],
-      popupActive2: false,
+      laboratorios: [],
+      presentaciones: [],
+      popupActive2: false
     };
   },
   computed: {
@@ -179,6 +200,80 @@ export default {
     this.getData();
   },
   methods: {
+    getRoles(r) {
+      let token = localStorage.getItem("tu");
+      let ide = localStorage.getItem("ui");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getLabs",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          this.laboratorios = [];
+          this.laboratory = [];
+          //console.log(Response.data);
+          Response.data.forEach(element => {
+            if (element.user_id == ide) {
+              this.laboratorios.push({
+                label: element.name,
+                value: element.id
+              });
+              if (r == element.id) {
+                this.laboratory.push({
+                  label: element.name,
+                  value: element.id
+                });
+                this.laboratory1 = element.id;
+              }
+            }
+          });
+          this.activeLoading = false;
+          this.$vs.loading.close();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getPre(r) {
+      let token = localStorage.getItem("tu");
+      let ide = localStorage.getItem("ui");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getPres",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          this.presentaciones = [];
+          this.precentation = [];
+          //console.log(Response.data);
+          Response.data.forEach(element => {
+            if (element.user_id == ide) {
+              this.presentaciones.push({
+                label: element.name + '-' + element.unidad + '-' + element.cantidad,
+                value: element.id
+              });
+              if (r == element.id) {
+                this.precentation.push({
+                  label: element.name + '-' + element.unidad + '-' + element.cantidad,
+                  value: element.id
+                });
+                this.precentation1 = element.id;
+              }
+            }
+          });
+          this.activeLoading = false;
+          this.$vs.loading.close();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     getData() {
       this.openLoading();
       this.category = [];
@@ -219,9 +314,11 @@ export default {
                   this.base64textString = Response.data[0].image;
                   this.quantity = Response.data[0].quantity;
                   this.description = Response.data[0].description;
-                  this.precentation = Response.data[0].precentation;
+                  let p = parseInt(Response.data[0].precentation);
+                  this.getPre(p);
                   this.price = Response.data[0].price;
-                  this.laboratory = Response.data[0].laboratory;
+                  let l = parseInt(Response.data[0].laboratory);
+                  this.getRoles(l);
                   this.warehouse = Response.data[0].warehouse;
                   this.activeLoading = false;
                   this.$vs.loading.close();
@@ -244,9 +341,11 @@ export default {
             this.base64textString = Response.data[0].image;
             this.quantity = Response.data[0].quantity;
             this.description = Response.data[0].description;
-            this.precentation = Response.data[0].precentation;
+            let p = parseInt(Response.data[0].precentation);
+            this.getPre(p);
             this.price = Response.data[0].price;
-            this.laboratory = Response.data[0].laboratory;
+            let l = parseInt(Response.data[0].laboratory);
+            this.getRoles(l);
             this.category1 = Response.data[0].categories.split(",");
             this.category1.forEach(element => {
               element = parseInt(element);
@@ -309,6 +408,14 @@ export default {
       this.category.forEach(element => {
         arrayFinal.push(element.value);
       });
+      let p = this.precentation.value;
+      let l = this.laboratory.value;
+      if(p == undefined){
+        p = this.precentation1;
+      }
+      if(l == undefined){
+        l = this.laboratory1;
+      }
       axios({
         method: "put",
         url: "http://127.0.0.1:8000/api/putProduct",
@@ -318,8 +425,8 @@ export default {
           image: this.base64textString,
           description: this.description,
           price: this.price,
-          precentation: this.precentation,
-          laboratory: this.laboratory,
+          precentation: p,
+          laboratory: l,
           warehouse: this.warehouse,
           quantity: this.quantity
         }),

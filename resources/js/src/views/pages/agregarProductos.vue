@@ -9,13 +9,13 @@
 
 <template>
   <div>
-    <div align="center">
+    <!-- <div align="center">
       <h4>Paso</h4>
       <h5>
         1 ...
         <strong>2</strong> ... 3 ... 4
       </h5>
-    </div>
+    </div>-->
     <div align="right">
       <feather-icon icon="FileTextIcon" class="cursor-pointer mt-1 sm:mr-6 mr-2" :badge="mediNum" />
     </div>
@@ -81,12 +81,14 @@
                   <div>
                     <ul>
                       <li
-                        v-for="item in categorias"
+                        v-for="(item, index) in categorias"
                         :key="item.value"
                         class="flex items-center cursor-pointer py-1"
                       >
-                        <!-- <vs-checkbox @click="bCate(item.id)">{{item.name}}</vs-checkbox> -->
-                        <vs-checkbox>{{item.name}}</vs-checkbox>
+                        <vs-checkbox
+                          @click="bCate(item.id, index, $event.target.checked)"
+                        >{{item.name}}</vs-checkbox>
+                        <!-- <vs-checkbox v-model="buscar1" :vs-value="item.id">{{item.name}}</vs-checkbox> -->
                       </li>
                     </ul>
                   </div>
@@ -203,7 +205,7 @@
                             </div>
                           </div>
                           <h5 class="mb-2">{{ item.name }}</h5>
-                          <h6 class="mb-2">{{ item.precentation }}</h6>
+                          <h6 class="mb-2">{{ item.precentacion }}</h6>
                           <p class="text-grey"></p>
                           <p class="text-grey">{{ item.description }}</p>
                           <vs-popup
@@ -252,7 +254,7 @@
                           <div class="flex justify-between flex-wrap">
                             <vs-button
                               class="mt-4 mr-2 shadow-lg alineacion"
-                              @click="activar=true, setData(item.id, item.name, item.description, item.precentation, item.image)"
+                              @click="activar=true, setData(item.id, item.name, item.description, item.precentacion, item.image)"
                             >Agregar Medicamento</vs-button>
                           </div>
                         </vx-card>
@@ -316,6 +318,7 @@ export default {
   },
   data() {
     return {
+      buscar1: [],
       mediNum: 0,
       buscar: "",
       image: "",
@@ -379,14 +382,20 @@ export default {
     searchMedicina: function() {
       let result = this.medicamentosList;
       if (!this.buscar) {
+        /*console.log(this.buscar);
+        console.log(this.buscar1);*/
         return result;
       }
+      //console.log(this.buscar);
       let texto = this.buscar.toLowerCase();
+      //let texto1 = this.buscar1.toString();
+      //let cateText = texto + ' ' + texto1; 
+      //console.log(cateText);
       const filter = event =>
         event.name.toLowerCase().includes(texto) ||
-        event.precentation.toLowerCase().includes(texto) ||
-        event.description.toLowerCase().includes(texto) ||
-        event.categories.toLowerCase().includes(texto);
+        event.precentacion.toLowerCase().includes(texto) ||
+        event.description.toLowerCase().includes(texto); 
+        //event.categories.toLowerCase().includes(cateText);
 
       return result.filter(filter);
     },
@@ -416,9 +425,16 @@ export default {
         this.mediNum = 0;
       }
     },
-    bCate(id) {
-      console.log(id);
-      this.buscar = this.buscar + "," + id;
+    bCate(id, index, event) {
+      //console.log(event);
+      if (event == true) {
+        this.buscar1.push(id);
+        this.buscar1 = this.buscar1.sort();
+      } else {
+        let a = this.buscar1.indexOf(id);
+        this.buscar1.splice(a, 1);
+        this.buscar1 = this.buscar1.sort();
+      }
     },
     agregarmF() {
       this.activar = false;
@@ -490,6 +506,7 @@ export default {
         }
       })
         .then(Response => {
+          //console.log(Response.data);
           this.categorias = Response.data;
         })
         .catch(err => {
@@ -501,7 +518,7 @@ export default {
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getProducts",
+        url: "http://127.0.0.1:8000/api/getProducts1",
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
@@ -515,6 +532,7 @@ export default {
               this.medicamentosList.push(element);
             }
           });
+          //console.log(this.medicamentosList);
           this.$vs.loading.close();
           this.activado = true;
         })

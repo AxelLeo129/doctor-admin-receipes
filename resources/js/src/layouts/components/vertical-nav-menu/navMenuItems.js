@@ -12,16 +12,16 @@ export default [
   //Medico
   {
     url: "/home",
-    name: "Pacientes",
+    name: "Home",
     slug: "home",
-    icon: "CircleIcon",
+    icon: "HomeIcon",
     rol: 2
   },
   {
-    url: "/nuevoPaciente",
-    name: "Nueva Receta",
-    slug: "nuevaReceta",
-    icon: "PlusIcon",
+    url: "/listadoRecetas",
+    name: "Listado Recetas",
+    slug: "listadoRecetas",
+    icon: "ListIcon",
     rol: 2
   },
   //Admin
@@ -29,17 +29,10 @@ export default [
     url: "/consola",
     name: "Consola",
     slug: "consola",
-    icon: "CircleIcon",
+    icon: "HomeIcon",
     rol: 1
   },
   //Admin - Productos
-  {
-    url: "/nuevoProducto",
-    name: "Nuevo Medicamento",
-    slug: "nuevoMedicamento",
-    icon: "PlusIcon",
-    rol: 1
-  },
   {
     url: "/listadoProductos",
     name: "Listado Medicamentos",
@@ -55,11 +48,36 @@ export default [
     icon: "ListIcon",
     rol: 1
   },
+  //Admin - roles
   {
-    url: "/nuevaCategoria",
-    name: "Nueva Categoria",
-    slug: "nuevaCategoria",
-    icon: "PlusIcon",
+    url: "/listadoRoles",
+    name: "Listado Roles",
+    slug: "listadoRoles",
+    icon: "ListIcon",
+    rol: 1
+  },
+  //Admin - Laboratorios 
+  {
+    url: "/listadoLabs",
+    name: "Listado Laboratorios",
+    slug: "listadoLabs",
+    icon: "ListIcon",
+    rol: 1
+  },
+  //Admin - Presentaciones
+  {
+    url: "/listadoPres",
+    name: "Listado Presentaciones",
+    slug: "listadoPres",
+    icon: "ListIcon",
+    rol: 1
+  },
+  //Admin - Usuarios
+  {
+    url: "/listadoUsurios",
+    name: "Listado Usuarios",
+    slug: "listadoUsurios",
+    icon: "ListIcon",
     rol: 1
   },
   {

@@ -153,7 +153,8 @@ __webpack_require__.r(__webpack_exports__);
     nuevaReceta: function nuevaReceta() {
       this.$router.push('/nuevoPaciente');
     },
-    verReceta: function verReceta(id) {//this.$router.push("/showRecipe/" + id);
+    verReceta: function verReceta(id) {
+      this.$router.push("/receta/" + id);
     },
     getRecipes: function getRecipes() {
       var _this = this;
@@ -309,42 +310,15 @@ var render = function() {
         [
           _c(
             "a",
-            { attrs: { href: "/apps/user/user-list" } },
+            { attrs: { href: "/listadoRecetas" } },
             [
               _c("statistics-card-line", {
                 attrs: {
                   icon: "ListIcon",
-                  statistic: "Pacientes",
-                  statisticTitle: "Busqueda de pacientes.",
+                  statistic: "Recetas",
+                  statisticTitle: "Busqueda de Recetas.",
                   chartData: _vm.ordersRecevied.series,
                   color: "warning",
-                  type: "area"
-                }
-              })
-            ],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base"
-        },
-        [
-          _c(
-            "a",
-            { attrs: { href: "/forms/form-wizard" } },
-            [
-              _c("statistics-card-line", {
-                attrs: {
-                  icon: "CalendarIcon",
-                  statistic: "Calendario",
-                  statisticTitle:
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit eaque, voluptatibus, aperiam, nesciunt laboriosam sint inventore odit consectetur nisi in accusamus libero dolores ducimus beatae perferendis quia. Veritatis, incidunt molestias?",
-                  chartData: _vm.subscribersGained.series,
                   type: "area"
                 }
               })

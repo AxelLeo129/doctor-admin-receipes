@@ -4160,10 +4160,6 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("search-bar"),
-            _vm._v(" "),
-            _c("notification-drop-down"),
-            _vm._v(" "),
             _c("profile-drop-down")
           ],
           1
@@ -4219,15 +4215,7 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _vm.windowWidth >= 992
-              ? _c("bookmarks", { attrs: { navbarColor: _vm.navbarColor } })
-              : _vm._e(),
-            _vm._v(" "),
             _c("vs-spacer"),
-            _vm._v(" "),
-            _c("search-bar"),
-            _vm._v(" "),
-            _c("notification-drop-down"),
             _vm._v(" "),
             _c("profile-drop-down")
           ],
@@ -4752,30 +4740,6 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("span", { staticClass: "ml-2" }, [_vm._v("Perfil")])
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      {
-                        staticClass:
-                          "flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white",
-                        on: {
-                          click: function($event) {
-                            _vm.$router.push("/apps/chat").catch(function() {})
-                          }
-                        }
-                      },
-                      [
-                        _c("feather-icon", {
-                          attrs: {
-                            icon: "MessageSquareIcon",
-                            svgClasses: "w-4 h-4"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "ml-2" }, [_vm._v("Chat")])
                       ],
                       1
                     ),
@@ -6918,31 +6882,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ([//Medico
 {
   url: "/home",
-  name: "Pacientes",
+  name: "Home",
   slug: "home",
-  icon: "CircleIcon",
+  icon: "HomeIcon",
   rol: 2
 }, {
-  url: "/nuevoPaciente",
-  name: "Nueva Receta",
-  slug: "nuevaReceta",
-  icon: "PlusIcon",
+  url: "/listadoRecetas",
+  name: "Listado Recetas",
+  slug: "listadoRecetas",
+  icon: "ListIcon",
   rol: 2
 }, //Admin
 {
   url: "/consola",
   name: "Consola",
   slug: "consola",
-  icon: "CircleIcon",
+  icon: "HomeIcon",
   rol: 1
 }, //Admin - Productos
 {
-  url: "/nuevoProducto",
-  name: "Nuevo Medicamento",
-  slug: "nuevoMedicamento",
-  icon: "PlusIcon",
-  rol: 1
-}, {
   url: "/listadoProductos",
   name: "Listado Medicamentos",
   slug: "listadoProductos",
@@ -6955,11 +6913,33 @@ __webpack_require__.r(__webpack_exports__);
   slug: "listadoCategorias",
   icon: "ListIcon",
   rol: 1
-}, {
-  url: "/nuevaCategoria",
-  name: "Nueva Categoria",
-  slug: "nuevaCategoria",
-  icon: "PlusIcon",
+}, //Admin - roles
+{
+  url: "/listadoRoles",
+  name: "Listado Roles",
+  slug: "listadoRoles",
+  icon: "ListIcon",
+  rol: 1
+}, //Admin - Laboratorios 
+{
+  url: "/listadoLabs",
+  name: "Listado Laboratorios",
+  slug: "listadoLabs",
+  icon: "ListIcon",
+  rol: 1
+}, //Admin - Presentaciones
+{
+  url: "/listadoPres",
+  name: "Listado Presentaciones",
+  slug: "listadoPres",
+  icon: "ListIcon",
+  rol: 1
+}, //Admin - Usuarios
+{
+  url: "/listadoUsurios",
+  name: "Listado Usuarios",
+  slug: "listadoUsurios",
+  icon: "ListIcon",
   rol: 1
 }, {
   url: "/dashboardCallCenter",
