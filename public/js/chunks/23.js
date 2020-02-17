@@ -221,6 +221,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        //console.log(Response);
         Response.data.forEach(function (element) {
           _this2.medicinas.push(element);
         });
@@ -563,7 +564,7 @@ var render = function() {
                           textContent: _vm._s(
                             item.name +
                               " " +
-                              item.precentation +
+                              item.presentacion +
                               " " +
                               item.dispensing
                           )

@@ -374,19 +374,19 @@ __webpack_require__.r(__webpack_exports__);
     searchMedicina: function searchMedicina() {
       var result = this.medicamentosList;
 
-      if (!this.buscar && !this.buscar1) {
-        console.log(this.buscar);
-        console.log(this.buscar1);
+      if (!this.buscar) {
+        /*console.log(this.buscar);
+        console.log(this.buscar1);*/
         return result;
-      }
+      } //console.log(this.buscar);
 
-      var texto = this.buscar.toLowerCase();
-      var texto1 = this.buscar1.toString();
-      var cateText = texto + ' ' + texto1;
-      console.log(cateText);
+
+      var texto = this.buscar.toLowerCase(); //let texto1 = this.buscar1.toString();
+      //let cateText = texto + ' ' + texto1; 
+      //console.log(cateText);
 
       var filter = function filter(event) {
-        return event.name.toLowerCase().includes(texto) || event.precentation.toLowerCase().includes(texto) || event.description.toLowerCase().includes(texto);
+        return event.name.toLowerCase().includes(texto) || event.precentacion.toLowerCase().includes(texto) || event.description.toLowerCase().includes(texto);
       }; //event.categories.toLowerCase().includes(cateText);
 
 
@@ -505,7 +505,7 @@ __webpack_require__.r(__webpack_exports__);
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_4___default()({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getProducts",
+        url: "http://127.0.0.1:8000/api/getProducts1",
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
@@ -519,7 +519,7 @@ __webpack_require__.r(__webpack_exports__);
 
             _this4.medicamentosList.push(element);
           }
-        });
+        }); //console.log(this.medicamentosList);
 
         _this4.$vs.loading.close();
 
@@ -1163,7 +1163,7 @@ var render = function() {
                                                     [
                                                       _vm._v(
                                                         _vm._s(
-                                                          item.precentation
+                                                          item.precentacion
                                                         )
                                                       )
                                                     ]
@@ -1400,7 +1400,7 @@ var render = function() {
                                                                   item.id,
                                                                   item.name,
                                                                   item.description,
-                                                                  item.precentation,
+                                                                  item.precentacion,
                                                                   item.image
                                                                 )
                                                             }

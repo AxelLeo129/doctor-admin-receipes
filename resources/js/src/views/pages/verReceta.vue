@@ -91,7 +91,7 @@
           <!-- DATA -->
           <template>
             <vs-tr v-for="item in medicinas" :key="item.id">
-              <vs-td v-text="item.name + ' ' + item.precentation + ' ' + item.dispensing"></vs-td>
+              <vs-td v-text="item.name + ' ' + item.presentacion + ' ' + item.dispensing"></vs-td>
             </vs-tr>
           </template>
         </vs-table>
@@ -212,6 +212,7 @@ export default {
         }
       })
         .then(Response => {
+          //console.log(Response);
           Response.data.forEach(element => {
               this.medicinas.push(element);
           });

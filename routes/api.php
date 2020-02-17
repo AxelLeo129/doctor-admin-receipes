@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::any('postUserCate', 'User\UserController@storeCategory');
     //Product
     Route::get('getProducts', 'Products\ProductController@list');
+    Route::get('getProducts1', 'Products\ProductController@list1');
     Route::post('postProducts', 'Products\ProductController@store');
     Route::get('getProduct/{id}', 'Products\ProductController@show');
     Route::get('getProduct1/{id}', 'Products\ProductController@show1');

@@ -21,6 +21,17 @@ class ProductController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list1()
+    {
+        //return Product::all();
+        return \DB::select("SELECT prod.id, prod.name, prod.image, prod.description,(SELECT GROUP_CONCAT(name, '-', unidad, '-', cantidad) FROM presentations WHERE presentations.id = prod.precentation) as precentacion, (SELECT name FROM labs WHERE labs.id = prod.laboratory) as lab, prod.quantity, prod.user_id, GROUP_CONCAT(cat.id SEPARATOR ',') categories FROM products_categories pp INNER JOIN products prod ON pp.product_id=prod.id INNER JOIN categories cat ON pp.category_id=cat.id GROUP BY prod.id");
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

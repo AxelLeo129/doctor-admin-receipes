@@ -141,6 +141,6 @@ class RecipieController extends Controller
 
     //muestra los medicamentos que se le recetó al cliente
     public function getInfoRecipie($id){
-        return \DB::select("SELECT recipe_id, name, dispensing, precentation FROM recipies_products INNER JOIN products ON recipies_products.product_id = products.id WHERE recipe_id = $id");
+        return \DB::select("SELECT recipe_id, name, dispensing, (SELECT GROUP_CONCAT(name, '-', unidad, '-', cantidad) FROM presentations WHERE presentations.id = precentation) as presentacion FROM recipies_products INNER JOIN products ON recipies_products.product_id = products.id WHERE recipe_id = $id");
     }
 }

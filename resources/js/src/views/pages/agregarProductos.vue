@@ -205,7 +205,7 @@
                             </div>
                           </div>
                           <h5 class="mb-2">{{ item.name }}</h5>
-                          <h6 class="mb-2">{{ item.precentation }}</h6>
+                          <h6 class="mb-2">{{ item.precentacion }}</h6>
                           <p class="text-grey"></p>
                           <p class="text-grey">{{ item.description }}</p>
                           <vs-popup
@@ -254,7 +254,7 @@
                           <div class="flex justify-between flex-wrap">
                             <vs-button
                               class="mt-4 mr-2 shadow-lg alineacion"
-                              @click="activar=true, setData(item.id, item.name, item.description, item.precentation, item.image)"
+                              @click="activar=true, setData(item.id, item.name, item.description, item.precentacion, item.image)"
                             >Agregar Medicamento</vs-button>
                           </div>
                         </vx-card>
@@ -381,18 +381,19 @@ export default {
 
     searchMedicina: function() {
       let result = this.medicamentosList;
-      if (!this.buscar && !this.buscar1) {
-        console.log(this.buscar);
-        console.log(this.buscar1);
+      if (!this.buscar) {
+        /*console.log(this.buscar);
+        console.log(this.buscar1);*/
         return result;
       }
+      //console.log(this.buscar);
       let texto = this.buscar.toLowerCase();
-      let texto1 = this.buscar1.toString();
-      let cateText = texto + ' ' + texto1; 
-      console.log(cateText);
+      //let texto1 = this.buscar1.toString();
+      //let cateText = texto + ' ' + texto1; 
+      //console.log(cateText);
       const filter = event =>
         event.name.toLowerCase().includes(texto) ||
-        event.precentation.toLowerCase().includes(texto) ||
+        event.precentacion.toLowerCase().includes(texto) ||
         event.description.toLowerCase().includes(texto); 
         //event.categories.toLowerCase().includes(cateText);
 
@@ -517,7 +518,7 @@ export default {
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getProducts",
+        url: "http://127.0.0.1:8000/api/getProducts1",
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
@@ -531,6 +532,7 @@ export default {
               this.medicamentosList.push(element);
             }
           });
+          //console.log(this.medicamentosList);
           this.$vs.loading.close();
           this.activado = true;
         })
