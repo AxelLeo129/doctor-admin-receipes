@@ -157,12 +157,12 @@
 
               <vs-input
                 label="Fecha de Vencimiento"
-                v-model="numberTr"
+                v-model="datetr"
                 class="mt-5 w-full"
                 name="item-name"
                 type="date"
               />
-              <span class="text-danger text-sm" v-show="numberTr  === ''">Este campo es requerido.</span>
+              <span class="text-danger text-sm" v-show="datetr  === ''">Este campo es requerido.</span>
             </div>
             <div class="vx-row" v-if="switch1 == '2'">
               <p class="mt-5">Paga en efectivo en el momento de la entrega.</p>
@@ -174,7 +174,7 @@
                 color="primary"
                 type="filled"
                 v-if="tipe == 1 && switch1 == '1'"
-                :disabled="total <= 0 || nameT == '' || nameT == null || numberT == '' || numberT == null || numberTr == '' || numberTr == null"
+                :disabled="total <= 0 || nameT == '' || nameT == null || numberT == '' || numberT == null || numberTr == '' || numberTr == null || datetr == null || datetr == ''"
               >Realizar el Pedido</vs-button>
               <vs-button
                 class="mt-5"
@@ -182,7 +182,7 @@
                 color="primary"
                 v-if="tipe == 2 && switch1 == '1'"
                 type="filled"
-                :disabled="total <= 0 || nameT == '' || nameT == null || numberT == '' || numberT == null || numberTr == '' || numberTr == null"
+                :disabled="total <= 0 || nameT == '' || nameT == null || numberT == '' || numberT == null || numberTr == '' || numberTr == null || datetr == null || datetr == ''"
               >Realizar el Pedido</vs-button>
 
               <vs-button
@@ -536,6 +536,7 @@ export default {
       numberT: null,
       total: 0,
       numberTr: null,
+      datetr: null,
       subtotal1: 0,
       subtotal2: 0,
       medicines: [],
@@ -799,6 +800,7 @@ export default {
               namet: this.nameT,
               numbert: this.numberT,
               numbertr: this.numberTr,
+              datetr: this.datetr,
               total: this.total
             }),
             headers: {

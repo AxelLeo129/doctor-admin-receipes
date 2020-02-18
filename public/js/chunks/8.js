@@ -526,6 +526,7 @@ __webpack_require__.r(__webpack_exports__);
       numberT: null,
       total: 0,
       numberTr: null,
+      datetr: null,
       subtotal1: 0,
       subtotal2: 0,
       medicines: [],
@@ -808,6 +809,7 @@ __webpack_require__.r(__webpack_exports__);
             namet: _this3.nameT,
             numbert: _this3.numberT,
             numbertr: _this3.numberTr,
+            datetr: _this3.datetr,
             total: _this3.total
           }),
           headers: {
@@ -2296,11 +2298,11 @@ var render = function() {
                                 type: "date"
                               },
                               model: {
-                                value: _vm.numberTr,
+                                value: _vm.datetr,
                                 callback: function($$v) {
-                                  _vm.numberTr = $$v
+                                  _vm.datetr = $$v
                                 },
-                                expression: "numberTr"
+                                expression: "datetr"
                               }
                             }),
                             _vm._v(" "),
@@ -2311,8 +2313,8 @@ var render = function() {
                                   {
                                     name: "show",
                                     rawName: "v-show",
-                                    value: _vm.numberTr === "",
-                                    expression: "numberTr  === ''"
+                                    value: _vm.datetr === "",
+                                    expression: "datetr  === ''"
                                   }
                                 ],
                                 staticClass: "text-danger text-sm"
@@ -2353,7 +2355,9 @@ var render = function() {
                                     _vm.numberT == "" ||
                                     _vm.numberT == null ||
                                     _vm.numberTr == "" ||
-                                    _vm.numberTr == null
+                                    _vm.numberTr == null ||
+                                    _vm.datetr == null ||
+                                    _vm.datetr == ""
                                 },
                                 on: {
                                   click: function($event) {
@@ -2382,7 +2386,9 @@ var render = function() {
                                     _vm.numberT == "" ||
                                     _vm.numberT == null ||
                                     _vm.numberTr == "" ||
-                                    _vm.numberTr == null
+                                    _vm.numberTr == null ||
+                                    _vm.datetr == null ||
+                                    _vm.datetr == ""
                                 },
                                 on: {
                                   click: function($event) {

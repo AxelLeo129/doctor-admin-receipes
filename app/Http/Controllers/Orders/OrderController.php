@@ -40,7 +40,8 @@ class OrderController extends Controller
         $order = new Order();
         $order->namet = $request->namet;
         $order->numbert = $request->numbert;
-        $order->numbertr = $request->numbertr;   
+        $order->numbertr = $request->numbertr;
+        $order->datetr = $request->datetr;   
         $order->total = $request->total;
         $order->client_id = $request->client_id;
 
