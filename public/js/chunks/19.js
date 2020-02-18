@@ -144,6 +144,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -196,9 +244,9 @@ __webpack_require__.r(__webpack_exports__);
       this.name_client = name;
     },
     setData: function setData(recipie, address) {
-      this.id_recipies = recipie;
+      this.recipie = recipie;
       this.address = address;
-      console.log(this.address);
+      console.log(this.id_recipies);
     },
     openLoading: function openLoading() {
       this.activeLoading = true;
@@ -450,12 +498,12 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      data[indextr].cliente.client_addressf.length > 25
+                      data[indextr].cliente.client_addresse.length > 25
                         ? _c(
                             "vs-td",
                             {
                               attrs: {
-                                data: data[indextr].cliente.client_addressf
+                                data: data[indextr].cliente.client_addresse
                               }
                             },
                             [
@@ -464,7 +512,7 @@ var render = function() {
                                   _vm._s(
                                     data[
                                       indextr
-                                    ].cliente.client_addressf.substring(0, 25) +
+                                    ].cliente.client_addresse.substring(0, 25) +
                                       "..."
                                   ) +
                                   "\n                "
@@ -473,12 +521,12 @@ var render = function() {
                           )
                         : _vm._e(),
                       _vm._v(" "),
-                      data[indextr].cliente.client_addressf.length <= 25
+                      data[indextr].cliente.client_addresse.length <= 25
                         ? _c(
                             "vs-td",
                             {
                               attrs: {
-                                data: data[indextr].cliente.client_addressf
+                                data: data[indextr].cliente.client_addresse
                               }
                             },
                             [
@@ -487,7 +535,7 @@ var render = function() {
                                   _vm._s(
                                     data[
                                       indextr
-                                    ].cliente.client_addressf.substring(0, 25)
+                                    ].cliente.client_addresse.substring(0, 25)
                                   ) +
                                   "\n                "
                               )
@@ -560,7 +608,7 @@ var render = function() {
                                 ;(_vm.popupActive = true),
                                   _vm.setData(
                                     data[indextr].medicamentos,
-                                    data[indextr].cliente.client_addressf
+                                    data[indextr].cliente.client_addresse
                                   )
                               }
                             }
@@ -663,6 +711,7 @@ var render = function() {
         {
           staticClass: "holamundo",
           attrs: {
+            fullscreen: "",
             title: "Ver información de la receta",
             active: _vm.popupActive
           },
@@ -676,23 +725,175 @@ var render = function() {
           _c("p", [_vm._v("Medicamentos recetados:")]),
           _c("br"),
           _vm._v(" "),
-          _vm._l(_vm.recipie, function(item) {
-            return _c("div", [
-              _c("p", [
-                _c("strong", [_vm._v("- " + _vm._s(item.name))]),
-                _vm._v(
-                  " (Cantidad: " + _vm._s(item.cantidad) + ")\n            "
-                )
-              ])
-            ])
-          }),
+          _c(
+            "vs-table",
+            {
+              attrs: { "max-items": "10", data: _vm.recipie },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var data = ref.data
+                    return _vm._l(_vm.recipie, function(tr, indextr) {
+                      return _c(
+                        "vs-tr",
+                        { key: indextr },
+                        [
+                          _c("vs-td", { attrs: { data: data[indextr].name } }, [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(data[indextr].name) +
+                                "\n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: data[indextr].description } },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(data[indextr].description) +
+                                  "\n                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: data[indextr].preName } },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(data[indextr].preName) +
+                                  " - " +
+                                  _vm._s(data[indextr].unidad) +
+                                  " - " +
+                                  _vm._s(data[indextr].preCantidad) +
+                                  "\n                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: data[indextr].labName } },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(data[indextr].labName) +
+                                  "\n                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: data[indextr].warehouse } },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(data[indextr].warehouse) +
+                                  "\n                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: data[indextr].cantidad } },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(data[indextr].cantidad) +
+                                  "\n                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: data[indextr].price } },
+                            [
+                              _vm._v(
+                                "\n                        Q " +
+                                  _vm._s(
+                                    data[indextr].price ||
+                                      _vm.numFormat("000,000.00")
+                                  ) +
+                                  "\n                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: data[indextr].cantidad } },
+                            [
+                              _vm._v(
+                                "\n                        Q " +
+                                  _vm._s(
+                                    data[indextr].price *
+                                      data[indextr].cantidad ||
+                                      _vm.numFormat("000,000.00")
+                                  ) +
+                                  "\n                    "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    })
+                  }
+                }
+              ]),
+              model: {
+                value: _vm.selected,
+                callback: function($$v) {
+                  _vm.selected = $$v
+                },
+                expression: "selected"
+              }
+            },
+            [
+              _c(
+                "template",
+                { slot: "thead" },
+                [
+                  _c("vs-th", [_vm._v("Nombre del producto")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Descripción")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Presentación")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Laboratorio")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Almacén")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Cantidad")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Precio")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Subtotal")])
+                ],
+                1
+              )
+            ],
+            2
+          ),
+          _vm._v(" "),
           _c("br"),
           _vm._v(" "),
           _c("p", [_vm._v("Dirección exacta:")]),
           _vm._v(" "),
+          _vm.address == ""
+            ? _c("p", [_c("strong", [_vm._v("No se adjuntó la dirección")])])
+            : _vm._e(),
+          _vm._v(" "),
           _c("p", [_c("strong", [_vm._v(_vm._s(_vm.address))])])
         ],
-        2
+        1
       ),
       _vm._v(" "),
       _c(

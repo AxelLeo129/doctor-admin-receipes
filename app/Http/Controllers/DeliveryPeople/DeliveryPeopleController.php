@@ -37,12 +37,14 @@ class DeliveryPeopleController extends Controller
             ->join('clients', 'clients.id', '=', 'orders.client_id')
             ->where('shippings.id_user', $id)
             ->where('orders.status', 3)
-            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addressf', 'orders.status', 'orders.order_id', 'orders.delivery_date')
+            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addresse', 'orders.status', 'orders.order_id', 'orders.delivery_date')
             ->get();
         foreach($clients_enviar as $client){
             $medicinas = \DB::table("orders_products")
             ->join('products', 'orders_products.product_id', '=', 'products.id')
-            ->select('products.name', 'orders_products.cantidad')
+            ->join('presentations', 'presentations.id', '=', 'products.precentation')
+            ->join('labs', 'labs.id', '=', 'products.laboratory')
+            ->select('products.name', 'orders_products.cantidad', 'products.description', 'products.price','presentations.name as preName','presentations.unidad', 'presentations.cantidad as preCantidad', 'labs.name as labName', 'products.warehouse')
             ->where('orders_products.order_id', $client->order_id)
             ->get();
             $datos = array("cliente" => $client, "medicamentos" => $medicinas);
@@ -54,12 +56,14 @@ class DeliveryPeopleController extends Controller
             ->join('clients', 'clients.id', '=', 'orders.client_id')
             ->where('shippings.id_user', $id)
             ->where('orders.status', 2)
-            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addressf', 'orders.status', 'orders.order_id', 'orders.delivery_date')
+            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addresse', 'orders.status', 'orders.order_id', 'orders.delivery_date')
             ->get();
         foreach($clients_enviar as $client){
             $medicinas = \DB::table("orders_products")
             ->join('products', 'orders_products.product_id', '=', 'products.id')
-            ->select('products.name', 'orders_products.cantidad')
+            ->join('presentations', 'presentations.id', '=', 'products.precentation')
+            ->join('labs', 'labs.id', '=', 'products.laboratory')
+            ->select('products.name', 'orders_products.cantidad', 'products.description', 'products.price','presentations.name as preName','presentations.unidad', 'presentations.cantidad as preCantidad', 'labs.name as labName', 'products.warehouse')
             ->where('orders_products.order_id', $client->order_id)
             ->get();
             $datos = array("cliente" => $client, "medicamentos" => $medicinas);
@@ -71,12 +75,14 @@ class DeliveryPeopleController extends Controller
             ->join('clients', 'clients.id', '=', 'orders.client_id')
             ->where('shippings.id_user', $id)
             ->where('orders.status', 4)
-            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addressf', 'orders.status', 'orders.order_id', 'orders.delivery_date')
+            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addresse', 'orders.status', 'orders.order_id', 'orders.delivery_date')
             ->get();
         foreach($clients_enviar as $client){
             $medicinas = \DB::table("orders_products")
             ->join('products', 'orders_products.product_id', '=', 'products.id')
-            ->select('products.name', 'orders_products.cantidad')
+            ->join('presentations', 'presentations.id', '=', 'products.precentation')
+            ->join('labs', 'labs.id', '=', 'products.laboratory')
+            ->select('products.name', 'orders_products.cantidad', 'products.description', 'products.price','presentations.name as preName','presentations.unidad', 'presentations.cantidad as preCantidad', 'labs.name as labName', 'products.warehouse')
             ->where('orders_products.order_id', $client->order_id)
             ->get();
             $datos = array("cliente" => $client, "medicamentos" => $medicinas);
@@ -95,6 +101,14 @@ class DeliveryPeopleController extends Controller
 
     //Cambia el estatus del envio de proceso de envío a entregado
     public function completeOrder(Request $request){
+        $order= \DB::table('orders')->where('order_id', $request->id_recipies)->first();
+        $products_order = \DB::table('orders_products')->where('order_id', $request->id_recipies)->get();
+        foreach($products_order as $pro_or){
+            $producto = \DB::table('products')->where('id', $pro_or->product_id)->first();
+            \DB::table('products')->where('id', $pro_or->product_id)->update([
+                "quantity" => ($producto->quantity - $pro_or->cantidad)
+            ]);
+        }
         \DB::table('shippings')->where('id_recipie', $request->id_recipies)->update([
             "recipient_name"=> $request->name_recibed
         ]);

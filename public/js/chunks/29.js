@@ -404,6 +404,54 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("vs-td", [
+                            _c("ul", { staticClass: "users-liked user-list" }, [
+                              _c(
+                                "li",
+                                [
+                                  _c(
+                                    "vx-tooltip",
+                                    { attrs: { position: "bottom" } },
+                                    [
+                                      _c("vs-avatar", {
+                                        staticClass:
+                                          "border-2 border-white border-solid -m-1",
+                                        attrs: {
+                                          size: "30px",
+                                          src:
+                                            "data:image/png;base64," +
+                                            item.image
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("span", {
+                              domProps: { textContent: _vm._s(item.quantity) }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("span", {
+                              domProps: { textContent: _vm._s(item.lab) }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("span", {
+                              domProps: {
+                                textContent: _vm._s(item.precentacion)
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
                             _c("span", {
                               domProps: { textContent: _vm._s(item.quantity) }
                             })

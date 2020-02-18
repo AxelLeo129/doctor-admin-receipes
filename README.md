@@ -12,7 +12,8 @@ cp .env.example .env
 
 Cambiar usuario y Password de la base de datos
 
-php artisan key:generate/public/
+php artisan key:generate
+
 
 sudo chmod -R o+rw bootstrap/cache
 
