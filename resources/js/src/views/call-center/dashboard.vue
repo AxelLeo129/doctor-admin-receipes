@@ -64,13 +64,13 @@
       <template>
         <div class="email__email-sidebar h-full">
           <div class="m-6 clearfix">
-            <!-- <vs-button
+            <vs-button
               class="bg-primary-gradient w-full"
               icon-pack="feather"
               icon="icon-plus"
               @click="addNewData"
-            >Nuevo Cliente</vs-button>-->
-            <h2>Listados</h2>
+            >Nuevo Cliente</vs-button>
+            <h2 class="mt-5">Listados</h2>
           </div>
 
           <!-- compose email -->

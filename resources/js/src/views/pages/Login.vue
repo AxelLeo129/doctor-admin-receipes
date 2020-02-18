@@ -62,7 +62,7 @@
 
                       <div class="flex flex-wrap justify-between my-5">
                         <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Recordarme</vs-checkbox>
-                        <router-link to>¿Olvidó su Contraseña?</router-link>
+                        <!-- <router-link to>¿Olvidó su Contraseña?</router-link> -->
                       </div>
                       <vs-button type="border" @click="registro">Registro</vs-button>
                       <vs-button class="float-right" @click="doLogin()">Ingresar</vs-button>

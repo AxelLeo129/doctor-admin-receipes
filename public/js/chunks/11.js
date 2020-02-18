@@ -469,12 +469,6 @@ var render = function() {
                                             }
                                           },
                                           [_vm._v("Recordarme")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "router-link",
-                                          { attrs: { to: "" } },
-                                          [_vm._v("¿Olvidó su Contraseña?")]
                                         )
                                       ],
                                       1

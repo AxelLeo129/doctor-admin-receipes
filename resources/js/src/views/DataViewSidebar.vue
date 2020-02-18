@@ -174,31 +174,35 @@
       <div class="p-3">
         <!-- NAME -->
         <div class="vx-row">
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input label="Nit" v-model="nit" class="mt-5 w-full" name="item-name" />
-            <span class="text-danger text-sm" v-show="nit === ''">Este campo es requerido.</span>
-          </div>
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input label="Nombre Completo" v-model="name" class="mt-5 w-full" name="item-name" />
-            <span class="text-danger text-sm" v-show="name === ''">Este campo es requerido.</span>
-          </div>
+          <vs-input label="Nombre Completo" v-model="name" class="mt-5 w-full" name="item-name" />
+          <span class="text-danger text-sm" v-show="name === ''">Este campo es requerido.</span>
         </div>
 
         <div class="vx-row">
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input
-              label="Teléfono"
-              type="number"
-              v-model="phone"
-              class="mt-5 w-full"
-              name="item-name"
-            />
-            <span class="text-danger text-sm" v-show="phone === ''">Este campo es requerido.</span>
-          </div>
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input label="Email" v-model="email" class="mt-5 w-full" name="item-name" />
-            <span class="text-danger text-sm" v-show="email === ''">Este campo es requerido.</span>
-          </div>
+          <vs-input label="Email" v-model="email" class="mt-5 w-full" name="item-name" />
+          <span class="text-danger text-sm" v-show="email === ''">Este campo es requerido.</span>
+        </div>
+
+        <div class="vx-row">
+          <vs-input
+            label="Teléfono"
+            type="number"
+            v-model="phone"
+            class="mt-5 w-full"
+            name="item-name"
+          />
+          <span class="text-danger text-sm" v-show="phone === ''">Este campo es requerido.</span>
+        </div>
+
+        <div class="vx-row">
+          <vs-input
+            label="Fecha de Nacimiento"
+            v-model="date"
+            class="mt-5 w-full"
+            name="date"
+            type="date"
+          />
+          <span class="text-danger text-sm" v-show="date === ''">Este campo es requerido.</span>
         </div>
 
         <div class="vx-row">
@@ -214,55 +218,23 @@
             <span class="text-danger text-sm" v-show="genre === ''">Este campo es requerido.</span>
           </div>
           <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input
-              label="Fecha de Nacimiento"
-              v-model="date"
-              class="mt-5 w-full"
-              name="date"
-              type="date"
-            />
-            <span class="text-danger text-sm" v-show="date === ''">Este campo es requerido.</span>
+            <vs-input label="Nit" v-model="nit" class="mt-5 w-full" name="item-name" />
+            <span class="text-danger text-sm" v-show="nit === ''">Este campo es requerido.</span>
           </div>
         </div>
         <!-- CATEGORY -->
         <div class="vx-row">
           <p>Dirección para la Factura</p>
-        </div>
-        <div class="vx-row">
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input label="País" v-model="paisf" class="mt-5 w-full" name="paisf" disabled />
-            <span class="text-danger text-sm" v-show="paisf === ''">Este campo es requerido.</span>
-          </div>
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-select v-model="deparf" label="Departamento" class="mt-5 w-full" name="depaf">
-              <vs-select-item
-                :key="item.id"
-                :value="item.id"
-                :text="item.name"
-                v-for="item in departamentos"
-              />
-            </vs-select>
-            <span class="text-danger text-sm" v-show="deparf === ''">Este campo es requerido.</span>
-          </div>
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input label="Calle o Avenida" v-model="callef" class="mt-5 w-full" name="callef" />
-            <span class="text-danger text-sm" v-show="callef === ''">Este campo es requerido.</span>
-          </div>
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input
-              label="Apartamento, habitación, etc."
-              v-model="apartamentof"
-              class="mt-5 w-full"
-              name="apartamentof"
-            />
-          </div>
+          <!-- <vs-input label="País" v-model="paisf" class="mt-5 w-full" name="paisf" disabled />
+          <span class="text-danger text-sm" v-show="paisf === ''">Este campo es requerido.</span>-->
+          <vs-input label="Calle o Avenida" v-model="callef" class="mt-5 w-full" name="callef" />
+          <span class="text-danger text-sm" v-show="callef === ''">Este campo es requerido.</span>
           <vs-input
-            label="Ciudad/Municipio"
-            v-model="municipiof"
+            label="Apartamento, habitación, etc."
+            v-model="apartamentof"
             class="mt-5 w-full"
-            name="municipiof"
+            name="apartamentof"
           />
-          <span class="text-danger text-sm" v-show="municipiof === ''">Este campo es requerido.</span>
           <vs-input
             label="Residencial/Colonia"
             v-model="residenciaf"
@@ -270,14 +242,26 @@
             name="residenciaf"
           />
           <span class="text-danger text-sm" v-show="residenciaf  === ''">Este campo es requerido.</span>
-          <vs-input
-            label="Código Postal"
-            type="number"
-            v-model="codigof"
-            class="mt-5 w-full"
-            name="codigof"
-          />
+          <vs-input label="Zona" v-model="codigof" class="mt-5 w-full" name="codigof" />
           <span class="text-danger text-sm" v-show="codigof === ''">Este campo es requerido.</span>
+          <vs-input
+            label="Ciudad/Municipio"
+            v-model="municipiof"
+            class="mt-5 w-full"
+            name="municipiof"
+          />
+          <span class="text-danger text-sm" v-show="municipiof === ''">Este campo es requerido.</span>
+          <vs-select v-model="deparf" label="Departamento" class="mt-5 w-full" name="depaf">
+            <vs-select-item
+              :key="item.id"
+              :value="item.id"
+              :text="item.name"
+              v-for="item in departamentos"
+            />
+          </vs-select>
+          <span class="text-danger text-sm" v-show="deparf === ''">Este campo es requerido.</span>
+        </div>
+        <div class="vx-row">
           <vs-input
             label="Teléfono"
             type="number"
@@ -299,61 +283,47 @@
         </div>
         <div class="vx-row" v-show="checkBox1 == 'false'">
           <p class="mt-5">Dirección de Entrenga/Envío</p>
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input label="País" v-model="paise" class="mt-5 w-full" name="paise" disabled />
-            <span class="text-danger text-sm" v-show="paise === ''">Este campo es requerido.</span>
-          </div>
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-select v-model="depare" label="Departamento" class="mt-5 w-full" name="depare">
-              <vs-select-item
-                :key="item.id"
-                :value="item.id"
-                :text="item.name"
-                v-for="item in departamentos"
-              />
-            </vs-select>
-            <span class="text-danger text-sm" v-show="depare === ''">Este campo es requerido.</span>
-          </div>
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input label="Calle o Avenida" v-model="callee" class="mt-5 w-full" name="callee" />
-            <span class="text-danger text-sm" v-show="callee === ''">Este campo es requerido.</span>
-          </div>
-          <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-            <vs-input
-              label="Apartamento, habitación, etc."
-              v-model="apartamentoe"
-              class="mt-5 w-full"
-              name="apartamentoe"
-            />
-          </div>
+          <!-- <vs-input label="País" v-model="paise" class="mt-5 w-full" name="paise" disabled />
+          <span class="text-danger text-sm" v-show="paise === ''">Este campo es requerido.</span>-->
+          <vs-input label="Calle o Avenida" v-model="callee" class="mt-5 w-full" name="callee" />
+          <span class="text-danger text-sm" v-show="callee === ''">Este campo es requerido.</span>
           <vs-input
-            label="Ciudad/Municipio"
-            v-model="municipioe"
+            label="Apartamento, habitación, etc."
+            v-model="apartamentoe"
             class="mt-5 w-full"
-            name="municipioe"
+            name="apartamentoe"
           />
-          <span class="text-danger text-sm" v-show="municipioe === ''">Este campo es requerido.</span>
           <vs-input
             label="Residencial/Colonia"
             v-model="residenciae"
             class="mt-5 w-full"
             name="residenciae"
           />
-          <span class="text-danger text-sm" v-show="residenciae === ''">Este campo es requerido.</span>
-          <vs-input
-            label="Código Postal"
-            type="number"
-            v-model="codigoe"
-            class="mt-5 w-full"
-            name="codigoe"
-          />
+          <span class="text-danger text-sm" v-show="residenciae  === ''">Este campo es requerido.</span>
+          <vs-input label="Zona" v-model="codigoe" class="mt-5 w-full" name="codigof" />
           <span class="text-danger text-sm" v-show="codigoe === ''">Este campo es requerido.</span>
+          <vs-input
+            label="Ciudad/Municipio"
+            v-model="municipioe"
+            class="mt-5 w-full"
+            name="municipiof"
+          />
+          <span class="text-danger text-sm" v-show="municipioe === ''">Este campo es requerido.</span>
+          <vs-select v-model="depare" label="Departamento" class="mt-5 w-full" name="depare">
+            <vs-select-item
+              :key="item.id"
+              :value="item.id"
+              :text="item.name"
+              v-for="item in departamentos"
+            />
+          </vs-select>
+          <span class="text-danger text-sm" v-show="depare === ''">Este campo es requerido.</span>
           <vs-input
             label="Teléfono"
             type="number"
             v-model="telefonoe"
             class="mt-5 w-full"
-            name="telefonoe"
+            name="telefonof"
           />
           <span class="text-danger text-sm" v-show="telefonoe === ''">Este campo es requerido.</span>
         </div>
@@ -364,12 +334,22 @@
       <vs-button
         @click="submitData"
         :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || telefonof == null || telefonof == '' || paise == null || paise == '' || depare == null || depare == undefined || callee == null || callee == '' ||  municipioe == null || municipioe == '' || residenciae == null || residenciae == '' || codigoe == null || codigoe == '' || telefonoe == null || telefonoe == ''"
-        v-show="checkBox1 == 'false'"
+        v-show="checkBox1 == 'false' && nuevo == false"
       >Nuevo Pedido</vs-button>
+      <vs-button
+        @click="nuevoCliente"
+        :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || telefonof == null || telefonof == '' || paise == null || paise == '' || depare == null || depare == undefined || callee == null || callee == '' ||  municipioe == null || municipioe == '' || residenciae == null || residenciae == '' || codigoe == null || codigoe == '' || telefonoe == null || telefonoe == ''"
+        v-show="nuevo == true && checkBox1 == 'false'"
+      >Registrar Cliente</vs-button>
+      <vs-button
+        @click="nuevoCliente"
+        :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || telefonof == null || telefonof == ''"
+        v-show="checkBox1 == 'true' && nuevo == true"
+      >Registrar Cliente</vs-button>
       <vs-button
         @click="submitData"
         :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || telefonof == null || telefonof == ''"
-        v-show="checkBox1 == 'true'"
+        v-show="checkBox1 == 'true' && nuevo == false"
       >Nuevo Pedido</vs-button>
     </div>
   </vs-sidebar>
@@ -540,7 +520,7 @@ export default {
       dataImg: null,
       dataOrder_status: "pending",
       dataPrice: 0,
-
+      nuevo: false,
       generos: [
         { text: "Femenino", value: "femenino" },
         { text: "Masculino", value: "masculino" }
@@ -569,6 +549,8 @@ export default {
       this.addressf = null;
       if (!val) return;
       if (Object.entries(this.data).length === 0) {
+        this.nuevo = true;
+        //console.log(this.nuevo);
         this.initValues();
         //this.$validator.reset()
       } else {
@@ -641,6 +623,7 @@ export default {
         this.addressf = client_addressf;
         this.addressc = this.addressf;
         this.idRecipe = this.data.idRecipies;
+        this.nuevo = false;
         this.initValues();
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -955,6 +938,96 @@ export default {
         });
     },
     updateData() {},
+    nuevoCliente() {
+      this.openLoading();
+      if (this.checkBox1 == "true") {
+        this.paise = this.paisf;
+        this.depare = this.deparf;
+        this.callee = this.callef;
+        this.apartamentoe = this.apartamentof;
+        this.municipioe = this.municipiof;
+        this.residenciae = this.residenciaf;
+        this.codigoe = this.codigof;
+        this.telefonoe = this.telefonof;
+      }
+      if (this.nit == null || this.nit == "") {
+        this.nit = "C/F";
+      }
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "post",
+        url: "http://127.0.0.1:8000/api/postCliente",
+        data: JSON.stringify({
+          client_name: this.name,
+          client_nit: this.nit,
+          client_phone: this.phone,
+          client_genre: this.genre,
+          client_email: this.email,
+          birthdate: this.date,
+          paisf: this.paisf,
+          deparf: this.deparf,
+          callef: this.callef,
+          apartamentof: this.apartamentof,
+          municipiof: this.municipiof,
+          residenciaf: this.residenciaf,
+          codigof: this.codigof,
+          telefonof: this.telefonof,
+          paise: this.paise,
+          depare: this.depare,
+          callee: this.callee,
+          apartamentoe: this.apartamentoe,
+          municipioe: this.municipioe,
+          residenciae: this.residenciae,
+          codigoe: this.codigoe,
+          telefonoe: this.telefonoe
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          this.name = null;
+          this.nit = null;
+          this.phone = null;
+          this.genre = null;
+          this.email = null;
+          this.date = null;
+          this.paisf = null;
+          this.deparf = null;
+          this.callef = null;
+          this.apartamentof = null;
+          this.municipiof = null;
+          this.residenciaf = null;
+          this.codigof = null;
+          this.telefonof = null;
+          this.paise = null;
+          this.depare = null;
+          this.callee = null;
+          this.apartamentoe = null;
+          this.municipioe = null;
+          this.residenciae = null;
+          this.codigoe = null;
+          this.telefonoe = null;
+          this.activeLoading = false;
+          this.$vs.loading.close();
+          this.$vs.notify({
+            title: "Satisfactorio",
+            text: "Cliente creado exitosamente.",
+            color: "success"
+          });
+        })
+        .catch(err => {
+          this.activeLoading = false;
+          this.$vs.loading.close();
+          this.$vs.notify({
+            title: "Error",
+            text: "Error, por favor intentelo más tarde.",
+            color: "danger"
+          });
+          console.log(err);
+        });
+    },
     submitData() {
       if (this.checkBox1 == "true") {
         this.paise = this.paisf;

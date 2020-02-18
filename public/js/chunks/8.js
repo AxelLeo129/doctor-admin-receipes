@@ -370,26 +370,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -530,6 +510,7 @@ __webpack_require__.r(__webpack_exports__);
       dataImg: null,
       dataOrder_status: "pending",
       dataPrice: 0,
+      nuevo: false,
       generos: [{
         text: "Femenino",
         value: "femenino"
@@ -568,6 +549,8 @@ __webpack_require__.r(__webpack_exports__);
       if (!val) return;
 
       if (Object.entries(this.data).length === 0) {
+        this.nuevo = true; //console.log(this.nuevo);
+
         this.initValues(); //this.$validator.reset()
       } else {
         //console.log(this.data);
@@ -647,6 +630,7 @@ __webpack_require__.r(__webpack_exports__);
         this.addressf = client_addressf;
         this.addressc = this.addressf;
         this.idRecipe = this.data.idRecipies;
+        this.nuevo = false;
         this.initValues();
       } // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
 
@@ -967,8 +951,106 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateData: function updateData() {},
-    submitData: function submitData() {
+    nuevoCliente: function nuevoCliente() {
       var _this5 = this;
+
+      this.openLoading();
+
+      if (this.checkBox1 == "true") {
+        this.paise = this.paisf;
+        this.depare = this.deparf;
+        this.callee = this.callef;
+        this.apartamentoe = this.apartamentof;
+        this.municipioe = this.municipiof;
+        this.residenciae = this.residenciaf;
+        this.codigoe = this.codigof;
+        this.telefonoe = this.telefonof;
+      }
+
+      if (this.nit == null || this.nit == "") {
+        this.nit = "C/F";
+      }
+
+      var token = localStorage.getItem("tu");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "post",
+        url: "http://127.0.0.1:8000/api/postCliente",
+        data: JSON.stringify({
+          client_name: this.name,
+          client_nit: this.nit,
+          client_phone: this.phone,
+          client_genre: this.genre,
+          client_email: this.email,
+          birthdate: this.date,
+          paisf: this.paisf,
+          deparf: this.deparf,
+          callef: this.callef,
+          apartamentof: this.apartamentof,
+          municipiof: this.municipiof,
+          residenciaf: this.residenciaf,
+          codigof: this.codigof,
+          telefonof: this.telefonof,
+          paise: this.paise,
+          depare: this.depare,
+          callee: this.callee,
+          apartamentoe: this.apartamentoe,
+          municipioe: this.municipioe,
+          residenciae: this.residenciae,
+          codigoe: this.codigoe,
+          telefonoe: this.telefonoe
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this5.name = null;
+        _this5.nit = null;
+        _this5.phone = null;
+        _this5.genre = null;
+        _this5.email = null;
+        _this5.date = null;
+        _this5.paisf = null;
+        _this5.deparf = null;
+        _this5.callef = null;
+        _this5.apartamentof = null;
+        _this5.municipiof = null;
+        _this5.residenciaf = null;
+        _this5.codigof = null;
+        _this5.telefonof = null;
+        _this5.paise = null;
+        _this5.depare = null;
+        _this5.callee = null;
+        _this5.apartamentoe = null;
+        _this5.municipioe = null;
+        _this5.residenciae = null;
+        _this5.codigoe = null;
+        _this5.telefonoe = null;
+        _this5.activeLoading = false;
+
+        _this5.$vs.loading.close();
+
+        _this5.$vs.notify({
+          title: "Satisfactorio",
+          text: "Cliente creado exitosamente.",
+          color: "success"
+        });
+      }).catch(function (err) {
+        _this5.activeLoading = false;
+
+        _this5.$vs.loading.close();
+
+        _this5.$vs.notify({
+          title: "Error",
+          text: "Error, por favor intentelo más tarde.",
+          color: "danger"
+        });
+
+        console.log(err);
+      });
+    },
+    submitData: function submitData() {
+      var _this6 = this;
 
       if (this.checkBox1 == "true") {
         this.paise = this.paisf;
@@ -995,10 +1077,10 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         //console.log(Response.data);
-        _this5.medicines = [];
+        _this6.medicines = [];
         Response.data.forEach(function (element) {
-          if (_this5.itms.includes(element.id)) {
-            _this5.medicines.push({
+          if (_this6.itms.includes(element.id)) {
+            _this6.medicines.push({
               id: element.id,
               name: element.name,
               precentation: element.precentacion,
@@ -1009,19 +1091,19 @@ __webpack_require__.r(__webpack_exports__);
             });
           }
         });
-        _this5.popupActive2 = true;
+        _this6.popupActive2 = true;
       }).catch(function (err) {
         console.log(err);
       });
     },
     updateCurrImg: function updateCurrImg(input) {
-      var _this6 = this;
+      var _this7 = this;
 
       if (input.target.files && input.target.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-          _this6.dataImg = e.target.result;
+          _this7.dataImg = e.target.result;
         };
 
         reader.readAsDataURL(input.target.files[0]);
@@ -2155,153 +2237,149 @@ var render = function() {
       _vm._v(" "),
       _c("vx-card", { staticClass: "scroll-area--data-list-add-new" }, [
         _c("div", { staticClass: "p-3" }, [
-          _c("div", { staticClass: "vx-row" }, [
-            _c(
-              "div",
-              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-              [
-                _c("vs-input", {
-                  staticClass: "mt-5 w-full",
-                  attrs: { label: "Nit", name: "item-name" },
-                  model: {
-                    value: _vm.nit,
-                    callback: function($$v) {
-                      _vm.nit = $$v
-                    },
-                    expression: "nit"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.nit === "",
-                        expression: "nit === ''"
-                      }
-                    ],
-                    staticClass: "text-danger text-sm"
+          _c(
+            "div",
+            { staticClass: "vx-row" },
+            [
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: { label: "Nombre Completo", name: "item-name" },
+                model: {
+                  value: _vm.name,
+                  callback: function($$v) {
+                    _vm.name = $$v
                   },
-                  [_vm._v("Este campo es requerido.")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-              [
-                _c("vs-input", {
-                  staticClass: "mt-5 w-full",
-                  attrs: { label: "Nombre Completo", name: "item-name" },
-                  model: {
-                    value: _vm.name,
-                    callback: function($$v) {
-                      _vm.name = $$v
-                    },
-                    expression: "name"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.name === "",
-                        expression: "name === ''"
-                      }
-                    ],
-                    staticClass: "text-danger text-sm"
-                  },
-                  [_vm._v("Este campo es requerido.")]
-                )
-              ],
-              1
-            )
-          ]),
+                  expression: "name"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.name === "",
+                      expression: "name === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              )
+            ],
+            1
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "vx-row" }, [
-            _c(
-              "div",
-              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-              [
-                _c("vs-input", {
-                  staticClass: "mt-5 w-full",
-                  attrs: {
-                    label: "Teléfono",
-                    type: "number",
-                    name: "item-name"
+          _c(
+            "div",
+            { staticClass: "vx-row" },
+            [
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: { label: "Email", name: "item-name" },
+                model: {
+                  value: _vm.email,
+                  callback: function($$v) {
+                    _vm.email = $$v
                   },
-                  model: {
-                    value: _vm.phone,
-                    callback: function($$v) {
-                      _vm.phone = $$v
-                    },
-                    expression: "phone"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.phone === "",
-                        expression: "phone === ''"
-                      }
-                    ],
-                    staticClass: "text-danger text-sm"
+                  expression: "email"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.email === "",
+                      expression: "email === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "vx-row" },
+            [
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: { label: "Teléfono", type: "number", name: "item-name" },
+                model: {
+                  value: _vm.phone,
+                  callback: function($$v) {
+                    _vm.phone = $$v
                   },
-                  [_vm._v("Este campo es requerido.")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-              [
-                _c("vs-input", {
-                  staticClass: "mt-5 w-full",
-                  attrs: { label: "Email", name: "item-name" },
-                  model: {
-                    value: _vm.email,
-                    callback: function($$v) {
-                      _vm.email = $$v
-                    },
-                    expression: "email"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.email === "",
-                        expression: "email === ''"
-                      }
-                    ],
-                    staticClass: "text-danger text-sm"
+                  expression: "phone"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.phone === "",
+                      expression: "phone === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "vx-row" },
+            [
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: {
+                  label: "Fecha de Nacimiento",
+                  name: "date",
+                  type: "date"
+                },
+                model: {
+                  value: _vm.date,
+                  callback: function($$v) {
+                    _vm.date = $$v
                   },
-                  [_vm._v("Este campo es requerido.")]
-                )
-              ],
-              1
-            )
-          ]),
+                  expression: "date"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.date === "",
+                      expression: "date === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              )
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "vx-row" }, [
             _c(
@@ -2355,17 +2433,13 @@ var render = function() {
               [
                 _c("vs-input", {
                   staticClass: "mt-5 w-full",
-                  attrs: {
-                    label: "Fecha de Nacimiento",
-                    name: "date",
-                    type: "date"
-                  },
+                  attrs: { label: "Nit", name: "item-name" },
                   model: {
-                    value: _vm.date,
+                    value: _vm.nit,
                     callback: function($$v) {
-                      _vm.date = $$v
+                      _vm.nit = $$v
                     },
-                    expression: "date"
+                    expression: "nit"
                   }
                 }),
                 _vm._v(" "),
@@ -2376,8 +2450,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.date === "",
-                        expression: "date === ''"
+                        value: _vm.nit === "",
+                        expression: "nit === ''"
                       }
                     ],
                     staticClass: "text-danger text-sm"
@@ -2389,160 +2463,21 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "vx-row" }, [
-            _c("p", [_vm._v("Dirección para la Factura")])
-          ]),
-          _vm._v(" "),
           _c(
             "div",
             { staticClass: "vx-row" },
             [
-              _c(
-                "div",
-                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-                [
-                  _c("vs-input", {
-                    staticClass: "mt-5 w-full",
-                    attrs: { label: "País", name: "paisf", disabled: "" },
-                    model: {
-                      value: _vm.paisf,
-                      callback: function($$v) {
-                        _vm.paisf = $$v
-                      },
-                      expression: "paisf"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.paisf === "",
-                          expression: "paisf === ''"
-                        }
-                      ],
-                      staticClass: "text-danger text-sm"
-                    },
-                    [_vm._v("Este campo es requerido.")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-                [
-                  _c(
-                    "vs-select",
-                    {
-                      staticClass: "mt-5 w-full",
-                      attrs: { label: "Departamento", name: "depaf" },
-                      model: {
-                        value: _vm.deparf,
-                        callback: function($$v) {
-                          _vm.deparf = $$v
-                        },
-                        expression: "deparf"
-                      }
-                    },
-                    _vm._l(_vm.departamentos, function(item) {
-                      return _c("vs-select-item", {
-                        key: item.id,
-                        attrs: { value: item.id, text: item.name }
-                      })
-                    }),
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.deparf === "",
-                          expression: "deparf === ''"
-                        }
-                      ],
-                      staticClass: "text-danger text-sm"
-                    },
-                    [_vm._v("Este campo es requerido.")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-                [
-                  _c("vs-input", {
-                    staticClass: "mt-5 w-full",
-                    attrs: { label: "Calle o Avenida", name: "callef" },
-                    model: {
-                      value: _vm.callef,
-                      callback: function($$v) {
-                        _vm.callef = $$v
-                      },
-                      expression: "callef"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.callef === "",
-                          expression: "callef === ''"
-                        }
-                      ],
-                      staticClass: "text-danger text-sm"
-                    },
-                    [_vm._v("Este campo es requerido.")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-                [
-                  _c("vs-input", {
-                    staticClass: "mt-5 w-full",
-                    attrs: {
-                      label: "Apartamento, habitación, etc.",
-                      name: "apartamentof"
-                    },
-                    model: {
-                      value: _vm.apartamentof,
-                      callback: function($$v) {
-                        _vm.apartamentof = $$v
-                      },
-                      expression: "apartamentof"
-                    }
-                  })
-                ],
-                1
-              ),
+              _c("p", [_vm._v("Dirección para la Factura")]),
               _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
-                attrs: { label: "Ciudad/Municipio", name: "municipiof" },
+                attrs: { label: "Calle o Avenida", name: "callef" },
                 model: {
-                  value: _vm.municipiof,
+                  value: _vm.callef,
                   callback: function($$v) {
-                    _vm.municipiof = $$v
+                    _vm.callef = $$v
                   },
-                  expression: "municipiof"
+                  expression: "callef"
                 }
               }),
               _vm._v(" "),
@@ -2553,14 +2488,29 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.municipiof === "",
-                      expression: "municipiof === ''"
+                      value: _vm.callef === "",
+                      expression: "callef === ''"
                     }
                   ],
                   staticClass: "text-danger text-sm"
                 },
                 [_vm._v("Este campo es requerido.")]
               ),
+              _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: {
+                  label: "Apartamento, habitación, etc.",
+                  name: "apartamentof"
+                },
+                model: {
+                  value: _vm.apartamentof,
+                  callback: function($$v) {
+                    _vm.apartamentof = $$v
+                  },
+                  expression: "apartamentof"
+                }
+              }),
               _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
@@ -2592,11 +2542,7 @@ var render = function() {
               _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
-                attrs: {
-                  label: "Código Postal",
-                  type: "number",
-                  name: "codigof"
-                },
+                attrs: { label: "Zona", name: "codigof" },
                 model: {
                   value: _vm.codigof,
                   callback: function($$v) {
@@ -2622,6 +2568,79 @@ var render = function() {
                 [_vm._v("Este campo es requerido.")]
               ),
               _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: { label: "Ciudad/Municipio", name: "municipiof" },
+                model: {
+                  value: _vm.municipiof,
+                  callback: function($$v) {
+                    _vm.municipiof = $$v
+                  },
+                  expression: "municipiof"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.municipiof === "",
+                      expression: "municipiof === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              ),
+              _vm._v(" "),
+              _c(
+                "vs-select",
+                {
+                  staticClass: "mt-5 w-full",
+                  attrs: { label: "Departamento", name: "depaf" },
+                  model: {
+                    value: _vm.deparf,
+                    callback: function($$v) {
+                      _vm.deparf = $$v
+                    },
+                    expression: "deparf"
+                  }
+                },
+                _vm._l(_vm.departamentos, function(item) {
+                  return _c("vs-select-item", {
+                    key: item.id,
+                    attrs: { value: item.id, text: item.name }
+                  })
+                }),
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.deparf === "",
+                      expression: "deparf === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "vx-row" },
+            [
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
                 attrs: { label: "Teléfono", type: "number", name: "telefonof" },
@@ -2717,152 +2736,15 @@ var render = function() {
                 _vm._v("Dirección de Entrenga/Envío")
               ]),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-                [
-                  _c("vs-input", {
-                    staticClass: "mt-5 w-full",
-                    attrs: { label: "País", name: "paise", disabled: "" },
-                    model: {
-                      value: _vm.paise,
-                      callback: function($$v) {
-                        _vm.paise = $$v
-                      },
-                      expression: "paise"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.paise === "",
-                          expression: "paise === ''"
-                        }
-                      ],
-                      staticClass: "text-danger text-sm"
-                    },
-                    [_vm._v("Este campo es requerido.")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-                [
-                  _c(
-                    "vs-select",
-                    {
-                      staticClass: "mt-5 w-full",
-                      attrs: { label: "Departamento", name: "depare" },
-                      model: {
-                        value: _vm.depare,
-                        callback: function($$v) {
-                          _vm.depare = $$v
-                        },
-                        expression: "depare"
-                      }
-                    },
-                    _vm._l(_vm.departamentos, function(item) {
-                      return _c("vs-select-item", {
-                        key: item.id,
-                        attrs: { value: item.id, text: item.name }
-                      })
-                    }),
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.depare === "",
-                          expression: "depare === ''"
-                        }
-                      ],
-                      staticClass: "text-danger text-sm"
-                    },
-                    [_vm._v("Este campo es requerido.")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-                [
-                  _c("vs-input", {
-                    staticClass: "mt-5 w-full",
-                    attrs: { label: "Calle o Avenida", name: "callee" },
-                    model: {
-                      value: _vm.callee,
-                      callback: function($$v) {
-                        _vm.callee = $$v
-                      },
-                      expression: "callee"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.callee === "",
-                          expression: "callee === ''"
-                        }
-                      ],
-                      staticClass: "text-danger text-sm"
-                    },
-                    [_vm._v("Este campo es requerido.")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
-                [
-                  _c("vs-input", {
-                    staticClass: "mt-5 w-full",
-                    attrs: {
-                      label: "Apartamento, habitación, etc.",
-                      name: "apartamentoe"
-                    },
-                    model: {
-                      value: _vm.apartamentoe,
-                      callback: function($$v) {
-                        _vm.apartamentoe = $$v
-                      },
-                      expression: "apartamentoe"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
-                attrs: { label: "Ciudad/Municipio", name: "municipioe" },
+                attrs: { label: "Calle o Avenida", name: "callee" },
                 model: {
-                  value: _vm.municipioe,
+                  value: _vm.callee,
                   callback: function($$v) {
-                    _vm.municipioe = $$v
+                    _vm.callee = $$v
                   },
-                  expression: "municipioe"
+                  expression: "callee"
                 }
               }),
               _vm._v(" "),
@@ -2873,14 +2755,29 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.municipioe === "",
-                      expression: "municipioe === ''"
+                      value: _vm.callee === "",
+                      expression: "callee === ''"
                     }
                   ],
                   staticClass: "text-danger text-sm"
                 },
                 [_vm._v("Este campo es requerido.")]
               ),
+              _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: {
+                  label: "Apartamento, habitación, etc.",
+                  name: "apartamentoe"
+                },
+                model: {
+                  value: _vm.apartamentoe,
+                  callback: function($$v) {
+                    _vm.apartamentoe = $$v
+                  },
+                  expression: "apartamentoe"
+                }
+              }),
               _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
@@ -2902,7 +2799,7 @@ var render = function() {
                       name: "show",
                       rawName: "v-show",
                       value: _vm.residenciae === "",
-                      expression: "residenciae === ''"
+                      expression: "residenciae  === ''"
                     }
                   ],
                   staticClass: "text-danger text-sm"
@@ -2912,11 +2809,7 @@ var render = function() {
               _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
-                attrs: {
-                  label: "Código Postal",
-                  type: "number",
-                  name: "codigoe"
-                },
+                attrs: { label: "Zona", name: "codigof" },
                 model: {
                   value: _vm.codigoe,
                   callback: function($$v) {
@@ -2944,7 +2837,73 @@ var render = function() {
               _vm._v(" "),
               _c("vs-input", {
                 staticClass: "mt-5 w-full",
-                attrs: { label: "Teléfono", type: "number", name: "telefonoe" },
+                attrs: { label: "Ciudad/Municipio", name: "municipiof" },
+                model: {
+                  value: _vm.municipioe,
+                  callback: function($$v) {
+                    _vm.municipioe = $$v
+                  },
+                  expression: "municipioe"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.municipioe === "",
+                      expression: "municipioe === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              ),
+              _vm._v(" "),
+              _c(
+                "vs-select",
+                {
+                  staticClass: "mt-5 w-full",
+                  attrs: { label: "Departamento", name: "depare" },
+                  model: {
+                    value: _vm.depare,
+                    callback: function($$v) {
+                      _vm.depare = $$v
+                    },
+                    expression: "depare"
+                  }
+                },
+                _vm._l(_vm.departamentos, function(item) {
+                  return _c("vs-select-item", {
+                    key: item.id,
+                    attrs: { value: item.id, text: item.name }
+                  })
+                }),
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.depare === "",
+                      expression: "depare === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v("Este campo es requerido.")]
+              ),
+              _vm._v(" "),
+              _c("vs-input", {
+                staticClass: "mt-5 w-full",
+                attrs: { label: "Teléfono", type: "number", name: "telefonof" },
                 model: {
                   value: _vm.telefonoe,
                   callback: function($$v) {
@@ -2990,8 +2949,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.checkBox1 == "false",
-                  expression: "checkBox1 == 'false'"
+                  value: _vm.checkBox1 == "false" && _vm.nuevo == false,
+                  expression: "checkBox1 == 'false' && nuevo == false"
                 }
               ],
               attrs: {
@@ -3047,8 +3006,108 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.checkBox1 == "true",
-                  expression: "checkBox1 == 'true'"
+                  value: _vm.nuevo == true && _vm.checkBox1 == "false",
+                  expression: "nuevo == true && checkBox1 == 'false'"
+                }
+              ],
+              attrs: {
+                disabled:
+                  _vm.nit == null ||
+                  _vm.nit == "" ||
+                  _vm.name == null ||
+                  _vm.name == "" ||
+                  _vm.phone == null ||
+                  _vm.phone == "" ||
+                  _vm.email == null ||
+                  _vm.email == "" ||
+                  _vm.genre == null ||
+                  _vm.date == null ||
+                  _vm.paisf == null ||
+                  _vm.paisf == "" ||
+                  _vm.deparf == null ||
+                  _vm.deparf == undefined ||
+                  _vm.callef == null ||
+                  _vm.callef == "" ||
+                  _vm.municipiof == null ||
+                  _vm.municipiof == "" ||
+                  _vm.residenciaf == null ||
+                  _vm.residenciaf == "" ||
+                  _vm.codigof == null ||
+                  _vm.codigof == "" ||
+                  _vm.telefonof == null ||
+                  _vm.telefonof == "" ||
+                  _vm.paise == null ||
+                  _vm.paise == "" ||
+                  _vm.depare == null ||
+                  _vm.depare == undefined ||
+                  _vm.callee == null ||
+                  _vm.callee == "" ||
+                  _vm.municipioe == null ||
+                  _vm.municipioe == "" ||
+                  _vm.residenciae == null ||
+                  _vm.residenciae == "" ||
+                  _vm.codigoe == null ||
+                  _vm.codigoe == "" ||
+                  _vm.telefonoe == null ||
+                  _vm.telefonoe == ""
+              },
+              on: { click: _vm.nuevoCliente }
+            },
+            [_vm._v("Registrar Cliente")]
+          ),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.checkBox1 == "true" && _vm.nuevo == true,
+                  expression: "checkBox1 == 'true' && nuevo == true"
+                }
+              ],
+              attrs: {
+                disabled:
+                  _vm.nit == null ||
+                  _vm.nit == "" ||
+                  _vm.name == null ||
+                  _vm.name == "" ||
+                  _vm.phone == null ||
+                  _vm.phone == "" ||
+                  _vm.email == null ||
+                  _vm.email == "" ||
+                  _vm.genre == null ||
+                  _vm.date == null ||
+                  _vm.paisf == null ||
+                  _vm.paisf == "" ||
+                  _vm.deparf == null ||
+                  _vm.deparf == undefined ||
+                  _vm.callef == null ||
+                  _vm.callef == "" ||
+                  _vm.municipiof == null ||
+                  _vm.municipiof == "" ||
+                  _vm.residenciaf == null ||
+                  _vm.residenciaf == "" ||
+                  _vm.codigof == null ||
+                  _vm.codigof == "" ||
+                  _vm.telefonof == null ||
+                  _vm.telefonof == ""
+              },
+              on: { click: _vm.nuevoCliente }
+            },
+            [_vm._v("Registrar Cliente")]
+          ),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.checkBox1 == "true" && _vm.nuevo == false,
+                  expression: "checkBox1 == 'true' && nuevo == false"
                 }
               ],
               attrs: {
@@ -3294,9 +3353,24 @@ var render = function() {
               "div",
               { staticClass: "email__email-sidebar h-full" },
               [
-                _c("div", { staticClass: "m-6 clearfix" }, [
-                  _c("h2", [_vm._v("Listados")])
-                ]),
+                _c(
+                  "div",
+                  { staticClass: "m-6 clearfix" },
+                  [
+                    _c(
+                      "vs-button",
+                      {
+                        staticClass: "bg-primary-gradient w-full",
+                        attrs: { "icon-pack": "feather", icon: "icon-plus" },
+                        on: { click: _vm.addNewData }
+                      },
+                      [_vm._v("Nuevo Cliente")]
+                    ),
+                    _vm._v(" "),
+                    _c("h2", { staticClass: "mt-5" }, [_vm._v("Listados")])
+                  ],
+                  1
+                ),
                 _vm._v(" "),
                 _c(
                   "vs-prompt",
