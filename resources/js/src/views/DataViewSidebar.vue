@@ -47,7 +47,7 @@
                 type="border"
                 size="small"
                 icon-pack="feather"
-                icon="icon-send"
+                icon="icon-plus"
                 class="mr-2"
                 @click="agregarL(tr)"
               ></vs-button>
@@ -69,19 +69,25 @@
                 <template slot="thead">
                   <vs-th>Nombre</vs-th>
                   <vs-th>Precentación</vs-th>
-                  <vs-th>Precio</vs-th>
+                  <vs-th sort-key="username">Dosis Médica</vs-th>
                   <vs-th>Cantidad</vs-th>
-                  <!-- <vs-th>Total Esperado</vs-th> -->
+                  <vs-th>Precio</vs-th>
                   <vs-th>Subtotal</vs-th>
                 </template>
 
                 <template slot-scope="{data}">
                   <vs-tr :key="indextr" v-for="(tr, indextr) in data">
-                    <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
+                    <vs-td :data="data[indextr].name">
+                      {{ data[indextr].name }}
+                      <vs-checkbox class="mt-5" v-model="tr.repro" v-show="tr.repro == false || tr.repro == true">Reprogramar</vs-checkbox>
+                    </vs-td>
 
-                    <vs-td :data="data[indextr].precentation">{{ data[indextr].precentation }}</vs-td>
+                    <vs-td :data="data[indextr].presentacion">
+                      {{ data[indextr].presentacion }}
+                      <vs-input class="inputx mt-5" size="small" type="date" v-model="tr.next" v-if="tr.next != ''"/>
+                    </vs-td>
 
-                    <vs-td :data="data[indextr].price">Q {{ data[indextr].price }}</vs-td>
+                    <vs-td :data="data[indextr].dispensing">{{ data[indextr].dispensing }}</vs-td>
 
                     <vs-td>
                       <vs-input-number
@@ -91,6 +97,8 @@
                         @change="sumar(data[indextr].cantidad, data[indextr].price, indextr)"
                       />
                     </vs-td>
+
+                    <vs-td :data="data[indextr].price">Q {{ data[indextr].price }}</vs-td>
 
                     <!-- <vs-td :data="data[indextr].totale">{{ data[indextr].totale }}</vs-td> -->
 
@@ -696,11 +704,13 @@ export default {
       this.medicines.push({
         id: data.id,
         name: data.name,
-        precentation: data.precentacion,
+        presentacion: data.precentacion,
         price: data.price,
         cantidad: 1,
         totale: 0,
-        unidad: "Pastillas"
+        unidad: "Pastillas",
+        repro: "hola",
+        next: ""
       });
       let p = parseFloat(data.price);
       this.sumar(p, 1, this.cont);
@@ -930,7 +940,7 @@ export default {
             }
           })
             .then(Response => {
-              console.log(Response);
+              //console.log(Response);
               axios({
                 method: "post",
                 url: "http://127.0.0.1:8000/api/postOrderProd",
@@ -1128,37 +1138,54 @@ export default {
       this.nameT = null;
       this.numberT = null;
       this.numberTr = null;
-      this.getItem(this.idRecipe);
+      //this.getItem(this.idRecipe);
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getProducts",
+        url: "http://127.0.0.1:8000/api/getMedicines/" + this.idRecipe,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
       })
         .then(Response => {
-          //console.log(Response.data);
           this.medicines = [];
-
+          function sumarDias(fecha, dias) {
+            fecha.setDate(fecha.getDate() + dias);
+            return fecha;
+          }
           this.cont = 0;
           Response.data.forEach(element => {
-            if (this.itms.includes(element.id)) {
-              this.medicines.push({
-                id: element.id,
-                name: element.name,
-                precentation: element.precentacion,
-                price: element.price,
-                cantidad: 1,
-                totale: 0,
-                unidad: "Pastillas"
-              });
-              let p = parseFloat(element.price);
-              this.sumar(p, 1, this.cont);
-              this.cont = this.cont + 1;
+            let d = new Date();
+            let c = parseInt(element.cantidad);
+            let a = sumarDias(d, c);
+            let e = (a.getMonth() + 1).toString();
+            let f = a.getFullYear().toString();
+            let g = a.getDate().toString();
+            if (e.length == 1) {
+              e = "0" + e;
             }
+            if (g.length == 1) {
+              g = "0" + g;
+            }
+            let h = f + "-" + e + "-" + g;
+            this.medicines.push({
+              id: element.id,
+              name: element.name,
+              presentacion: element.presentacion,
+              dispensing: element.dispensing,
+              price: element.price,
+              cantidad: 1,
+              totale: 0,
+              unidad: "Pastillas",
+              repro: false,
+              next: h
+            });
+            let p = parseFloat(element.price);
+            this.sumar(p, 1, this.cont);
+            this.cont = this.cont + 1;
           });
+          console.log(this.medicines);
           this.popupActive2 = true;
         })
         .catch(err => {

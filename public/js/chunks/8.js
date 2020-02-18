@@ -407,6 +407,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -701,11 +709,13 @@ __webpack_require__.r(__webpack_exports__);
       this.medicines.push({
         id: data.id,
         name: data.name,
-        precentation: data.precentacion,
+        presentacion: data.precentacion,
         price: data.price,
         cantidad: 1,
         totale: 0,
-        unidad: "Pastillas"
+        unidad: "Pastillas",
+        repro: "hola",
+        next: ""
       });
       var p = parseFloat(data.price);
       this.sumar(p, 1, this.cont);
@@ -941,7 +951,7 @@ __webpack_require__.r(__webpack_exports__);
             "content-type": "application/json"
           }
         }).then(function (Response) {
-          console.log(Response);
+          //console.log(Response);
           axios__WEBPACK_IMPORTED_MODULE_1___default()({
             method: "post",
             url: "http://127.0.0.1:8000/api/postOrderProd",
@@ -1153,39 +1163,63 @@ __webpack_require__.r(__webpack_exports__);
 
       this.nameT = null;
       this.numberT = null;
-      this.numberTr = null;
-      this.getItem(this.idRecipe);
+      this.numberTr = null; //this.getItem(this.idRecipe);
+
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getProducts",
+        url: "http://127.0.0.1:8000/api/getMedicines/" + this.idRecipe,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        //console.log(Response.data);
         _this7.medicines = [];
+
+        function sumarDias(fecha, dias) {
+          fecha.setDate(fecha.getDate() + dias);
+          return fecha;
+        }
+
         _this7.cont = 0;
         Response.data.forEach(function (element) {
-          if (_this7.itms.includes(element.id)) {
-            _this7.medicines.push({
-              id: element.id,
-              name: element.name,
-              precentation: element.precentacion,
-              price: element.price,
-              cantidad: 1,
-              totale: 0,
-              unidad: "Pastillas"
-            });
+          var d = new Date();
+          var c = parseInt(element.cantidad);
+          var a = sumarDias(d, c);
+          var e = (a.getMonth() + 1).toString();
+          var f = a.getFullYear().toString();
+          var g = a.getDate().toString();
 
-            var p = parseFloat(element.price);
-
-            _this7.sumar(p, 1, _this7.cont);
-
-            _this7.cont = _this7.cont + 1;
+          if (e.length == 1) {
+            e = "0" + e;
           }
+
+          if (g.length == 1) {
+            g = "0" + g;
+          }
+
+          var h = f + "-" + e + "-" + g;
+
+          _this7.medicines.push({
+            id: element.id,
+            name: element.name,
+            presentacion: element.presentacion,
+            dispensing: element.dispensing,
+            price: element.price,
+            cantidad: 1,
+            totale: 0,
+            unidad: "Pastillas",
+            repro: false,
+            next: h
+          });
+
+          var p = parseFloat(element.price);
+
+          _this7.sumar(p, 1, _this7.cont);
+
+          _this7.cont = _this7.cont + 1;
         });
+        console.log(_this7.medicines);
         _this7.popupActive2 = true;
       }).catch(function (err) {
         console.log(err);
@@ -1866,7 +1900,7 @@ var render = function() {
                                   type: "border",
                                   size: "small",
                                   "icon-pack": "feather",
-                                  icon: "icon-send"
+                                  icon: "icon-plus"
                                 },
                                 on: {
                                   click: function($event) {
@@ -1962,31 +1996,86 @@ var render = function() {
                                       _c(
                                         "vs-td",
                                         { attrs: { data: data[indextr].name } },
-                                        [_vm._v(_vm._s(data[indextr].name))]
+                                        [
+                                          _vm._v(
+                                            "\n                    " +
+                                              _vm._s(data[indextr].name) +
+                                              "\n                    "
+                                          ),
+                                          _c(
+                                            "vs-checkbox",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "show",
+                                                  rawName: "v-show",
+                                                  value:
+                                                    tr.repro == false ||
+                                                    tr.repro == true,
+                                                  expression:
+                                                    "tr.repro == false || tr.repro == true"
+                                                }
+                                              ],
+                                              staticClass: "mt-5",
+                                              model: {
+                                                value: tr.repro,
+                                                callback: function($$v) {
+                                                  _vm.$set(tr, "repro", $$v)
+                                                },
+                                                expression: "tr.repro"
+                                              }
+                                            },
+                                            [_vm._v("Reprogramar")]
+                                          )
+                                        ],
+                                        1
                                       ),
                                       _vm._v(" "),
                                       _c(
                                         "vs-td",
                                         {
                                           attrs: {
-                                            data: data[indextr].precentation
+                                            data: data[indextr].presentacion
                                           }
                                         },
                                         [
                                           _vm._v(
-                                            _vm._s(data[indextr].precentation)
-                                          )
-                                        ]
+                                            "\n                    " +
+                                              _vm._s(
+                                                data[indextr].presentacion
+                                              ) +
+                                              "\n                    "
+                                          ),
+                                          tr.next != ""
+                                            ? _c("vs-input", {
+                                                staticClass: "inputx mt-5",
+                                                attrs: {
+                                                  size: "small",
+                                                  type: "date"
+                                                },
+                                                model: {
+                                                  value: tr.next,
+                                                  callback: function($$v) {
+                                                    _vm.$set(tr, "next", $$v)
+                                                  },
+                                                  expression: "tr.next"
+                                                }
+                                              })
+                                            : _vm._e()
+                                        ],
+                                        1
                                       ),
                                       _vm._v(" "),
                                       _c(
                                         "vs-td",
                                         {
-                                          attrs: { data: data[indextr].price }
+                                          attrs: {
+                                            data: data[indextr].dispensing
+                                          }
                                         },
                                         [
                                           _vm._v(
-                                            "Q " + _vm._s(data[indextr].price)
+                                            _vm._s(data[indextr].dispensing)
                                           )
                                         ]
                                       ),
@@ -2032,6 +2121,18 @@ var render = function() {
                                       _c(
                                         "vs-td",
                                         {
+                                          attrs: { data: data[indextr].price }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Q " + _vm._s(data[indextr].price)
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "vs-td",
+                                        {
                                           attrs: {
                                             data: (data[indextr].subtotal =
                                               data[indextr].price *
@@ -2062,9 +2163,15 @@ var render = function() {
                               _vm._v(" "),
                               _c("vs-th", [_vm._v("Precentación")]),
                               _vm._v(" "),
-                              _c("vs-th", [_vm._v("Precio")]),
+                              _c(
+                                "vs-th",
+                                { attrs: { "sort-key": "username" } },
+                                [_vm._v("Dosis Médica")]
+                              ),
                               _vm._v(" "),
                               _c("vs-th", [_vm._v("Cantidad")]),
+                              _vm._v(" "),
+                              _c("vs-th", [_vm._v("Precio")]),
                               _vm._v(" "),
                               _c("vs-th", [_vm._v("Subtotal")])
                             ],

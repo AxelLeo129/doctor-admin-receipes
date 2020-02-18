@@ -127,6 +127,7 @@ class RecipieController extends Controller
     {
         $recipe = Recipie::find($request->id);
         $recipe->status = $request->status;
+        $recipe->status1 = $request->status1;
 
         if($recipe->save()){
             return ['result' => 'success', "mess"=>$recipe];
@@ -149,5 +150,9 @@ class RecipieController extends Controller
     //muestra los medicamentos que se le recetó al cliente
     public function getInfoRecipie($id){
         return \DB::select("SELECT recipe_id, name, dispensing, (SELECT GROUP_CONCAT(name, '-', unidad, '-', cantidad) FROM presentations WHERE presentations.id = precentation) as presentacion FROM recipies_products INNER JOIN products ON recipies_products.product_id = products.id WHERE recipe_id = $id");
+    }
+
+    public function getMedicines($id){
+        return \DB::select("SELECT recipe_id, name, dispensing, (SELECT cantidad FROM presentations WHERE presentations.id = precentation) as cantidad, (SELECT GROUP_CONCAT(name, '-', unidad, '-', cantidad) FROM presentations WHERE presentations.id = precentation) as presentacion , (SELECT price FROM products WHERE products.id = recipies_products.product_id) as price FROM recipies_products INNER JOIN products ON recipies_products.product_id = products.id WHERE recipe_id = $id");
     }
 }
