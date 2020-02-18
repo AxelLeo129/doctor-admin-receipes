@@ -25,6 +25,38 @@
     </div>
     <vs-divider class="mb-0"></vs-divider>
 
+    <vs-popup class="holamundo" title="Agregar Producto" :active.sync="popupActive4">
+      <vs-table pagination max-items="3" search :data="users">
+        <template slot="thead">
+          <vs-th sort-key="email">Nombre</vs-th>
+          <vs-th sort-key="username">Precentación</vs-th>
+          <vs-th sort-key="website">Descripción</vs-th>
+          <vs-th sort-key="id">Acción</vs-th>
+        </template>
+
+        <template slot-scope="{data}">
+          <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
+            <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
+
+            <vs-td :data="data[indextr].precentacion">{{ data[indextr].precentacion }}</vs-td>
+
+            <vs-td :data="data[indextr].description">{{ data[indextr].description }}</vs-td>
+
+            <vs-td>
+              <vs-button
+                type="border"
+                size="small"
+                icon-pack="feather"
+                icon="icon-send"
+                class="mr-2"
+                @click="agregarL(tr)"
+              ></vs-button>
+            </vs-td>
+          </vs-tr>
+        </template>
+      </vs-table>
+    </vs-popup>
+
     <vs-popup fullscreen title="Medicamentos" :active.sync="popupActive2">
       <p>Seleccione los medicamentos a enviar.</p>
       <br />
@@ -39,8 +71,7 @@
                   <vs-th>Precentación</vs-th>
                   <vs-th>Precio</vs-th>
                   <vs-th>Cantidad</vs-th>
-                  <vs-th>Total Esperado</vs-th>
-                  <vs-th>Unidad</vs-th>
+                  <!-- <vs-th>Total Esperado</vs-th> -->
                   <vs-th>Subtotal</vs-th>
                 </template>
 
@@ -61,9 +92,7 @@
                       />
                     </vs-td>
 
-                    <vs-td :data="data[indextr].totale">{{ data[indextr].totale }}</vs-td>
-
-                    <vs-td :data="data[indextr].unidad">{{ data[indextr].unidad }}</vs-td>
+                    <!-- <vs-td :data="data[indextr].totale">{{ data[indextr].totale }}</vs-td> -->
 
                     <vs-td
                       :data="(data[indextr].subtotal = data[indextr].price * data[indextr].cantidad)"
@@ -74,17 +103,18 @@
             </div>
             <div class="vx-row">
               <vs-button
-                class="mt-5"
+                class="mt-5 mr-3"
                 @click="popupActive2=false, isSidebarActiveLocal = false"
                 color="warning"
                 type="filled"
               >Regresar</vs-button>
+              <vs-button class="mt-5 mr-3" @click="agregarP" type="filled">Nuevo Producto</vs-button>
             </div>
           </vx-card>
         </div>
         <div class="vx-col w-full sm:w-1/3 lg:w-1/3 mb-base">
           <vx-card>
-            <p v-text="'Total: Q' + total"></p>
+            <p v-text="'Total: Q ' + total"></p>
             <vs-divider class="mb-0"></vs-divider>
             <div class="vx-row">
               <ul class="centerx">
@@ -116,16 +146,23 @@
               <span class="text-danger text-sm" v-show="numberT  === ''">Este campo es requerido.</span>
             </div>
             <div class="vx-row" v-if="switch1 == '1'">
-              <div>
-                <vs-input
-                  label="Número de Transacción"
-                  v-model="numberTr"
-                  class="mt-5 w-full"
-                  name="item-name"
-                  type="number"
-                />
-                <span class="text-danger text-sm" v-show="numberTr  === ''">Este campo es requerido.</span>
-              </div>
+              <vs-input
+                label="Número de Transacción"
+                v-model="numberTr"
+                class="mt-5 w-full"
+                name="item-name"
+                type="number"
+              />
+              <span class="text-danger text-sm" v-show="numberTr  === ''">Este campo es requerido.</span>
+
+              <vs-input
+                label="Fecha de Vencimiento"
+                v-model="numberTr"
+                class="mt-5 w-full"
+                name="item-name"
+                type="date"
+              />
+              <span class="text-danger text-sm" v-show="numberTr  === ''">Este campo es requerido.</span>
             </div>
             <div class="vx-row" v-if="switch1 == '2'">
               <p class="mt-5">Paga en efectivo en el momento de la entrega.</p>
@@ -394,6 +431,8 @@ export default {
       codigoe: null,
       telefonoe: null,
       //Demás variables
+      cont: 0,
+      popupActive4: false,
       cantidades: [],
       totales: [],
       departamentos: [
@@ -486,6 +525,7 @@ export default {
           name: "Zacapa"
         }
       ],
+      users: [],
       tipe: 0,
       idRecipe: null,
       checkBox1: "true",
@@ -650,6 +690,49 @@ export default {
     }
   },
   methods: {
+    agregarL(data) {
+      //console.log(data);
+      this.medicines.push({
+        id: data.id,
+        name: data.name,
+        precentation: data.precentacion,
+        price: data.price,
+        cantidad: 1,
+        totale: 0,
+        unidad: "Pastillas"
+      });
+      let p = parseFloat(data.price);
+      this.sumar(p, 1, this.cont);
+      this.cont = this.cont + 1;
+      this.popupActive4 = false;
+    },
+    agregarP() {
+      let token = localStorage.getItem("tu");
+      this.users = [];
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getProducts",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          //console.log(Response);
+          Response.data.forEach(element => {
+            element.quantity = parseInt(element.quantity);
+            if (element.quantity > 0) {
+              //this.numberData = this.numberData + 1;
+              this.users.push(element);
+            }
+          });
+          //console.log(this.users);
+          this.popupActive4 = true;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     sumar(price, cantidad, index) {
       this.total = 0;
       cantidad = parseFloat(cantidad);
@@ -1011,6 +1094,7 @@ export default {
           this.telefonoe = null;
           this.activeLoading = false;
           this.$vs.loading.close();
+          this.isSidebarActiveLocal = false;
           this.$vs.notify({
             title: "Satisfactorio",
             text: "Cliente creado exitosamente.",
@@ -1055,6 +1139,8 @@ export default {
         .then(Response => {
           //console.log(Response.data);
           this.medicines = [];
+
+          this.cont = 0;
           Response.data.forEach(element => {
             if (this.itms.includes(element.id)) {
               this.medicines.push({
@@ -1062,10 +1148,13 @@ export default {
                 name: element.name,
                 precentation: element.precentacion,
                 price: element.price,
-                cantidad: 0,
+                cantidad: 1,
                 totale: 0,
                 unidad: "Pastillas"
               });
+              let p = parseFloat(element.price);
+              this.sumar(p, 1, this.cont);
+              this.cont = this.cont + 1;
             }
           });
           this.popupActive2 = true;

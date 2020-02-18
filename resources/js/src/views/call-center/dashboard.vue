@@ -4,8 +4,6 @@
     class="border border-solid d-theme-border-grey-light rounded relative overflow-hidden"
   >
     <vs-popup title="Posibles Clíentes" :active.sync="popupActive2">
-      <p>Listado de clíentes anteriores.</p>
-      <br />
       <vs-table pagination max-items="3" search :data="users">
         <template slot="thead">
           <vs-th>NIT</vs-th>
@@ -115,7 +113,7 @@
                 class="flex items-center mt-4 mb-2 cursor-pointer"
               >
                 <feather-icon icon="ArchiveIcon"></feather-icon>
-                <span class="text-lg ml-3">Empaquetando</span>
+                <span class="text-lg ml-3">Despacho</span>
               </li>
 
               <!-- draft -->
