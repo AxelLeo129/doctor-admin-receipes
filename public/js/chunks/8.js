@@ -415,6 +415,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -589,6 +599,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     isSidebarActive: function isSidebarActive(val) {
+      this.datetr = null;
       this.nit = null;
       this.name = null;
       this.phone = null;
@@ -774,9 +785,34 @@ __webpack_require__.r(__webpack_exports__);
       this.openLoading();
       var token = localStorage.getItem("tu");
       var ids = [];
+      var fecha = [];
       this.medicines.forEach(function (element) {
         ids.push(element.id);
       });
+      this.medicines.forEach(function (element) {
+        if (element.repro == true && element.next != "") {
+          fecha.push(element.next);
+        }
+      });
+      var date = null;
+      var status = 0; //console.log(this.medicines, fecha);
+
+      if (fecha.length > 0) {
+        date = fecha[0];
+        status = 1;
+        fecha.forEach(function (element) {
+          if (element > date) {
+            date = element;
+          }
+        });
+      } else if (fecha.length == 0) {
+        date = fecha[0];
+        status = 1;
+      } else {
+        date = "";
+      } //console.log(date);
+
+
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "put",
         url: "http://127.0.0.1:8000/api/putCliente",
@@ -827,7 +863,7 @@ __webpack_require__.r(__webpack_exports__);
             "content-type": "application/json"
           }
         }).then(function (Response) {
-          console.log(Response);
+          //console.log(Response);
           axios__WEBPACK_IMPORTED_MODULE_1___default()({
             method: "post",
             url: "http://127.0.0.1:8000/api/postOrderProd",
@@ -841,12 +877,15 @@ __webpack_require__.r(__webpack_exports__);
               "content-type": "application/json"
             }
           }).then(function (Response) {
+            _this3.datetr = null;
             axios__WEBPACK_IMPORTED_MODULE_1___default()({
               method: "put",
               url: "http://127.0.0.1:8000/api/putReceSta",
               data: JSON.stringify({
                 id: _this3.idRecipe,
-                status: 2
+                status: 2,
+                status1: date,
+                status2: status
               }),
               headers: {
                 authorization: "Bearer " + token,
@@ -903,6 +942,30 @@ __webpack_require__.r(__webpack_exports__);
       this.medicines.forEach(function (element) {
         ids.push(element.id);
       });
+      this.medicines.forEach(function (element) {
+        if (element.repro == true && element.next != "") {
+          fecha.push(element.next);
+        }
+      });
+      var date = null; //console.log(this.medicines, fecha);
+
+      var status = 0;
+
+      if (fecha.length > 0) {
+        status = 1;
+        date = fecha[0];
+        fecha.forEach(function (element) {
+          if (element > date) {
+            date = element;
+          }
+        });
+      } else if (fecha.length == 0) {
+        status = 1;
+        date = fecha[0];
+      } else {
+        date = "";
+      }
+
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "post",
         url: "http://127.0.0.1:8000/api/postCliente",
@@ -970,7 +1033,9 @@ __webpack_require__.r(__webpack_exports__);
               url: "http://127.0.0.1:8000/api/putReceSta",
               data: JSON.stringify({
                 id: _this4.idRecipe,
-                status: 2
+                status: 2,
+                status1: date,
+                status2: status
               }),
               headers: {
                 authorization: "Bearer " + token,
@@ -1492,6 +1557,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1681,6 +1756,51 @@ __webpack_require__.r(__webpack_exports__);
         _this3.activeLoading = false;
 
         _this3.$vs.loading.close();
+      });
+    },
+    getRerecipes: function getRerecipes() {
+      var _this4 = this;
+
+      this.openLoading();
+      var token = localStorage.getItem("tu");
+      var id = localStorage.getItem("ui");
+      var f = new Date();
+      var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+      fecha = fecha.toString();
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getRerecipes",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this4.recipes = []; //console.log(Response.data);
+
+        Response.data.forEach(function (element) {
+          element.color = _this4.colore(element.status);
+          element.status = _this4.status[element.status - 1]; //console.log(element.status);
+
+          _this4.doctors.forEach(function (e) {
+            if (e.id == element.doctor_id) {
+              element.doctor_id = e.name;
+            }
+          });
+
+          _this4.recipes.push(element);
+
+          if (_this4.recipes.length == 0) {
+            _this4.message = "No hay resultados.";
+          }
+        });
+        _this4.activeLoading = false;
+
+        _this4.$vs.loading.close();
+      }).catch(function (err) {
+        console.log(err);
+        _this4.activeLoading = false;
+
+        _this4.$vs.loading.close();
       });
     }
   }
@@ -3909,6 +4029,36 @@ var render = function() {
                               _vm._v(" "),
                               _c("span", { staticClass: "text-lg ml-3" }, [
                                 _vm._v("Cancelado")
+                              ])
+                            ],
+                            1
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          staticClass:
+                            "flex items-center justify-between items-center mt-4 cursor-pointer",
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRerecipes()
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "flex items-center mb-2" },
+                            [
+                              _c("feather-icon", {
+                                attrs: { icon: "WatchIcon" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-lg ml-3" }, [
+                                _vm._v("Reprogramada")
                               ])
                             ],
                             1

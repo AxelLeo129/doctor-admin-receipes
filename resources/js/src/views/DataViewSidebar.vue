@@ -79,12 +79,22 @@
                   <vs-tr :key="indextr" v-for="(tr, indextr) in data">
                     <vs-td :data="data[indextr].name">
                       {{ data[indextr].name }}
-                      <vs-checkbox class="mt-5" v-model="tr.repro" v-show="tr.repro == false || tr.repro == true">Reprogramar</vs-checkbox>
+                      <vs-checkbox
+                        class="mt-5"
+                        v-model="tr.repro"
+                        v-show="tr.repro == false || tr.repro == true"
+                      >Reprogramar</vs-checkbox>
                     </vs-td>
 
                     <vs-td :data="data[indextr].presentacion">
                       {{ data[indextr].presentacion }}
-                      <vs-input class="inputx mt-5" size="small" type="date" v-model="tr.next" v-if="tr.next != ''"/>
+                      <vs-input
+                        class="inputx mt-5"
+                        size="small"
+                        type="date"
+                        v-model="tr.next"
+                        v-if="tr.next != ''"
+                      />
                     </vs-td>
 
                     <vs-td :data="data[indextr].dispensing">{{ data[indextr].dispensing }}</vs-td>
@@ -590,6 +600,7 @@ export default {
   },
   watch: {
     isSidebarActive(val) {
+      this.datetr = null;
       this.nit = null;
       this.name = null;
       this.phone = null;
@@ -764,9 +775,33 @@ export default {
       this.openLoading();
       let token = localStorage.getItem("tu");
       let ids = [];
+      let fecha = [];
       this.medicines.forEach(element => {
         ids.push(element.id);
       });
+      this.medicines.forEach(element => {
+        if (element.repro == true && element.next != "") {
+          fecha.push(element.next);
+        }
+      });
+      let date = null;
+      let status = 0;
+      //console.log(this.medicines, fecha);
+      if (fecha.length > 0) {
+        date = fecha[0];
+        status = 1;
+        fecha.forEach(element => {
+          if (element > date) {
+            date = element;
+          }
+        });
+      } else if (fecha.length == 0) {
+        date = fecha[0];
+        status = 1;
+      } else {
+        date = "";
+      }
+      //console.log(date);
       axios({
         method: "put",
         url: "http://127.0.0.1:8000/api/putCliente",
@@ -819,7 +854,7 @@ export default {
             }
           })
             .then(Response => {
-              console.log(Response);
+              //console.log(Response);
               axios({
                 method: "post",
                 url: "http://127.0.0.1:8000/api/postOrderProd",
@@ -834,12 +869,15 @@ export default {
                 }
               })
                 .then(Response => {
+                  this.datetr = null;
                   axios({
                     method: "put",
                     url: "http://127.0.0.1:8000/api/putReceSta",
                     data: JSON.stringify({
                       id: this.idRecipe,
-                      status: 2
+                      status: 2,
+                      status1: date,
+                      status2: status
                     }),
                     headers: {
                       authorization: "Bearer " + token,
@@ -890,6 +928,28 @@ export default {
       this.medicines.forEach(element => {
         ids.push(element.id);
       });
+      this.medicines.forEach(element => {
+        if (element.repro == true && element.next != "") {
+          fecha.push(element.next);
+        }
+      });
+      let date = null;
+      //console.log(this.medicines, fecha);
+      let status = 0;
+      if (fecha.length > 0) {
+        status = 1;
+        date = fecha[0];
+        fecha.forEach(element => {
+          if (element > date) {
+            date = element;
+          }
+        });
+      } else if (fecha.length == 0) {
+        status = 1;
+        date = fecha[0];
+      } else {
+        date = "";
+      }
       axios({
         method: "post",
         url: "http://127.0.0.1:8000/api/postCliente",
@@ -960,7 +1020,9 @@ export default {
                     url: "http://127.0.0.1:8000/api/putReceSta",
                     data: JSON.stringify({
                       id: this.idRecipe,
-                      status: 2
+                      status: 2,
+                      status1: date,
+                      status2: status
                     }),
                     headers: {
                       authorization: "Bearer " + token,

@@ -149,6 +149,16 @@
                   <span class="text-lg ml-3">Cancelado</span>
                 </div>
               </li>
+              <li
+                @click="getRerecipes()"
+                tag="span"
+                class="flex items-center justify-between items-center mt-4 cursor-pointer"
+              >
+                <div class="flex items-center mb-2">
+                  <feather-icon icon="WatchIcon"></feather-icon>
+                  <span class="text-lg ml-3">Reprogramada</span>
+                </div>
+              </li>
             </div>
           </VuePerfectScrollbar>
         </div>
@@ -407,6 +417,48 @@ export default {
             if (element.status == a) {
               this.recipes.push(element);
             }
+            if (this.recipes.length == 0) {
+              this.message = "No hay resultados.";
+            }
+          });
+          this.activeLoading = false;
+          this.$vs.loading.close();
+        })
+        .catch(err => {
+          console.log(err);
+          this.activeLoading = false;
+          this.$vs.loading.close();
+        });
+    },
+    getRerecipes() {
+      this.openLoading();
+      let token = localStorage.getItem("tu");
+      let id = localStorage.getItem("ui");
+      let f = new Date();
+      let fecha =
+        f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+      fecha = fecha.toString();
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getRerecipes",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          this.recipes = [];
+          //console.log(Response.data);
+          Response.data.forEach(element => {
+            element.color = this.colore(element.status);
+            element.status = this.status[element.status - 1];
+            //console.log(element.status);
+            this.doctors.forEach(e => {
+              if (e.id == element.doctor_id) {
+                element.doctor_id = e.name;
+              }
+            });
+            this.recipes.push(element);
             if (this.recipes.length == 0) {
               this.message = "No hay resultados.";
             }
