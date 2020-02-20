@@ -31,8 +31,18 @@
     <div class="vx-row">
       <!-- CARD 9: DISPATCHED ORDERS -->
       <div class="vx-col w-full">
-        <vx-card title="Categorias">
-          <div slot="no-body" class="mt-4">
+        <vx-card>
+          <div class="vx-row">
+            <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 mb-base">
+              <h4>Categorías</h4>
+            </div>
+            <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 mb-base">
+              <div align="right">
+                <vs-button color="primary" type="filled" @click="nuevo">Nueva Categoría</vs-button>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4">
             <vs-table class="table-dark-inverted">
               <template slot="thead">
                 <vs-th>NUMERO.</vs-th>
@@ -96,6 +106,9 @@ export default {
     };
   },
   methods: {
+    nuevo(){
+      this.$router.push('/nuevaCategoria');
+    },
     edit(id) {
       this.$router.push("/editarCategoria/" + id);
     },
