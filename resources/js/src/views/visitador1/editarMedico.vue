@@ -564,7 +564,7 @@ export default {
                   this.$router.push("/1visitador");
                   this.$vs.notify({
                     title: "Actualizado",
-                    text: "Producto actualizado exitosamente.",
+                    text: "Médico actualizado exitosamente.",
                     color: "success"
                   });
                 })

@@ -584,7 +584,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
             _this4.$vs.notify({
               title: "Actualizado",
-              text: "Producto actualizado exitosamente.",
+              text: "Médico actualizado exitosamente.",
               color: "success"
             });
           }).catch(function (err) {

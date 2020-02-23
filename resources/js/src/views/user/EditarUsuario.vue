@@ -65,7 +65,10 @@
                         style="width: 70%"
                         icon-pack="feather"
                         close-icon="icon-x"
-                      >Error en el servidor, por favor intentelo más tarde.</vs-alert>
+                      >
+                        Error en el
+                        servidor, por favor intentelo más tarde.
+                      </vs-alert>
                     </div>
                   </div>
                 </div>
@@ -89,7 +92,10 @@
                   <div class="vx-col md:w-1/4 w-full">
                     <ul>
                       <li>
-                        <vs-checkbox v-if="rol == 2" v-model="registro">¿Desea usar registro Clínico?</vs-checkbox>
+                        <vs-checkbox v-if="rol == 2" v-model="registro">
+                          ¿Desea usar registro
+                          Clínico?
+                        </vs-checkbox>
                       </li>
                     </ul>
                   </div>
@@ -132,7 +138,6 @@
                     <span class="text-danger text-sm" v-show="userName === ''">{{ errors.campo }}</span>
 
                     <vs-input
-                      v-show="rol == 2"
                       class="w-full mt-4"
                       label="No. Colegiado"
                       name="noCollegiate"
@@ -173,7 +178,7 @@
               </div>
             </div>
           </vs-tab>
-          <vs-tab label="Información Médica" v-if="rol == 2" icon-pack="feather" icon="icon-info">
+          <vs-tab label="Información Médica" icon-pack="feather" icon="icon-info">
             <div class="tab-text">
               <div id="user-edit-tab-info">
                 <div class="vx-row">
@@ -185,7 +190,10 @@
                     style="width: 70%"
                     icon-pack="feather"
                     close-icon="icon-x"
-                  >Error en el servidor, por favor intentelo más tarde.</vs-alert>
+                  >
+                    Error en el servidor,
+                    por favor intentelo más tarde.
+                  </vs-alert>
                 </div>
                 <br />
                 <div class="vx-row">
@@ -205,7 +213,10 @@
                             <img v-bind:src="clinicLogo" class="mr-8 rounded h-24 w-24" />
                             <!-- <vs-avatar :src="data.avatar" size="80px" class="mr-4" /> -->
                             <div>
-                              <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">Logo Clínica</p>
+                              <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">
+                                Logo
+                                Clínica
+                              </p>
                               <input
                                 type="file"
                                 class="hidden"
@@ -236,7 +247,10 @@
                               style="width: 70%"
                               icon-pack="feather"
                               close-icon="icon-x"
-                            >Error en el servidor, por favor intentelo más tarde.</vs-alert>
+                            >
+                              Error en el servidor, por favor
+                              intentelo más tarde.
+                            </vs-alert>
                           </div>
                         </div>
                       </div>
@@ -273,7 +287,14 @@
                     <!-- Col Content -->
                     <div>
                       <div class="mt-4">
-                        <vs-textarea label="Lista Especialidades" v-model="specialties" />
+                        <label class="vs-input--label">Lista Especialidades</label>
+                        <v-select
+                          multiple
+                          :closeOnSelect="false"
+                          v-model="specialties"
+                          :options="categorias"
+                          :dir="$vs.rtl ? 'rtl' : 'ltr'"
+                        />
                       </div>
                     </div>
                   </div>
@@ -321,6 +342,7 @@ export default {
   },
   data() {
     return {
+      categorias: [],
       rol: null,
       errors: {
         campo: "Este campo es requerido"
@@ -341,7 +363,7 @@ export default {
       clinicName: null,
       clinicPhone: null,
       clinicAddress: null,
-      specialties: null,
+      specialties: [],
       email: null,
       clinicalRecord: null,
       showAlerts: null,
@@ -351,12 +373,66 @@ export default {
       activado1: false,
       clinicLogo: null,
       popupActive2: false,
-      popupActive3: false
+      popupActive3: false,
+      category1: [],
+      categories: []
     };
   },
   methods: {
     getRol() {
       this.rol = localStorage.getItem("ru");
+    },
+    getCategories() {
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCategories",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          this.specialties = [];
+          Response.data.forEach(element => {
+            this.categorias.push({
+              label: element.name,
+              value: element.id
+            });
+            if (this.categories.includes(element.id)) {
+              this.specialties.push({
+                label: element.name,
+                value: element.id
+              });
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getCategories1() {
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCategories",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          this.specialties = [];
+          Response.data.forEach(element => {
+            this.categorias.push({
+              label: element.name,
+              value: element.id
+            });
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     handleFileSelect(evt) {
       let files = evt.target.files;
@@ -435,9 +511,9 @@ export default {
         }
       })
         .then(Response => {
+          this.getData();
           this.activeLoading = false;
           this.$vs.loading.close();
-          this.getData();
           this.$vs.notify({
             title: "Actualizado",
             text: "Usuario actualizado exitosamente.",
@@ -455,6 +531,10 @@ export default {
       this.popupActive3 = false;
       this.openLoading();
       let token = localStorage.getItem("tu");
+      let arrayFinal = [];
+      this.specialties.forEach(element => {
+        arrayFinal.push(element.value);
+      });
       axios({
         method: "put",
         url: "http://127.0.0.1:8000/api/putUser2",
@@ -472,14 +552,50 @@ export default {
         }
       })
         .then(Response => {
-          this.activeLoading = false;
-          this.$vs.loading.close();
-          this.getData();
-          this.$vs.notify({
-            title: "Actualizado",
-            text: "Usuario actualizado exitosamente.",
-            color: "success"
-          });
+          axios({
+            method: "get",
+            url: "http://127.0.0.1:8000/api/deleteUserCate/" + this.id,
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          })
+            .then(Response => {
+              axios({
+                method: "post",
+                url: "http://127.0.0.1:8000/api/postUserCate",
+                data: JSON.stringify({
+                  categories: arrayFinal,
+                  user_id: this.id
+                }),
+                headers: {
+                  authorization: "Bearer " + token,
+                  "content-type": "application/json"
+                }
+              })
+                .then(Response => {
+                  this.getData();
+                  this.activeLoading = false;
+                  this.$vs.loading.close();
+                  this.$vs.notify({
+                    title: "Actualizado",
+                    text: "Perfil actualizado exitosamente.",
+                    color: "success"
+                  });
+                })
+                .catch(err => {
+                  this.activeLoading = false;
+                  this.$vs.loading.close();
+                  activado = true;
+                  //console.log(err);
+                });
+            })
+            .catch(err => {
+              this.activeLoading = false;
+              this.$vs.loading.close();
+              this.activado = true;
+              console.log(err);
+            });
         })
         .catch(err => {
           this.activeLoading = false;
@@ -499,53 +615,129 @@ export default {
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
-        url: "http://127.0.0.1:8000/api/details",
+        url: "http://127.0.0.1:8000/api/getUser1/" + this.id,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
       })
         .then(Response => {
-          this.id = Response.data.success.id;
-          this.name = Response.data.success.name;
-          this.userName = Response.data.success.userName;
-          if (Response.data.success.clinicalRecord == 0) {
-            this.registro = false;
+          if (Response.data.length == 0) {
+            axios({
+              method: "get",
+              url: "http://127.0.0.1:8000/api/getUser2/" + this.id,
+              headers: {
+                authorization: "Bearer " + token,
+                "content-type": "application/json"
+              }
+            })
+              .then(Response => {
+                this.getCategories1();
+                this.name = Response.data[0].name;
+                this.userName = Response.data[0].userName;
+                if (Response.data[0].clinicalRecord == 0) {
+                  this.registro = false;
+                } else {
+                  this.registro = true;
+                }
+                this.phone = Response.data[0].phone;
+                if (Response.data[0].showAlerts == 0) {
+                  this.alertas = false;
+                } else {
+                  this.alertas = true;
+                }
+                if (
+                  Response.data[0].image == null ||
+                  Response.data[0].image == ""
+                ) {
+                  this.image = "/images/medicamentos/avatar.jpeg";
+                } else {
+                  this.image =
+                    "data:image/png;base64," + Response.data[0].image;
+                  this.base64textString = Response.data[0].image;
+                }
+                this.email = Response.data[0].email;
+                if (
+                  Response.data[0].clinicLogo == null ||
+                  Response.data[0].clinicLogo == ""
+                ) {
+                  this.clinicLogo = "/images/medicamentos/demol.PNG";
+                } else {
+                  this.clinicLogo =
+                    "data:image/png;base64," + Response.data[0].clinicLogo;
+                  this.base64textString1 = Response.data[0].clinicLogo;
+                }
+
+                this.clinicName = Response.data[0].clinicName;
+                this.clinicPhone = Response.data[0].clinicPhone;
+                this.clinicAddress = Response.data[0].clinicAddress;
+                this.specialties = Response.data[0].specialties;
+                this.noCollegiate = Response.data[0].noCollegiate;
+                if (Response.data[0].birthDate == "") {
+                  this.birthDate = null;
+                } else {
+                  this.birthDate = Response.data[0].birthDate;
+                }
+                this.activeLoading = false;
+                this.$vs.loading.close();
+              })
+              .catch(err => {
+                console.log(err);
+              });
           } else {
-            this.registro = true;
+            this.category1 = Response.data[0].categories.split(",");
+            this.category1.forEach(element => {
+              element = parseInt(element);
+              this.categories.push(element);
+            });
+            this.getCategories();
+            this.name = Response.data[0].name;
+            this.userName = Response.data[0].userName;
+            if (Response.data[0].clinicalRecord == 0) {
+              this.registro = false;
+            } else {
+              this.registro = true;
+            }
+            this.phone = Response.data[0].phone;
+            if (Response.data[0].showAlerts == 0) {
+              this.alertas = false;
+            } else {
+              this.alertas = true;
+            }
+            if (
+              Response.data[0].image == null ||
+              Response.data[0].image == ""
+            ) {
+              this.image = "/images/medicamentos/avatar.jpeg";
+            } else {
+              this.image = "data:image/png;base64," + Response.data[0].image;
+              this.base64textString = Response.data[0].image;
+            }
+            this.email = Response.data[0].email;
+            if (
+              Response.data[0].clinicLogo == null ||
+              Response.data[0].clinicLogo == ""
+            ) {
+              this.clinicLogo = "/images/medicamentos/demol.PNG";
+            } else {
+              this.clinicLogo =
+                "data:image/png;base64," + Response.data[0].clinicLogo;
+              this.base64textString1 = Response.data[0].clinicLogo;
+            }
+
+            this.clinicName = Response.data[0].clinicName;
+            this.clinicPhone = Response.data[0].clinicPhone;
+            this.clinicAddress = Response.data[0].clinicAddress;
+            this.specialties = Response.data[0].specialties;
+            this.noCollegiate = Response.data[0].noCollegiate;
+            if (Response.data[0].birthDate == "") {
+              this.birthDate = null;
+            } else {
+              this.birthDate = Response.data[0].birthDate;
+            }
+            this.activeLoading = false;
+            this.$vs.loading.close();
           }
-          if (Response.data.success.showAlerts == 0) {
-            this.alertas = false;
-          } else {
-            this.alertas = true;
-          }
-          if (Response.data.success.image == null || Response.data.success.image == "") {
-            this.image = "/images/medicamentos/avatar.jpeg";
-          } else {
-            this.image = "data:image/png;base64," + Response.data.success.image;
-            this.base64textString = Response.data.success.image;
-          }
-          this.email = Response.data.success.email;
-          if (Response.data.success.clinicLogo == null || Response.data.success.clinicLogo == "") {
-            this.clinicLogo = "/images/medicamentos/demol.PNG";
-          } else {
-            this.clinicLogo =
-              "data:image/png;base64," + Response.data.success.clinicLogo;
-            this.base64textString1 = Response.data.success.clinicLogo;
-          }
-          this.phone = Response.data.success.phone;
-          this.clinicName = Response.data.success.clinicName;
-          this.clinicPhone = Response.data.success.clinicPhone;
-          this.clinicAddress = Response.data.success.clinicAddress;
-          this.specialties = Response.data.success.specialties;
-          this.noCollegiate = Response.data.success.noCollegiate;
-          if (Response.data.success.birthDate == "") {
-            this.birthDate = null;
-          } else {
-            this.birthDate = Response.data.success.birthDate;
-          }
-          this.activeLoading = false;
-          this.$vs.loading.close();
         })
         .catch(err => {
           console.log(err);
@@ -555,6 +747,7 @@ export default {
     }
   },
   created() {
+    this.id = localStorage.getItem("ui");
     this.getRol();
     this.getData();
   }
