@@ -160,4 +160,12 @@ class RecipieController extends Controller
     public function getRerecipe(){
         return \DB::select("SELECT * FROM `recipies` WHERE status2 = 1 AND status1 >= CURRENT_TIMESTAMP () ORDER BY status1 ASC");
     }
+
+    public function getPacientes(){
+        return \DB::select("SELECT * FROM `recipies` WHERE observations != ''");
+    }
+
+    public function getPaciente($id, $id1){
+        return \DB::select("SELECT * FROM `recipies` WHERE observations != '' AND id = $id AND doctor_id = $id1");
+    }
 }

@@ -115,20 +115,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -329,8 +315,6 @@ var render = function() {
                       [
                         _c("vs-th", [_vm._v("NUMERO.")]),
                         _vm._v(" "),
-                        _c("vs-th", [_vm._v("IMAGEN")]),
-                        _vm._v(" "),
                         _c("vs-th", [_vm._v("NOMBRE")]),
                         _vm._v(" "),
                         _c("vs-th", [_vm._v("LABORATORIO")]),
@@ -353,34 +337,6 @@ var render = function() {
                             _c("span", {
                               domProps: { textContent: _vm._s(item.id) }
                             })
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("ul", { staticClass: "users-liked user-list" }, [
-                              _c(
-                                "li",
-                                [
-                                  _c(
-                                    "vx-tooltip",
-                                    { attrs: { position: "bottom" } },
-                                    [
-                                      _c("vs-avatar", {
-                                        staticClass:
-                                          "border-2 border-white border-solid -m-1",
-                                        attrs: {
-                                          size: "30px",
-                                          src:
-                                            "data:image/png;base64," +
-                                            item.image
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ])
                           ]),
                           _vm._v(" "),
                           _c("vs-td", [

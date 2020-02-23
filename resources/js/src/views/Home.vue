@@ -55,6 +55,17 @@
           ></statistics-card-line>
         </a>
       </div> -->
+      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+        <a href="/listadoPacientes">
+          <statistics-card-line
+            icon="ListIcon"
+            statistic="Pacientes"
+            statisticTitle="Busqueda de Pacientes"
+            :chartData="subscribersGained.series"
+            type="area"
+          ></statistics-card-line>
+        </a>
+      </div>
     </div>
 
     <div class="vx-row">

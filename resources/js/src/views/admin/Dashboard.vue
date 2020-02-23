@@ -68,7 +68,6 @@
             <vs-table pagination max-items="10" search :data="medicamentos">
               <template slot="thead">
                 <vs-th>NUMERO.</vs-th>
-                <vs-th>IMAGEN</vs-th>
                 <vs-th>NOMBRE</vs-th>
                 <vs-th>LABORATORIO</vs-th>
                 <vs-th>PRECENTACION</vs-th>
@@ -80,20 +79,6 @@
                 <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
                   <vs-td>
                     <span v-text="tr.id"></span>
-                  </vs-td>
-
-                  <vs-td>
-                    <ul class="users-liked user-list">
-                      <li>
-                        <vx-tooltip position="bottom">
-                          <vs-avatar
-                            size="30px"
-                            class="border-2 border-white border-solid -m-1"
-                            v-bind:src="'data:image/png;base64,'+tr.image"
-                          ></vs-avatar>
-                        </vx-tooltip>
-                      </li>
-                    </ul>
                   </vs-td>
 
                   <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>

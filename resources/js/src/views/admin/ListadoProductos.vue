@@ -46,7 +46,6 @@
             <vs-table :data="dispatchedOrders" class="table-dark-inverted">
               <template slot="thead">
                 <vs-th>NUMERO.</vs-th>
-                <vs-th>IMAGEN</vs-th>
                 <vs-th>NOMBRE</vs-th>
                 <vs-th>LABORATORIO</vs-th>
                 <vs-th>PRECENTACION</vs-th>
@@ -58,19 +57,6 @@
                 <vs-tr v-for="(item, index) in searchPacientes" :key="index">
                   <vs-td>
                     <span v-text="item.id"></span>
-                  </vs-td>
-                  <vs-td>
-                    <ul class="users-liked user-list">
-                      <li>
-                        <vx-tooltip position="bottom">
-                          <vs-avatar
-                            size="30px"
-                            class="border-2 border-white border-solid -m-1"
-                            v-bind:src="'data:image/png;base64,'+item.image"
-                          ></vs-avatar>
-                        </vx-tooltip>
-                      </li>
-                    </ul>
                   </vs-td>
                   <vs-td>
                     <span v-text="item.name"></span>

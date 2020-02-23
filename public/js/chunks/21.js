@@ -488,8 +488,8 @@ var render = function() {
                                   { staticClass: "vx-col md:w-1/2 w-full" },
                                   [
                                     _c("img", {
+                                      staticClass: "h-48 w-48",
                                       attrs: {
-                                        height: "75%",
                                         src:
                                           "data:image/png;base64," + item.img,
                                         alt: "image"

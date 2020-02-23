@@ -40,7 +40,7 @@
                 >
                   <div class="vx-row">
                     <div class="vx-col md:w-1/2 w-full">
-                      <img height="75%" :src="'data:image/png;base64,' + item.img" alt="image" />
+                      <img class="h-48 w-48" :src="'data:image/png;base64,' + item.img" alt="image" />
                     </div>
                     <div class="vx-col md:w-1/2 w-full">
                       <h3 class="mb-3" v-text="item.nombre"></h3>

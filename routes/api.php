@@ -57,6 +57,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('getMedicines/{id}', 'Recipies\RecipieController@getMedicines');
     Route::put('putReceSta', 'Recipies\RecipieController@update');
     Route::get('getRerecipes', 'Recipies\RecipieController@getRerecipe');
+    Route::get('getPacientes', 'Recipies\RecipieController@getPacientes');
+    Route::get('getPaciente/{id}/{id1}', 'Recipies\RecipieController@getPaciente');
     //Categorias
     Route::post('postCategory', 'Categories\CategoryController@store');
     Route::get('getCategories', 'Categories\CategoryController@index');
