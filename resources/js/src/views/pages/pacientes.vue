@@ -38,6 +38,7 @@
                 <vs-th>NUMERO.</vs-th>
                 <vs-th>PACIENTE</vs-th>
                 <vs-th>TELÉFONO</vs-th>
+                <vs-th>FECHA</vs-th>
                 <vs-th>ACCIONES</vs-th>
               </template>
 
@@ -55,6 +56,9 @@
                   </vs-td>
                   <vs-td>
                     <span v-text="item.phone"></span>
+                  </vs-td>
+                  <vs-td>
+                    <span v-text="item.dateIssue"></span>
                   </vs-td>
                   <vs-td>
                     <vs-button
