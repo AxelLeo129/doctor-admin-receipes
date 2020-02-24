@@ -24,6 +24,13 @@ export default [
     icon: "ListIcon",
     rol: 2
   },
+  {
+    url: "/listadoPacientes",
+    name: "Listado Pacientes",
+    slug: "listadoPacientes",
+    icon: "ListIcon",
+    rol: 2
+  },
   //Admin
   {
     url: "/consola",

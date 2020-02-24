@@ -16,45 +16,91 @@
       <!-- <div align="center">
         <h4>Paso</h4>
         <h5><strong>1</strong> ... 2 ... 3 ... 4</h5>
-      </div> -->
-      <form-wizard
-        color="rgba(var(--vs-primary), 1)"
-        :title="null"
-        :subtitle="null"
-        finishButtonText="Siguiente"
-        @on-complete="formSubmitted"
-      >
-        <tab-content title="Paso 1" icon="feather icon-home" class="mb-5">
-          <!-- tab 1 content -->
-          <div class="vx-row">
-            <div class="vx-col md:w-1/2 w-full mt-5">
-              <vs-input label="Nombre Completo del Paciente" v-model="nombres" class="w-full" />
-              <span
-                class="text-danger text-sm"
-                v-show="nombres === '' || (nombres === '' && actiErr == true)"
-              >Este campo es requerido.</span>
+      </div>-->
+      <div align="center" v-if="registro == 1">
+        <ul class="timeline mt-5" id="timeline">
+          <li class="li complete">
+            <div class="status">
+              <h4 class="mt-5">Paso 1</h4>
             </div>
-            <div class="vx-col md:w-1/2 w-full mt-5">
-              <vs-input label="Teléfono" type="number" v-model="telefono" class="w-full" />
-              <span
-                class="text-danger text-sm"
-                v-show="telefono === '' || (telefono === '' && actiErr1 == true)"
-              >Este campo es requerido.</span>
+          </li>
+          <li class="li">
+            <div class="status">
+              <h4 class="mt-5">Paso 2</h4>
             </div>
+          </li>
+          <li class="li">
+            <div class="status">
+              <h4 class="mt-5">Paso 3</h4>
+            </div>
+          </li>
+          <li class="li">
+            <div class="status">
+              <h4 class="mt-5">Paso 4</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div align="center" v-else>
+        <ul class="timeline mt-5" id="timeline">
+          <li class="li complete">
+            <div class="status">
+              <h4 class="mt-5">Paso 1</h4>
+            </div>
+          </li>
+          <li class="li">
+            <div class="status">
+              <h4 class="mt-5">Paso 2</h4>
+            </div>
+          </li>
+          <li class="li">
+            <div class="status">
+              <h4 class="mt-5">Paso 3</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="vx-row">
+        <div class="vx-col md:w-1/2 w-full mt-5">
+          <vs-input label="Nombre Completo del Paciente" v-model="nombres" class="w-full" />
+          <span
+            class="text-danger text-sm"
+            v-show="nombres === '' || (nombres === '' && actiErr == true)"
+          >
+            Este campo es
+            requerido.
+          </span>
+        </div>
+        <div class="vx-col md:w-1/2 w-full mt-5">
+          <vs-input label="Teléfono" type="number" v-model="telefono" class="w-full" />
+          <span
+            class="text-danger text-sm"
+            v-show="telefono === '' || (telefono === '' && actiErr1 == true)"
+          >
+            Este campo es
+            requerido.
+          </span>
+        </div>
+      </div>
+      <div class="vx-row">
+        <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+        </div>
+        <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
+          <div align="right">
+            <vs-button class="mt-5" color="primary" type="filled" @click="formSubmitted">Siguiente</vs-button>
           </div>
-        </tab-content>
-      </form-wizard>
+        </div>
+      </div>
     </div>
   </vx-card>
 </template>
 
 <script>
-import { FormWizard, TabContent } from "vue-form-wizard";
-import "vue-form-wizard/dist/vue-form-wizard.min.css";
 
 export default {
   data() {
     return {
+      registro: null,
       nombres: null,
       telefono: null,
       fecha: "",
@@ -63,26 +109,23 @@ export default {
     };
   },
   methods: {
-    newData(){
+    newData() {
       let nuevaRecetaData = {
-          recipe_id: "",
-          name: "",
-          phone: "",
-          doctor_id: "",
-          symptom: "",
-          diagnostics: "",
-          observations: "",
-          nextAppointment: "",
-          status: 1,
-          dateIssue: "",
-          medicines: [],
-          dispensing: [],
-          medicamentos: []
-        };
-        localStorage.setItem(
-          "nuevaRecetaData",
-          JSON.stringify(nuevaRecetaData)
-        );
+        recipe_id: "",
+        name: "",
+        phone: "",
+        doctor_id: "",
+        symptom: "",
+        diagnostics: "",
+        observations: "",
+        nextAppointment: "",
+        status: 1,
+        dateIssue: "",
+        medicines: [],
+        dispensing: [],
+        medicamentos: []
+      };
+      localStorage.setItem("nuevaRecetaData", JSON.stringify(nuevaRecetaData));
     },
     getDate() {
       let f = new Date();
@@ -122,13 +165,91 @@ export default {
       }
     }
   },
-  components: {
-    FormWizard,
-    TabContent
-  },
   created() {
+    this.registro = localStorage.getItem("regi");
     this.newData();
     this.getDate();
   }
 };
 </script>
+<style lang="scss">
+.timeline {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.li {
+  transition: all 200ms ease-in;
+}
+
+.status {
+  padding: 0px 40px;
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid #d6dce0;
+  position: relative;
+  transition: all 200ms ease-in;
+
+  h4 {
+    font-weight: 600;
+  }
+
+  &:before {
+    content: "";
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    position: absolute;
+    top: -15px;
+    left: 42%;
+    transition: all 200ms ease-in;
+  }
+}
+
+.li.complete {
+  .status {
+    border-top: 2px solid #003da5;
+
+    &:before {
+      background-color: #003da5;
+      border: none;
+      transition: all 200ms ease-in;
+    }
+
+    h4 {
+      color: #003da5;
+    }
+  }
+}
+
+@media (min-device-width: 320px) and (max-device-width: 700px) {
+  .timeline {
+    list-style-type: none;
+    display: block;
+  }
+
+  .li {
+    transition: all 200ms ease-in;
+    display: flex;
+    width: inherit;
+  }
+
+  .timestamp {
+    width: 100px;
+  }
+
+  .status {
+    &:before {
+      left: -8%;
+      top: 30%;
+      transition: all 200ms ease-in;
+    }
+  }
+}
+
+/// Layout stuff
+</style>

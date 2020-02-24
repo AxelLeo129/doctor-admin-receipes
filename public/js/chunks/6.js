@@ -6892,6 +6892,12 @@ __webpack_require__.r(__webpack_exports__);
   slug: "listadoRecetas",
   icon: "ListIcon",
   rol: 2
+}, {
+  url: "/listadoPacientes",
+  name: "Listado Pacientes",
+  slug: "listadoPacientes",
+  icon: "ListIcon",
+  rol: 2
 }, //Admin
 {
   url: "/consola",

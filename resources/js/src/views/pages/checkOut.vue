@@ -9,25 +9,49 @@
 
 <template>
   <div>
-    <!-- <div align="center">
-      <h4>Paso</h4>
-      <h5 v-if="nextStep == 0">
-        1 ... 2 ... <strong>3</strong>
-      </h5>
-      <h5 v-else>
-        1 ... 2 ... <strong>3</strong> ... 4
-      </h5>
-    </div> -->
-    <div id="ecommerce-checkout-demo">
-      <form-wizard
-        ref="checkoutWizard"
-        color="rgba(var(--vs-primary), 1)"
-        :title="null"
-        :subtitle="null"
-        :hide-buttons="true"
-      >
-        <!-- tab 1 content -->
-        <tab-content title="Paso 3" icon="feather icon-home" class="mb-5">
+    <div align="center" v-if="registro == 1">
+        <ul class="timeline mt-5" id="timeline">
+          <li class="li complete">
+            <div class="status">
+              <h4 class="mt-5">Paso 1</h4>
+            </div>
+          </li>
+          <li class="li complete">
+            <div class="status">
+              <h4 class="mt-5">Paso 2</h4>
+            </div>
+          </li>
+          <li class="li complete">
+            <div class="status">
+              <h4 class="mt-5">Paso 3</h4>
+            </div>
+          </li>
+          <li class="li">
+            <div class="status">
+              <h4 class="mt-5">Paso 4</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div align="center" v-else>
+        <ul class="timeline mt-5" id="timeline">
+          <li class="li complete">
+            <div class="status">
+              <h4 class="mt-5">Paso 1</h4>
+            </div>
+          </li>
+          <li class="li complete">
+            <div class="status">
+              <h4 class="mt-5">Paso 2</h4>
+            </div>
+          </li>
+          <li class="li complete">
+            <div class="status">
+              <h4 class="mt-5">Paso 3</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
           <!-- IF CART HAVE ITEMS -->
           <div class="vx-row">
             <!-- LEFT COL -->
@@ -37,6 +61,7 @@
                   v-for="(item, index) in nuevaRecetaData.medicamentos"
                   :key="item.id"
                   style="height: 14rem;"
+                  class="mt-5"
                 >
                   <div class="vx-row">
                     <div class="vx-col md:w-1/2 w-full">
@@ -56,7 +81,7 @@
 
             <!-- RIGHT COL -->
             <div class="vx-col lg:w-1/3 w-full">
-              <vx-card>
+              <vx-card class="mt-5">
                 <p class="font-semibold mb-3">Detalles del Paciente</p>
 
                 <vs-divider />
@@ -86,20 +111,17 @@
           <!-- <vx-card title="You don't have any items in your cart.">
                     <vs-button @click="$router.push('/apps/eCommerce/shop').catch(() => {})">Browse Shop</vs-button>
           </vx-card>-->
-        </tab-content>
-      </form-wizard>
     </div>
   </div>
 </template>
 
 <script>
-import { FormWizard, TabContent } from "vue-form-wizard";
-import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import axios from "axios";
 
 export default {
   data() {
     return {
+      registro: null,
       nextStep: null,
       resid: null,
       recetasData: [],
@@ -131,6 +153,7 @@ export default {
   },
   created() {
     this.openLoading();
+    this.registro = localStorage.getItem("regi");
     this.getUser();
     this.getData();
   },
@@ -353,15 +376,89 @@ export default {
         });
       });
     }
-  },
-  components: {
-    FormWizard,
-    TabContent
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.timeline {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.li {
+  transition: all 200ms ease-in;
+}
+
+.status {
+  padding: 0px 40px;
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid #d6dce0;
+  position: relative;
+  transition: all 200ms ease-in;
+
+  h4 {
+    font-weight: 600;
+  }
+
+  &:before {
+    content: "";
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    position: absolute;
+    top: -15px;
+    left: 42%;
+    transition: all 200ms ease-in;
+  }
+}
+
+.li.complete {
+  .status {
+    border-top: 2px solid #003da5;
+
+    &:before {
+      background-color: #003da5;
+      border: none;
+      transition: all 200ms ease-in;
+    }
+
+    h4 {
+      color: #003da5;
+    }
+  }
+}
+
+@media (min-device-width: 320px) and (max-device-width: 700px) {
+  .timeline {
+    list-style-type: none;
+    display: block;
+  }
+
+  .li {
+    transition: all 200ms ease-in;
+    display: flex;
+    width: inherit;
+  }
+
+  .timestamp {
+    width: 100px;
+  }
+
+  .status {
+    &:before {
+      left: -8%;
+      top: 30%;
+      transition: all 200ms ease-in;
+    }
+  }
+}
+
 #ecommerce-checkout-demo {
   .item-view-primary-action-btn {
     color: #2c2c2c !important;

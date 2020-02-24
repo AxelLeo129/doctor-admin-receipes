@@ -91,86 +91,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -213,9 +133,11 @@ __webpack_require__.r(__webpack_exports__);
         _this.token = Response.data.success.token;
         _this.rol = Response.data.rol;
         _this.user_id = Response.data.id;
+        var registro = Response.data.regis;
         localStorage.setItem("tu", _this.token);
         localStorage.setItem("ru", _this.rol);
         localStorage.setItem("ui", _this.user_id);
+        localStorage.setItem("regi", registro);
 
         if (_this.rol == 1) {
           _this.$router.push("/consola");

@@ -525,6 +525,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        localStorage.setItem('regi', _this3.clinicalRecord);
+
         _this3.getData();
 
         _this3.activeLoading = false;

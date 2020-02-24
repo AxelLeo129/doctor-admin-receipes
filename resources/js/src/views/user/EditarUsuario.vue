@@ -511,6 +511,7 @@ export default {
         }
       })
         .then(Response => {
+          localStorage.setItem('regi', this.clinicalRecord);
           this.getData();
           this.activeLoading = false;
           this.$vs.loading.close();
