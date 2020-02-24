@@ -892,6 +892,7 @@ __webpack_require__.r(__webpack_exports__);
                 "content-type": "application/json"
               }
             }).then(function (Response) {
+              _this3.isSidebarActiveLocal = false;
               _this3.activeLoading = false;
 
               _this3.$vs.loading.close();
@@ -939,6 +940,7 @@ __webpack_require__.r(__webpack_exports__);
       this.openLoading();
       var token = localStorage.getItem("tu");
       var ids = [];
+      var fecha = [];
       this.medicines.forEach(function (element) {
         ids.push(element.id);
       });
@@ -998,7 +1000,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(Response);
+        console.log(_this4.datetr);
         axios__WEBPACK_IMPORTED_MODULE_1___default()({
           method: "post",
           url: "http://127.0.0.1:8000/api/postOrder",
@@ -1006,6 +1008,7 @@ __webpack_require__.r(__webpack_exports__);
             client_id: Response.data.mess.id,
             namet: _this4.nameT,
             numbert: _this4.numberT,
+            datetr: _this4.datetr,
             numbertr: _this4.numberTr,
             total: _this4.total
           }),
@@ -1042,6 +1045,7 @@ __webpack_require__.r(__webpack_exports__);
                 "content-type": "application/json"
               }
             }).then(function (Response) {
+              _this4.isSidebarActiveLocal = false;
               _this4.activeLoading = false;
 
               _this4.$vs.loading.close();
@@ -2589,7 +2593,6 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     ;(_vm.popupActive2 = false),
-                                      (_vm.isSidebarActiveLocal = false),
                                       _vm.notificacion1()
                                   }
                                 }
@@ -2620,7 +2623,6 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     ;(_vm.popupActive2 = false),
-                                      (_vm.isSidebarActiveLocal = false),
                                       _vm.notificacion()
                                   }
                                 }
@@ -2642,7 +2644,6 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     ;(_vm.popupActive2 = false),
-                                      (_vm.isSidebarActiveLocal = false),
                                       _vm.notificacion1()
                                   }
                                 }
@@ -2664,7 +2665,6 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     ;(_vm.popupActive2 = false),
-                                      (_vm.isSidebarActiveLocal = false),
                                       _vm.notificacion()
                                   }
                                 }

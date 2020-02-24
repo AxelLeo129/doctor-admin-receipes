@@ -188,7 +188,7 @@
             <div class="vx-row">
               <vs-button
                 class="mt-5"
-                @click="popupActive2=false, isSidebarActiveLocal = false, notificacion1()"
+                @click="popupActive2=false, notificacion1()"
                 color="primary"
                 type="filled"
                 v-if="tipe == 1 && switch1 == '1'"
@@ -196,7 +196,7 @@
               >Realizar el Pedido</vs-button>
               <vs-button
                 class="mt-5"
-                @click="popupActive2=false, isSidebarActiveLocal = false, notificacion()"
+                @click="popupActive2=false, notificacion()"
                 color="primary"
                 v-if="tipe == 2 && switch1 == '1'"
                 type="filled"
@@ -205,7 +205,7 @@
 
               <vs-button
                 class="mt-5"
-                @click="popupActive2=false, isSidebarActiveLocal = false, notificacion1()"
+                @click="popupActive2=false, notificacion1()"
                 color="primary"
                 type="filled"
                 v-if="tipe == 1 && switch1 == '2'"
@@ -213,7 +213,7 @@
               >Realizar el Pedido</vs-button>
               <vs-button
                 class="mt-5"
-                @click="popupActive2=false, isSidebarActiveLocal = false, notificacion()"
+                @click="popupActive2=false, notificacion()"
                 color="primary"
                 v-if="tipe == 2 && switch1 == '2'"
                 type="filled"
@@ -885,6 +885,7 @@ export default {
                     }
                   })
                     .then(Response => {
+                      this.isSidebarActiveLocal = false;
                       this.activeLoading = false;
                       this.$vs.loading.close();
                       this.$vs.notify({
@@ -925,6 +926,7 @@ export default {
       this.openLoading();
       let token = localStorage.getItem("tu");
       let ids = [];
+      let fecha = [];
       this.medicines.forEach(element => {
         ids.push(element.id);
       });
@@ -983,7 +985,7 @@ export default {
         }
       })
         .then(Response => {
-          console.log(Response);
+          console.log(this.datetr);
           axios({
             method: "post",
             url: "http://127.0.0.1:8000/api/postOrder",
@@ -991,6 +993,7 @@ export default {
               client_id: Response.data.mess.id,
               namet: this.nameT,
               numbert: this.numberT,
+              datetr: this.datetr,
               numbertr: this.numberTr,
               total: this.total
             }),
@@ -1030,6 +1033,7 @@ export default {
                     }
                   })
                     .then(Response => {
+                      this.isSidebarActiveLocal = false;
                       this.activeLoading = false;
                       this.$vs.loading.close();
                       this.$vs.notify({
