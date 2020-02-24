@@ -16,9 +16,9 @@
         <strong>2</strong> ... 3 ... 4
       </h5>
     </div>-->
-    <div align="right">
-      <feather-icon icon="FileTextIcon" class="cursor-pointer mt-1 sm:mr-6 mr-2" :badge="mediNum" />
-    </div>
+    <!-- <div align="right">
+            <feather-icon icon="FileTextIcon" class="cursor-pointer mt-1 sm:mr-6 mr-2" :badge="mediNum" />
+    </div>-->
     <form-wizard
       color="rgba(var(--vs-primary), 1)"
       :title="null"
@@ -33,7 +33,6 @@
           id="algolia-instant-search-demo"
         >
           <!-- AIS CONFIG -->
-          <ais-configure :hits-per-page.camel="9" />
 
           <div class="algolia-header mb-4">
             <div class="flex md:items-end items-center justify-between flex-wrap">
@@ -54,6 +53,14 @@
                     v-text="numberData + ' resultados encontrados'"
                   ></p>
                 </ais-stats>
+                <div align="right">
+                  <label>Medicamentos agregados: </label>
+                  <feather-icon
+                    icon="FileTextIcon"
+                    class="cursor-pointer mt-1 sm:mr-6 mr-2"
+                    :badge="mediNum"
+                  />
+                </div>
                 <vs-button @click="formSubmitted">Siguiente</vs-button>
               </div>
             </div>
@@ -81,13 +88,16 @@
                   <div>
                     <ul>
                       <li
-                        v-for="(item, index) in categorias"
-                        :key="item.value"
                         class="flex items-center cursor-pointer py-1"
+                        @click="filterCate = 0"
+                      >Todos</li>
+                      <li
+                        v-for="(item, index) in categorias"
+                        :key="index"
+                        class="flex items-center cursor-pointer py-1"
+                        @click="filterCate = item.id"
                       >
-                        <vs-checkbox
-                          @click="bCate(item.id, index, $event.target.checked)"
-                        >{{item.name}}</vs-checkbox>
+                        {{item.name}}
                         <!-- <vs-checkbox v-model="buscar1" :vs-value="item.id">{{item.name}}</vs-checkbox> -->
                       </li>
                     </ul>
@@ -109,24 +119,22 @@
                     <ul>
                       <li v-if="isFromSearch && !items.length">No results.</li>
                       <li
+                        @click="filterMar = 0"
+                        class="mb-2 flex cursor-pointer items-center justify-between"
+                      >Todos</li>
+                      <li
                         v-for="item in marcas"
                         :key="item.value"
-                        class="mb-2 flex items-center justify-between"
-                      >
-                        <vs-checkbox
-                          v-model="item.isRefined"
-                          class="ml-0"
-                          @click="refine(item.value)"
-                        >{{ item.label }}</vs-checkbox>
-                        <span>{{ item.count }}</span>
-                      </li>
+                        class="mb-2 flex items-center cursor-pointer justify-between"
+                        @click="filterMar = item.value"
+                      >{{item.label}}</li>
                     </ul>
                   </div>
                 </ais-refinement-list>
                 <vs-divider />
 
                 <ais-clear-refinements class="flex justify-center">
-                  <vs-button class="w-full">Limpiar Filtros</vs-button>
+                  <vs-button @click="limpiar" class="w-full">Limpiar Filtros</vs-button>
                 </ais-clear-refinements>
               </div>
             </vs-sidebar>
@@ -208,11 +216,7 @@
                           <h6 class="mb-2">{{ item.precentacion }}</h6>
                           <p class="text-grey"></p>
                           <p class="text-grey">{{ item.description }}</p>
-                          <vs-popup
-                            classContent="holamundo"
-                            title="Medicamento Recetado"
-                            :active.sync="activar"
-                          >
+                          <vs-popup title="Medicamento Recetado" :active.sync="activar">
                             <h4 class="mb-2">
                               <strong v-text="nombre"></strong>
                             </h4>
@@ -225,10 +229,10 @@
                                 label="Descripción de uso"
                                 v-model="uso"
                               />
-                              <span
-                                class="text-danger text-sm"
-                                v-show="uso == ''"
-                              >Este campo es requerido.</span>
+                              <span class="text-danger text-sm" v-show="uso == ''">
+                                Este
+                                campo es requerido.
+                              </span>
                             </div>
                             <div class="vx-row">
                               <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
@@ -246,14 +250,17 @@
                                     type="filled"
                                     @click="agregarM"
                                     :disabled="uso == null || uso == ''"
-                                  >Agregar & Continuar</vs-button>
+                                  >
+                                    Agregar &
+                                    Continuar
+                                  </vs-button>
                                 </div>
                               </div>
                             </div>
                           </vs-popup>
                           <div class="flex justify-between flex-wrap">
                             <vs-button
-                              class="mt-4 mr-2 shadow-lg alineacion"
+                              class="mt-4 mr-2 alineacion"
                               @click="activar=true, setData(item.id, item.name, item.description, item.precentacion, item.image)"
                             >Agregar Medicamento</vs-button>
                           </div>
@@ -280,7 +287,6 @@ import { FormWizard, TabContent } from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import {
   AisClearRefinements,
-  AisConfigure,
   AisHierarchicalMenu,
   AisHits,
   AisInstantSearch,
@@ -301,7 +307,6 @@ export default {
     ItemGridView: () => import("../../components/eCommerce/ItemGridView.vue"),
     ItemListView: () => import("../../components/eCommerce/ItemListView.vue"),
     AisClearRefinements,
-    AisConfigure,
     AisHierarchicalMenu,
     AisHits,
     AisInstantSearch,
@@ -318,6 +323,8 @@ export default {
   },
   data() {
     return {
+      filterCate: 0,
+      filterMar: 0,
       buscar1: [],
       mediNum: 0,
       buscar: "",
@@ -341,28 +348,9 @@ export default {
       clickNotClose: true,
       currentItemView: "item-grid-view",
       categorias: [],
-      marcas: [
-        {
-          label: "Bayern",
-          count: 1
-        },
-        {
-          label: "Adenuric",
-          count: 0
-        },
-        {
-          label: "Badyket",
-          count: 0
-        },
-        {
-          label: "Carbimen",
-          count: 0
-        },
-        {
-          label: "Cromatonbic Ferro",
-          count: 0
-        }
-      ],
+      categoriasId: [],
+      marcas: [],
+      marcasId: [],
       algoliaCategories: [
         "hierarchicalCategories.lvl0",
         "hierarchicalCategories.lvl1",
@@ -380,24 +368,58 @@ export default {
     },
 
     searchMedicina: function() {
-      let result = this.medicamentosList;
-      if (!this.buscar) {
-        /*console.log(this.buscar);
-        console.log(this.buscar1);*/
-        return result;
-      }
-      //console.log(this.buscar);
-      let texto = this.buscar.toLowerCase();
-      //let texto1 = this.buscar1.toString();
-      //let cateText = texto + ' ' + texto1; 
-      //console.log(cateText);
-      const filter = event =>
-        event.name.toLowerCase().includes(texto) ||
-        event.precentacion.toLowerCase().includes(texto) ||
-        event.description.toLowerCase().includes(texto); 
-        //event.categories.toLowerCase().includes(cateText);
-
-      return result.filter(filter);
+      return this.medicamentosList.filter(medicina => {
+        if (this.filterCate == 0 && this.filterMar == 0)
+          return (
+            medicina.name.toLowerCase().includes(this.buscar.toLowerCase()) ||
+            medicina.precentacion
+              .toLowerCase()
+              .includes(this.buscar.toLowerCase()) ||
+            medicina.description
+              .toLowerCase()
+              .includes(this.buscar.toLowerCase())
+          );
+        else if (
+          this.categoriasId.includes(this.filterCate) &&
+          this.filterMar == 0
+        )
+          return (
+            medicina.categories.includes(this.filterCate) &&
+            (medicina.name.toLowerCase().includes(this.buscar.toLowerCase()) ||
+              medicina.precentacion
+                .toLowerCase()
+                .includes(this.buscar.toLowerCase()) ||
+              medicina.description
+                .toLowerCase()
+                .includes(this.buscar.toLowerCase()))
+          );
+        else if (this.marcasId.includes(this.filterMar) && this.filterCate == 0)
+          return (
+            medicina.laboratory == this.filterMar &&
+            (medicina.name.toLowerCase().includes(this.buscar.toLowerCase()) ||
+              medicina.precentacion
+                .toLowerCase()
+                .includes(this.buscar.toLowerCase()) ||
+              medicina.description
+                .toLowerCase()
+                .includes(this.buscar.toLowerCase()))
+          );
+        else if (
+          this.marcasId.includes(this.filterMar) &&
+          this.categoriasId.includes(this.filterCate)
+        )
+          return (
+            medicina.laboratory == this.filterMar &&
+            medicina.categories.includes(this.filterCate) &&
+            (medicina.name.toLowerCase().includes(this.buscar.toLowerCase()) ||
+              medicina.precentacion
+                .toLowerCase()
+                .includes(this.buscar.toLowerCase()) ||
+              medicina.description
+                .toLowerCase()
+                .includes(this.buscar.toLowerCase()))
+          );
+      });
     },
     // GRID VIEW
     isInCart() {
@@ -416,6 +438,11 @@ export default {
     }
   },
   methods: {
+    limpiar() {
+      this.buscar = "";
+      this.filterCate = 0;
+      this.filterCate = 0;
+    },
     getNum() {
       let num = JSON.parse(localStorage.getItem("nuevaRecetaData"));
       if (num != null || num != "") {
@@ -423,17 +450,6 @@ export default {
         //console.log(num.medicines);
       } else {
         this.mediNum = 0;
-      }
-    },
-    bCate(id, index, event) {
-      //console.log(event);
-      if (event == true) {
-        this.buscar1.push(id);
-        this.buscar1 = this.buscar1.sort();
-      } else {
-        let a = this.buscar1.indexOf(id);
-        this.buscar1.splice(a, 1);
-        this.buscar1 = this.buscar1.sort();
       }
     },
     agregarmF() {
@@ -508,6 +524,34 @@ export default {
         .then(Response => {
           //console.log(Response.data);
           this.categorias = Response.data;
+          Response.data.forEach(element => {
+            this.categoriasId.push(element.id);
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getMarcas() {
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getLabs",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          //console.log(Response.data);
+          Response.data.forEach(element => {
+            this.marcas.push({
+              label: element.name,
+              value: element.id
+            });
+            this.marcasId.push(element.id);
+          });
+          //this.marcas = Response.data;
         })
         .catch(err => {
           console.log(err);
@@ -527,6 +571,13 @@ export default {
         .then(Response => {
           Response.data.forEach(element => {
             element.quantity = parseInt(element.quantity);
+            element.laboratory = parseInt(element.laboratory);
+            let arrayc = [];
+            arrayc = element.categories.split(",");
+            element.categories = [];
+            arrayc.forEach(e => {
+              element.categories.push(parseInt(e));
+            });
             if (element.quantity > 0) {
               this.numberData = this.numberData + 1;
               this.medicamentosList.push(element);
@@ -588,6 +639,7 @@ export default {
     this.getNum();
     this.setSidebarWidth();
     this.getCategorias();
+    this.getMarcas();
     this.getData();
   }
 };
@@ -598,6 +650,7 @@ export default {
 .alineacion {
   text-align: center;
 }
+
 .size {
   height: 206px;
   width: 266px;
@@ -609,6 +662,7 @@ export default {
     width: 150px;
   }
 }
+
 #algolia-instant-search-demo {
   .algolia-header {
     .algolia-filters-label {
