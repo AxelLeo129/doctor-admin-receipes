@@ -22,7 +22,7 @@
               <div id="info1"></div>
               <span
                 class="text-danger text-sm"
-                v-show="image === 'images/medicamentos/demo.jpg' && bol == ''"
+                v-show="image === 'images/medicamentos/default.png' && bol == ''"
               >{{ errors.campo }}</span>
             </div>
           </div>
@@ -109,7 +109,7 @@
                 class="ml-auto mt-2"
                 color="success"
                 @click="doSave"
-                :disabled="name == null || name == '' || image == 'images/medicamentos/demo.jpg' || bol == 'as' || quantity == null || quantity == '' || description == null || description == '' || precentation == null || precentation == '' || price == null || price == '' || laboratory == null || laboratory == '' || category == null || category.length == 0 || warehouse == null || warehouse == ''"
+                :disabled="name == null || name == '' || image == 'images/medicamentos/default.png' || bol == 'as' || quantity == null || quantity == '' || description == null || description == '' || precentation == null || precentation == '' || price == null || price == '' || laboratory == null || laboratory == '' || category == null || category.length == 0 || warehouse == null || warehouse == ''"
               >Guardar</vs-button>
               <vs-button class="ml-4 mt-2" type="border" color="danger" @click="cancel">Cancelar</vs-button>
             </div>
@@ -138,7 +138,7 @@ export default {
         campo: "Este campo es requerido."
       },
       bol: "as",
-      image: "images/medicamentos/demo.jpg",
+      image: "images/medicamentos/default.png",
       name: null,
       precentation: null,
       description: null,
