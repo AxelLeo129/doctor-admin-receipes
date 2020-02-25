@@ -78,6 +78,20 @@ export default [
     slug: "listadoPres",
     icon: "ListIcon",
     rol: 1
+  }, 
+  {
+    url: "/boodskapper",
+    name: "Listado Envíos",
+    slug: "boodskapper",
+    icon: "ListIcon",
+    rol: 5
+  },
+  {
+    url: "/visitador",
+    name: "Listado Pedidos",
+    slug: "visitador",
+    icon: "ListIcon",
+    rol: 4
   },
   //Admin - Usuarios
   {
