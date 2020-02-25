@@ -213,10 +213,12 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        //console.log(Response);
         Response.data.forEach(function (element) {
+          element.cliente.client_addresse = element.cliente.callee + ' ' + element.cliente.apartamentoe + ' ' + element.cliente.residenciae + ' zona ' + element.cliente.codigoe + ' ' + element.cliente.municipioe + ' ' + element.cliente.depare + ' ' + element.cliente.paise;
+
           _this.users.push(element);
-        });
-        console.log(_this.users);
+        }); //console.log(this.users);
       }).catch(function (err) {
         console.log(err);
       });
@@ -233,8 +235,7 @@ __webpack_require__.r(__webpack_exports__);
             label: element.name,
             value: element.id
           });
-        });
-        console.log(_this.deliveryP);
+        }); //console.log(this.deliveryP);
       }).catch(function (err) {
         console.log(err);
       });

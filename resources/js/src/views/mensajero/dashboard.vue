@@ -199,10 +199,12 @@
                 }
                 })
                 .then(Response => {
+                    //console.log(Response);
                     Response.data.forEach(element => {
+                    element.cliente.client_addresse = (element.cliente.callee + ' ' + element.cliente.apartamentoe + ' ' + element.cliente.residenciae + ' zona ' + element.cliente.codigoe + ' ' + element.cliente.municipioe + ' ' + element.cliente.depare + ' ' + element.cliente.paise);
                     this.users.push(element);
                 });
-                    console.log(this.users);
+                    //console.log(this.users);
                 })
                 .catch(err => {
                     console.log(err);
@@ -223,7 +225,7 @@
                         value:element.id
                     });
                 });
-                    console.log(this.deliveryP);
+                    //console.log(this.deliveryP);
                 })
                 .catch(err => {
                     console.log(err);

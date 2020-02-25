@@ -36,8 +36,8 @@
             <template slot-scope="{data}">
                 <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
-                    <vs-td :data="data[indextr].cliente.client_id">
-                        {{ data[indextr].cliente.client_id }}
+                    <vs-td :data="data[indextr].cliente.id">
+                        {{ data[indextr].cliente.id }}
                     </vs-td>
 
                     <vs-td :data="data[indextr].cliente.client_name">
@@ -157,7 +157,7 @@
             <p>Seleccionar al encargado del envío:</p><br>
                 <p v-if="errors.length">
                     <ul>
-                    <li class="text-danger" v-for="error in errors">{{ error }}</li>
+                    <li class="text-danger" v-for="error in errors" v-bind:key="error">{{ error }}</li>
                     </ul>
                 </p>
             <v-select
@@ -181,7 +181,7 @@
             <p>Seleccionar al encargado para los envíos:</p><br>
                 <p v-if="errorsEM.length">
                     <ul>
-                    <li class="text-danger" v-for="error in errorsEM">{{ error }}</li>
+                    <li class="text-danger" v-for="error in errorsEM" v-bind:key="error">{{ error }}</li>
                     </ul>
                 </p>
             <v-select
@@ -227,10 +227,11 @@
                 })
                 .then(Response => {
                     Response.data.forEach(element => {
+                    element.cliente.client_addresse = (element.cliente.callee + ' ' + element.cliente.apartamentoe + ' ' + element.cliente.residenciae + ' zona ' + element.cliente.codigoe + ' ' + element.cliente.municipioe + ' ' + element.cliente.depare + ' ' + element.cliente.paise);
                     this.users.push(element);
                 });
-                    console.log("USUARIO");
-                    console.log(this.users);
+                    //console.log("USUARIO");
+                    //console.log(this.users);
                 })
                 .catch(err => {
                     console.log(err);
@@ -251,7 +252,7 @@
                         value:element.id
                     });
                 });
-                    console.log(this.deliveryP);
+                    //console.log(this.deliveryP);
                 })
                 .catch(err => {
                     console.log(err);

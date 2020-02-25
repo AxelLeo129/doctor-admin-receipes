@@ -1236,7 +1236,7 @@ export default {
             }
             let h = f + "-" + e + "-" + g;
             this.medicines.push({
-              id: element.id,
+              id: element.product_id,
               name: element.name,
               presentacion: element.presentacion,
               dispensing: element.dispensing,

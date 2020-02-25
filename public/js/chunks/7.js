@@ -1270,7 +1270,7 @@ __webpack_require__.r(__webpack_exports__);
           var h = f + "-" + e + "-" + g;
 
           _this7.medicines.push({
-            id: element.id,
+            id: element.product_id,
             name: element.name,
             presentacion: element.presentacion,
             dispensing: element.dispensing,

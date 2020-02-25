@@ -88,7 +88,7 @@ class OrderController extends Controller
         $data = [];
         $clients= \DB::table('clients')
             ->join('orders', 'orders.client_id', '=', 'clients.id')
-            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addresse', 'orders.status', 'orders.order_id', 'orders.delivery_date')
+            ->select('clients.id','clients.client_name','client_addresse' , 'clients.client_phone', 'paise', 'depare', 'callee', 'apartamentoe', 'municipioe', 'residenciae', 'codigoe', 'orders.status', 'orders.order_id', 'orders.delivery_date')
             ->get();
         foreach($clients as $client){
             $medicinas = \DB::table("orders_products")

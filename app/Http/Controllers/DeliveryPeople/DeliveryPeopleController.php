@@ -37,7 +37,7 @@ class DeliveryPeopleController extends Controller
             ->join('clients', 'clients.id', '=', 'orders.client_id')
             ->where('shippings.id_user', $id)
             ->where('orders.status', 3)
-            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addresse', 'orders.status', 'orders.order_id', 'orders.delivery_date')
+            ->select('clients.id','clients.client_name', 'clients.client_phone',  'clients.paise', 'clients.depare', 'clients.callee', 'clients.apartamentoe', 'clients.municipioe', 'clients.residenciae', 'clients.codigoe','client_addresse', 'orders.status', 'orders.order_id', 'orders.delivery_date')
             ->get();
         foreach($clients_enviar as $client){
             $medicinas = \DB::table("orders_products")
@@ -56,7 +56,7 @@ class DeliveryPeopleController extends Controller
             ->join('clients', 'clients.id', '=', 'orders.client_id')
             ->where('shippings.id_user', $id)
             ->where('orders.status', 2)
-            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addresse', 'orders.status', 'orders.order_id', 'orders.delivery_date')
+            ->select('clients.id','clients.client_name', 'clients.client_phone','clients.paise', 'clients.depare', 'clients.callee', 'clients.apartamentoe', 'clients.municipioe', 'clients.residenciae', 'clients.codigoe', 'client_addresse', 'orders.status', 'orders.order_id', 'orders.delivery_date')
             ->get();
         foreach($clients_enviar as $client){
             $medicinas = \DB::table("orders_products")
@@ -75,7 +75,7 @@ class DeliveryPeopleController extends Controller
             ->join('clients', 'clients.id', '=', 'orders.client_id')
             ->where('shippings.id_user', $id)
             ->where('orders.status', 4)
-            ->select('clients.id','clients.client_name', 'clients.client_phone', 'client_addresse', 'orders.status', 'orders.order_id', 'orders.delivery_date')
+            ->select('clients.id','clients.client_name', 'clients.client_phone', 'clients.paise', 'clients.depare', 'clients.callee', 'clients.apartamentoe', 'clients.municipioe', 'clients.residenciae', 'clients.codigoe','client_addresse', 'orders.status', 'orders.order_id', 'orders.delivery_date')
             ->get();
         foreach($clients_enviar as $client){
             $medicinas = \DB::table("orders_products")

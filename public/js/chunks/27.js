@@ -241,10 +241,11 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
+          element.cliente.client_addresse = element.cliente.callee + ' ' + element.cliente.apartamentoe + ' ' + element.cliente.residenciae + ' zona ' + element.cliente.codigoe + ' ' + element.cliente.municipioe + ' ' + element.cliente.depare + ' ' + element.cliente.paise;
+
           _this.users.push(element);
-        });
-        console.log("USUARIO");
-        console.log(_this.users);
+        }); //console.log("USUARIO");
+        //console.log(this.users);
       }).catch(function (err) {
         console.log(err);
       });
@@ -261,8 +262,7 @@ __webpack_require__.r(__webpack_exports__);
             label: element.name,
             value: element.id
           });
-        });
-        console.log(_this.deliveryP);
+        }); //console.log(this.deliveryP);
       }).catch(function (err) {
         console.log(err);
       });
@@ -538,11 +538,11 @@ var render = function() {
                     [
                       _c(
                         "vs-td",
-                        { attrs: { data: data[indextr].cliente.client_id } },
+                        { attrs: { data: data[indextr].cliente.id } },
                         [
                           _vm._v(
                             "\n                    " +
-                              _vm._s(data[indextr].cliente.client_id) +
+                              _vm._s(data[indextr].cliente.id) +
                               "\n                "
                           )
                         ]
@@ -994,9 +994,11 @@ var render = function() {
                 _c(
                   "ul",
                   _vm._l(_vm.errors, function(error) {
-                    return _c("li", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(error))
-                    ])
+                    return _c(
+                      "li",
+                      { key: error, staticClass: "text-danger" },
+                      [_vm._v(_vm._s(error))]
+                    )
                   }),
                   0
                 )
@@ -1060,9 +1062,11 @@ var render = function() {
                 _c(
                   "ul",
                   _vm._l(_vm.errorsEM, function(error) {
-                    return _c("li", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(error))
-                    ])
+                    return _c(
+                      "li",
+                      { key: error, staticClass: "text-danger" },
+                      [_vm._v(_vm._s(error))]
+                    )
                   }),
                   0
                 )
