@@ -108,11 +108,11 @@
                       />
                     </vs-td>
 
-                    <vs-td :data="data[indextr].price">Q {{ data[indextr].price }}</vs-td>
+                    <vs-td :data="data[indextr].price" style="white-space: nowrap;">Q {{ data[indextr].price }}</vs-td>
 
                     <!-- <vs-td :data="data[indextr].totale">{{ data[indextr].totale }}</vs-td> -->
 
-                    <vs-td
+                    <vs-td style="white-space: nowrap;"
                       :data="(data[indextr].subtotal = data[indextr].price * data[indextr].cantidad)"
                     >Q {{ data[indextr].subtotal }}</vs-td>
                   </vs-tr>

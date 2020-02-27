@@ -2253,6 +2253,9 @@ var render = function() {
                                       _c(
                                         "vs-td",
                                         {
+                                          staticStyle: {
+                                            "white-space": "nowrap"
+                                          },
                                           attrs: { data: data[indextr].price }
                                         },
                                         [
@@ -2265,6 +2268,9 @@ var render = function() {
                                       _c(
                                         "vs-td",
                                         {
+                                          staticStyle: {
+                                            "white-space": "nowrap"
+                                          },
                                           attrs: {
                                             data: (data[indextr].subtotal =
                                               data[indextr].price *
