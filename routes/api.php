@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 //use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
 
@@ -23,16 +22,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'User\UserController@login');
 Route::any('register', 'User\UserController@register');
 
-Route::get('enviar', function() {
-    Mail::send('welcome', [], function($message) {
-        $message->from('admin@pharmazone.app', 'Pharmazone.app');
-        $message->to('atooleonardon129@gmail.com', 'Axel López')->subject('¡Bienvenid@ a Pharmazone.app!');
-        //$message->
-    });
-
-    return "Se ha enviado el email";
-});
-
 Route::group(['middleware' => 'auth:api'], function(){
     //User
     Route::get('listUsers', "User\UserController@index");
@@ -48,6 +37,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('getUser/{id}', 'User\UserController@detailsUser');
     Route::get('deleteUserCate/{id}', 'User\UserController@destroyCategory');
     Route::any('postUserCate', 'User\UserController@storeCategory');
+    Route::post('enviar', 'User\UserController@sendEmail');
     //Product
     Route::get('getProducts', 'Products\ProductController@list');
     Route::get('getProducts1', 'Products\ProductController@list1');

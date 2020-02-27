@@ -8,12 +8,23 @@ use App\User;
 use App\Users_category;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
     
     public $successStatus = 200;
 
+
+    public function sendEmail(Request $request){
+        Mail::send('welcome', ['request' => $request], function($message) use ($request){
+            $message->from('pharmazone@insayd.com', 'Pharmazone.app');
+            $message->to($request->email, $request->name)->subject('¡Bienvenid@ a Pharmazone.app!');
+            //$message->
+        });
+    
+        return "Se ha enviado el email";
+    }
 
     /**
      * Display a listing of the resource.
@@ -33,6 +44,10 @@ class UserController extends Controller
     public function getMedics($id)
     {
         return User::where('id_visitador', $id)->get();
+    }
+
+    public function changePassword(Request $request){
+        
     }
 
     /** 
