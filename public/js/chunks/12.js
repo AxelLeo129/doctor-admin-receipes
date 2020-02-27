@@ -91,6 +91,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -291,6 +294,16 @@ var render = function() {
                                 "div",
                                 { staticClass: "vx-card__title mb-4" },
                                 [
+                                  _c("div", { attrs: { align: "center" } }, [
+                                    _c("img", {
+                                      staticClass: "w-24 h-24",
+                                      attrs: {
+                                        src: "/images/logo/login/logo.png",
+                                        alt: ""
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
                                   _c("h4", { staticClass: "mb-4" }, [
                                     _vm._v("Ingresar")
                                   ]),

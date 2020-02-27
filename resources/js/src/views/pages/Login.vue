@@ -25,6 +25,9 @@
               <div class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg">
                 <div class="px-8 pt-8 login-tabs-container" style="padding: 4rem;">
                   <div class="vx-card__title mb-4">
+                    <div align="center">
+                      <img src="/images/logo/login/logo.png" class="w-24 h-24" alt />
+                    </div>
                     <h4 class="mb-4">Ingresar</h4>
                     <p>Bienvenido de nuevo, inicie sesión en su cuenta.</p>
                   </div>
@@ -128,10 +131,9 @@ export default {
           localStorage.setItem("regi", registro);
           if (this.rol == 1) {
             this.$router.push("/consola");
-          } else if(this.rol==5){
+          } else if (this.rol == 5) {
             this.$router.push("/boodskapper");
-          }
-          else {
+          } else {
             this.$router.push("/home");
           }
           this.activeLoading = false;
