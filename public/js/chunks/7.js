@@ -423,8 +423,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3115,23 +3113,7 @@ var render = function() {
                   },
                   expression: "telefonof"
                 }
-              }),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.telefonof === "",
-                      expression: "telefonof === ''"
-                    }
-                  ],
-                  staticClass: "text-danger text-sm"
-                },
-                [_vm._v("Este campo es requerido.")]
-              )
+              })
             ],
             1
           ),
@@ -3375,23 +3357,7 @@ var render = function() {
                   },
                   expression: "telefonoe"
                 }
-              }),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.telefonoe === "",
-                      expression: "telefonoe === ''"
-                    }
-                  ],
-                  staticClass: "text-danger text-sm"
-                },
-                [_vm._v("Este campo es requerido.")]
-              )
+              })
             ],
             1
           )
@@ -3441,8 +3407,6 @@ var render = function() {
                   _vm.residenciaf == "" ||
                   _vm.codigof == null ||
                   _vm.codigof == "" ||
-                  _vm.telefonof == null ||
-                  _vm.telefonof == "" ||
                   _vm.paise == null ||
                   _vm.paise == "" ||
                   _vm.depare == null ||
@@ -3454,9 +3418,7 @@ var render = function() {
                   _vm.residenciae == null ||
                   _vm.residenciae == "" ||
                   _vm.codigoe == null ||
-                  _vm.codigoe == "" ||
-                  _vm.telefonoe == null ||
-                  _vm.telefonoe == ""
+                  _vm.codigoe == ""
               },
               on: { click: _vm.submitData }
             },
@@ -3498,8 +3460,6 @@ var render = function() {
                   _vm.residenciaf == "" ||
                   _vm.codigof == null ||
                   _vm.codigof == "" ||
-                  _vm.telefonof == null ||
-                  _vm.telefonof == "" ||
                   _vm.paise == null ||
                   _vm.paise == "" ||
                   _vm.depare == null ||
@@ -3511,9 +3471,7 @@ var render = function() {
                   _vm.residenciae == null ||
                   _vm.residenciae == "" ||
                   _vm.codigoe == null ||
-                  _vm.codigoe == "" ||
-                  _vm.telefonoe == null ||
-                  _vm.telefonoe == ""
+                  _vm.codigoe == ""
               },
               on: { click: _vm.nuevoCliente }
             },

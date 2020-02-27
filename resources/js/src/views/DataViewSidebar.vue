@@ -324,7 +324,6 @@
             class="mt-5 w-full"
             name="telefonof"
           />
-          <span class="text-danger text-sm" v-show="telefonof === ''">Este campo es requerido.</span>
         </div>
         <div class="vx-row">
           <ul class="centerx mt-5">
@@ -380,7 +379,6 @@
             class="mt-5 w-full"
             name="telefonof"
           />
-          <span class="text-danger text-sm" v-show="telefonoe === ''">Este campo es requerido.</span>
         </div>
       </div>
     </vx-card>
@@ -388,12 +386,12 @@
     <div class="flex flex-wrap items-center p-6" slot="footer">
       <vs-button
         @click="submitData"
-        :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || telefonof == null || telefonof == '' || paise == null || paise == '' || depare == null || depare == undefined || callee == null || callee == '' ||  municipioe == null || municipioe == '' || residenciae == null || residenciae == '' || codigoe == null || codigoe == '' || telefonoe == null || telefonoe == ''"
+        :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || paise == null || paise == '' || depare == null || depare == undefined || callee == null || callee == '' ||  municipioe == null || municipioe == '' || residenciae == null || residenciae == '' || codigoe == null || codigoe == ''"
         v-show="checkBox1 == 'false' && nuevo == false"
       >Nuevo Pedido</vs-button>
       <vs-button
         @click="nuevoCliente"
-        :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || telefonof == null || telefonof == '' || paise == null || paise == '' || depare == null || depare == undefined || callee == null || callee == '' ||  municipioe == null || municipioe == '' || residenciae == null || residenciae == '' || codigoe == null || codigoe == '' || telefonoe == null || telefonoe == ''"
+        :disabled="nit == null || nit == '' || name == null || name == '' || phone == null || phone == '' || email == null || email == '' || genre == null || date == null || paisf == null || paisf == '' || deparf == null || deparf == undefined || callef == null || callef == '' ||  municipiof == null || municipiof == '' || residenciaf == null || residenciaf == '' || codigof == null || codigof == '' || paise == null || paise == '' || depare == null || depare == undefined || callee == null || callee == '' ||  municipioe == null || municipioe == '' || residenciae == null || residenciae == '' || codigoe == null || codigoe == ''"
         v-show="nuevo == true && checkBox1 == 'false'"
       >Registrar Cliente</vs-button>
       <vs-button
