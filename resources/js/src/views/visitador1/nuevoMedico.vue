@@ -128,24 +128,46 @@ export default {
         }
       })
         .then(response => {
-          this.name = null;
-          this.email = null;
-          this.password = null;
-          this.confirmPassword = null;
-          this.userName = null;
-          this.bol = null;
-          this.bol1 = null;
-          this.bol2 = null;
-          this.bol3 = null;
-          this.activeLoading = false;
-          this.$vs.loading.close();
-          //this.activado = true;
-          this.$vs.notify({
-            title: "Satisfactorio",
-            text: "Médico creado satisfactoriamente",
-            color: "success"
-          });
-          this.$router.push("/1visitador");
+          axios({
+            method: "post",
+            url: "http://127.0.0.1:8000/api/enviar",
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            },
+            data: JSON.stringify({
+              name: this.name,
+              email: this.email,
+              password: this.password
+            })
+          })
+            .then(response => {
+              this.name = null;
+              this.email = null;
+              this.password = null;
+              this.confirmPassword = null;
+              this.userName = null;
+              this.bol = null;
+              this.bol1 = null;
+              this.bol2 = null;
+              this.bol3 = null;
+              this.activeLoading = false;
+              this.$vs.loading.close();
+              //this.activado = true;
+              this.$vs.notify({
+                title: "Satisfactorio",
+                text: "Médico creado satisfactoriamente",
+                color: "success"
+              });
+              this.$router.push("/1visitador");
+            })
+            .catch(response => {
+              //this.message = "Ya existe un usuario con este email.";
+              this.activeLoading = false;
+              this.$vs.loading.close();
+              //this.activado1 = true;
+              console.log(response);
+            });
         })
         .catch(response => {
           //this.message = "Ya existe un usuario con este email.";

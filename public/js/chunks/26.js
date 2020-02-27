@@ -340,6 +340,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -496,12 +515,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         data: JSON.stringify({
           id: this.id,
           name: this.name,
-          userName: this.userName,
+          userName: "",
           noCollegiate: this.noCollegiate,
           phone: this.phone,
           birthDate: this.birthDate,
           clinicalRecord: this.clinicalRecord,
-          showAlerts: this.showAlerts,
+          //showAlerts: this.showAlerts,
+          showAlerts: 0,
           email: this.email,
           image: this.base64textString
         }),
@@ -957,7 +977,7 @@ var render = function() {
                               },
                               [
                                 _c("img", {
-                                  staticClass: "mr-8 rounded h-24 w-24",
+                                  staticClass: "mr-8 rounded w-24",
                                   attrs: { src: _vm.image }
                                 }),
                                 _vm._v(" "),
@@ -1057,14 +1077,14 @@ var render = function() {
                                     "vs-checkbox",
                                     {
                                       model: {
-                                        value: _vm.alertas,
+                                        value: _vm.registro,
                                         callback: function($$v) {
-                                          _vm.alertas = $$v
+                                          _vm.registro = $$v
                                         },
-                                        expression: "alertas"
+                                        expression: "registro"
                                       }
                                     },
-                                    [_vm._v("Mostrar alertas")]
+                                    [_vm._v("Guardar Registro Clínico")]
                                   )
                                 ],
                                 1
@@ -1197,37 +1217,6 @@ var render = function() {
                               _c("vs-input", {
                                 staticClass: "w-full mt-4",
                                 attrs: {
-                                  label: "Nombre de Usuario",
-                                  name: "userName"
-                                },
-                                model: {
-                                  value: _vm.userName,
-                                  callback: function($$v) {
-                                    _vm.userName = $$v
-                                  },
-                                  expression: "userName"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: _vm.userName === "",
-                                      expression: "userName === ''"
-                                    }
-                                  ],
-                                  staticClass: "text-danger text-sm"
-                                },
-                                [_vm._v(_vm._s(_vm.errors.campo))]
-                              ),
-                              _vm._v(" "),
-                              _c("vs-input", {
-                                staticClass: "w-full mt-4",
-                                attrs: {
                                   label: "No. Colegiado",
                                   name: "noCollegiate"
                                 },
@@ -1241,20 +1230,30 @@ var render = function() {
                               }),
                               _vm._v(" "),
                               _c(
+                                "span",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.noCollegiate === "",
+                                      expression: "noCollegiate === ''"
+                                    }
+                                  ],
+                                  staticClass: "text-danger text-sm"
+                                },
+                                [_vm._v(_vm._s(_vm.errors.campo))]
+                              ),
+                              _vm._v(" "),
+                              _c(
                                 "div",
                                 { staticClass: "mt-4" },
                                 [
-                                  _c("label", { staticClass: "text-sm" }, [
-                                    _vm._v("Fecha de Nacimiento")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("flat-pickr", {
-                                    staticClass: "w-full",
+                                  _c("vs-input", {
+                                    staticClass: "w-full mt-4",
                                     attrs: {
-                                      config: {
-                                        dateFormat: "d F Y",
-                                        maxDate: new Date()
-                                      },
+                                      label: "Fecha de Nacimiento",
+                                      type: "date",
                                       name: "birthDate"
                                     },
                                     model: {
@@ -1290,7 +1289,7 @@ var render = function() {
                                       color: "warning",
                                       disabled:
                                         _vm.name == "" ||
-                                        _vm.userName == "" ||
+                                        _vm.noCollegiate == "" ||
                                         _vm.email === ""
                                     },
                                     on: {
@@ -1314,6 +1313,20 @@ var render = function() {
                               ],
                               1
                             )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "vx-row" }, [
+                          _c("div", { staticClass: "vx-col md:w-1/2 w-full" }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "vx-col md:w-1/2 w-full" }, [
+                            _c("div", { attrs: { align: "right" } }, [
+                              _c("p", [
+                                _vm._v(
+                                  "Recuerde guardar antes de cambiar pestaña."
+                                )
+                              ])
+                            ])
                           ])
                         ])
                       ])
@@ -1403,7 +1416,7 @@ var render = function() {
                                       },
                                       [
                                         _c("img", {
-                                          staticClass: "mr-8 rounded h-24 w-24",
+                                          staticClass: "mr-8 rounded w-24",
                                           attrs: { src: _vm.clinicLogo }
                                         }),
                                         _vm._v(" "),
@@ -1638,6 +1651,20 @@ var render = function() {
                               ],
                               1
                             )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "vx-row" }, [
+                          _c("div", { staticClass: "vx-col md:w-1/2 w-full" }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "vx-col md:w-1/2 w-full" }, [
+                            _c("div", { attrs: { align: "right" } }, [
+                              _c("p", [
+                                _vm._v(
+                                  "Recuerde guardar antes de cambiar pestaña."
+                                )
+                              ])
+                            ])
                           ])
                         ])
                       ])

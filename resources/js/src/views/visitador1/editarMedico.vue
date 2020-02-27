@@ -31,7 +31,7 @@
                 <div class="vx-row">
                   <div class="vx-col w-full">
                     <div class="flex items-start flex-col sm:flex-row">
-                      <img v-bind:src="image" class="mr-8 rounded h-24 w-24" />
+                      <img v-bind:src="image" class="mr-8 rounded w-24" />
                       <!-- <vs-avatar :src="data.avatar" size="80px" class="mr-4" /> -->
                       <div>
                         <p class="text-lg font-medium mb-2 mt-4 sm:mt-0" v-text="name"></p>
@@ -82,7 +82,7 @@
                   <div class="vx-col md:w-1/4 w-full">
                     <ul class="centerx">
                       <li>
-                        <vs-checkbox v-model="alertas">Mostrar alertas</vs-checkbox>
+                        <vs-checkbox v-model="registro">Guardar Registro Clínico</vs-checkbox>
                       </li>
                     </ul>
                   </div>
@@ -126,13 +126,13 @@
                   </div>
 
                   <div class="vx-col md:w-1/2 w-full">
-                    <vs-input
+                    <!-- <vs-input
                       class="w-full mt-4"
                       label="Nombre de Usuario"
                       name="userName"
                       v-model="userName"
                     />
-                    <span class="text-danger text-sm" v-show="userName === ''">{{ errors.campo }}</span>
+                    <span class="text-danger text-sm" v-show="userName === ''">{{ errors.campo }}</span>-->
 
                     <vs-input
                       class="w-full mt-4"
@@ -140,14 +140,17 @@
                       name="noCollegiate"
                       v-model="noCollegiate"
                     />
-
+                    <span
+                      class="text-danger text-sm"
+                      v-show="noCollegiate === ''"
+                    >{{ errors.campo }}</span>
                     <div class="mt-4">
-                      <label class="text-sm">Fecha de Nacimiento</label>
-                      <flat-pickr
-                        v-model="birthDate"
-                        :config="{ dateFormat: 'd F Y', maxDate: new Date() }"
-                        class="w-full"
+                      <vs-input
+                        label="Fecha de Nacimiento"
+                        type="date"
+                        class="w-full mt-4"
                         name="birthDate"
+                        v-model="birthDate"
                       />
                     </div>
                   </div>
@@ -161,7 +164,7 @@
                         class="ml-auto mt-2"
                         color="warning"
                         @click="popupActive2=true"
-                        :disabled="name == '' || userName == '' || email === ''"
+                        :disabled="name == '' || noCollegiate == '' || email === ''"
                       >Guardar Cambios</vs-button>
                       <vs-button
                         class="ml-4 mt-2"
@@ -169,6 +172,14 @@
                         color="danger"
                         @click="getData"
                       >Resetear</vs-button>
+                    </div>
+                  </div>
+                </div>
+                <div class="vx-row">
+                  <div class="vx-col md:w-1/2 w-full"></div>
+                  <div class="vx-col md:w-1/2 w-full">
+                    <div align="right">
+                      <p>Recuerde guardar antes de cambiar pestaña.</p>
                     </div>
                   </div>
                 </div>
@@ -204,7 +215,7 @@
                       <div class="vx-row">
                         <div class="vx-col w-full">
                           <div class="flex items-start flex-col sm:flex-row mt-4">
-                            <img v-bind:src="clinicLogo" class="mr-8 rounded h-24 w-24" />
+                            <img v-bind:src="clinicLogo" class="mr-8 rounded w-24" />
                             <!-- <vs-avatar :src="data.avatar" size="80px" class="mr-4" /> -->
                             <div>
                               <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">Logo Clínica</p>
@@ -303,6 +314,14 @@
                         color="danger"
                         @click="getData"
                       >Resetear</vs-button>
+                    </div>
+                  </div>
+                </div>
+                <div class="vx-row">
+                  <div class="vx-col md:w-1/2 w-full"></div>
+                  <div class="vx-col md:w-1/2 w-full">
+                    <div align="right">
+                      <p>Recuerde guardar antes de cambiar pestaña.</p>
                     </div>
                   </div>
                 </div>
@@ -481,12 +500,13 @@ export default {
         data: JSON.stringify({
           id: this.id,
           name: this.name,
-          userName: this.userName,
+          userName: "",
           noCollegiate: this.noCollegiate,
           phone: this.phone,
           birthDate: this.birthDate,
           clinicalRecord: this.clinicalRecord,
-          showAlerts: this.showAlerts,
+          //showAlerts: this.showAlerts,
+          showAlerts: 0,
           email: this.email,
           image: this.base64textString
         }),
