@@ -240,14 +240,14 @@
         </transition-group>
       </VuePerfectScrollbar>
     </div>
-    <iframe 
+    <!-- <iframe 
     id='efectiva-chat'
     style='position: fixed; right: 20px; bottom: 20px; z-index:3000;'
     frameborder='0'
     scrolling='auto'
     height='450px'
     width='428px'
-    src='https://app.efectiva.merke.app/chats/chat_index.php?aWQ9NjAmYXJlYT0wLDEzMywxMzQmbG49ZXM='></iframe>
+    src='https://app.efectiva.merke.app/chats/chat_index.php?aWQ9NjAmYXJlYT0wLDEzMywxMzQmbG49ZXM='></iframe> -->
   </div>
 </template>
 
