@@ -21,6 +21,12 @@
       <vs-button @click="update2" color="primary" type="filled">Actualizar</vs-button>
       <vs-button @click="popupActive3=false" color="danger" type="filled">Cancelar</vs-button>
     </vs-popup>
+    <vs-popup title="Actualizar Contraseña" :active.sync="popupActive4">
+      <p>¿Está seguro de actualizar tu contraseña?</p>
+      <br />
+      <vs-button @click="update3" color="primary" type="filled">Actualizar</vs-button>
+      <vs-button @click="popupActive4=false" color="danger" type="filled">Cancelar</vs-button>
+    </vs-popup>
     <vx-card>
       <div slot="no-body" class="tabs-container px-6 pt-6">
         <vs-tabs class="tab-action-btn-fill-conatiner">
@@ -129,13 +135,13 @@
                   </div>
 
                   <div class="vx-col md:w-1/2 w-full">
-                    <vs-input
+                    <!-- <vs-input
                       class="w-full mt-4"
                       label="Nombre de Usuario"
                       name="userName"
                       v-model="userName"
                     />
-                    <span class="text-danger text-sm" v-show="userName === ''">{{ errors.campo }}</span>
+                    <span class="text-danger text-sm" v-show="userName === ''">{{ errors.campo }}</span>-->
 
                     <vs-input
                       class="w-full mt-4"
@@ -164,7 +170,7 @@
                         class="ml-auto mt-2"
                         color="warning"
                         @click="popupActive2=true"
-                        :disabled="name == '' || userName == '' || email === ''"
+                        :disabled="name == '' || noCollegiate == '' || email === ''"
                       >Guardar Cambios</vs-button>
                       <vs-button
                         class="ml-4 mt-2"
@@ -321,6 +327,108 @@
               </div>
             </div>
           </vs-tab>
+          <vs-tab label="Cambiar Contraseña" icon-pack="feather" icon="icon-lock">
+            <div class="tab-text">
+              <div id="user-edit-tab-info">
+                <div class="vx-row">
+                  <vs-alert
+                    color="danger"
+                    title="Error"
+                    :active.sync="activado2"
+                    closable
+                    style="width: 70%"
+                    icon-pack="feather"
+                    close-icon="icon-x"
+                  >
+                    Error en el servidor,
+                    por favor intentelo más tarde.
+                  </vs-alert>
+                </div>
+                <br />
+                <div class="vx-row">
+                  <div class="vx-col w-full">
+                    <!-- Col Header -->
+                    <div class="flex items-end">
+                      <feather-icon icon="KeyIcon" class="mr-2" svgClasses="w-5 h-5" />
+                      <span class="leading-none font-medium">Cambiar Contraseña</span>
+                    </div>
+
+                    <!-- Col Content -->
+                    <div>
+                      <!-- DOB -->
+
+                      <vs-input
+                        class="w-full mt-4"
+                        label="Contraseña Actual"
+                        name="mypassword"
+                        type="password"
+                        v-model="mypassword"
+                      />
+                      <span
+                        class="text-danger text-sm"
+                        v-if="mypassword === ''"
+                      >Este campo es requerido</span>
+
+                      <vs-input
+                        class="w-full mt-4"
+                        type="password"
+                        label="Nueva Contraseña"
+                        name="password"
+                        v-model="password"
+                      />
+                      <span
+                        class="text-danger text-sm"
+                        v-if="password === ''"
+                      >Este campo es requerido</span>
+                      <span
+                        class="text-danger text-sm"
+                        v-if="bol1 === false && password !== ''"
+                      >Este campo debe tener al menos 4 caracteres.</span>
+                      <vs-input
+                        class="w-full mt-4"
+                        type="password"
+                        label="Confirmar Nueva Contraseña"
+                        name="confirmPassword"
+                        v-model="confirmPassword"
+                      />
+                      <span
+                        class="text-danger text-sm"
+                        v-if="confirmPassword === ''"
+                      >Este campo es requerido.</span>
+                      <span
+                        class="text-danger text-sm"
+                        v-if="bol2 === false && confirmPassword !== ''"
+                      >Este campo debe tener al menos 4 caracteres.</span>
+                      <span
+                        class="text-danger text-sm"
+                        v-if="bol3 === false && confirmPassword !== '' && bol2 == true"
+                      >La confirmación de contraseña no coincide.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Save & Reset Button -->
+                <div class="vx-row">
+                  <div class="vx-col w-full">
+                    <div class="mt-8 flex flex-wrap items-center justify-end">
+                      <vs-button
+                        class="ml-auto mt-2"
+                        color="warning"
+                        @click="popupActive4=true"
+                        :disabled="mypassword == null || mypassword == '' || password == null || password == '' || confirmPassword == null || confirmPassword == '' || bol1 == false || bol1 == null || bol2 == false || bol2 == null || bol3 == false || bol3 == null || password != confirmPassword"
+                      >Guardar Cambios</vs-button>
+                      <vs-button
+                        class="ml-4 mt-2"
+                        type="border"
+                        color="danger"
+                        @click="getData"
+                      >Resetear</vs-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </vs-tab>
         </vs-tabs>
       </div>
     </vx-card>
@@ -342,6 +450,13 @@ export default {
   },
   data() {
     return {
+      bol1: null,
+      bol2: null,
+      bol3: null,
+      popupActive4: null,
+      mypassword: null,
+      password: null,
+      confirmPassword: null,
       categorias: [],
       rol: null,
       errors: {
@@ -371,6 +486,7 @@ export default {
       base64textString1: null,
       activado: false,
       activado1: false,
+      activado2: false,
       clinicLogo: null,
       popupActive2: false,
       popupActive3: false,
@@ -496,7 +612,7 @@ export default {
         data: JSON.stringify({
           id: this.id,
           name: this.name,
-          userName: this.userName,
+          userName: "",
           noCollegiate: this.noCollegiate,
           phone: this.phone,
           birthDate: this.birthDate,
@@ -511,7 +627,7 @@ export default {
         }
       })
         .then(Response => {
-          localStorage.setItem('regi', this.clinicalRecord);
+          localStorage.setItem("regi", this.clinicalRecord);
           this.getData();
           this.activeLoading = false;
           this.$vs.loading.close();
@@ -605,6 +721,52 @@ export default {
           console.log(err);
         });
     },
+    update3() {
+      this.popupActive4 = false;
+      this.openLoading();
+      let token = localStorage.getItem("tu");
+      axios({
+        method: "post",
+        url: "http://127.0.0.1:8000/api/resetPassword",
+        data: JSON.stringify({
+          mypassword: this.mypassword,
+          password: this.password
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      })
+        .then(Response => {
+          if (Response.data == "Success") {
+            this.getData();
+            this.activeLoading = false;
+            this.$vs.loading.close();
+            this.$vs.notify({
+              title: "Actualizado",
+              text: "Contraseña actualizada exitosamente.",
+              color: "success"
+            });
+          } else {
+            this.mypassword = null;
+            this.password = null;
+            this.confirmPassword = null;
+            this.activeLoading = false;
+            this.$vs.loading.close();
+            this.$vs.notify({
+              title: "Atención",
+              text: "La contraseña no es correcta.",
+              color: "danger"
+            });
+          }
+        })
+        .catch(err => {
+          this.activeLoading = false;
+          this.$vs.loading.close();
+          this.activado2 = true;
+          console.log(err);
+        });
+    },
     openLoading() {
       this.activeLoading = true;
       this.$vs.loading({
@@ -634,6 +796,9 @@ export default {
             })
               .then(Response => {
                 this.getCategories1();
+                this.mypassword = null;
+                this.password = null;
+                this.confirmPassword = null;
                 this.name = Response.data[0].name;
                 this.userName = Response.data[0].userName;
                 if (Response.data[0].clinicalRecord == 0) {
@@ -745,6 +910,28 @@ export default {
           this.activeLoading = false;
           this.$vs.loading.close();
         });
+    }
+  },
+  watch: {
+    password: function(val, oldVal) {
+      if (val.length < 4) {
+        this.bol1 = false;
+      } else {
+        this.bol1 = true;
+      }
+    },
+    confirmPassword: function(val, oldVal) {
+      if (val.length < 4) {
+        this.bol2 = false;
+      } else {
+        this.bol2 = true;
+      }
+
+      if (val == this.password) {
+        this.bol3 = true;
+      } else {
+        this.bol3 = false;
+      }
     }
   },
   created() {

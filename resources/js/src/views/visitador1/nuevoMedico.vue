@@ -15,7 +15,7 @@
       </div>
       <div class="vx-row">
         <div class="vx-col sm:w-1/2 w-full mb-2">
-          <vs-input class="w-full" label-placeholder="No. Colegiado" v-model="noCollegiate" />
+          <vs-input class="w-full" type="number" label-placeholder="No. Colegiado" v-model="noCollegiate" />
           <span class="text-danger text-sm" v-if="noCollegiate === ''">{{ errors.noCollegiate }}</span>
         </div>
         <div class="vx-col sm:w-1/2 w-full mb-2">
@@ -56,7 +56,7 @@
           <vs-button
             class="float-right mt-6"
             @click="registrar"
-            :disabled="name == null || name == '' || noCollegiate == null || noCollegiate == '' || email == '' || email == null || bol == false || bol == null || password == null || password == '' || bol1 == false || bol1 == null || confirmPassword == '' || confirmPassword == null || bol2 == false || bol2 == null || bol3 == false || bol3 == null"
+            :disabled="password != confirmPassword || name == null || name == '' || noCollegiate == null || noCollegiate == '' || email == '' || email == null || bol == false || bol == null || password == null || password == '' || bol1 == false || bol1 == null || confirmPassword == '' || confirmPassword == null || bol2 == false || bol2 == null || bol3 == false || bol3 == null"
           >Registrar</vs-button>
           <vs-button color="danger" type="border" class="mb-2 mt-5">Cancelar</vs-button>
         </div>

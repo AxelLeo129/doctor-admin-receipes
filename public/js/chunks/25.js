@@ -352,6 +352,114 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -367,6 +475,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      bol1: null,
+      bol2: null,
+      bol3: null,
+      popupActive4: null,
+      mypassword: null,
+      password: null,
+      confirmPassword: null,
       categorias: [],
       rol: null,
       errors: {
@@ -389,7 +504,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       clinicPhone: null,
       clinicAddress: null,
       specialties: []
-    }, _defineProperty(_ref, "email", null), _defineProperty(_ref, "clinicalRecord", null), _defineProperty(_ref, "showAlerts", null), _defineProperty(_ref, "base64textString", null), _defineProperty(_ref, "base64textString1", null), _defineProperty(_ref, "activado", false), _defineProperty(_ref, "activado1", false), _defineProperty(_ref, "clinicLogo", null), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "popupActive3", false), _defineProperty(_ref, "category1", []), _defineProperty(_ref, "categories", []), _ref;
+    }, _defineProperty(_ref, "email", null), _defineProperty(_ref, "clinicalRecord", null), _defineProperty(_ref, "showAlerts", null), _defineProperty(_ref, "base64textString", null), _defineProperty(_ref, "base64textString1", null), _defineProperty(_ref, "activado", false), _defineProperty(_ref, "activado1", false), _defineProperty(_ref, "activado2", false), _defineProperty(_ref, "clinicLogo", null), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "popupActive3", false), _defineProperty(_ref, "category1", []), _defineProperty(_ref, "categories", []), _ref;
   },
   methods: {
     getRol: function getRol() {
@@ -511,7 +626,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         data: JSON.stringify({
           id: this.id,
           name: this.name,
-          userName: this.userName,
+          userName: "",
           noCollegiate: this.noCollegiate,
           phone: this.phone,
           birthDate: this.birthDate,
@@ -525,7 +640,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        localStorage.setItem('regi', _this3.clinicalRecord);
+        localStorage.setItem("regi", _this3.clinicalRecord);
 
         _this3.getData();
 
@@ -628,6 +743,59 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         console.log(err);
       });
     },
+    update3: function update3() {
+      var _this5 = this;
+
+      this.popupActive4 = false;
+      this.openLoading();
+      var token = localStorage.getItem("tu");
+      axios__WEBPACK_IMPORTED_MODULE_5___default()({
+        method: "post",
+        url: "http://127.0.0.1:8000/api/resetPassword",
+        data: JSON.stringify({
+          mypassword: this.mypassword,
+          password: this.password
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        if (Response.data == "Success") {
+          _this5.getData();
+
+          _this5.activeLoading = false;
+
+          _this5.$vs.loading.close();
+
+          _this5.$vs.notify({
+            title: "Actualizado",
+            text: "Contraseña actualizada exitosamente.",
+            color: "success"
+          });
+        } else {
+          _this5.mypassword = null;
+          _this5.password = null;
+          _this5.confirmPassword = null;
+          _this5.activeLoading = false;
+
+          _this5.$vs.loading.close();
+
+          _this5.$vs.notify({
+            title: "Atención",
+            text: "La contraseña no es correcta.",
+            color: "danger"
+          });
+        }
+      }).catch(function (err) {
+        _this5.activeLoading = false;
+
+        _this5.$vs.loading.close();
+
+        _this5.activado2 = true;
+        console.log(err);
+      });
+    },
     openLoading: function openLoading() {
       this.activeLoading = true;
       this.$vs.loading({
@@ -635,7 +803,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     getData: function getData() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -650,131 +818,156 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (Response.data.length == 0) {
           axios__WEBPACK_IMPORTED_MODULE_5___default()({
             method: "get",
-            url: "http://127.0.0.1:8000/api/getUser2/" + _this5.id,
+            url: "http://127.0.0.1:8000/api/getUser2/" + _this6.id,
             headers: {
               authorization: "Bearer " + token,
               "content-type": "application/json"
             }
           }).then(function (Response) {
-            _this5.getCategories1();
+            _this6.getCategories1();
 
-            _this5.name = Response.data[0].name;
-            _this5.userName = Response.data[0].userName;
+            _this6.mypassword = null;
+            _this6.password = null;
+            _this6.confirmPassword = null;
+            _this6.name = Response.data[0].name;
+            _this6.userName = Response.data[0].userName;
 
             if (Response.data[0].clinicalRecord == 0) {
-              _this5.registro = false;
+              _this6.registro = false;
             } else {
-              _this5.registro = true;
+              _this6.registro = true;
             }
 
-            _this5.phone = Response.data[0].phone;
+            _this6.phone = Response.data[0].phone;
 
             if (Response.data[0].showAlerts == 0) {
-              _this5.alertas = false;
+              _this6.alertas = false;
             } else {
-              _this5.alertas = true;
+              _this6.alertas = true;
             }
 
             if (Response.data[0].image == null || Response.data[0].image == "") {
-              _this5.image = "/images/medicamentos/avatar.jpeg";
+              _this6.image = "/images/medicamentos/avatar.jpeg";
             } else {
-              _this5.image = "data:image/png;base64," + Response.data[0].image;
-              _this5.base64textString = Response.data[0].image;
+              _this6.image = "data:image/png;base64," + Response.data[0].image;
+              _this6.base64textString = Response.data[0].image;
             }
 
-            _this5.email = Response.data[0].email;
+            _this6.email = Response.data[0].email;
 
             if (Response.data[0].clinicLogo == null || Response.data[0].clinicLogo == "") {
-              _this5.clinicLogo = "/images/medicamentos/demol.PNG";
+              _this6.clinicLogo = "/images/medicamentos/demol.PNG";
             } else {
-              _this5.clinicLogo = "data:image/png;base64," + Response.data[0].clinicLogo;
-              _this5.base64textString1 = Response.data[0].clinicLogo;
+              _this6.clinicLogo = "data:image/png;base64," + Response.data[0].clinicLogo;
+              _this6.base64textString1 = Response.data[0].clinicLogo;
             }
 
-            _this5.clinicName = Response.data[0].clinicName;
-            _this5.clinicPhone = Response.data[0].clinicPhone;
-            _this5.clinicAddress = Response.data[0].clinicAddress;
-            _this5.specialties = Response.data[0].specialties;
-            _this5.noCollegiate = Response.data[0].noCollegiate;
+            _this6.clinicName = Response.data[0].clinicName;
+            _this6.clinicPhone = Response.data[0].clinicPhone;
+            _this6.clinicAddress = Response.data[0].clinicAddress;
+            _this6.specialties = Response.data[0].specialties;
+            _this6.noCollegiate = Response.data[0].noCollegiate;
 
             if (Response.data[0].birthDate == "") {
-              _this5.birthDate = null;
+              _this6.birthDate = null;
             } else {
-              _this5.birthDate = Response.data[0].birthDate;
+              _this6.birthDate = Response.data[0].birthDate;
             }
 
-            _this5.activeLoading = false;
+            _this6.activeLoading = false;
 
-            _this5.$vs.loading.close();
+            _this6.$vs.loading.close();
           }).catch(function (err) {
             console.log(err);
           });
         } else {
-          _this5.category1 = Response.data[0].categories.split(",");
+          _this6.category1 = Response.data[0].categories.split(",");
 
-          _this5.category1.forEach(function (element) {
+          _this6.category1.forEach(function (element) {
             element = parseInt(element);
 
-            _this5.categories.push(element);
+            _this6.categories.push(element);
           });
 
-          _this5.getCategories();
+          _this6.getCategories();
 
-          _this5.name = Response.data[0].name;
-          _this5.userName = Response.data[0].userName;
+          _this6.name = Response.data[0].name;
+          _this6.userName = Response.data[0].userName;
 
           if (Response.data[0].clinicalRecord == 0) {
-            _this5.registro = false;
+            _this6.registro = false;
           } else {
-            _this5.registro = true;
+            _this6.registro = true;
           }
 
-          _this5.phone = Response.data[0].phone;
+          _this6.phone = Response.data[0].phone;
 
           if (Response.data[0].showAlerts == 0) {
-            _this5.alertas = false;
+            _this6.alertas = false;
           } else {
-            _this5.alertas = true;
+            _this6.alertas = true;
           }
 
           if (Response.data[0].image == null || Response.data[0].image == "") {
-            _this5.image = "/images/medicamentos/avatar.jpeg";
+            _this6.image = "/images/medicamentos/avatar.jpeg";
           } else {
-            _this5.image = "data:image/png;base64," + Response.data[0].image;
-            _this5.base64textString = Response.data[0].image;
+            _this6.image = "data:image/png;base64," + Response.data[0].image;
+            _this6.base64textString = Response.data[0].image;
           }
 
-          _this5.email = Response.data[0].email;
+          _this6.email = Response.data[0].email;
 
           if (Response.data[0].clinicLogo == null || Response.data[0].clinicLogo == "") {
-            _this5.clinicLogo = "/images/medicamentos/demol.PNG";
+            _this6.clinicLogo = "/images/medicamentos/demol.PNG";
           } else {
-            _this5.clinicLogo = "data:image/png;base64," + Response.data[0].clinicLogo;
-            _this5.base64textString1 = Response.data[0].clinicLogo;
+            _this6.clinicLogo = "data:image/png;base64," + Response.data[0].clinicLogo;
+            _this6.base64textString1 = Response.data[0].clinicLogo;
           }
 
-          _this5.clinicName = Response.data[0].clinicName;
-          _this5.clinicPhone = Response.data[0].clinicPhone;
-          _this5.clinicAddress = Response.data[0].clinicAddress;
-          _this5.specialties = Response.data[0].specialties;
-          _this5.noCollegiate = Response.data[0].noCollegiate;
+          _this6.clinicName = Response.data[0].clinicName;
+          _this6.clinicPhone = Response.data[0].clinicPhone;
+          _this6.clinicAddress = Response.data[0].clinicAddress;
+          _this6.specialties = Response.data[0].specialties;
+          _this6.noCollegiate = Response.data[0].noCollegiate;
 
           if (Response.data[0].birthDate == "") {
-            _this5.birthDate = null;
+            _this6.birthDate = null;
           } else {
-            _this5.birthDate = Response.data[0].birthDate;
+            _this6.birthDate = Response.data[0].birthDate;
           }
 
-          _this5.activeLoading = false;
+          _this6.activeLoading = false;
 
-          _this5.$vs.loading.close();
+          _this6.$vs.loading.close();
         }
       }).catch(function (err) {
         console.log(err);
-        _this5.activeLoading = false;
+        _this6.activeLoading = false;
 
-        _this5.$vs.loading.close();
+        _this6.$vs.loading.close();
       });
+    }
+  },
+  watch: {
+    password: function password(val, oldVal) {
+      if (val.length < 4) {
+        this.bol1 = false;
+      } else {
+        this.bol1 = true;
+      }
+    },
+    confirmPassword: function confirmPassword(val, oldVal) {
+      if (val.length < 4) {
+        this.bol2 = false;
+      } else {
+        this.bol2 = true;
+      }
+
+      if (val == this.password) {
+        this.bol3 = true;
+      } else {
+        this.bol3 = false;
+      }
     }
   },
   created: function created() {
@@ -931,6 +1124,46 @@ var render = function() {
               on: {
                 click: function($event) {
                   _vm.popupActive3 = false
+                }
+              }
+            },
+            [_vm._v("Cancelar")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          attrs: { title: "Actualizar Contraseña", active: _vm.popupActive4 },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActive4 = $event
+            }
+          }
+        },
+        [
+          _c("p", [_vm._v("¿Está seguro de actualizar tu contraseña?")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              attrs: { color: "primary", type: "filled" },
+              on: { click: _vm.update3 }
+            },
+            [_vm._v("Actualizar")]
+          ),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              attrs: { color: "danger", type: "filled" },
+              on: {
+                click: function($event) {
+                  _vm.popupActive4 = false
                 }
               }
             },
@@ -1215,37 +1448,6 @@ var render = function() {
                               _c("vs-input", {
                                 staticClass: "w-full mt-4",
                                 attrs: {
-                                  label: "Nombre de Usuario",
-                                  name: "userName"
-                                },
-                                model: {
-                                  value: _vm.userName,
-                                  callback: function($$v) {
-                                    _vm.userName = $$v
-                                  },
-                                  expression: "userName"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: _vm.userName === "",
-                                      expression: "userName === ''"
-                                    }
-                                  ],
-                                  staticClass: "text-danger text-sm"
-                                },
-                                [_vm._v(_vm._s(_vm.errors.campo))]
-                              ),
-                              _vm._v(" "),
-                              _c("vs-input", {
-                                staticClass: "w-full mt-4",
-                                attrs: {
                                   label: "No. Colegiado",
                                   name: "noCollegiate"
                                 },
@@ -1308,7 +1510,7 @@ var render = function() {
                                       color: "warning",
                                       disabled:
                                         _vm.name == "" ||
-                                        _vm.userName == "" ||
+                                        _vm.noCollegiate == "" ||
                                         _vm.email === ""
                                     },
                                     on: {
@@ -1642,6 +1844,251 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         _vm.popupActive3 = true
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Guardar Cambios")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-button",
+                                  {
+                                    staticClass: "ml-4 mt-2",
+                                    attrs: { type: "border", color: "danger" },
+                                    on: { click: _vm.getData }
+                                  },
+                                  [_vm._v("Resetear")]
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        ])
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "vs-tab",
+                  {
+                    attrs: {
+                      label: "Cambiar Contraseña",
+                      "icon-pack": "feather",
+                      icon: "icon-lock"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "tab-text" }, [
+                      _c("div", { attrs: { id: "user-edit-tab-info" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "vx-row" },
+                          [
+                            _c(
+                              "vs-alert",
+                              {
+                                staticStyle: { width: "70%" },
+                                attrs: {
+                                  color: "danger",
+                                  title: "Error",
+                                  active: _vm.activado2,
+                                  closable: "",
+                                  "icon-pack": "feather",
+                                  "close-icon": "icon-x"
+                                },
+                                on: {
+                                  "update:active": function($event) {
+                                    _vm.activado2 = $event
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  Error en el servidor,\n                  por favor intentelo más tarde.\n                "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "vx-row" }, [
+                          _c("div", { staticClass: "vx-col w-full" }, [
+                            _c(
+                              "div",
+                              { staticClass: "flex items-end" },
+                              [
+                                _c("feather-icon", {
+                                  staticClass: "mr-2",
+                                  attrs: {
+                                    icon: "KeyIcon",
+                                    svgClasses: "w-5 h-5"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  { staticClass: "leading-none font-medium" },
+                                  [_vm._v("Cambiar Contraseña")]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              [
+                                _c("vs-input", {
+                                  staticClass: "w-full mt-4",
+                                  attrs: {
+                                    label: "Contraseña Actual",
+                                    name: "mypassword",
+                                    type: "password"
+                                  },
+                                  model: {
+                                    value: _vm.mypassword,
+                                    callback: function($$v) {
+                                      _vm.mypassword = $$v
+                                    },
+                                    expression: "mypassword"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.mypassword === ""
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "text-danger text-sm" },
+                                      [_vm._v("Este campo es requerido")]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("vs-input", {
+                                  staticClass: "w-full mt-4",
+                                  attrs: {
+                                    type: "password",
+                                    label: "Nueva Contraseña",
+                                    name: "password"
+                                  },
+                                  model: {
+                                    value: _vm.password,
+                                    callback: function($$v) {
+                                      _vm.password = $$v
+                                    },
+                                    expression: "password"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.password === ""
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "text-danger text-sm" },
+                                      [_vm._v("Este campo es requerido")]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.bol1 === false && _vm.password !== ""
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "text-danger text-sm" },
+                                      [
+                                        _vm._v(
+                                          "Este campo debe tener al menos 4 caracteres."
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("vs-input", {
+                                  staticClass: "w-full mt-4",
+                                  attrs: {
+                                    type: "password",
+                                    label: "Confirmar Nueva Contraseña",
+                                    name: "confirmPassword"
+                                  },
+                                  model: {
+                                    value: _vm.confirmPassword,
+                                    callback: function($$v) {
+                                      _vm.confirmPassword = $$v
+                                    },
+                                    expression: "confirmPassword"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.confirmPassword === ""
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "text-danger text-sm" },
+                                      [_vm._v("Este campo es requerido.")]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.bol2 === false && _vm.confirmPassword !== ""
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "text-danger text-sm" },
+                                      [
+                                        _vm._v(
+                                          "Este campo debe tener al menos 4 caracteres."
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.bol3 === false &&
+                                _vm.confirmPassword !== "" &&
+                                _vm.bol2 == true
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "text-danger text-sm" },
+                                      [
+                                        _vm._v(
+                                          "La confirmación de contraseña no coincide."
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ],
+                              1
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "vx-row" }, [
+                          _c("div", { staticClass: "vx-col w-full" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "mt-8 flex flex-wrap items-center justify-end"
+                              },
+                              [
+                                _c(
+                                  "vs-button",
+                                  {
+                                    staticClass: "ml-auto mt-2",
+                                    attrs: {
+                                      color: "warning",
+                                      disabled:
+                                        _vm.mypassword == null ||
+                                        _vm.mypassword == "" ||
+                                        _vm.password == null ||
+                                        _vm.password == "" ||
+                                        _vm.confirmPassword == null ||
+                                        _vm.confirmPassword == "" ||
+                                        _vm.bol1 == false ||
+                                        _vm.bol1 == null ||
+                                        _vm.bol2 == false ||
+                                        _vm.bol2 == null ||
+                                        _vm.bol3 == false ||
+                                        _vm.bol3 == null ||
+                                        _vm.password != _vm.confirmPassword
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.popupActive4 = true
                                       }
                                     }
                                   },

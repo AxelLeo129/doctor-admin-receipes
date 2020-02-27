@@ -51,7 +51,7 @@ class UserController extends Controller
         if(Hash::check($request->mypassword, Auth::user()->password)){
             $user = new User();
             $user->where('email', '=', Auth::user()->email)->update(['password' => bcrypt($request->password)]);
-            return "";
+            return "Success";
         }else{
             return "Unauthorized";
         }
