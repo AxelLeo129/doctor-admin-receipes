@@ -219,6 +219,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -311,7 +312,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.$vs.notify({
             title: "En proceso",
-            text: "La receta del cliente ahora está en proceso de envío.",
+            text: "El pedido del cliente ahora está en proceso de envío.",
             color: "success"
           });
         }).catch(function (err) {
@@ -790,7 +791,7 @@ var render = function() {
           staticClass: "holamundo",
           attrs: {
             fullscreen: "",
-            title: "Ver información de la receta",
+            title: "Ver información del Pedido\n    ",
             active: _vm.popupActive
           },
           on: {
@@ -800,7 +801,7 @@ var render = function() {
           }
         },
         [
-          _c("p", [_vm._v("Medicamentos recetados:")]),
+          _c("p", [_vm._v("Medicamentos Pedidos:")]),
           _c("br"),
           _vm._v(" "),
           _c(

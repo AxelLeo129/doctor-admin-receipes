@@ -93,8 +93,9 @@
             </template>
         </vs-table>
         <!--PopUp para ver la receta que tiene el cliente-->
-        <vs-popup class="holamundo" fullscreen  title="Ver información de la receta" :active.sync="popupActive">
-            <p>Medicamentos recetados:</p><br>
+        <vs-popup class="holamundo" fullscreen  title="Ver información del Pedido
+        " :active.sync="popupActive">
+            <p>Medicamentos Pedidos:</p><br>
             <vs-table v-model="selected" max-items="10" :data="recipie">
 
                 <template slot="thead">
@@ -297,7 +298,7 @@
                         this.getusers();
                         this.$vs.notify({
                             title: "En proceso",
-                            text: "La receta del cliente ahora está en proceso de envío.",
+                            text: "El pedido del cliente ahora está en proceso de envío.",
                             color: "success"
                         });
                         })
