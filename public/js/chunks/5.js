@@ -6898,13 +6898,15 @@ __webpack_require__.r(__webpack_exports__);
   slug: "listadoRecetas",
   icon: "ListIcon",
   rol: 2
-}, {
+},
+/*{
   url: "/listadoPacientes",
   name: "Listado Diagnósticos",
   slug: "listadoPacientes",
   icon: "ListIcon",
   rol: 2
-}, //Admin
+},*/
+//Admin
 {
   url: "/consola",
   name: "Consola",

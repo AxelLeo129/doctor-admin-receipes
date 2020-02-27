@@ -55,7 +55,7 @@
           ></statistics-card-line>
         </a>
       </div> -->
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <div v-if="check == 1" class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
         <a href="/listadoPacientes">
           <statistics-card-line
             icon="ListIcon"
@@ -139,6 +139,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      check: null,
       checkpointReward: {},
       subscribersGained: {},
       ordersRecevied: {},
@@ -191,6 +192,7 @@ export default {
     VxTimeline
   },
   created() {
+    this.check = localStorage.getItem('regi');
     this.getRecipes();
   }
 };

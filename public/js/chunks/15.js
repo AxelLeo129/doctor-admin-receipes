@@ -156,6 +156,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      check: null,
       checkpointReward: {},
       subscribersGained: {},
       ordersRecevied: {},
@@ -208,6 +209,7 @@ __webpack_require__.r(__webpack_exports__);
     VxTimeline: _components_timeline_VxTimeline__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   created: function created() {
+    this.check = localStorage.getItem('regi');
     this.getRecipes();
   }
 });
@@ -347,31 +349,33 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base"
-        },
-        [
-          _c(
-            "a",
-            { attrs: { href: "/listadoPacientes" } },
+      _vm.check == 1
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base"
+            },
             [
-              _c("statistics-card-line", {
-                attrs: {
-                  icon: "ListIcon",
-                  statistic: "Diagnósticos",
-                  statisticTitle: "Busqueda de Diagnósticos",
-                  chartData: _vm.subscribersGained.series,
-                  type: "area"
-                }
-              })
-            ],
-            1
+              _c(
+                "a",
+                { attrs: { href: "/listadoPacientes" } },
+                [
+                  _c("statistics-card-line", {
+                    attrs: {
+                      icon: "ListIcon",
+                      statistic: "Diagnósticos",
+                      statisticTitle: "Busqueda de Diagnósticos",
+                      chartData: _vm.subscribersGained.series,
+                      type: "area"
+                    }
+                  })
+                ],
+                1
+              )
+            ]
           )
-        ]
-      )
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "vx-row" }, [
