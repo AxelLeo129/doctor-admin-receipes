@@ -456,7 +456,7 @@ var render = function() {
         _c("div", { staticClass: "vx-row leading-loose p-base" }, [
           _c("div", { staticClass: "vx-col w-full md:w-1/2 mt-base" }, [
             _c("img", {
-              staticClass: "mr-8 rounded h-48 w-48",
+              staticClass: "mr-8 rounded h-24",
               attrs: { src: _vm.image }
             })
           ]),

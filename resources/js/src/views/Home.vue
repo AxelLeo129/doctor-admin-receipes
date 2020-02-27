@@ -59,8 +59,8 @@
         <a href="/listadoPacientes">
           <statistics-card-line
             icon="ListIcon"
-            statistic="Pacientes"
-            statisticTitle="Busqueda de Pacientes"
+            statistic="Diagnósticos"
+            statisticTitle="Busqueda de Diagnósticos"
             :chartData="subscribersGained.series"
             type="area"
           ></statistics-card-line>

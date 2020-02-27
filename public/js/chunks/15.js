@@ -361,8 +361,8 @@ var render = function() {
               _c("statistics-card-line", {
                 attrs: {
                   icon: "ListIcon",
-                  statistic: "Pacientes",
-                  statisticTitle: "Busqueda de Pacientes",
+                  statistic: "Diagnósticos",
+                  statisticTitle: "Busqueda de Diagnósticos",
                   chartData: _vm.subscribersGained.series,
                   type: "area"
                 }

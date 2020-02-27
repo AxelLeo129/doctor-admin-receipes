@@ -14,7 +14,7 @@
     <!-- <form-wizard-number-tab></form-wizard-number-tab>
     <form-wizard-icon-tab></form-wizard-icon-tab>-->
     <form-wizard-validation></form-wizard-validation>
-    <iframe
+    <!-- <iframe
       id="efectiva-chat"
       style="position: fixed; right: 2px; bottom: 2px; z-index:3000;"
       frameborder="0"
@@ -22,7 +22,7 @@
       height="450px"
       width="428px"
       src="https://app.efectiva.merke.app/chats/chat_index.php?aWQ9NjAmYXJlYT0wLDEzOSZsbj1lcyZwbGFuPTEz"
-    ></iframe>
+    ></iframe> -->
   </div>
 </template>
 

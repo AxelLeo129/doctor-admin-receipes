@@ -6887,6 +6887,12 @@ __webpack_require__.r(__webpack_exports__);
   icon: "HomeIcon",
   rol: 2
 }, {
+  url: "/nuevoPaciente",
+  name: "Nueva Receta",
+  slug: "nuevoPaciente",
+  icon: "PlusIcon",
+  rol: 2
+}, {
   url: "/listadoRecetas",
   name: "Listado Recetas",
   slug: "listadoRecetas",
@@ -6894,7 +6900,7 @@ __webpack_require__.r(__webpack_exports__);
   rol: 2
 }, {
   url: "/listadoPacientes",
-  name: "Listado Pacientes",
+  name: "Listado Diagnósticos",
   slug: "listadoPacientes",
   icon: "ListIcon",
   rol: 2

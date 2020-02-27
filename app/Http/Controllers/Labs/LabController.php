@@ -15,7 +15,7 @@ class LabController extends Controller
      */
     public function index()
     {
-        return Lab::all();
+        return Lab::orderBy('name', 'ASC')->get();
     }
 
     /**

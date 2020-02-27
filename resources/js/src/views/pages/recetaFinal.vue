@@ -41,7 +41,7 @@
       <!-- INVOICE METADATA -->
       <div class="vx-row leading-loose p-base">
         <div class="vx-col w-full md:w-1/2 mt-base">
-          <img v-bind:src="image" class="mr-8 rounded h-48 w-48" />
+          <img v-bind:src="image" class="mr-8 rounded h-24" />
         </div>
         <div class="vx-col w-full md:w-1/2 text-right">
           <h1>Receta</h1>
@@ -109,14 +109,14 @@
         </div>
       </div>
     </vx-card>
-    <iframe 
+    <!-- <iframe 
     id='efectiva-chat'
     style='position: fixed; right: 2px; bottom: 2px; z-index:3000;'
     frameborder='0'
     scrolling='auto'
     height='450px'
     width='428px'
-    src='https://app.efectiva.merke.app/chats/chat_index.php?aWQ9NjAmYXJlYT0wLDEzOSZsbj1lcyZwbGFuPTEz'></iframe>
+    src='https://app.efectiva.merke.app/chats/chat_index.php?aWQ9NjAmYXJlYT0wLDEzOSZsbj1lcyZwbGFuPTEz'></iframe> -->
   </div>
 </template>
 

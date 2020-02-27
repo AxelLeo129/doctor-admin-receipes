@@ -18,6 +18,13 @@ export default [
     rol: 2
   },
   {
+    url: "/nuevoPaciente",
+    name: "Nueva Receta",
+    slug: "nuevoPaciente",
+    icon: "PlusIcon",
+    rol: 2
+  },
+  {
     url: "/listadoRecetas",
     name: "Listado Recetas",
     slug: "listadoRecetas",
@@ -26,7 +33,7 @@ export default [
   },
   {
     url: "/listadoPacientes",
-    name: "Listado Pacientes",
+    name: "Listado Diagnósticos",
     slug: "listadoPacientes",
     icon: "ListIcon",
     rol: 2
