@@ -282,7 +282,10 @@ var render = function() {
                         [
                           _c(
                             "div",
-                            { staticClass: "p-8 login-tabs-container" },
+                            {
+                              staticClass: "px-8 pt-8 login-tabs-container",
+                              staticStyle: { padding: "4rem" }
+                            },
                             [
                               _c(
                                 "div",
@@ -372,39 +375,10 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "flex flex-wrap justify-between my-5"
-                                      },
-                                      [
-                                        _c(
-                                          "vs-checkbox",
-                                          {
-                                            staticClass: "mb-3",
-                                            model: {
-                                              value: _vm.checkbox_remember_me,
-                                              callback: function($$v) {
-                                                _vm.checkbox_remember_me = $$v
-                                              },
-                                              expression: "checkbox_remember_me"
-                                            }
-                                          },
-                                          [_vm._v("Recordarme")]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "vs-button",
-                                      {
-                                        attrs: { type: "border" },
-                                        on: { click: _vm.registro }
-                                      },
-                                      [_vm._v("Registro")]
-                                    ),
+                                    _c("div", {
+                                      staticClass:
+                                        "flex flex-wrap justify-between my-5"
+                                    }),
                                     _vm._v(" "),
                                     _c(
                                       "vs-button",

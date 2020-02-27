@@ -23,7 +23,7 @@
               </div>
 
               <div class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg">
-                <div class="p-8 login-tabs-container">
+                <div class="px-8 pt-8 login-tabs-container" style="padding: 4rem;">
                   <div class="vx-card__title mb-4">
                     <h4 class="mb-4">Ingresar</h4>
                     <p>Bienvenido de nuevo, inicie sesión en su cuenta.</p>
@@ -61,10 +61,10 @@
                       />
 
                       <div class="flex flex-wrap justify-between my-5">
-                        <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Recordarme</vs-checkbox>
+                        <!-- <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Recordarme</vs-checkbox> -->
                         <!-- <router-link to>¿Olvidó su Contraseña?</router-link> -->
                       </div>
-                      <vs-button type="border" @click="registro">Registro</vs-button>
+                      <!-- <vs-button type="border" @click="registro">Registro</vs-button> -->
                       <vs-button class="float-right" @click="doLogin()">Ingresar</vs-button>
                     </form>
                   </div>

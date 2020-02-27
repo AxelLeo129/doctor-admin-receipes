@@ -77,9 +77,9 @@ export default {
         email: "Este campo es requerido.",
         email1: "Ingrese un email válido.",
         password: "Este campo es requerido.",
-        password1: "Este campo debe tener al menos 8 caracteres.",
+        password1: "Este campo debe tener al menos 4 caracteres.",
         c_password: "Este campo es requerido.",
-        c_password1: "Este campo debe tener al menos 8 caracteres.",
+        c_password1: "Este campo debe tener al menos 4 caracteres.",
         c_password2: "La confirmación de contraseña no coincide."
       },
       bol: null,
@@ -162,14 +162,14 @@ export default {
       this.bol = re.test(String(val).toLowerCase());
     },
     password: function(val, oldVal) {
-      if (val.length < 8) {
+      if (val.length < 4) {
         this.bol1 = false;
       } else {
         this.bol1 = true;
       }
     },
     confirmPassword: function(val, oldVal) {
-      if (val.length < 8) {
+      if (val.length < 4) {
         this.bol2 = false;
       } else {
         this.bol2 = true;

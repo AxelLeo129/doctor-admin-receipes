@@ -94,14 +94,14 @@
         </vx-card>
       </div>
     </div>
-    <iframe 
+    <!-- <iframe 
     id='efectiva-chat'
     style='position: fixed; right: 2px; bottom: 2px; z-index:3000;'
     frameborder='0'
     scrolling='auto'
     height='450px'
     width='428px'
-    src='https://app.efectiva.merke.app/chats/chat_index.php?aWQ9NjAmYXJlYT0wLDEzOSZsbj1lcyZwbGFuPTEz'></iframe>
+    src='https://app.efectiva.merke.app/chats/chat_index.php?aWQ9NjAmYXJlYT0wLDEzOSZsbj1lcyZwbGFuPTEz'></iframe> -->
   </div>
 </template>
 
