@@ -10,108 +10,118 @@
 <template>
   <div>
     <div align="center" v-if="registro == 1">
-        <ul class="timeline mt-5" id="timeline">
-          <li class="li complete">
-            <div class="status">
-              <h4 class="mt-5">Paso 1</h4>
-            </div>
-          </li>
-          <li class="li complete">
-            <div class="status">
-              <h4 class="mt-5">Paso 2</h4>
-            </div>
-          </li>
-          <li class="li complete">
-            <div class="status">
-              <h4 class="mt-5">Paso 3</h4>
-            </div>
-          </li>
-          <li class="li">
-            <div class="status">
-              <h4 class="mt-5">Paso 4</h4>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div align="center" v-else>
-        <ul class="timeline mt-5" id="timeline">
-          <li class="li complete">
-            <div class="status">
-              <h4 class="mt-5">Paso 1</h4>
-            </div>
-          </li>
-          <li class="li complete">
-            <div class="status">
-              <h4 class="mt-5">Paso 2</h4>
-            </div>
-          </li>
-          <li class="li complete">
-            <div class="status">
-              <h4 class="mt-5">Paso 3</h4>
-            </div>
-          </li>
-        </ul>
-      </div>
-          <!-- IF CART HAVE ITEMS -->
-          <div class="vx-row">
-            <!-- LEFT COL -->
-            <div class="vx-col lg:w-2/3 w-full relative">
-              <div class="items-list-view">
-                <vx-card
-                  v-for="(item, index) in nuevaRecetaData.medicamentos"
-                  :key="item.id"
-                  style="height: 14rem;"
-                  class="mt-5"
-                >
-                  <div class="vx-row">
-                    <div class="vx-col md:w-1/2 w-full">
-                      <img class="h-48 w-48" :src="'data:image/png;base64,' + item.img" alt="image" />
-                    </div>
-                    <div class="vx-col md:w-1/2 w-full">
-                      <h3 class="mb-3" v-text="item.nombre"></h3>
-                      <h5 class="mb-3" v-text="item.precentacion"></h5>
-                      <p class="mb-3" v-text="item.descripcion.slice(0, 10) + '...'"></p> 
-                      <br />
-                      <vs-button class="w-full" @click="remover(index)" color="danger">Remover</vs-button>
-                    </div>
-                  </div>
-                </vx-card>
+      <ul class="timeline mt-5" id="timeline">
+        <li class="li complete">
+          <div class="status">
+            <h4 class="mt-5">Paso 1</h4>
+          </div>
+        </li>
+        <li class="li complete">
+          <div class="status">
+            <h4 class="mt-5">Paso 2</h4>
+          </div>
+        </li>
+        <li class="li complete">
+          <div class="status">
+            <h4 class="mt-5">Paso 3</h4>
+          </div>
+        </li>
+        <li class="li">
+          <div class="status">
+            <h4 class="mt-5">Paso 4</h4>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div align="center" v-else>
+      <ul class="timeline mt-5" id="timeline">
+        <li class="li complete">
+          <div class="status">
+            <h4 class="mt-5">Paso 1</h4>
+          </div>
+        </li>
+        <li class="li complete">
+          <div class="status">
+            <h4 class="mt-5">Paso 2</h4>
+          </div>
+        </li>
+        <li class="li complete">
+          <div class="status">
+            <h4 class="mt-5">Paso 3</h4>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- IF CART HAVE ITEMS -->
+    <div class="vx-row">
+      <!-- LEFT COL -->
+      <div class="vx-col lg:w-2/3 w-full relative">
+        <div class="items-list-view">
+          <vx-card
+            v-for="(item, index) in nuevaRecetaData.medicamentos"
+            :key="item.id"
+            style="height: 14rem;"
+            class="mt-5"
+          >
+            <div class="vx-row">
+              <div class="vx-col md:w-1/2 w-full">
+                <img class="h-48 w-48" :src="'data:image/png;base64,' + item.img" alt="image" />
+              </div>
+              <div class="vx-col md:w-1/2 w-full">
+                <h3 class="mb-3" v-text="item.nombre"></h3>
+                <h5 class="mb-3" v-text="item.precentacion"></h5>
+                <p class="mb-3" v-text="item.descripcion.slice(0, 10) + '...'"></p>
+                <br />
+                <vs-button class="w-full" @click="remover(index)" color="danger">Remover</vs-button>
               </div>
             </div>
+          </vx-card>
+        </div>
+      </div>
 
-            <!-- RIGHT COL -->
-            <div class="vx-col lg:w-1/3 w-full">
-              <vx-card class="mt-5">
-                <p class="font-semibold mb-3">Detalles del Paciente</p>
+      <!-- RIGHT COL -->
+      <div class="vx-col lg:w-1/3 w-full">
+        <vx-card class="mt-5">
+          <p class="font-semibold mb-3">Detalles del Paciente</p>
 
-                <vs-divider />
-                <div class="flex justify-between mb-2">
-                  <span class="text-grey">Nombre</span>
-                  <span>{{nuevaRecetaData.name}}</span>
-                </div>
-                <div class="flex justify-between mb-2">
-                  <span class="text-grey">Teléfono</span>
-                  <span class="text-success">{{nuevaRecetaData.phone}}</span>
-                </div>
-
-                <vs-divider />
-
-                <vs-button class="w-full mb-2" @click="generarReceta" v-if="nextStep == 0">Finalizar</vs-button>
-                <vs-button class="w-full mb-2" @click="generarReceta" v-else>Siguiente</vs-button>
-                <vs-button
-                  class="w-full mb-2"
-                  @click="agregarmas"
-                  color="rgb(71, 227, 228)"
-                >Seguir Recetando</vs-button>
-              </vx-card>
-            </div>
+          <vs-divider />
+          <div class="flex justify-between mb-2">
+            <span class="text-grey">Nombre</span>
+            <span>{{nuevaRecetaData.name}}</span>
+          </div>
+          <div class="flex justify-between mb-2">
+            <span class="text-grey">Teléfono</span>
+            <span class="text-success">{{nuevaRecetaData.phone}}</span>
           </div>
 
-          <!-- IF NO ITEMS IN CART -->
-          <!-- <vx-card title="You don't have any items in your cart.">
-                    <vs-button @click="$router.push('/apps/eCommerce/shop').catch(() => {})">Browse Shop</vs-button>
-          </vx-card>-->
+          <vs-divider />
+
+          <vs-button class="w-full mb-2" @click="generarReceta" v-if="nextStep == 0">Finalizar</vs-button>
+          <vs-button class="w-full mb-2" @click="generarReceta" v-else>Siguiente</vs-button>
+          <vs-button
+            class="w-full mb-2"
+            @click="agregarmas"
+            color="rgb(71, 227, 228)"
+          >Seguir Recetando</vs-button>
+        </vx-card>
+      </div>
     </div>
+
+    <!-- IF NO ITEMS IN CART -->
+    <!-- <vx-card title="You don't have any items in your cart.">
+                    <vs-button @click="$router.push('/apps/eCommerce/shop').catch(() => {})">Browse Shop</vs-button>
+    </vx-card>-->
+    <!-- <div>
+      <iframe
+        id="efectiva-chat"
+        style="position: fixed; right: 2px; bottom: 2px; z-index:3000;"
+        frameborder="0"
+        scrolling="auto"
+        height="450px"
+        width="428px"
+        src="https://app.efectiva.merke.app/chats/chat_index.php?aWQ9NjAmYXJlYT0wLDEzOSZsbj1lcyZwbGFuPTEz"
+      ></iframe>
+    </div> -->
   </div>
 </template>
 
@@ -137,8 +147,14 @@ export default {
       state: "",
       addressType: 1,
       addressTypeOptions: [
-        { text: "Home", value: 1 },
-        { text: "Office", value: 2 }
+        {
+          text: "Home",
+          value: 1
+        },
+        {
+          text: "Office",
+          value: 2
+        }
       ],
 
       // TAB 3

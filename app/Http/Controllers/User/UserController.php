@@ -65,15 +65,26 @@ class UserController extends Controller
          * 
          * @return \Illuminate\Http\Response 
          */
-        public function login(){ 
-            if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
-                $user = Auth::user(); 
-                $success['token'] =  $user->createToken('MyApp')-> accessToken; 
-                return response()->json(['success' => $success, 'rol'=> $user->rol, 'regis'=> $user->clinicalRecord ,'id'=> $user->id], $this-> successStatus); 
-            } 
-            else{ 
-                return response()->json(['error'=>'Unauthoriseds'], 401); 
-            } 
+        public function login(Request $request){
+            if(filter_var($request->email, FILTER_VALIDATE_EMAIL)){
+                if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
+                    $user = Auth::user(); 
+                    $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+                    return response()->json(['success' => $success, 'rol'=> $user->rol, 'regis'=> $user->clinicalRecord ,'id'=> $user->id], $this-> successStatus); 
+                } 
+                else{ 
+                    return response()->json(['error'=>'Unauthoriseds'], 401); 
+                }
+            }else{
+                if(Auth::attempt(['noCollegiate' => $request->email, 'password' => $request->password])){ 
+                    $user = Auth::user(); 
+                    $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+                    return response()->json(['success' => $success, 'rol'=> $user->rol, 'regis'=> $user->clinicalRecord ,'id'=> $user->id], $this-> successStatus); 
+                } 
+                else{ 
+                    return response()->json(['error'=>'Unauthorised'], 401); 
+                }
+            }
         }
         /** 
          * details api 

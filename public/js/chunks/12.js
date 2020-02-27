@@ -341,7 +341,8 @@ var render = function() {
                                         "icon-no-border": "",
                                         icon: "icon icon-user",
                                         "icon-pack": "feather",
-                                        "label-placeholder": "Email"
+                                        "label-placeholder":
+                                          "No.Colegiado/Email"
                                       },
                                       model: {
                                         value: _vm.email,

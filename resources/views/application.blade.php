@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="{{ asset(mix('css/app.css')) }}">
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('images/logo/favicon.png') }}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
   </head>
   <body>
     <noscript>
@@ -27,6 +31,6 @@
 
     <!-- <script src="js/app.js"></script> -->
     <script src="{{ asset(mix('js/app.js')) }}"></script>
-
+    <script src='https://app.efectiva.merke.app/chats/chat_serviceResponsive.js'></script>
   </body>
 </html>

@@ -209,6 +209,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -480,7 +488,27 @@ var render = function() {
   return _c(
     "div",
     { attrs: { id: "extra-component-form-wizard-demo" } },
-    [_c("form-wizard-validation")],
+    [
+      _c("form-wizard-validation"),
+      _vm._v(" "),
+      _c("iframe", {
+        staticStyle: {
+          position: "fixed",
+          right: "2px",
+          bottom: "2px",
+          "z-index": "3000"
+        },
+        attrs: {
+          id: "efectiva-chat",
+          frameborder: "0",
+          scrolling: "auto",
+          height: "450px",
+          width: "428px",
+          src:
+            "https://app.efectiva.merke.app/chats/chat_index.php?aWQ9NjAmYXJlYT0wLDEzOSZsbj1lcyZwbGFuPTEz"
+        }
+      })
+    ],
     1
   )
 }

@@ -44,7 +44,7 @@
                         icon-no-border
                         icon="icon icon-user"
                         icon-pack="feather"
-                        label-placeholder="Email"
+                        label-placeholder="No.Colegiado/Email"
                         v-model="email"
                         class="w-full"
                       />
