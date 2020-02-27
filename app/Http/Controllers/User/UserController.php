@@ -9,6 +9,7 @@ use App\Users_category;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Support\Facades\Mail;
+use Hash;
 
 class UserController extends Controller
 {
@@ -47,8 +48,13 @@ class UserController extends Controller
     }
 
     public function changePassword(Request $request){
-
-        
+        if(Hash::check($request->mypassword, Auth::user()->password)){
+            $user = new User();
+            $user->where('email', '=', Auth::user()->email)->update(['password' => bcrypt($request->password)]);
+            return "";
+        }else{
+            return "Unauthorized";
+        }
     }
 
     /** 

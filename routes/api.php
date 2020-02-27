@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('putUser3', 'User\UserController@update3');
     Route::get('getUser1/{id}', 'User\UserController@show');
     Route::get('getUser2/{id}', 'User\UserController@show1');
+    Route::post('resetPassword', 'User\UserController@changePassword');
     //Visitador
     Route::get('getVisitador/{id}', "User\UserController@getMedics");
     Route::any('register1', 'User\UserController@register');

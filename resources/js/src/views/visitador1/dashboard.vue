@@ -48,7 +48,7 @@ export default {
       this.$router.push("/editarMedico/" + id);
     },
     getMedics() {
-      this.openLoading();
+      //this.openLoading();
       let token = localStorage.getItem("tu");
       let id = localStorage.getItem("ui");
       axios({
