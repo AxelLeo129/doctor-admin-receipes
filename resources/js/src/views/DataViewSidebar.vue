@@ -62,7 +62,7 @@
       <br />
 
       <div class="vx-row">
-        <div class="vx-col w-full sm:w-2/3 lg:w-2/3 mb-base">
+        <div class="vx-col w-full sm:w-3/4 lg:w-3/4 mb-base">
           <vx-card>
             <div class="vx-row">
               <vs-table :data="medicines" class="responsive">
@@ -130,7 +130,7 @@
             </div>
           </vx-card>
         </div>
-        <div class="vx-col w-full sm:w-1/3 lg:w-1/3 mb-base">
+        <div class="vx-col w-full sm:w-1/4 lg:w-1/4 mb-base">
           <vx-card>
             <p v-text="'Total: Q ' + total"></p>
             <vs-divider class="mb-0"></vs-divider>
@@ -178,7 +178,7 @@
                 v-model="datetr"
                 class="mt-5 w-full"
                 name="item-name"
-                type="date"
+                type="month"
               />
               <span class="text-danger text-sm" v-show="datetr  === ''">Este campo es requerido.</span>
             </div>

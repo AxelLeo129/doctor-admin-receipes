@@ -2103,7 +2103,7 @@ var render = function() {
           _c("div", { staticClass: "vx-row" }, [
             _c(
               "div",
-              { staticClass: "vx-col w-full sm:w-2/3 lg:w-2/3 mb-base" },
+              { staticClass: "vx-col w-full sm:w-3/4 lg:w-3/4 mb-base" },
               [
                 _c("vx-card", [
                   _c(
@@ -2354,7 +2354,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "vx-col w-full sm:w-1/3 lg:w-1/3 mb-base" },
+              { staticClass: "vx-col w-full sm:w-1/4 lg:w-1/4 mb-base" },
               [
                 _c(
                   "vx-card",
@@ -2534,7 +2534,7 @@ var render = function() {
                               attrs: {
                                 label: "Fecha de Vencimiento",
                                 name: "item-name",
-                                type: "date"
+                                type: "month"
                               },
                               model: {
                                 value: _vm.datetr,
