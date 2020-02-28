@@ -1324,6 +1324,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _DataViewSidebar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../DataViewSidebar.vue */ "./resources/js/src/views/DataViewSidebar.vue");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1582,26 +1618,51 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
-      message: "",
-      idRecipe: null,
-      users: [],
-      popupActive2: false,
-      addNewDataSidebar: false,
-      sidebarData: {},
-      status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado"],
-      buscar: "",
-      clickNotClose: true,
-      isEmailSidebarActive: true,
-      mailFilter: "inbox",
-      settings: {
-        maxScrollbarLength: 60,
-        wheelSpeed: 0.3
+    var _ref;
+
+    return _ref = {
+      companyDetails: {
+        name: "",
+        addressLine1: "9 N. Sherwood Court",
+        addressLine2: "Nombre Médico",
+        zipcode: "94203",
+        mailId: "hello@pixinvent.net",
+        mobile: "s"
       },
-      recipes: [],
-      doctors: [],
-      primary: "primary"
-    };
+      rId: '',
+      clAddress: '',
+      clPhone: '',
+      pName: '',
+      pPhone: '',
+      medicinas: [],
+      image: "/images/medicamentos/demol.PNG",
+      drName: "",
+      drEmail: "",
+      drPhone: "",
+      nuevaRecetaData: {},
+      invoiceData: {
+        tasks: [{
+          id: 1,
+          task: "Website Redesign",
+          hours: 60,
+          rate: 15,
+          amount: 90000
+        }, {
+          id: 2,
+          task: "Newsletter template design",
+          hours: 20,
+          rate: 12,
+          amount: 24000
+        }],
+        subtotal: 114000,
+        discountPercentage: 5,
+        discountedAmount: 5700,
+        total: 108300
+      }
+    }, _defineProperty(_ref, "medicinas", []), _defineProperty(_ref, "popupActive", false), _defineProperty(_ref, "message", ""), _defineProperty(_ref, "idRecipe", null), _defineProperty(_ref, "users", []), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "addNewDataSidebar", false), _defineProperty(_ref, "sidebarData", {}), _defineProperty(_ref, "status", ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado"]), _defineProperty(_ref, "buscar", ""), _defineProperty(_ref, "clickNotClose", true), _defineProperty(_ref, "isEmailSidebarActive", true), _defineProperty(_ref, "mailFilter", "inbox"), _defineProperty(_ref, "settings", {
+      maxScrollbarLength: 60,
+      wheelSpeed: 0.3
+    }), _defineProperty(_ref, "recipes", []), _defineProperty(_ref, "doctors", []), _defineProperty(_ref, "primary", "primary"), _ref;
   },
   components: {
     VuePerfectScrollbar: vue_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_0___default.a,
@@ -1629,6 +1690,89 @@ __webpack_require__.r(__webpack_exports__);
     this.getRecipes("Nuevo");
   },
   methods: {
+    verReceta: function verReceta(id, id1) {
+      var _this = this;
+
+      this.popupActive = true;
+      var token = localStorage.getItem("tu");
+      var idu = id;
+      var idm = id1;
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getReceta/" + idu,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        var f = new Date();
+        var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+        _this.nuevaRecetaData.dateIssue = fecha;
+        _this.pName = Response.data[0].name;
+        _this.pPhone = Response.data[0].phone;
+        _this.rId = Response.data[0].id;
+        axios__WEBPACK_IMPORTED_MODULE_1___default()({
+          method: "get",
+          url: "http://127.0.0.1:8000/api/getInfoRecipie/" + idu,
+          headers: {
+            authorization: "Bearer " + token,
+            "content-type": "application/json"
+          }
+        }).then(function (Response) {
+          _this.medicinas = []; //console.log(Response);
+
+          Response.data.forEach(function (element) {
+            _this.medicinas.push(element);
+          });
+          console.log(idm);
+          axios__WEBPACK_IMPORTED_MODULE_1___default()({
+            method: "get",
+            url: "http://127.0.0.1:8000/api/getUser/" + idm,
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          }).then(function (Response) {
+            _this.drName = Response.data.name;
+
+            if (Response.data.clinicPhone == null || Response.data.clinicPhone == '') {
+              _this.clPhone = '+502: 8452-9862';
+            } else {
+              _this.clPhone = Response.data.clinicPhone;
+            }
+
+            if (Response.data.clinicAddress == null || Response.data.clinicAddress == '') {
+              _this.clAddress = 'Via 4 zona 4 Guatemala';
+            } else {
+              _this.clAddress = Response.data.clinicAddress;
+            }
+
+            _this.drEmail = Response.data.email;
+
+            if (Response.data.phone == null || Response.data.phone == "") {
+              _this.drPhone = "+502: 8452-9862";
+            } else {
+              _this.drPhone = "+502: " + Response.data.phone;
+            }
+          }).catch(function (err) {
+            console.log(err);
+            _this.activeLoading = false;
+
+            _this.$vs.loading.close();
+          });
+        }).catch(function (err) {
+          console.log(err);
+          _this.activeLoading = false;
+
+          _this.$vs.loading.close();
+        });
+      }).catch(function (err) {
+        console.log(err);
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
+      });
+    },
     editData: function editData(data, id) {
       this.popupActive2 = false; // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
 
@@ -1641,7 +1785,7 @@ __webpack_require__.r(__webpack_exports__);
       this.toggleDataSidebar(true);
     },
     openModal: function openModal(phone, id, status) {
-      var _this = this;
+      var _this2 = this;
 
       //console.log(status);
       if (status == "Nuevo") {
@@ -1657,9 +1801,9 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (Response) {
           Response.data.forEach(function (element) {
-            _this.users.push(element);
+            _this2.users.push(element);
           });
-          _this.popupActive2 = true;
+          _this2.popupActive2 = true;
         }).catch(function (err) {
           console.log(err);
         });
@@ -1690,7 +1834,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getUsers: function getUsers() {
-      var _this2 = this;
+      var _this3 = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -1703,7 +1847,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this2.doctors.push({
+          _this3.doctors.push({
             id: element.id,
             name: element.name
           });
@@ -1722,7 +1866,7 @@ __webpack_require__.r(__webpack_exports__);
       return "primary";
     },
     getRecipes: function getRecipes(a) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -1738,38 +1882,38 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this3.recipes = []; //console.log(Response.data);
+        _this4.recipes = []; //console.log(Response.data);
 
         Response.data.forEach(function (element) {
-          element.color = _this3.colore(element.status);
-          element.status = _this3.status[element.status - 1]; //console.log(element.status);
+          element.color = _this4.colore(element.status);
+          element.status = _this4.status[element.status - 1]; //console.log(element.status);
 
-          _this3.doctors.forEach(function (e) {
+          _this4.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
-              element.doctor_id = e.name;
+              element.doctor_name = e.name;
             }
           });
 
           if (element.status == a) {
-            _this3.recipes.push(element);
+            _this4.recipes.push(element);
           }
 
-          if (_this3.recipes.length == 0) {
-            _this3.message = "No hay resultados.";
+          if (_this4.recipes.length == 0) {
+            _this4.message = "No hay resultados.";
           }
         });
-        _this3.activeLoading = false;
+        _this4.activeLoading = false;
 
-        _this3.$vs.loading.close();
+        _this4.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
-        _this3.activeLoading = false;
+        _this4.activeLoading = false;
 
-        _this3.$vs.loading.close();
+        _this4.$vs.loading.close();
       });
     },
     getRerecipes: function getRerecipes() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -1785,32 +1929,32 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this4.recipes = []; //console.log(Response.data);
+        _this5.recipes = []; //console.log(Response.data);
 
         Response.data.forEach(function (element) {
-          element.color = _this4.colore(element.status);
-          element.status = _this4.status[element.status - 1]; //console.log(element.status);
+          element.color = _this5.colore(element.status);
+          element.status = _this5.status[element.status - 1]; //console.log(element.status);
 
-          _this4.doctors.forEach(function (e) {
+          _this5.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
               element.doctor_id = e.name;
             }
           });
 
-          _this4.recipes.push(element);
+          _this5.recipes.push(element);
 
-          if (_this4.recipes.length == 0) {
-            _this4.message = "No hay resultados.";
+          if (_this5.recipes.length == 0) {
+            _this5.message = "No hay resultados.";
           }
         });
-        _this4.activeLoading = false;
+        _this5.activeLoading = false;
 
-        _this4.$vs.loading.close();
+        _this5.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
-        _this4.activeLoading = false;
+        _this5.activeLoading = false;
 
-        _this4.$vs.loading.close();
+        _this5.$vs.loading.close();
       });
     }
   }
@@ -3740,6 +3884,167 @@ var render = function() {
         1
       ),
       _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          staticClass: "holamundo",
+          attrs: {
+            fullscreen: "",
+            title: "Detalles de la Receta",
+            active: _vm.popupActive
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActive = $event
+            }
+          }
+        },
+        [
+          _c("vx-card", { attrs: { id: "invoice-container" } }, [
+            _c("div", { staticClass: "vx-row leading-loose p-base" }, [
+              _c("div", { staticClass: "vx-col w-full md:w-1/2 mt-base" }, [
+                _c("img", {
+                  staticClass: "mr-8 rounded h-24",
+                  attrs: { src: _vm.image }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "vx-col w-full md:w-1/2 text-right" }, [
+                _c("h1", [_vm._v("Receta")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "invoice__invoice-detail mt-6" }, [
+                  _c("h6", [_vm._v("Receta No.")]),
+                  _vm._v(" "),
+                  _c("p", { domProps: { textContent: _vm._s(_vm.rId) } }),
+                  _vm._v(" "),
+                  _c("h6", { staticClass: "mt-4" }, [_vm._v("Fecha Receta")]),
+                  _vm._v(" "),
+                  _c("p", {
+                    domProps: {
+                      textContent: _vm._s(_vm.nuevaRecetaData.dateIssue)
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "vx-col w-full md:w-1/2 mt-12" }, [
+                _c("h5", [_vm._v("Paciente")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "invoice__recipient-info my-4" }, [
+                  _c("p", { domProps: { textContent: _vm._s(_vm.pName) } }),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Guatemala")]),
+                  _vm._v(" "),
+                  _c("p", { domProps: { textContent: _vm._s(_vm.pPhone) } })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "invoice__recipient-contact" })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "vx-col w-full md:w-1/2 mt-base text-right mt-12"
+                },
+                [
+                  _c("h5", [_vm._v(_vm._s(_vm.companyDetails.name))]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "invoice__company-info my-4" }, [
+                    _c("p", {
+                      domProps: { textContent: _vm._s(_vm.clAddress) }
+                    }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _c("strong", {
+                        domProps: { textContent: _vm._s(_vm.drName) }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { domProps: { textContent: _vm._s(_vm.clPhone) } })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "invoice__company-contact" }, [
+                    _c(
+                      "p",
+                      { staticClass: "flex items-center justify-end" },
+                      [
+                        _c("feather-icon", {
+                          attrs: { icon: "MailIcon", svgClasses: "h-4 w-4" }
+                        }),
+                        _vm._v(" "),
+                        _c("span", {
+                          staticClass: "ml-2",
+                          domProps: { textContent: _vm._s(_vm.drEmail) }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "p",
+                      { staticClass: "flex items-center justify-end" },
+                      [
+                        _c("feather-icon", {
+                          attrs: { icon: "PhoneIcon", svgClasses: "h-4 w-4" }
+                        }),
+                        _vm._v(" "),
+                        _c("span", {
+                          staticClass: "ml-2",
+                          domProps: { textContent: _vm._s(_vm.drPhone) }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "p-base" },
+              [
+                _c(
+                  "vs-table",
+                  { attrs: { hoverFlat: "", data: _vm.invoiceData.tasks } },
+                  [
+                    _vm._l(_vm.medicinas, function(item) {
+                      return _c(
+                        "vs-tr",
+                        { key: item.id },
+                        [
+                          _c("vs-td", {
+                            domProps: {
+                              textContent: _vm._s(
+                                item.name +
+                                  " " +
+                                  item.presentacion +
+                                  " " +
+                                  item.dispensing
+                              )
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    })
+                  ],
+                  2
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "invoice__footer text-right p-base" }, [
+              _c("div", { attrs: { align: "right" } }, [
+                _c("h6", [_vm._v("PHARMAZone.app")])
+              ])
+            ])
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
       _c("data-view-sidebar", {
         attrs: {
           isSidebarActive: _vm.addNewDataSidebar,
@@ -4127,13 +4432,8 @@ var render = function() {
                     "li",
                     {
                       key: mail.id,
-                      staticClass: "cursor-pointer email__mail-item",
-                      style: { transitionDelay: index * 0.1 + "s" },
-                      on: {
-                        click: function($event) {
-                          return _vm.openModal(mail.phone, mail.id, mail.status)
-                        }
-                      }
+                      staticClass: "email__mail-item",
+                      style: { transitionDelay: index * 0.1 + "s" }
                     },
                     [
                       _c(
@@ -4155,7 +4455,11 @@ var render = function() {
                                   _vm._v(" "),
                                   mail.phone
                                     ? _c("span", [_vm._v(_vm._s(mail.phone))])
-                                    : _c("span", [_vm._v("(no subject)")])
+                                    : _c("span", [_vm._v("(no subject)")]),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v(_vm._s(mail.doctor_name))])
                                 ]),
                                 _vm._v(" "),
                                 _c(
@@ -4167,20 +4471,80 @@ var render = function() {
                                   [
                                     _c(
                                       "div",
-                                      {
-                                        staticClass:
-                                          "email__labels hidden sm:flex items-center"
-                                      },
+                                      { staticClass: "mail__details" },
                                       [
-                                        _c("div", {
-                                          staticClass:
-                                            "h-2 w-2 rounded-full mr-2",
-                                          class: "bg-" + mail.color
-                                        })
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("span", [_vm._v(_vm._s(mail.status))])
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "email__labels hidden sm:flex items-center"
+                                          },
+                                          [
+                                            _c("div", {
+                                              staticClass:
+                                                "h-2 w-2 rounded-full mr-2",
+                                              class: "bg-" + mail.color
+                                            }),
+                                            _vm._v(" "),
+                                            _c("span", [
+                                              _vm._v(_vm._s(mail.status))
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "vs-button",
+                                          {
+                                            staticClass: "mt-5",
+                                            attrs: {
+                                              color: "rgb(62, 201, 214)",
+                                              size: "small",
+                                              type: "filled"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.verReceta(
+                                                  mail.id,
+                                                  mail.doctor_id
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "Ver\n                                            Receta\n                                        "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "vs-button",
+                                          {
+                                            staticClass: "mt-5",
+                                            attrs: {
+                                              color: "primary",
+                                              type: "filled",
+                                              size: "small"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.openModal(
+                                                  mail.phone,
+                                                  mail.id,
+                                                  mail.status
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "Posibles Clientes\n                                        "
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
                                   ]
                                 )
                               ]
@@ -4188,11 +4552,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "flex w-full" }, [
-                            _c(
-                              "div",
-                              { staticClass: "mail__message truncate" },
-                              [_c("span", [_vm._v(_vm._s(mail.doctor_id))])]
-                            )
+                            _c("div", { staticClass: "mail__message truncate" })
                           ])
                         ]
                       )
