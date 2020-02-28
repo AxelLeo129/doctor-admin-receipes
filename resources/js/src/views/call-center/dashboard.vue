@@ -369,7 +369,7 @@
                 const filter = event =>
                     event.name.toLowerCase().includes(texto) ||
                     event.phone.toLowerCase().includes(texto) ||
-                    event.doctor_id.toLowerCase().includes(texto);
+                    event.doctor_name.toLowerCase().includes(texto);
 
                 return result.filter(filter);
             }

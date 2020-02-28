@@ -1679,7 +1679,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var texto = this.buscar.toLowerCase();
 
       var filter = function filter(event) {
-        return event.name.toLowerCase().includes(texto) || event.phone.toLowerCase().includes(texto) || event.doctor_id.toLowerCase().includes(texto);
+        return event.name.toLowerCase().includes(texto) || event.phone.toLowerCase().includes(texto) || event.doctor_name.toLowerCase().includes(texto);
       };
 
       return result.filter(filter);

@@ -234,9 +234,9 @@
                       <div slot="no-body">
                         <div align="center">
                           <img
-                            :src="'data:image/png;base64,' + item.image"
+                            :src="'https://pharmazone.app/images/productos/' + item.id + '.png'"
                             alt="content-img"
-                            class="responsive card-img-top h-48 w-48"
+                            class="responsive pt-8 card-img-top h-48 w-48"
                           />
                         </div>
                       </div>

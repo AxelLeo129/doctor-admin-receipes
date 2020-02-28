@@ -1143,11 +1143,12 @@ var render = function() {
                                                 [
                                                   _c("img", {
                                                     staticClass:
-                                                      "responsive card-img-top h-48 w-48",
+                                                      "responsive pt-8 card-img-top h-48 w-48",
                                                     attrs: {
                                                       src:
-                                                        "data:image/png;base64," +
-                                                        item.image,
+                                                        "https://pharmazone.app/images/productos/" +
+                                                        item.id +
+                                                        ".png",
                                                       alt: "content-img"
                                                     }
                                                   })
