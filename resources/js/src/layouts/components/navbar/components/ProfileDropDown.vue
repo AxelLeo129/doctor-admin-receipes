@@ -125,6 +125,8 @@ export default {
             this.rol = "Despachador";
           }else if(r == 6){
             this.rol = "Visitador";
+          }else if(r == 9){
+            this.rol = "Facturador";
           }else {
             this.rol = "Mensajero";
           }

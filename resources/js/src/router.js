@@ -119,6 +119,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -157,6 +161,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -198,6 +206,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -258,6 +270,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -300,6 +316,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -341,6 +361,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -389,6 +413,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -430,6 +458,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -473,6 +505,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -514,6 +550,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -557,6 +597,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -598,6 +642,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -641,6 +689,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -683,6 +735,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -715,6 +771,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -749,6 +809,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -782,6 +846,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -825,6 +893,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -866,6 +938,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -910,6 +986,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -952,6 +1032,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -993,6 +1077,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -1037,6 +1125,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -1079,6 +1171,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -1120,6 +1216,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -1164,6 +1264,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -1206,6 +1310,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -1247,6 +1355,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -1291,6 +1403,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -1333,6 +1449,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -1374,6 +1494,10 @@ const router = new Router({
             } else if (rol == 6) {
               next({
                 name: "1visitador"
+              });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
               });
             } else {
               next({
@@ -1418,6 +1542,10 @@ const router = new Router({
               next({
                 name: "1visitador"
               });
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -1434,6 +1562,57 @@ const router = new Router({
             rule: 'editor'
           },
         },
+        //Facturador
+        {
+          path: '/facturacion',
+          name: 'facturacion',
+          component: () => import('./views/facturacion/dashboard.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Consola', url: '/consola' },
+              { title: 'Listado de pedidos' },
+              { title: 'Pedidos', active: true },
+            ],
+            pageTitle: 'Listado de pedidos',
+            rule: 'editor'
+          },
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next({
+                name: 'page-login'
+              });
+            } else if (rol == 1) {
+              next({
+                name: 'consola'
+              });
+            } else if (rol == 2) {
+              next({
+                name: 'home'
+              });
+            } else if (rol == 3) {
+              next({
+                name: 'ListCallCenter'
+              });
+            } else if (rol == 6) {
+              next({
+                name: '1visitador'
+              });
+            } else if (rol == 4) {
+              next({
+                name: "visitador"
+              });
+            } else if (rol == 9){
+              next();
+            } else {
+              next({
+                name: 'page-login'
+              });
+            }
+          }
+        },
         //Visitador Medico
         {
           path: '/visitador',
@@ -1449,7 +1628,6 @@ const router = new Router({
             rule: 'editor'
           },
           beforeEnter(to, from, next) {
-            console.log("Estoy aca")
             let rol = localStorage.getItem('ru');
             let idu = localStorage.getItem('ui');
             let token = localStorage.getItem('tu');
@@ -1475,6 +1653,10 @@ const router = new Router({
               });
             } else if (rol == 4) {
               next();
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -1522,6 +1704,10 @@ const router = new Router({
               });
             } else if (rol == 6) {
               next();
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -1568,6 +1754,10 @@ const router = new Router({
               });
             } else if (rol == 6) {
               next();
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'
@@ -1614,6 +1804,10 @@ const router = new Router({
               });
             } else if (rol == 6) {
               next();
+            } else if (rol == 9) {
+              next({
+                name: "facturacion"
+              });
             } else {
               next({
                 name: 'page-login'

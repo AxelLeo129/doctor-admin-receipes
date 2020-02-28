@@ -89,6 +89,29 @@ class OrderController extends Controller
         $clients= \DB::table('clients')
             ->join('orders', 'orders.client_id', '=', 'clients.id')
             ->select('clients.id','clients.client_name','client_addresse' , 'clients.client_phone', 'paise', 'depare', 'callee', 'apartamentoe', 'municipioe', 'residenciae', 'codigoe', 'orders.status', 'orders.order_id', 'orders.delivery_date')
+            ->where('orders.status', '!=',0)
+            ->get();
+        foreach($clients as $client){
+            $medicinas = \DB::table("orders_products")
+            ->join('products', 'orders_products.product_id', '=', 'products.id')
+            ->join('presentations', 'presentations.id', '=', 'products.precentation')
+            ->join('labs', 'labs.id', '=', 'products.laboratory')
+            ->select('products.name', 'orders_products.cantidad', 'products.description', 'products.price','presentations.name as preName','presentations.unidad', 'presentations.cantidad as preCantidad', 'labs.name as labName', 'products.warehouse')
+            ->where('orders_products.order_id', $client->order_id)
+            ->get();
+            $datos = array("cliente" => $client, "medicamentos" => $medicinas);
+            array_push($data, $datos);
+        }
+        return $data;
+    }
+
+    public function show1()
+    {
+        $data = [];
+        $clients= \DB::table('clients')
+            ->join('orders', 'orders.client_id', '=', 'clients.id')
+            ->select('orders.order_id','clients.id','clients.client_nit','clients.client_name','client_addresse' , 'clients.client_phone', 'paisf', 'deparf', 'callef', 'apartamentof', 'municipiof', 'residenciaf', 'codigof', 'orders.status', 'orders.order_id', 'orders.delivery_date', 'orders.total')
+            ->where('orders.status',0)
             ->get();
         foreach($clients as $client){
             $medicinas = \DB::table("orders_products")
@@ -122,9 +145,21 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        //$order = Order::find($request->order_id);
+        \DB::table('orders')->where('order_id', $request->order_id)->update(['nit' => $request->nit, 'noInvoice' => $request->noInvoice, 'dateInvoice' => $request->dateInvoice, 'status' => $request->status, 'facturador_id' => $request->facturador_id]);
+        /*$order->nit = $request->nit;
+        $order->noInvoice = $request->noInvoice;
+        $order->dateInvoice = $request->dateInvoice;
+        $order->status = $request->status;
+        $order->facturador_id = $request->facturador_id;
+
+        if($order->save()){
+            return ['result' => 'success', "mess"=>$order];
+        }else{
+            return ['result' => 'fail', "mess"=>$order];
+        }*/
     }
 
     /**

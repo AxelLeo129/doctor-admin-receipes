@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('getUser1/{id}', 'User\UserController@show');
     Route::get('getUser2/{id}', 'User\UserController@show1');
     Route::post('resetPassword', 'User\UserController@changePassword');
+    Route::post('forgotPassword', 'User\UserController@resetPassword');
     //Visitador
     Route::get('getVisitador/{id}', "User\UserController@getMedics");
     Route::any('register1', 'User\UserController@register');
@@ -70,6 +71,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     //Clientes
     Route::get('getClients', 'Clients\ClientController@index');
     Route::get('getCliente', 'Orders\OrderController@show');
+    Route::get('getClientess', 'Orders\OrderController@show1');
     Route::get('getCliente1/{id}', 'Clients\ClientController@show1');
     Route::post('postCliente', 'Clients\ClientController@store');
     Route::put('putCliente', 'Clients\ClientController@update');
@@ -82,6 +84,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     //Pedidos
     Route::post('postOrder', 'Orders\OrderController@store');
     Route::post('postOrderProd', 'Orders\OrderController@storeProducto');
+    Route::post('putOrder', 'Orders\OrderController@update');
     //Roles
     Route::get('getRoles', 'Roles\RolController@index');
     Route::post('postRol', 'Roles\RolController@store');

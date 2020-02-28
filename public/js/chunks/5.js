@@ -1609,6 +1609,8 @@ __webpack_require__.r(__webpack_exports__);
           _this.rol = "Despachador";
         } else if (r == 6) {
           _this.rol = "Visitador";
+        } else if (r == 9) {
+          _this.rol = "Facturador";
         } else {
           _this.rol = "Mensajero";
         }
@@ -6879,7 +6881,14 @@ __webpack_require__.r(__webpack_exports__);
   Author: Pixinvent
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
-/* harmony default export */ __webpack_exports__["default"] = ([//Medico
+/* harmony default export */ __webpack_exports__["default"] = ([//Facturador
+{
+  url: "/facturacion",
+  name: "Listado de Pedidos ",
+  slug: "facturacion",
+  icon: "ListIcon",
+  rol: 9
+}, //Medico
 {
   url: "/home",
   name: "Home",

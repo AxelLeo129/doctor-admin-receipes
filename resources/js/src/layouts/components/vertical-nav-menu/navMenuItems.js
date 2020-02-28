@@ -9,6 +9,14 @@
 
 
 export default [
+  //Facturador
+  {
+    url: "/facturacion",
+    name: "Listado de Pedidos ",
+    slug: "facturacion",
+    icon: "ListIcon",
+    rol: 9
+  },
   //Medico
   {
     url: "/home",

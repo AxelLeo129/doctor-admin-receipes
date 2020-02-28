@@ -57,6 +57,10 @@ class UserController extends Controller
         }
     }
 
+    public function resetPassword(Request $request){
+        return User::where('email', $request->email)->get();
+    }
+
     /** 
          * Register api 
          * 
