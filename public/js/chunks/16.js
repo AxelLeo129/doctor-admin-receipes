@@ -279,9 +279,9 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          if (element.user_id == id) {
-            _this.medicamentos.push(element);
-          }
+          //if (element.user_id == id) {
+          _this.medicamentos.push(element); //}
+
         });
       }).catch(function (err) {
         console.log(err);

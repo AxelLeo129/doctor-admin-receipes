@@ -270,9 +270,9 @@ export default {
       })
         .then(Response => {
           Response.data.forEach(element => {
-            if (element.user_id == id) {
+            //if (element.user_id == id) {
               this.medicamentos.push(element);
-            }
+            //}
           });
         })
         .catch(err => {
