@@ -150,11 +150,22 @@ class RecipieController extends Controller
 
     //muestra los medicamentos que se le recetó al cliente
     public function getInfoRecipie($id){
-        return \DB::select("SELECT recipe_id, name, dispensing, (SELECT GROUP_CONCAT(name, '-', unidad, '-', cantidad) FROM presentations WHERE presentations.id = precentation) as presentacion FROM recipies_products INNER JOIN products ON recipies_products.product_id = products.id WHERE recipe_id = $id");
+        return \DB::select("SELECT recipe_id, name, dispensing, (SELECT name FROM presentations WHERE presentations.id = precentation) as presentacion FROM recipies_products INNER JOIN products ON recipies_products.product_id = products.id WHERE recipe_id = $id");
+    }
+
+    public function updateStatus(Request $request){
+        $recipe = Recipie::find($request->id);
+        $recipe->status = $request->status;
+
+        if($recipe->save()){
+            return ['result' => 'success', "mess"=>$recipe];
+        }else{
+            return ['result' => 'fail', "mess"=>$recipe];
+        }
     }
 
     public function getMedicines($id){
-        return \DB::select("SELECT recipe_id, product_id ,name, dispensing, (SELECT cantidad FROM presentations WHERE presentations.id = precentation) as cantidad, (SELECT GROUP_CONCAT(name, '-', unidad, '-', cantidad) FROM presentations WHERE presentations.id = precentation) as presentacion , (SELECT price FROM products WHERE products.id = recipies_products.product_id) as price FROM recipies_products INNER JOIN products ON recipies_products.product_id = products.id WHERE recipe_id = $id");
+        return \DB::select("SELECT recipe_id, product_id ,name, dispensing, (SELECT cantidad FROM presentations WHERE presentations.id = precentation) as cantidad, (SELECT name FROM presentations WHERE presentations.id = precentation) as presentacion , (SELECT price FROM products WHERE products.id = recipies_products.product_id) as price FROM recipies_products INNER JOIN products ON recipies_products.product_id = products.id WHERE recipe_id = $id");
     }
 
     public function getRerecipe(){

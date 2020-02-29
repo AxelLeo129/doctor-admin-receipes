@@ -159,6 +159,7 @@ export default {
   },
   data: () => ({
     token: null,
+    registro: null,
     clickNotClose: false, // disable close navMenu on outside click
     isMouseEnter: false,
     reduce: false, // determines if navMenu is reduce - component property
@@ -213,7 +214,7 @@ export default {
       let newArray = [];
 
       clone.forEach(element => {
-        if (element.rol == this.token || element.rol == 0) {
+        if ((element.rol == this.token && (element.disabled == 3 || element.disabled == this.registro)) || element.rol == 0 ) {
           newArray.push(element);
         }
       });
@@ -281,6 +282,7 @@ export default {
   methods: {
     onItem() {
       this.token = localStorage.getItem("ru");
+      this.registro = localStorage.getItem('regi');
       //console.log(this.token);
     },
     // handleWindowResize(event) {

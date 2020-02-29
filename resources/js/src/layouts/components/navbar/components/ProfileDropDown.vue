@@ -99,6 +99,7 @@ export default {
       localStorage.removeItem("tu");
       localStorage.removeItem("ru");
       localStorage.removeItem("ui");
+      localStorage.removeItem("regi");
       localStorage.removeItem("nuevaRecetaData");
       this.$router.push("/");
     },

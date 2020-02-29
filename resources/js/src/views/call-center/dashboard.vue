@@ -150,23 +150,31 @@
                         <div class="px-6 pb-2 flex flex-col">
                             <!-- inbox -->
                             <li tag="span" @click="getRecipes('Nuevo')"
-                                class="flex justify-between items-center cursor-pointer">
+                                class="flex justify-between items-center cursor-pointer" :class="{'text-primary': activado == 'Nuevo'}">
                                 <div class="flex items-center mb-2">
                                     <feather-icon icon="PlusIcon"></feather-icon>
                                     <span class="text-lg ml-3">Nuevos</span>
                                 </div>
                             </li>
 
+                            <li tag="span" @click="getFacturacion('Facturacion')"
+                                class="flex justify-between items-center cursor-pointer" :class="{'text-primary': activado == 'Facturacion'}">
+                                <div class="flex items-center mb-2">
+                                    <feather-icon icon="FileIcon"></feather-icon>
+                                    <span class="text-lg ml-3">Facturación</span>
+                                </div>
+                            </li>
+
                             <!-- sent -->
                             <li tag="span" @click="getRecipes('Empaquetando')"
-                                class="flex items-center mt-4 mb-2 cursor-pointer">
+                                class="flex items-center mt-4 mb-2 cursor-pointer" :class="{'text-primary': activado == 'Empaquetando'}">
                                 <feather-icon icon="ArchiveIcon"></feather-icon>
                                 <span class="text-lg ml-3">Despacho</span>
                             </li>
 
                             <!-- draft -->
                             <li tag="span" @click="getRecipes('Entregando')"
-                                class="flex justify-between items-center mt-4 cursor-pointer">
+                                class="flex justify-between items-center mt-4 cursor-pointer" :class="{'text-primary': activado == 'Entregando'}">
                                 <div class="flex items-center mb-2">
                                     <feather-icon icon="TruckIcon"></feather-icon>
                                     <span class="text-lg ml-3">Entregando</span>
@@ -175,21 +183,21 @@
 
                             <!-- starred -->
                             <li tag="span" @click="getRecipes('Entregado')"
-                                class="flex items-center mt-4 mb-2 cursor-pointer">
+                                class="flex items-center mt-4 mb-2 cursor-pointer" :class="{'text-primary': activado == 'Entregado'}">
                                 <feather-icon icon="MapPinIcon"></feather-icon>
                                 <span class="text-lg ml-3">Entregados</span>
                             </li>
 
                             <!-- spam -->
                             <li @click="getRecipes('Cancelado')" tag="span"
-                                class="flex items-center justify-between items-center mt-4 cursor-pointer">
+                                class="flex items-center justify-between items-center mt-4 cursor-pointer" :class="{'text-primary': activado == 'Cancelado'}">
                                 <div class="flex items-center mb-2">
                                     <feather-icon icon="HexagonIcon"></feather-icon>
-                                    <span class="text-lg ml-3">Cancelado</span>
+                                    <span class="text-lg ml-3">Descartadas</span>
                                 </div>
                             </li>
-                            <li @click="getRerecipes()" tag="span"
-                                class="flex items-center justify-between items-center mt-4 cursor-pointer">
+                            <li @click="getRerecipes('Reprogramada')" tag="span"
+                                class="flex items-center justify-between items-center mt-4 cursor-pointer" :class="{'text-primary': activado == 'Reprogramada'}">
                                 <div class="flex items-center mb-2">
                                     <feather-icon icon="WatchIcon"></feather-icon>
                                     <span class="text-lg ml-3">Reprogramada</span>
@@ -244,11 +252,14 @@
                                                 </div>
                                                 <span>{{ mail.status }}</span>
                                             </div>
+                                            <vs-button @click="descartar(mail.id)" v-show="mail.status == 'Nuevo'"
+                                                color="danger" class="mt-5" size="small" type="filled">Descartar
+                                            </vs-button>
                                             <vs-button @click="verReceta(mail.id, mail.doctor_id)"
                                                 color="rgb(62, 201, 214)" class="mt-5" size="small" type="filled">Ver
                                                 Receta
                                             </vs-button>
-                                            <vs-button color="primary" class="mt-5" type="filled" size="small"
+                                            <vs-button color="primary" class="mt-5" type="filled" size="small" v-show="mail.status == 'Nuevo'"
                                                 @click="openModal(mail.phone, mail.id, mail.status)">Posibles Clientes
                                             </vs-button>
                                         </div>
@@ -293,6 +304,7 @@
     export default {
         data() {
             return {
+                activado: 'Nuevo',
                 companyDetails: {
                     name: "",
                     addressLine1: "9 N. Sherwood Court",
@@ -379,6 +391,37 @@
             this.getRecipes("Nuevo");
         },
         methods: {
+            descartar(id){
+                this.openLoading();
+                let token = localStorage.getItem('tu');
+                axios({
+                    method: "put",
+                    url: "http://127.0.0.1:8000/api/changeStatus",
+                    data: JSON.stringify({
+                      id: id,
+                      status: 5
+                    }),
+                    headers: {
+                      authorization: "Bearer " + token,
+                      "content-type": "application/json"
+                    }
+                  })
+                    .then(Response => {
+                      this.activeLoading = false;
+                      this.$vs.loading.close();
+                      this.getRecipes("Nuevo");
+                      this.$vs.notify({
+                        title: "Satisfactorio",
+                        text: "Pedido descartado exitosamente.",
+                        color: "success"
+                      });
+                    })
+                    .catch(err => {
+                      this.activeLoading = false;
+                      this.$vs.loading.close();
+                      console.log(err);
+                    });
+            },
             verReceta(id, id1) {
                 this.popupActive = true;
                 let token = localStorage.getItem("tu");
@@ -551,12 +594,56 @@
                 if (a == 1) return "primary";
                 if (a == 2) return "warning";
                 if (a == 3) return "warning";
-                if (a == 4) return "warning";
-                if (a == 5) return "success";
+                if (a == 4) return "success";
+                if (a == 5) return "danger";
                 if (a == 6) return "danger";
                 return "primary";
             },
+            getFacturacion(a){
+                this.activado = a;
+                this.openLoading();
+                let token = localStorage.getItem("tu");
+                let id = localStorage.getItem("ui");
+                let f = new Date();
+                let fecha =
+                    f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+                fecha = fecha.toString();
+                axios({
+                        method: "get",
+                        url: "http://127.0.0.1:8000/api/getClientess",
+                        headers: {
+                            authorization: "Bearer " + token,
+                            "content-type": "application/json"
+                        }
+                    })
+                    .then(Response => {
+                        this.recipes = [];
+                        //console.log(Response.data);
+                        Response.data.forEach(element => {
+                            element.color = 'warning';
+                            element.status = 'Facturación';
+                            //console.log(element.status);
+                            this.doctors.forEach(e => {
+                                if (e.id == element.doctor_id) {
+                                    element.doctor_name = e.name;
+                                }
+                            });
+                            this.recipes.push(element);
+                            if (this.recipes.length == 0) {
+                                this.message = "No hay resultados.";
+                            }
+                        });
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                    });
+            },
             getRecipes(a) {
+                this.activado = a;
                 this.openLoading();
                 let token = localStorage.getItem("tu");
                 let id = localStorage.getItem("ui");
@@ -600,7 +687,8 @@
                         this.$vs.loading.close();
                     });
             },
-            getRerecipes() {
+            getRerecipes(a) {
+                this.activado = a;
                 this.openLoading();
                 let token = localStorage.getItem("tu");
                 let id = localStorage.getItem("ui");

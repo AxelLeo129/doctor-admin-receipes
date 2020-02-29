@@ -21,6 +21,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'User\UserController@login');
 Route::any('register', 'User\UserController@register');
+Route::get('pdf', function () {
+    $pdf = App::make('dompdf.wrapper');
+
+    $pdf->loadview('recipe');
+
+    return $pdf->stream();
+
+});
 
 Route::group(['middleware' => 'auth:api'], function(){
     //User
@@ -58,6 +66,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('getRecipes', 'Recipies\RecipieController@index');
     Route::get('getReceProd/{id}', 'Recipies\RecipieController@getProduct');
     Route::get('getInfoRecipie/{id}', 'Recipies\RecipieController@getInfoRecipie');
+    Route::put('changeStatus', 'Recipies\RecipieController@updateStatus');
     Route::get('getMedicines/{id}', 'Recipies\RecipieController@getMedicines');
     Route::put('putReceSta', 'Recipies\RecipieController@update');
     Route::get('getRerecipes', 'Recipies\RecipieController@getRerecipe');

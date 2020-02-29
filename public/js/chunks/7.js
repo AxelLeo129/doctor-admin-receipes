@@ -1613,6 +1613,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1621,6 +1632,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      activado: 'Nuevo',
       companyDetails: {
         name: "",
         addressLine1: "9 N. Sherwood Court",
@@ -1690,8 +1702,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getRecipes("Nuevo");
   },
   methods: {
-    verReceta: function verReceta(id, id1) {
+    descartar: function descartar(id) {
       var _this = this;
+
+      this.openLoading();
+      var token = localStorage.getItem('tu');
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "put",
+        url: "http://127.0.0.1:8000/api/changeStatus",
+        data: JSON.stringify({
+          id: id,
+          status: 5
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
+
+        _this.getRecipes("Nuevo");
+
+        _this.$vs.notify({
+          title: "Satisfactorio",
+          text: "Pedido descartado exitosamente.",
+          color: "success"
+        });
+      }).catch(function (err) {
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
+
+        console.log(err);
+      });
+    },
+    verReceta: function verReceta(id, id1) {
+      var _this2 = this;
 
       this.popupActive = true;
       var token = localStorage.getItem("tu");
@@ -1707,10 +1755,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (Response) {
         var f = new Date();
         var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-        _this.nuevaRecetaData.dateIssue = fecha;
-        _this.pName = Response.data[0].name;
-        _this.pPhone = Response.data[0].phone;
-        _this.rId = Response.data[0].id;
+        _this2.nuevaRecetaData.dateIssue = fecha;
+        _this2.pName = Response.data[0].name;
+        _this2.pPhone = Response.data[0].phone;
+        _this2.rId = Response.data[0].id;
         axios__WEBPACK_IMPORTED_MODULE_1___default()({
           method: "get",
           url: "http://127.0.0.1:8000/api/getInfoRecipie/" + idu,
@@ -1719,10 +1767,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             "content-type": "application/json"
           }
         }).then(function (Response) {
-          _this.medicinas = []; //console.log(Response);
+          _this2.medicinas = []; //console.log(Response);
 
           Response.data.forEach(function (element) {
-            _this.medicinas.push(element);
+            _this2.medicinas.push(element);
           });
           console.log(idm);
           axios__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -1733,44 +1781,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               "content-type": "application/json"
             }
           }).then(function (Response) {
-            _this.drName = Response.data.name;
+            _this2.drName = Response.data.name;
 
             if (Response.data.clinicPhone == null || Response.data.clinicPhone == '') {
-              _this.clPhone = '+502: 8452-9862';
+              _this2.clPhone = '+502: 8452-9862';
             } else {
-              _this.clPhone = Response.data.clinicPhone;
+              _this2.clPhone = Response.data.clinicPhone;
             }
 
             if (Response.data.clinicAddress == null || Response.data.clinicAddress == '') {
-              _this.clAddress = 'Via 4 zona 4 Guatemala';
+              _this2.clAddress = 'Via 4 zona 4 Guatemala';
             } else {
-              _this.clAddress = Response.data.clinicAddress;
+              _this2.clAddress = Response.data.clinicAddress;
             }
 
-            _this.drEmail = Response.data.email;
+            _this2.drEmail = Response.data.email;
 
             if (Response.data.phone == null || Response.data.phone == "") {
-              _this.drPhone = "+502: 8452-9862";
+              _this2.drPhone = "+502: 8452-9862";
             } else {
-              _this.drPhone = "+502: " + Response.data.phone;
+              _this2.drPhone = "+502: " + Response.data.phone;
             }
           }).catch(function (err) {
             console.log(err);
-            _this.activeLoading = false;
+            _this2.activeLoading = false;
 
-            _this.$vs.loading.close();
+            _this2.$vs.loading.close();
           });
         }).catch(function (err) {
           console.log(err);
-          _this.activeLoading = false;
+          _this2.activeLoading = false;
 
-          _this.$vs.loading.close();
+          _this2.$vs.loading.close();
         });
       }).catch(function (err) {
         console.log(err);
-        _this.activeLoading = false;
+        _this2.activeLoading = false;
 
-        _this.$vs.loading.close();
+        _this2.$vs.loading.close();
       });
     },
     editData: function editData(data, id) {
@@ -1785,7 +1833,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.toggleDataSidebar(true);
     },
     openModal: function openModal(phone, id, status) {
-      var _this2 = this;
+      var _this3 = this;
 
       //console.log(status);
       if (status == "Nuevo") {
@@ -1801,9 +1849,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }).then(function (Response) {
           Response.data.forEach(function (element) {
-            _this2.users.push(element);
+            _this3.users.push(element);
           });
-          _this2.popupActive2 = true;
+          _this3.popupActive2 = true;
         }).catch(function (err) {
           console.log(err);
         });
@@ -1834,7 +1882,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     getUsers: function getUsers() {
-      var _this3 = this;
+      var _this4 = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -1847,7 +1895,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this3.doctors.push({
+          _this4.doctors.push({
             id: element.id,
             name: element.name
           });
@@ -1860,61 +1908,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (a == 1) return "primary";
       if (a == 2) return "warning";
       if (a == 3) return "warning";
-      if (a == 4) return "warning";
-      if (a == 5) return "success";
+      if (a == 4) return "success";
+      if (a == 5) return "danger";
       if (a == 6) return "danger";
       return "primary";
     },
-    getRecipes: function getRecipes(a) {
-      var _this4 = this;
-
-      this.openLoading();
-      var token = localStorage.getItem("tu");
-      var id = localStorage.getItem("ui");
-      var f = new Date();
-      var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-      fecha = fecha.toString();
-      axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        method: "get",
-        url: "http://127.0.0.1:8000/api/getRecipes",
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      }).then(function (Response) {
-        _this4.recipes = []; //console.log(Response.data);
-
-        Response.data.forEach(function (element) {
-          element.color = _this4.colore(element.status);
-          element.status = _this4.status[element.status - 1]; //console.log(element.status);
-
-          _this4.doctors.forEach(function (e) {
-            if (e.id == element.doctor_id) {
-              element.doctor_name = e.name;
-            }
-          });
-
-          if (element.status == a) {
-            _this4.recipes.push(element);
-          }
-
-          if (_this4.recipes.length == 0) {
-            _this4.message = "No hay resultados.";
-          }
-        });
-        _this4.activeLoading = false;
-
-        _this4.$vs.loading.close();
-      }).catch(function (err) {
-        console.log(err);
-        _this4.activeLoading = false;
-
-        _this4.$vs.loading.close();
-      });
-    },
-    getRerecipes: function getRerecipes() {
+    getFacturacion: function getFacturacion(a) {
       var _this5 = this;
 
+      this.activado = a;
       this.openLoading();
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -1923,7 +1925,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       fecha = fecha.toString();
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getRerecipes",
+        url: "http://127.0.0.1:8000/api/getClientess",
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
@@ -1932,12 +1934,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this5.recipes = []; //console.log(Response.data);
 
         Response.data.forEach(function (element) {
-          element.color = _this5.colore(element.status);
-          element.status = _this5.status[element.status - 1]; //console.log(element.status);
+          element.color = 'warning';
+          element.status = 'Facturación'; //console.log(element.status);
 
           _this5.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
-              element.doctor_id = e.name;
+              element.doctor_name = e.name;
             }
           });
 
@@ -1955,6 +1957,100 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this5.activeLoading = false;
 
         _this5.$vs.loading.close();
+      });
+    },
+    getRecipes: function getRecipes(a) {
+      var _this6 = this;
+
+      this.activado = a;
+      this.openLoading();
+      var token = localStorage.getItem("tu");
+      var id = localStorage.getItem("ui");
+      var f = new Date();
+      var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+      fecha = fecha.toString();
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getRecipes",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this6.recipes = []; //console.log(Response.data);
+
+        Response.data.forEach(function (element) {
+          element.color = _this6.colore(element.status);
+          element.status = _this6.status[element.status - 1]; //console.log(element.status);
+
+          _this6.doctors.forEach(function (e) {
+            if (e.id == element.doctor_id) {
+              element.doctor_name = e.name;
+            }
+          });
+
+          if (element.status == a) {
+            _this6.recipes.push(element);
+          }
+
+          if (_this6.recipes.length == 0) {
+            _this6.message = "No hay resultados.";
+          }
+        });
+        _this6.activeLoading = false;
+
+        _this6.$vs.loading.close();
+      }).catch(function (err) {
+        console.log(err);
+        _this6.activeLoading = false;
+
+        _this6.$vs.loading.close();
+      });
+    },
+    getRerecipes: function getRerecipes(a) {
+      var _this7 = this;
+
+      this.activado = a;
+      this.openLoading();
+      var token = localStorage.getItem("tu");
+      var id = localStorage.getItem("ui");
+      var f = new Date();
+      var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+      fecha = fecha.toString();
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getRerecipes",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this7.recipes = []; //console.log(Response.data);
+
+        Response.data.forEach(function (element) {
+          element.color = _this7.colore(element.status);
+          element.status = _this7.status[element.status - 1]; //console.log(element.status);
+
+          _this7.doctors.forEach(function (e) {
+            if (e.id == element.doctor_id) {
+              element.doctor_id = e.name;
+            }
+          });
+
+          _this7.recipes.push(element);
+
+          if (_this7.recipes.length == 0) {
+            _this7.message = "No hay resultados.";
+          }
+        });
+        _this7.activeLoading = false;
+
+        _this7.$vs.loading.close();
+      }).catch(function (err) {
+        console.log(err);
+        _this7.activeLoading = false;
+
+        _this7.$vs.loading.close();
       });
     }
   }
@@ -4182,6 +4278,7 @@ var render = function() {
                         {
                           staticClass:
                             "flex justify-between items-center cursor-pointer",
+                          class: { "text-primary": _vm.activado == "Nuevo" },
                           attrs: { tag: "span" },
                           on: {
                             click: function($event) {
@@ -4211,7 +4308,43 @@ var render = function() {
                         "li",
                         {
                           staticClass:
+                            "flex justify-between items-center cursor-pointer",
+                          class: {
+                            "text-primary": _vm.activado == "Facturacion"
+                          },
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getFacturacion("Facturacion")
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "flex items-center mb-2" },
+                            [
+                              _c("feather-icon", {
+                                attrs: { icon: "FileIcon" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-lg ml-3" }, [
+                                _vm._v("Facturación")
+                              ])
+                            ],
+                            1
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          staticClass:
                             "flex items-center mt-4 mb-2 cursor-pointer",
+                          class: {
+                            "text-primary": _vm.activado == "Empaquetando"
+                          },
                           attrs: { tag: "span" },
                           on: {
                             click: function($event) {
@@ -4236,6 +4369,9 @@ var render = function() {
                         {
                           staticClass:
                             "flex justify-between items-center mt-4 cursor-pointer",
+                          class: {
+                            "text-primary": _vm.activado == "Entregando"
+                          },
                           attrs: { tag: "span" },
                           on: {
                             click: function($event) {
@@ -4266,6 +4402,9 @@ var render = function() {
                         {
                           staticClass:
                             "flex items-center mt-4 mb-2 cursor-pointer",
+                          class: {
+                            "text-primary": _vm.activado == "Entregado"
+                          },
                           attrs: { tag: "span" },
                           on: {
                             click: function($event) {
@@ -4288,6 +4427,9 @@ var render = function() {
                         {
                           staticClass:
                             "flex items-center justify-between items-center mt-4 cursor-pointer",
+                          class: {
+                            "text-primary": _vm.activado == "Cancelado"
+                          },
                           attrs: { tag: "span" },
                           on: {
                             click: function($event) {
@@ -4305,7 +4447,7 @@ var render = function() {
                               }),
                               _vm._v(" "),
                               _c("span", { staticClass: "text-lg ml-3" }, [
-                                _vm._v("Cancelado")
+                                _vm._v("Descartadas")
                               ])
                             ],
                             1
@@ -4318,10 +4460,13 @@ var render = function() {
                         {
                           staticClass:
                             "flex items-center justify-between items-center mt-4 cursor-pointer",
+                          class: {
+                            "text-primary": _vm.activado == "Reprogramada"
+                          },
                           attrs: { tag: "span" },
                           on: {
                             click: function($event) {
-                              return _vm.getRerecipes()
+                              return _vm.getRerecipes("Reprogramada")
                             }
                           }
                         },
@@ -4495,6 +4640,37 @@ var render = function() {
                                         _c(
                                           "vs-button",
                                           {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: mail.status == "Nuevo",
+                                                expression:
+                                                  "mail.status == 'Nuevo'"
+                                              }
+                                            ],
+                                            staticClass: "mt-5",
+                                            attrs: {
+                                              color: "danger",
+                                              size: "small",
+                                              type: "filled"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.descartar(mail.id)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "Descartar\n                                        "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "vs-button",
+                                          {
                                             staticClass: "mt-5",
                                             attrs: {
                                               color: "rgb(62, 201, 214)",
@@ -4520,6 +4696,15 @@ var render = function() {
                                         _c(
                                           "vs-button",
                                           {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: mail.status == "Nuevo",
+                                                expression:
+                                                  "mail.status == 'Nuevo'"
+                                              }
+                                            ],
                                             staticClass: "mt-5",
                                             attrs: {
                                               color: "primary",
