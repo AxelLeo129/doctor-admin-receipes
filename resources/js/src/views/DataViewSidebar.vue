@@ -82,7 +82,6 @@
                       <vs-checkbox
                         class="mt-5"
                         v-model="tr.repro"
-                        v-show="tr.repro == false || tr.repro == true"
                       >Reprogramar</vs-checkbox>
                     </vs-td>
 
@@ -93,7 +92,6 @@
                         size="small"
                         type="date"
                         v-model="tr.next"
-                        v-if="tr.next != ''"
                       />
                     </vs-td>
 
@@ -709,7 +707,23 @@ export default {
   },
   methods: {
     agregarL(data) {
-      //console.log(data);
+      function sumarDias(fecha, dias) {
+          fecha.setDate(fecha.getDate() + dias);
+          return fecha;
+      }
+      let d = new Date();
+      let c = 1;
+      let a = sumarDias(d, c);
+      let e = (a.getMonth() + 1).toString();
+      let f = a.getFullYear().toString();
+      let g = a.getDate().toString();
+      if (e.length == 1) {
+        e = "0" + e;
+      }
+      if (g.length == 1) {
+        g = "0" + g;
+      }
+      let h = f + "-" + e + "-" + g;
       this.medicines.push({
         id: data.id,
         name: data.name,
@@ -718,8 +732,8 @@ export default {
         cantidad: 1,
         totale: 0,
         unidad: "Pastillas",
-        repro: "hola",
-        next: ""
+        repro: false,
+        next: h
       });
       let p = parseFloat(data.price);
       this.sumar(p, 1, this.cont);
@@ -760,7 +774,7 @@ export default {
       this.totales[index] = price * cantidad;
       this.totales.forEach(element => {
         //console.log(element);
-        this.total = this.total + element;
+        this.total = parseFloat(this.total + element).toFixed(2);
       });
     },
     openLoading() {
@@ -1039,6 +1053,7 @@ export default {
                         text: "Pedido enviado al despachador exitosamente.",
                         color: "success"
                       });
+                      this.$router.go();
                     })
                     .catch(err => {
                       this.activeLoading = false;
@@ -1249,7 +1264,7 @@ export default {
             this.sumar(p, 1, this.cont);
             this.cont = this.cont + 1;
           });
-          console.log(this.medicines);
+          //console.log(this.medicines);
           this.popupActive2 = true;
         })
         .catch(err => {

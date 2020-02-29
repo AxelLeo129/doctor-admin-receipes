@@ -737,6 +737,7 @@ export default {
             text: "Usuario actualizado exitosamente.",
             color: "success"
           });
+          this.$router.go();
         })
         .catch(err => {
           this.activeLoading = false;

@@ -421,8 +421,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -714,7 +712,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     agregarL: function agregarL(data) {
-      //console.log(data);
+      function sumarDias(fecha, dias) {
+        fecha.setDate(fecha.getDate() + dias);
+        return fecha;
+      }
+
+      var d = new Date();
+      var c = 1;
+      var a = sumarDias(d, c);
+      var e = (a.getMonth() + 1).toString();
+      var f = a.getFullYear().toString();
+      var g = a.getDate().toString();
+
+      if (e.length == 1) {
+        e = "0" + e;
+      }
+
+      if (g.length == 1) {
+        g = "0" + g;
+      }
+
+      var h = f + "-" + e + "-" + g;
       this.medicines.push({
         id: data.id,
         name: data.name,
@@ -723,8 +741,8 @@ __webpack_require__.r(__webpack_exports__);
         cantidad: 1,
         totale: 0,
         unidad: "Pastillas",
-        repro: "hola",
-        next: ""
+        repro: false,
+        next: h
       });
       var p = parseFloat(data.price);
       this.sumar(p, 1, this.cont);
@@ -768,7 +786,7 @@ __webpack_require__.r(__webpack_exports__);
       this.totales[index] = price * cantidad;
       this.totales.forEach(function (element) {
         //console.log(element);
-        _this2.total = _this2.total + element;
+        _this2.total = parseFloat(_this2.total + element).toFixed(2);
       });
     },
     openLoading: function openLoading() {
@@ -1053,6 +1071,8 @@ __webpack_require__.r(__webpack_exports__);
                 text: "Pedido enviado al despachador exitosamente.",
                 color: "success"
               });
+
+              _this4.$router.go();
             }).catch(function (err) {
               _this4.activeLoading = false;
 
@@ -1285,8 +1305,8 @@ __webpack_require__.r(__webpack_exports__);
           _this7.sumar(p, 1, _this7.cont);
 
           _this7.cont = _this7.cont + 1;
-        });
-        console.log(_this7.medicines);
+        }); //console.log(this.medicines);
+
         _this7.popupActive2 = true;
       }).catch(function (err) {
         console.log(err);
@@ -2375,17 +2395,6 @@ var render = function() {
                                           _c(
                                             "vs-checkbox",
                                             {
-                                              directives: [
-                                                {
-                                                  name: "show",
-                                                  rawName: "v-show",
-                                                  value:
-                                                    tr.repro == false ||
-                                                    tr.repro == true,
-                                                  expression:
-                                                    "tr.repro == false || tr.repro == true"
-                                                }
-                                              ],
                                               staticClass: "mt-5",
                                               model: {
                                                 value: tr.repro,
@@ -2416,22 +2425,20 @@ var render = function() {
                                               ) +
                                               "\n                    "
                                           ),
-                                          tr.next != ""
-                                            ? _c("vs-input", {
-                                                staticClass: "inputx mt-5",
-                                                attrs: {
-                                                  size: "small",
-                                                  type: "date"
-                                                },
-                                                model: {
-                                                  value: tr.next,
-                                                  callback: function($$v) {
-                                                    _vm.$set(tr, "next", $$v)
-                                                  },
-                                                  expression: "tr.next"
-                                                }
-                                              })
-                                            : _vm._e()
+                                          _c("vs-input", {
+                                            staticClass: "inputx mt-5",
+                                            attrs: {
+                                              size: "small",
+                                              type: "date"
+                                            },
+                                            model: {
+                                              value: tr.next,
+                                              callback: function($$v) {
+                                                _vm.$set(tr, "next", $$v)
+                                              },
+                                              expression: "tr.next"
+                                            }
+                                          })
                                         ],
                                         1
                                       ),

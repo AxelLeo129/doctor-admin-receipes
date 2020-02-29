@@ -754,6 +754,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           text: "Usuario actualizado exitosamente.",
           color: "success"
         });
+
+        _this3.$router.go();
       }).catch(function (err) {
         _this3.activeLoading = false;
 
