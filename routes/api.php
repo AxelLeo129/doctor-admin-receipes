@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('getProducts', 'Products\ProductController@list');
     Route::get('getProducts1', 'Products\ProductController@list1');
     Route::post('postProducts', 'Products\ProductController@store');
+    Route::post('postProducts1', 'Products\ProductController@store1');
     Route::get('getProduct/{id}', 'Products\ProductController@show');
     Route::get('getProduct1/{id}', 'Products\ProductController@show1');
     Route::get('deleteProduct/{id}', 'Products\ProductController@destroy');

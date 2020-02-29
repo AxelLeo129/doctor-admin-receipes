@@ -138,7 +138,9 @@ export default {
             data: JSON.stringify({
               name: this.name,
               email: this.email,
-              password: this.password
+              password: this.password,
+              user_id: idu,
+              collegiate: this.noCollegiate,
             })
           })
             .then(response => {

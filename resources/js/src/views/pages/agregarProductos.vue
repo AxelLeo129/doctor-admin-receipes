@@ -289,7 +289,7 @@
                       <div class="flex justify-between flex-wrap">
                         <vs-button
                           class="mt-4 mr-2 alineacion"
-                          @click="activar=true, setData(item.id, item.name, item.description, item.precentacion, item.image)"
+                          @click="activar=true, setData(item.id, item.name, item.description, item.precentacion)"
                         >Agregar Medicamento</vs-button>
                       </div>
                     </vx-card>
@@ -543,12 +543,12 @@ export default {
         type: "default"
       });
     },
-    setData(id, nombre, descripcion, precentacion, img) {
+    setData(id, nombre, descripcion, precentacion) {
       this.idMedicanto = id;
       this.nombre = nombre;
       this.descripcion = descripcion;
       this.precentacion = precentacion;
-      this.image = img;
+      this.image = id;
     },
     getCategorias() {
       let token = localStorage.getItem("tu");

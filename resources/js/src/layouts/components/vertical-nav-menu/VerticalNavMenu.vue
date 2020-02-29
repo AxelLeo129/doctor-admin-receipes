@@ -213,7 +213,7 @@ export default {
       let newArray = [];
 
       clone.forEach(element => {
-        if (element.rol == this.token) {
+        if (element.rol == this.token || element.rol == 0) {
           newArray.push(element);
         }
       });

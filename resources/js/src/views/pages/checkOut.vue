@@ -65,7 +65,7 @@
           >
             <div class="vx-row">
               <div class="vx-col md:w-1/2 w-full">
-                <img class="h-48 w-48" :src="'data:image/png;base64,' + item.img" alt="image" />
+                <img class="h-48 w-48" alt="image" :src="'https://pharmazone.app/images/productos/' + item.img + '.png'"/>
               </div>
               <div class="vx-col md:w-1/2 w-full">
                 <h3 class="mb-3" v-text="item.nombre"></h3>
@@ -98,11 +98,11 @@
 
           <vs-button class="w-full mb-2" @click="generarReceta" v-if="nextStep == 0">Finalizar</vs-button>
           <vs-button class="w-full mb-2" @click="generarReceta" v-else>Siguiente</vs-button>
-          <vs-button
+          <!-- <vs-button
             class="w-full mb-2"
             @click="agregarmas"
             color="rgb(71, 227, 228)"
-          >Seguir Recetando</vs-button>
+          >Seguir Recetando</vs-button> -->
         </vx-card>
       </div>
     </div>

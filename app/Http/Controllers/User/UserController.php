@@ -18,10 +18,10 @@ class UserController extends Controller
 
 
     public function sendEmail(Request $request){
-        Mail::send('welcome', ['request' => $request], function($message) use ($request){
+        $userName = \DB::table('users')->where('id', $request->user_id)->value('name');
+        Mail::send('welcome', ['request' => $request, 'userName' => $userName], function($message) use ($request){
             $message->from('pharmazone@insayd.com', 'Pharmazone.app');
             $message->to($request->email, $request->name)->subject('¡Bienvenid@ a Pharmazone.app!');
-            //$message->
         });
     
         return "Se ha enviado el email";

@@ -88,13 +88,13 @@
                   </div>
                 </div>
                 <div class="vx-row">
-                  <div class="vx-col md:w-1/4 w-full">
+                  <!-- <div class="vx-col md:w-1/4 w-full">
                     <ul class="centerx">
                       <li>
                         <vs-checkbox v-model="alertas">Mostrar alertas</vs-checkbox>
                       </li>
                     </ul>
-                  </div>
+                  </div> -->
                   <div class="vx-col md:w-1/4 w-full">
                     <ul>
                       <li>
@@ -178,6 +178,109 @@
                         color="danger"
                         @click="getData"
                       >Resetear</vs-button>
+                    </div>
+                  </div>
+                </div>
+                <hr class="mt-5" />
+                <div class="mt-5">
+                  <div class="tab-text">
+                    <div id="user-edit-tab-info">
+                      <div class="vx-row">
+                        <vs-alert
+                          color="danger"
+                          title="Error"
+                          :active.sync="activado2"
+                          closable
+                          style="width: 70%"
+                          icon-pack="feather"
+                          close-icon="icon-x"
+                        >
+                          Error en el servidor,
+                          por favor intentelo más tarde.
+                        </vs-alert>
+                      </div>
+                      <br />
+                      <div class="vx-row">
+                        <div class="vx-col w-full">
+                          <!-- Col Header -->
+                          <div class="flex items-end">
+                            <feather-icon icon="KeyIcon" class="mr-2" svgClasses="w-5 h-5" />
+                            <span class="leading-none font-medium">Cambiar Contraseña</span>
+                          </div>
+
+                          <!-- Col Content -->
+                          <div>
+                            <!-- DOB -->
+
+                            <vs-input
+                              class="w-full mt-4"
+                              label="Contraseña Actual"
+                              name="mypassword"
+                              type="password"
+                              v-model="mypassword"
+                            />
+                            <span
+                              class="text-danger text-sm"
+                              v-if="mypassword === ''"
+                            >Este campo es requerido</span>
+
+                            <vs-input
+                              class="w-full mt-4"
+                              type="password"
+                              label="Nueva Contraseña"
+                              name="password"
+                              v-model="password"
+                            />
+                            <span
+                              class="text-danger text-sm"
+                              v-if="password === ''"
+                            >Este campo es requerido</span>
+                            <span
+                              class="text-danger text-sm"
+                              v-if="bol1 === false && password !== ''"
+                            >Este campo debe tener al menos 4 caracteres.</span>
+                            <vs-input
+                              class="w-full mt-4"
+                              type="password"
+                              label="Confirmar Nueva Contraseña"
+                              name="confirmPassword"
+                              v-model="confirmPassword"
+                            />
+                            <span
+                              class="text-danger text-sm"
+                              v-if="confirmPassword === ''"
+                            >Este campo es requerido.</span>
+                            <span
+                              class="text-danger text-sm"
+                              v-if="bol2 === false && confirmPassword !== ''"
+                            >Este campo debe tener al menos 4 caracteres.</span>
+                            <span
+                              class="text-danger text-sm"
+                              v-if="bol3 === false && confirmPassword !== '' && bol2 == true"
+                            >La confirmación de contraseña no coincide.</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Save & Reset Button -->
+                      <div class="vx-row">
+                        <div class="vx-col w-full">
+                          <div class="mt-8 flex flex-wrap items-center justify-end">
+                            <vs-button
+                              class="ml-auto mt-2"
+                              color="warning"
+                              @click="popupActive4=true"
+                              :disabled="mypassword == null || mypassword == '' || password == null || password == '' || confirmPassword == null || confirmPassword == '' || bol1 == false || bol1 == null || bol2 == false || bol2 == null || bol3 == false || bol3 == null || password != confirmPassword"
+                            >Guardar Cambios</vs-button>
+                            <vs-button
+                              class="ml-4 mt-2"
+                              type="border"
+                              color="danger"
+                              @click="getData"
+                            >Resetear</vs-button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -327,7 +430,7 @@
               </div>
             </div>
           </vs-tab>
-          <vs-tab label="Cambiar Contraseña" icon-pack="feather" icon="icon-lock">
+          <!-- <vs-tab label="Cambiar Contraseña" icon-pack="feather" icon="icon-lock">
             <div class="tab-text">
               <div id="user-edit-tab-info">
                 <div class="vx-row">
@@ -347,15 +450,14 @@
                 <br />
                 <div class="vx-row">
                   <div class="vx-col w-full">
-                    <!-- Col Header -->
+                    
                     <div class="flex items-end">
                       <feather-icon icon="KeyIcon" class="mr-2" svgClasses="w-5 h-5" />
                       <span class="leading-none font-medium">Cambiar Contraseña</span>
                     </div>
 
-                    <!-- Col Content -->
                     <div>
-                      <!-- DOB -->
+                      
 
                       <vs-input
                         class="w-full mt-4"
@@ -407,7 +509,6 @@
                   </div>
                 </div>
 
-                <!-- Save & Reset Button -->
                 <div class="vx-row">
                   <div class="vx-col w-full">
                     <div class="mt-8 flex flex-wrap items-center justify-end">
@@ -428,7 +529,7 @@
                 </div>
               </div>
             </div>
-          </vs-tab>
+          </vs-tab> -->
         </vs-tabs>
       </div>
     </vx-card>
@@ -741,6 +842,9 @@ export default {
           if (Response.data == "Success") {
             this.getData();
             this.activeLoading = false;
+            this.mypassword = null;
+            this.password = null;
+            this.confirmPassword = null;
             this.$vs.loading.close();
             this.$vs.notify({
               title: "Actualizado",

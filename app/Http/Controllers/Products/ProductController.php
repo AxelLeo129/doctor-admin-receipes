@@ -66,6 +66,34 @@ class ProductController extends Controller
     }
 
 
+    public function store1(Request $request)
+    {
+        if($request->hasFile('image')){
+            //$request->image->
+            $request->image->store('local');
+            return $request->all();
+        }else{
+            return "fail";
+        }
+        
+        /*$data['image'] = $request->image->store('');
+        return ['result' => 'success', "mess"=>$request->all()];*/
+
+        /*$product = new Product();
+        $product->name = $request->name;
+        $product->image = $request->image;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->precentation = $request->precentation;
+        $product->laboratory = $request->laboratory;
+        $product->warehouse = $request->warehouse;
+        $product->quantity = $request->quantity;
+        $product->user_id = $request->user_id;
+        if($product->save()){
+            return ['result' => 'success', "mess"=>$product->id];
+        }*/
+    }
+
     /**
      * Store a newly created resource in storage.
      *

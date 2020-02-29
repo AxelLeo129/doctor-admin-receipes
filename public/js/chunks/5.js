@@ -2066,7 +2066,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
       var newArray = [];
       clone.forEach(function (element) {
-        if (element.rol == _this2.token) {
+        if (element.rol == _this2.token || element.rol == 0) {
           newArray.push(element);
         }
       });
@@ -6994,6 +6994,13 @@ __webpack_require__.r(__webpack_exports__);
   slug: "nuevoMedico",
   icon: "PlusIcon",
   rol: 6
+}, //Todos
+{
+  url: "/user/profile",
+  name: "Cambiar Contreseña ",
+  slug: "user/profile",
+  icon: "KeyIcon",
+  rol: 0
 }]);
 
 /***/ }),

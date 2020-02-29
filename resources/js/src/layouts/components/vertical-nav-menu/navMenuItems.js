@@ -93,7 +93,7 @@ export default [
     slug: "listadoPres",
     icon: "ListIcon",
     rol: 1
-  }, 
+  },
   {
     url: "/boodskapper",
     name: "Listado Envíos",
@@ -136,5 +136,13 @@ export default [
     slug: "nuevoMedico",
     icon: "PlusIcon",
     rol: 6
-  }
+  },
+  //Todos
+  {
+    url: "/user/profile",
+    name: "Cambiar Contreseña ",
+    slug: "user/profile",
+    icon: "KeyIcon",
+    rol: 0
+  },
 ]

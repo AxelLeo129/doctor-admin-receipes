@@ -27,7 +27,7 @@
           <vs-td :data="data[indextr].email">{{ data[indextr].email }}</vs-td>
 
           <vs-td>
-            <vs-button size="small" color="warning" @click="edit(tr.id)">Editar</vs-button>
+            <vs-button size="small" color="warning" @click="edit(tr.id)" disabled>Editar</vs-button>
           </vs-td>
         </vs-tr>
       </template>
