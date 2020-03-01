@@ -57,15 +57,15 @@
                     </vs-td>
 
                     <vs-td v-if="data[indextr].cliente.status == 1">
-                        Nuevo
+                        Despachando
                     </vs-td>
 
                     <vs-td v-if="data[indextr].cliente.status == 2">
-                        Empaquetando
+                        En ruta
                     </vs-td>
 
                     <vs-td v-if="data[indextr].cliente.status == 3">
-                        Entregando
+                        En ruta
                     </vs-td>
 
                     <vs-td v-if="data[indextr].cliente.status == 4">
@@ -227,6 +227,7 @@
                 }
                 })
                 .then(Response => {
+                    console.log(Response.data);
                     Response.data.forEach(element => {
                     element.cliente.client_addresse = (element.cliente.callee + ' ' + element.cliente.apartamentoe + ' ' + element.cliente.residenciae + ' zona ' + element.cliente.codigoe + ' ' + element.cliente.municipioe + ' ' + element.cliente.depare + ' ' + element.cliente.paise);
                     this.users.push(element);

@@ -770,7 +770,7 @@ export default {
     sumar(price, cantidad, index) {
       this.total = 0;
       cantidad = parseFloat(cantidad);
-      this.cantidades[index] = price;
+      this.cantidades[index] = cantidad;
       this.totales[index] = price * cantidad;
       this.totales.forEach(element => {
         //console.log(element);

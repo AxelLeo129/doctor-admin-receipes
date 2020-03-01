@@ -157,13 +157,11 @@
                                 </div>
                             </li>
 
-                            <li tag="span" @click="getFacturacion('Facturacion')"
-                                class="flex justify-between items-center cursor-pointer" :class="{'text-primary': activado == 'Facturacion'}">
-                                <div class="flex items-center mb-2">
-                                    <feather-icon icon="FileIcon"></feather-icon>
-                                    <span class="text-lg ml-3">Facturación</span>
-                                </div>
-                            </li>
+                            <!-- <li tag="span" @click="getFacturacion('Facturacion')"
+                                class="flex items-center mt-4 mb-2 cursor-pointer" :class="{'text-primary': activado == 'Facturacion'}">
+                                <feather-icon icon="FileIcon"></feather-icon>
+                                <span class="text-lg ml-3">Facturación</span>
+                            </li> -->
 
                             <!-- sent -->
                             <li tag="span" @click="getRecipes('Empaquetando')"
@@ -600,6 +598,7 @@
                 return "primary";
             },
             getFacturacion(a){
+                console.log(a);
                 this.activado = a;
                 this.openLoading();
                 let token = localStorage.getItem("tu");
@@ -618,7 +617,7 @@
                     })
                     .then(Response => {
                         this.recipes = [];
-                        //console.log(Response.data);
+                        console.log(Response.data);
                         Response.data.forEach(element => {
                             element.color = 'warning';
                             element.status = 'Facturación';

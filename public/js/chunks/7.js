@@ -782,7 +782,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.total = 0;
       cantidad = parseFloat(cantidad);
-      this.cantidades[index] = price;
+      this.cantidades[index] = cantidad;
       this.totales[index] = price * cantidad;
       this.totales.forEach(function (element) {
         //console.log(element);
@@ -1642,8 +1642,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -1936,6 +1934,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getFacturacion: function getFacturacion(a) {
       var _this5 = this;
 
+      console.log(a);
       this.activado = a;
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -1951,8 +1950,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this5.recipes = []; //console.log(Response.data);
-
+        _this5.recipes = [];
+        console.log(Response.data);
         Response.data.forEach(function (element) {
           element.color = 'warning';
           element.status = 'Facturación'; //console.log(element.status);
@@ -4304,39 +4303,6 @@ var render = function() {
                               _vm._v(" "),
                               _c("span", { staticClass: "text-lg ml-3" }, [
                                 _vm._v("Nuevos")
-                              ])
-                            ],
-                            1
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        {
-                          staticClass:
-                            "flex justify-between items-center cursor-pointer",
-                          class: {
-                            "text-primary": _vm.activado == "Facturacion"
-                          },
-                          attrs: { tag: "span" },
-                          on: {
-                            click: function($event) {
-                              return _vm.getFacturacion("Facturacion")
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "div",
-                            { staticClass: "flex items-center mb-2" },
-                            [
-                              _c("feather-icon", {
-                                attrs: { icon: "FileIcon" }
-                              }),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "text-lg ml-3" }, [
-                                _vm._v("Facturación")
                               ])
                             ],
                             1

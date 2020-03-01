@@ -137,7 +137,7 @@
                         </vs-td>
 
                         <vs-td :data="data[indextr].preName">
-                            {{ data[indextr].preName }} - {{data[indextr].unidad}} - {{data[indextr].preCantidad}}
+                            {{ data[indextr].preName }}
                         </vs-td>
 
                         <vs-td :data="data[indextr].labName">

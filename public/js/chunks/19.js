@@ -847,10 +847,6 @@ var render = function() {
                               _vm._v(
                                 "\n                        " +
                                   _vm._s(data[indextr].preName) +
-                                  " - " +
-                                  _vm._s(data[indextr].unidad) +
-                                  " - " +
-                                  _vm._s(data[indextr].preCantidad) +
                                   "\n                    "
                               )
                             ]

@@ -241,6 +241,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        console.log(Response.data);
         Response.data.forEach(function (element) {
           element.cliente.client_addresse = element.cliente.callee + ' ' + element.cliente.apartamentoe + ' ' + element.cliente.residenciae + ' zona ' + element.cliente.codigoe + ' ' + element.cliente.municipioe + ' ' + element.cliente.depare + ' ' + element.cliente.paise;
 
@@ -621,7 +622,7 @@ var render = function() {
                       data[indextr].cliente.status == 1
                         ? _c("vs-td", [
                             _vm._v(
-                              "\n                    Nuevo\n                "
+                              "\n                    Despachando\n                "
                             )
                           ])
                         : _vm._e(),
@@ -629,7 +630,7 @@ var render = function() {
                       data[indextr].cliente.status == 2
                         ? _c("vs-td", [
                             _vm._v(
-                              "\n                    Empaquetando\n                "
+                              "\n                    En ruta\n                "
                             )
                           ])
                         : _vm._e(),
@@ -637,7 +638,7 @@ var render = function() {
                       data[indextr].cliente.status == 3
                         ? _c("vs-td", [
                             _vm._v(
-                              "\n                    Entregando\n                "
+                              "\n                    En ruta\n                "
                             )
                           ])
                         : _vm._e(),
