@@ -119,21 +119,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -152,12 +137,14 @@ __webpack_require__.r(__webpack_exports__);
       },
       bol: "as",
       image: "images/medicamentos/default.png",
+      image1: null,
       name: null,
       precentation: null,
       description: null,
       activado: false,
       quantity: null,
       price: null,
+      cost: null,
       message: "Error en el servidor, Intente más tarde.",
       laboratory: null,
       warehouse: null,
@@ -185,12 +172,12 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         _this.presentaciones = [];
         Response.data.forEach(function (element) {
-          if (element.user_id == idu) {
-            _this.presentaciones.push({
-              label: element.name + '-' + element.unidad + '-' + element.cantidad,
-              value: element.id
-            });
-          }
+          //if (element.user_id == idu) {
+          _this.presentaciones.push({
+            label: element.name + '-' + element.unidad + '-' + element.cantidad,
+            value: element.id
+          }); //}
+
         });
       }).catch(function (err) {
         console.log(err);
@@ -211,12 +198,12 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         _this2.laboratorios = [];
         Response.data.forEach(function (element) {
-          if (element.user_id == idu) {
-            _this2.laboratorios.push({
-              label: element.name,
-              value: element.id
-            });
-          }
+          //if (element.user_id == idu) {
+          _this2.laboratorios.push({
+            label: element.name,
+            value: element.id
+          }); //}
+
         });
       }).catch(function (err) {
         console.log(err);
@@ -236,12 +223,12 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          if (element.user_id == idu) {
-            _this3.categorias.push({
-              label: element.name,
-              value: element.id
-            });
-          }
+          //if (element.user_id == idu) {
+          _this3.categorias.push({
+            label: element.name,
+            value: element.id
+          }); //}
+
         });
       }).catch(function (err) {
         console.log(err);
@@ -269,26 +256,33 @@ __webpack_require__.r(__webpack_exports__);
       this.category.forEach(function (element) {
         arrayFinal.push(element.value);
       });
+      var formData = new FormData();
+      formData.append('name', this.name);
+      formData.append('image', this.image1);
+      formData.append('description', this.description);
+      formData.append('price', this.price);
+      formData.append('cost', this.cost);
+      formData.append('precentation', this.precentation.value);
+      formData.append('laboratory', this.laboratory.value);
+      formData.append('warehouse', this.warehouse);
+      formData.append('quantity', this.quantity);
+      formData.append('user_id', idu);
+      console.log(formData);
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "post",
         url: "http://127.0.0.1:8000/api/postProducts",
-        data: JSON.stringify({
-          name: this.name,
-          image: this.base64textString,
-          description: this.description,
-          price: this.price,
-          precentation: this.precentation.value,
-          laboratory: this.laboratory.value,
-          warehouse: this.warehouse,
-          quantity: this.quantity,
-          user_id: idu
-        }),
+        data: formData,
         headers: {
           authorization: "Bearer " + token,
-          "content-type": "application/json"
+          "content-type": "multipart/form-data"
         }
       }).then(function (Response) {
-        _this4.Resid = Response.data.mess;
+        _this4.Resid = Response.data.mess; //console.log(Response);
+
+        _this4.activeLoading = false;
+
+        _this4.$vs.loading.close();
+
         axios__WEBPACK_IMPORTED_MODULE_1___default()({
           method: "post",
           url: "http://127.0.0.1:8000/api/postProdCate",
@@ -330,6 +324,7 @@ __webpack_require__.r(__webpack_exports__);
     handleFileSelect: function handleFileSelect(evt) {
       var files = evt.target.files;
       var file = files[0];
+      this.image1 = file;
       var nombre = files[0].name;
       document.getElementById("info1").innerHTML = nombre;
 
@@ -422,6 +417,7 @@ var render = function() {
     _c(
       "form",
       {
+        attrs: { enctype: "multipart/form-data" },
         on: {
           submit: function($event) {
             $event.preventDefault()
@@ -589,84 +585,6 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("label", { staticClass: "vs-input--label" }, [
-                _vm._v("Precio")
-              ]),
-              _vm._v(" "),
-              _c(
-                "vx-input-group",
-                { staticClass: "mb-base" },
-                [
-                  _c("template", { slot: "prepend" }, [
-                    _c("div", { staticClass: "prepend-text bg-primary" }, [
-                      _c("span", [_vm._v("Q")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("vs-input", {
-                    attrs: { placeholder: "Price" },
-                    model: {
-                      value: _vm.price,
-                      callback: function($$v) {
-                        _vm.price = $$v
-                      },
-                      expression: "price"
-                    }
-                  })
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.price === "",
-                      expression: "price === ''"
-                    }
-                  ],
-                  staticClass: "text-danger text-sm"
-                },
-                [_vm._v(_vm._s(_vm.errors.campo))]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "mt-4" },
-                [
-                  _c("label", { staticClass: "vs-input--label" }, [
-                    _vm._v("Categoría")
-                  ]),
-                  _vm._v(" "),
-                  _c("v-select", {
-                    attrs: {
-                      multiple: "",
-                      closeOnSelect: false,
-                      options: _vm.categorias,
-                      dir: _vm.$vs.rtl ? "rtl" : "ltr"
-                    },
-                    model: {
-                      value: _vm.category,
-                      callback: function($$v) {
-                        _vm.category = $$v
-                      },
-                      expression: "category"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "vx-col md:w-1/2 w-full" },
-            [
               _c("vs-input", {
                 staticClass: "w-full mt-4",
                 attrs: { label: "Cantidad", name: "cantidad", type: "number" },
@@ -695,9 +613,171 @@ var render = function() {
                 [_vm._v(_vm._s(_vm.errors.campo))]
               ),
               _vm._v(" "),
+              _c("label", { staticClass: "vs-input--label" }, [
+                _vm._v("Precio")
+              ]),
+              _vm._v(" "),
+              _c(
+                "vx-input-group",
+                { staticClass: "mb-base" },
+                [
+                  _c("template", { slot: "prepend" }, [
+                    _c("div", { staticClass: "prepend-text bg-primary" }, [
+                      _c("span", [_vm._v("Q")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-input", {
+                    attrs: { type: "number", placeholder: "Precio" },
+                    model: {
+                      value: _vm.price,
+                      callback: function($$v) {
+                        _vm.price = $$v
+                      },
+                      expression: "price"
+                    }
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("label", { staticClass: "vs-input--label" }, [
+                _vm._v("Costo")
+              ]),
+              _vm._v(" "),
+              _c(
+                "vx-input-group",
+                { staticClass: "mb-base" },
+                [
+                  _c("template", { slot: "prepend" }, [
+                    _c("div", { staticClass: "prepend-text bg-primary" }, [
+                      _c("span", [_vm._v("Q")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-input", {
+                    attrs: { type: "number", placeholder: "Costo" },
+                    model: {
+                      value: _vm.cost,
+                      callback: function($$v) {
+                        _vm.cost = $$v
+                      },
+                      expression: "cost"
+                    }
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.cost === "",
+                      expression: "cost === ''"
+                    }
+                  ],
+                  staticClass: "text-danger text-sm"
+                },
+                [_vm._v(_vm._s(_vm.errors.campo))]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "vx-col md:w-1/2 w-full" }, [
+            _c(
+              "div",
+              { staticClass: "mt-4" },
+              [
+                _c("label", { staticClass: "vs-input--label" }, [
+                  _vm._v("Categorías")
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    multiple: "",
+                    closeOnSelect: false,
+                    options: _vm.categorias,
+                    dir: _vm.$vs.rtl ? "rtl" : "ltr"
+                  },
+                  model: {
+                    value: _vm.category,
+                    callback: function($$v) {
+                      _vm.category = $$v
+                    },
+                    expression: "category"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.category === "",
+                    expression: "category === ''"
+                  }
+                ],
+                staticClass: "text-danger text-sm"
+              },
+              [_vm._v(_vm._s(_vm.errors.campo))]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mt-4" },
+              [
+                _c(
+                  "label",
+                  {
+                    staticClass: "vs-input--label",
+                    staticStyle: { color: "gray" }
+                  },
+                  [_vm._v("Presentación")]
+                ),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { options: _vm.presentaciones },
+                  model: {
+                    value: _vm.precentation,
+                    callback: function($$v) {
+                      _vm.precentation = $$v
+                    },
+                    expression: "precentation"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.precentation === "",
+                        expression: "precentation === ''"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.campo))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "mt-4" }, [
               _c(
                 "div",
-                { staticClass: "mt-4" },
                 [
                   _c(
                     "label",
@@ -705,17 +785,17 @@ var render = function() {
                       staticClass: "vs-input--label",
                       staticStyle: { color: "gray" }
                     },
-                    [_vm._v("Presentación")]
+                    [_vm._v("Laboratorio")]
                   ),
                   _vm._v(" "),
                   _c("v-select", {
-                    attrs: { options: _vm.presentaciones },
+                    attrs: { options: _vm.laboratorios },
                     model: {
-                      value: _vm.precentation,
+                      value: _vm.laboratory,
                       callback: function($$v) {
-                        _vm.precentation = $$v
+                        _vm.laboratory = $$v
                       },
-                      expression: "precentation"
+                      expression: "laboratory"
                     }
                   }),
                   _vm._v(" "),
@@ -726,93 +806,8 @@ var render = function() {
                         {
                           name: "show",
                           rawName: "v-show",
-                          value: _vm.precentation === "",
-                          expression: "precentation === ''"
-                        }
-                      ],
-                      staticClass: "text-danger text-sm"
-                    },
-                    [_vm._v(_vm._s(_vm.errors.campo))]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "mt-4" }, [
-                _c(
-                  "div",
-                  [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "vs-input--label",
-                        staticStyle: { color: "gray" }
-                      },
-                      [_vm._v("Laboratorio")]
-                    ),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      attrs: { options: _vm.laboratorios },
-                      model: {
-                        value: _vm.laboratory,
-                        callback: function($$v) {
-                          _vm.laboratory = $$v
-                        },
-                        expression: "laboratory"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.laboratory === "",
-                            expression: "laboratory === ''"
-                          }
-                        ],
-                        staticClass: "text-danger text-sm"
-                      },
-                      [_vm._v(_vm._s(_vm.errors.campo))]
-                    )
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "mt-4" },
-                [
-                  _c("label", { staticClass: "vs-input--label" }, [
-                    _vm._v("Proveedor")
-                  ]),
-                  _vm._v(" "),
-                  _c("v-select", {
-                    attrs: {
-                      options: ["NOVEMED"],
-                      dir: _vm.$vs.rtl ? "rtl" : "ltr"
-                    },
-                    model: {
-                      value: _vm.warehouse,
-                      callback: function($$v) {
-                        _vm.warehouse = $$v
-                      },
-                      expression: "warehouse"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.warehouse === "",
-                          expression: "warehouse === ''"
+                          value: _vm.laboratory === "",
+                          expression: "laboratory === ''"
                         }
                       ],
                       staticClass: "text-danger text-sm"
@@ -822,9 +817,49 @@ var render = function() {
                 ],
                 1
               )
-            ],
-            1
-          ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mt-4" },
+              [
+                _c("label", { staticClass: "vs-input--label" }, [
+                  _vm._v("Proveedor")
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    options: ["NOVEMED"],
+                    dir: _vm.$vs.rtl ? "rtl" : "ltr"
+                  },
+                  model: {
+                    value: _vm.warehouse,
+                    callback: function($$v) {
+                      _vm.warehouse = $$v
+                    },
+                    expression: "warehouse"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.warehouse === "",
+                        expression: "warehouse === ''"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.campo))]
+                )
+              ],
+              1
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "vx-row" }, [
             _vm._m(0),
@@ -853,6 +888,8 @@ var render = function() {
                           _vm.precentation == "" ||
                           _vm.price == null ||
                           _vm.price == "" ||
+                          _vm.cost == null ||
+                          _vm.cost == "" ||
                           _vm.laboratory == null ||
                           _vm.laboratory == "" ||
                           _vm.category == null ||
@@ -862,7 +899,7 @@ var render = function() {
                       },
                       on: { click: _vm.doSave }
                     },
-                    [_vm._v("Guardar")]
+                    [_vm._v("\n                            Guardar")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -872,7 +909,7 @@ var render = function() {
                       attrs: { type: "border", color: "danger" },
                       on: { click: _vm.cancel }
                     },
-                    [_vm._v("Cancelar")]
+                    [_vm._v("Cancelar\n                        ")]
                   )
                 ],
                 1

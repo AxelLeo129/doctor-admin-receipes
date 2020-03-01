@@ -538,23 +538,6 @@ var render = function() {
                                         "vs-button",
                                         {
                                           attrs: {
-                                            color: "warning",
-                                            type: "filled",
-                                            size: "small"
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.edit(tr.id)
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("Editar")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "vs-button",
-                                        {
-                                          attrs: {
                                             color: "danger",
                                             type: "filled",
                                             size: "small"

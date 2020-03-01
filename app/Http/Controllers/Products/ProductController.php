@@ -51,10 +51,11 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //return ['result' => 'success', "mess"=>$request->categories];
+        $imageName = date("d").date("m").date('Y').date("H").date("i").date("s").'.png';
         $product = new Product();
         $product->name = $request->name;
-        $product->image = $request->image;
+        $product->img_url = $imageName;
+        $product->cost = $request->cost;
         $product->description = $request->description;
         $product->price = $request->price;
         $product->precentation = $request->precentation;
@@ -62,6 +63,8 @@ class ProductController extends Controller
         $product->warehouse = $request->warehouse;
         $product->quantity = $request->quantity;
         $product->user_id = $request->user_id;
+        $product->status = 1;
+        $request->image->storeAs('productos', $imageName);
         if($product->save()){
             return ['result' => 'success', "mess"=>$product->id];
         }
@@ -72,8 +75,10 @@ class ProductController extends Controller
     {
         if($request->hasFile('image')){
             //$request->image->
-            $request->image->store('local');
-            return $request->all();
+            $request->image->storeAs(
+                'productos', 'hola.png'
+            );
+            return 'hola';
         }else{
             return "fail";
         }
@@ -127,7 +132,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return \DB::select("SELECT prod.id, prod.name, prod.image, prod.description, prod.precentation, prod.price, prod.laboratory, prod.warehouse, prod.quantity, prod.user_id, GROUP_CONCAT(cat.id SEPARATOR ',') categories FROM products_categories pp INNER JOIN products prod ON pp.product_id=prod.id INNER JOIN categories cat ON pp.category_id=cat.id WHERE prod.id = $id GROUP BY prod.id");
+        return \DB::select("SELECT prod.id, prod.name, prod.cost, prod.img_url, prod.description, prod.precentation, prod.price, prod.laboratory, prod.warehouse, prod.quantity, prod.user_id, GROUP_CONCAT(cat.id SEPARATOR ',') categories FROM products_categories pp INNER JOIN products prod ON pp.product_id=prod.id INNER JOIN categories cat ON pp.category_id=cat.id WHERE prod.id = $id GROUP BY prod.id");
     }
 
     /**
@@ -161,18 +166,21 @@ class ProductController extends Controller
      */
     public function update(Request $request)
     {
+        return ['result' => 'success', "mess"=>$request->all()];
         $product = Product::find($request->id);
         $product->name = $request->name;
-        $product->image = $request->image;
+        $product->img_url = $request->imageName;
         $product->description = $request->description;
         $product->price = $request->price;
+        $product->cost = $request->cost;
         $product->precentation = $request->precentation;
         $product->laboratory = $request->laboratory;
         $product->warehouse = $request->warehouse;
         $product->quantity = $request->quantity;
         $product->user_id = $product->user_id;
-
-
+        if($request->hasFile('image')){
+            $request->image->storeAs('productos', $request->imageName);
+        }
         if($product->save()){
             return ['result' => 'success', "mess"=>$product];
         }else{

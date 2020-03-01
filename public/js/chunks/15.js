@@ -282,7 +282,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('user_id', idu);
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "post",
-        url: "http://127.0.0.1:8000/api/postProducts1",
+        url: "http://127.0.0.1:8000/api/postProducts",
         data: formData,
         headers: {
           authorization: "Bearer " + token,
@@ -291,34 +291,40 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         _this4.Resid = Response.data.mess;
         console.log(Response);
-        /*axios({
+        _this4.activeLoading = false;
+
+        _this4.$vs.loading.close();
+
+        axios__WEBPACK_IMPORTED_MODULE_1___default()({
           method: "post",
           url: "http://127.0.0.1:8000/api/postProdCate",
           data: JSON.stringify({
             categories: arrayFinal,
-            product_id: this.Resid
+            product_id: _this4.Resid
           }),
           headers: {
             authorization: "Bearer " + token,
             "content-type": "application/json"
           }
-        })
-          .then(Response => {
-            this.activeLoading = false;
-            this.$vs.loading.close();
-            this.$router.push("/consola");
-            this.$vs.notify({
-              title: "Agregado",
-              text: "Producto creado exitosamente.",
-              color: "success"
-            });
-          })
-          .catch(err => {
-            this.activeLoading = false;
-            this.$vs.loading.close();
-            activado = true;
-            //console.log(err);
-          });*/
+        }).then(function (Response) {
+          _this4.activeLoading = false;
+
+          _this4.$vs.loading.close();
+
+          _this4.$router.push("/consola");
+
+          _this4.$vs.notify({
+            title: "Agregado",
+            text: "Producto creado exitosamente.",
+            color: "success"
+          });
+        }).catch(function (err) {
+          _this4.activeLoading = false;
+
+          _this4.$vs.loading.close();
+
+          activado = true; //console.log(err);
+        });
       }).catch(function (err) {
         _this4.activeLoading = false;
 

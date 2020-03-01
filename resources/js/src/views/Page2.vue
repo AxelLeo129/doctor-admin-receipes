@@ -267,7 +267,7 @@ export default {
       formData.append('user_id', idu);
       axios({
         method: "post",
-        url: "http://127.0.0.1:8000/api/postProducts1",
+        url: "http://127.0.0.1:8000/api/postProducts",
         data: formData,
         headers: {
           authorization: "Bearer " + token,
@@ -277,7 +277,9 @@ export default {
         .then(Response => {
           this.Resid = Response.data.mess;
           console.log(Response);
-          /*axios({
+          this.activeLoading = false;
+          this.$vs.loading.close();
+          axios({
             method: "post",
             url: "http://127.0.0.1:8000/api/postProdCate",
             data: JSON.stringify({
@@ -304,7 +306,7 @@ export default {
               this.$vs.loading.close();
               activado = true;
               //console.log(err);
-            });*/
+            });
         })
         .catch(err => {
           this.activeLoading = false;

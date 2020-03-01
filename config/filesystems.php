@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => public_path('images/productos'), // miproyecto.com/public/defaults/
+            'root' => public_path('images'), // miproyecto.com/public/defaults/
          ],
 
         'public' => [
