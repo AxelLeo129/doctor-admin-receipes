@@ -110,10 +110,10 @@ class DeliveryPeopleController extends Controller
             ]);
         }
         \DB::table('shippings')->where('id_recipie', $request->id_recipies)->update([
-            "recipient_name"=> $request->name_recibed
+            "recipient_name"=> $request->name_recibed, "observations" => $request->observations
         ]);
         \DB::table('orders')->where('order_id', $request->id_recipies)->update([
-            "status"=>4,
+            "status"=>$request->status,
             "delivery_date" => date("Y-m-d H:m:s")
         ]);
         return ['result' => 'success'];

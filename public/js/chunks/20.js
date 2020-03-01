@@ -192,6 +192,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -301,6 +322,12 @@ __webpack_require__.r(__webpack_exports__);
     completarPedido: function completarPedido() {
       var _this3 = this;
 
+      if (this.status == true) {
+        this.status = 5;
+      } else {
+        this.status = 4;
+      }
+
       if (this.nombre_confirmacion == "") {
         this.errorsEM.push('Debe de escribirse el nombre de recibido');
         this.activeLoading = false;
@@ -314,7 +341,9 @@ __webpack_require__.r(__webpack_exports__);
           url: "http://127.0.0.1:8000/api/confirm-delivery",
           data: JSON.stringify({
             id_recipies: this.id_order,
-            name_recibed: this.nombre_confirmacion
+            name_recibed: this.nombre_confirmacion,
+            observations: this.observations,
+            status: this.status
           }),
           headers: {
             authorization: "Bearer " + token,
@@ -355,6 +384,8 @@ __webpack_require__.r(__webpack_exports__);
       popupEntrega: false,
       select: null,
       nombre_confirmacion: "",
+      observations: null,
+      status: false,
       id_recipies: 0,
       id_order: 0,
       name_client: "",
@@ -383,7 +414,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "[dir] #table-search{\n  margin-top:-65px;\n}\n@media only screen and (max-width:600px){\n[dir] #table-search{\n    margin-top:0px;\n}\n}\n", ""]);
+exports.push([module.i, "[dir] #table-search {\n  margin-top: -65px;\n}\n@media only screen and (max-width:600px) {\n[dir] #table-search {\n    margin-top: 0px;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -577,6 +608,14 @@ var render = function() {
                           ])
                         : _vm._e(),
                       _vm._v(" "),
+                      data[indextr].cliente.status == 5
+                        ? _c("vs-td", [
+                            _c("i", {
+                              staticClass: "feather icon-x-circle text-danger"
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c(
                         "vs-td",
                         {
@@ -689,7 +728,7 @@ var render = function() {
             [
               _c("vs-th", [_vm._v("ID")]),
               _vm._v(" "),
-              _c("vs-th", [_vm._v("Paciente")]),
+              _c("vs-th", [_vm._v("Cliente")]),
               _vm._v(" "),
               _c("vs-th", [_vm._v("Teléfono")]),
               _vm._v(" "),
@@ -713,7 +752,7 @@ var render = function() {
           staticClass: "holamundo",
           attrs: {
             fullscreen: "",
-            title: "Ver información de la receta",
+            title: "Ver información del Pedido",
             active: _vm.popupActive
           },
           on: {
@@ -723,7 +762,7 @@ var render = function() {
           }
         },
         [
-          _c("p", [_vm._v("Medicamentos recetados:")]),
+          _c("p", [_vm._v("Medicamentos ordenados:")]),
           _c("br"),
           _vm._v(" "),
           _c(
@@ -954,7 +993,39 @@ var render = function() {
         },
         [
           _c("p", [_vm._v("Escriba su nombre de recibido:")]),
-          _c("br"),
+          _vm._v(" "),
+          _c("div", { staticClass: "vx-row" }, [
+            _c("div", {
+              staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base"
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+              [
+                _c(
+                  "div",
+                  { attrs: { align: "right" } },
+                  [
+                    _c(
+                      "vs-checkbox",
+                      {
+                        model: {
+                          value: _vm.status,
+                          callback: function($$v) {
+                            _vm.status = $$v
+                          },
+                          expression: "status"
+                        }
+                      },
+                      [_vm._v("No se pudo entregar")]
+                    )
+                  ],
+                  1
+                )
+              ]
+            )
+          ]),
           _vm._v(" "),
           _vm.errorsEM.length
             ? _c("p", [
@@ -984,6 +1055,27 @@ var render = function() {
                       _vm.nombre_confirmacion = $$v
                     },
                     expression: "nombre_confirmacion"
+                  }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "vx-row mb-2" }, [
+            _c(
+              "div",
+              { staticClass: "vx-col w-full" },
+              [
+                _c("vs-textarea", {
+                  staticClass: "w-full",
+                  attrs: { label: "Observaciones" },
+                  model: {
+                    value: _vm.observations,
+                    callback: function($$v) {
+                      _vm.observations = $$v
+                    },
+                    expression: "observations"
                   }
                 })
               ],
