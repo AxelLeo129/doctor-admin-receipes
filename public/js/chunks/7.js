@@ -780,13 +780,40 @@ __webpack_require__.r(__webpack_exports__);
     sumar: function sumar(price, cantidad, index) {
       var _this2 = this;
 
+      function trunc(x) {
+        var posiciones = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        var s = x.toString();
+        var l = s.length;
+        var decimalLength = s.indexOf('.') + 1;
+
+        if (l - decimalLength <= posiciones) {
+          return x;
+        } // Parte decimal del número
+
+
+        var isNeg = x < 0;
+        var decimal = x % 1;
+        var entera = isNeg ? Math.ceil(x) : Math.floor(x); // Parte decimal como número entero
+        // Ejemplo: parte decimal = 0.77
+        // decimalFormated = 0.77 * (10^posiciones)
+        // si posiciones es 2 ==> 0.77 * 100
+        // si posiciones es 3 ==> 0.77 * 1000
+
+        var decimalFormated = Math.floor(Math.abs(decimal) * Math.pow(10, posiciones)); // Sustraemos del número original la parte decimal
+        // y le sumamos la parte decimal que hemos formateado
+
+        var finalNum = entera + decimalFormated / Math.pow(10, posiciones) * (isNeg ? -1 : 1);
+        return finalNum;
+      }
+
       this.total = 0;
       cantidad = parseFloat(cantidad);
       this.cantidades[index] = cantidad;
       this.totales[index] = price * cantidad;
       this.totales.forEach(function (element) {
         //console.log(element);
-        _this2.total = parseFloat(_this2.total + element).toFixed(2);
+        _this2.total = _this2.total + element;
+        _this2.total = trunc(_this2.total, 2); //this.total = parseFloat(this.total).toFixed(2);
       });
     },
     openLoading: function openLoading() {

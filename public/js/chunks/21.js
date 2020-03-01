@@ -1147,7 +1147,7 @@ var render = function() {
                                                     attrs: {
                                                       src:
                                                         "https://pharmazone.app/images/productos/" +
-                                                        item.id +
+                                                        item.img_url +
                                                         ".png",
                                                       alt: "content-img"
                                                     }
