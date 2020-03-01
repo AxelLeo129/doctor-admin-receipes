@@ -142,6 +142,12 @@ export default {
         })
         .catch(err => {
           console.log(err);
+          localStorage.removeItem("tu");
+          localStorage.removeItem("ru");
+          localStorage.removeItem("ui");
+          localStorage.removeItem("regi");
+          localStorage.removeItem("nuevaRecetaData");
+          this.$router.push("/");
         });
     },
     logout() {

@@ -1623,6 +1623,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).catch(function (err) {
         console.log(err);
+        localStorage.removeItem("tu");
+        localStorage.removeItem("ru");
+        localStorage.removeItem("ui");
+        localStorage.removeItem("regi");
+        localStorage.removeItem("nuevaRecetaData");
+
+        _this.$router.push("/");
       });
     },
     logout: function logout() {
