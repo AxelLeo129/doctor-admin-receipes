@@ -234,7 +234,7 @@
                       <div slot="no-body">
                         <div align="center">
                           <img
-                            :src="'https://pharmazone.app/images/productos/' + item.img_url + '.png'"
+                            :src="'https://pharmazone.app/images/productos/' + item.img_url"
                             alt="content-img"
                             class="responsive pt-8 card-img-top h-48 w-48"
                           />
@@ -608,6 +608,7 @@ export default {
         }
       })
         .then(Response => {
+          console.log(Response);
           Response.data.forEach(element => {
             element.quantity = parseInt(element.quantity);
             element.laboratory = parseInt(element.laboratory);
