@@ -608,7 +608,7 @@ export default {
         }
       })
         .then(Response => {
-          console.log(Response);
+          //console.log(Response);
           Response.data.forEach(element => {
             element.quantity = parseInt(element.quantity);
             element.laboratory = parseInt(element.laboratory);

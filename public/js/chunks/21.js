@@ -549,7 +549,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(Response);
+        //console.log(Response);
         Response.data.forEach(function (element) {
           element.quantity = parseInt(element.quantity);
           element.laboratory = parseInt(element.laboratory);
