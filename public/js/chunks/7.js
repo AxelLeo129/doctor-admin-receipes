@@ -286,141 +286,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -808,7 +673,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.total = 0;
       cantidad = parseFloat(cantidad);
-      this.cantidades[index] = cantidad;
+      this.cantidades[index] = price;
       this.totales[index] = price * cantidad;
       this.totales.forEach(function (element) {
         //console.log(element);
@@ -942,7 +807,7 @@ __webpack_require__.r(__webpack_exports__);
 
               _this3.$vs.notify({
                 title: "Satisfactorio",
-                text: "Pedido enviado al despachador exitosamente.",
+                text: "Pedido enviado al facturador exitosamente.",
                 color: "success"
               });
             }).catch(function (err) {
@@ -1288,6 +1153,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        console.log;
         _this7.medicines = [];
 
         function sumarDias(fecha, dias) {
@@ -1881,26 +1747,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this3 = this;
 
       //console.log(status);
-      if (status == "Nuevo") {
-        this.idRecipe = id;
-        this.users = [];
-        var token = localStorage.getItem("tu");
-        axios__WEBPACK_IMPORTED_MODULE_1___default()({
-          method: "get",
-          url: "http://127.0.0.1:8000/api/getCliente1/" + phone,
-          headers: {
-            authorization: "Bearer " + token,
-            "content-type": "application/json"
-          }
-        }).then(function (Response) {
-          Response.data.forEach(function (element) {
-            _this3.users.push(element);
-          });
-          _this3.popupActive2 = true;
-        }).catch(function (err) {
-          console.log(err);
+      //if (status == "Nuevo") {
+      this.idRecipe = id;
+      this.users = [];
+      var token = localStorage.getItem("tu");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getCliente1/" + phone,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        Response.data.forEach(function (element) {
+          _this3.users.push(element);
         });
-      }
+        _this3.popupActive2 = true;
+      }).catch(function (err) {
+        console.log(err);
+      }); //}
     },
     addNewData: function addNewData() {
       this.sidebarData = {};
@@ -2027,7 +1892,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         Response.data.forEach(function (element) {
           element.color = _this6.colore(element.status);
-          element.status = _this6.status[element.status - 1]; //console.log(element.status);
+          element.status = _this6.status[element.status - 1];
+          element.permission = 0;
+          element.origen = 1; //console.log(element.status);
 
           _this6.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
@@ -2071,11 +1938,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        console.log(Response);
         _this7.recipes = []; //console.log(Response.data);
 
         Response.data.forEach(function (element) {
           element.color = _this7.colore(element.status);
-          element.status = _this7.status[element.status - 1]; //console.log(element.status);
+          element.status = _this7.status[element.status - 1];
+          element.permission = 1;
+          element.origen = 3; //console.log(element.status);
 
           _this7.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
@@ -2414,9 +2284,9 @@ var render = function() {
                                         { attrs: { data: data[indextr].name } },
                                         [
                                           _vm._v(
-                                            "\n                    " +
+                                            "\n                                        " +
                                               _vm._s(data[indextr].name) +
-                                              "\n                    "
+                                              "\n                                        "
                                           ),
                                           _c(
                                             "vs-checkbox",
@@ -2445,11 +2315,11 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                    " +
+                                            "\n                                        " +
                                               _vm._s(
                                                 data[indextr].presentacion
                                               ) +
-                                              "\n                    "
+                                              "\n                                        "
                                           ),
                                           _c("vs-input", {
                                             staticClass: "inputx mt-5",
@@ -2531,7 +2401,8 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "Q " + _vm._s(data[indextr].price)
+                                            "Q\n                                        " +
+                                              _vm._s(data[indextr].price)
                                           )
                                         ]
                                       ),
@@ -2550,7 +2421,7 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "Q " +
+                                            "\n                                        Q " +
                                               _vm._s(data[indextr].subtotal)
                                           )
                                         ]
@@ -2882,7 +2753,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Realizar el Pedido")]
+                              [
+                                _vm._v(
+                                  "\n                            Realizar el Pedido"
+                                )
+                              ]
                             )
                           : _vm._e(),
                         _vm._v(" "),
@@ -2912,7 +2787,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Realizar el Pedido")]
+                              [
+                                _vm._v(
+                                  "\n                            Realizar el Pedido"
+                                )
+                              ]
                             )
                           : _vm._e(),
                         _vm._v(" "),
@@ -2933,7 +2812,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Realizar el Pedido")]
+                              [
+                                _vm._v(
+                                  "Realizar el\n                            Pedido"
+                                )
+                              ]
                             )
                           : _vm._e(),
                         _vm._v(" "),
@@ -2954,7 +2837,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Realizar el Pedido")]
+                              [
+                                _vm._v(
+                                  "Realizar el\n                            Pedido"
+                                )
+                              ]
                             )
                           : _vm._e()
                       ],
@@ -3408,7 +3295,11 @@ var render = function() {
                         expression: "checkBox1"
                       }
                     },
-                    [_vm._v("Dirección envio igual a facturación.")]
+                    [
+                      _vm._v(
+                        "Dirección envio igual a facturación.\n                        "
+                      )
+                    ]
                   )
                 ],
                 1
@@ -4700,9 +4591,11 @@ var render = function() {
                                               {
                                                 name: "show",
                                                 rawName: "v-show",
-                                                value: mail.status == "Nuevo",
+                                                value:
+                                                  mail.status == "Nuevo" ||
+                                                  mail.permission == 1,
                                                 expression:
-                                                  "mail.status == 'Nuevo'"
+                                                  "mail.status == 'Nuevo' || mail.permission == 1"
                                               }
                                             ],
                                             staticClass: "mt-5",

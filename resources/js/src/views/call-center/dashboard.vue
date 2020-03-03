@@ -257,7 +257,7 @@
                                                 color="rgb(62, 201, 214)" class="mt-5" size="small" type="filled">Ver
                                                 Receta
                                             </vs-button>
-                                            <vs-button color="primary" class="mt-5" type="filled" size="small" v-show="mail.status == 'Nuevo'"
+                                            <vs-button color="primary" class="mt-5" type="filled" size="small" v-show="mail.status == 'Nuevo' || mail.permission == 1"
                                                 @click="openModal(mail.phone, mail.id, mail.status)">Posibles Clientes
                                             </vs-button>
                                         </div>
@@ -519,7 +519,7 @@
             },
             openModal(phone, id, status) {
                 //console.log(status);
-                if (status == "Nuevo") {
+                //if (status == "Nuevo") {
                     this.idRecipe = id;
                     this.users = [];
                     let token = localStorage.getItem("tu");
@@ -540,7 +540,7 @@
                         .catch(err => {
                             console.log(err);
                         });
-                }
+                //}
             },
             addNewData() {
                 this.sidebarData = {};
@@ -664,6 +664,8 @@
                         Response.data.forEach(element => {
                             element.color = this.colore(element.status);
                             element.status = this.status[element.status - 1];
+                            element.permission = 0;
+                            element.origen = 1;
                             //console.log(element.status);
                             this.doctors.forEach(e => {
                                 if (e.id == element.doctor_id) {
@@ -704,11 +706,14 @@
                         }
                     })
                     .then(Response => {
+                        console.log(Response);
                         this.recipes = [];
                         //console.log(Response.data);
                         Response.data.forEach(element => {
                             element.color = this.colore(element.status);
                             element.status = this.status[element.status - 1];
+                            element.permission = 1;
+                            element.origen = 3;
                             //console.log(element.status);
                             this.doctors.forEach(e => {
                                 if (e.id == element.doctor_id) {

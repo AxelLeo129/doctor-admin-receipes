@@ -119,6 +119,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -139,6 +157,9 @@ __webpack_require__.r(__webpack_exports__);
       image: "images/medicamentos/default.png",
       image1: null,
       name: null,
+      status: null,
+      regulated: null,
+      observations: null,
       precentation: null,
       description: null,
       activado: false,
@@ -263,6 +284,9 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('price', this.price);
       formData.append('cost', this.cost);
       formData.append('precentation', this.precentation.value);
+      formData.append('status', this.status.value);
+      formData.append('regulated', this.regulated.value);
+      formData.append('observations', this.observations);
       formData.append('laboratory', this.laboratory.value);
       formData.append('warehouse', this.warehouse);
       formData.append('quantity', this.quantity);
@@ -683,6 +707,41 @@ var render = function() {
                   staticClass: "text-danger text-sm"
                 },
                 [_vm._v(_vm._s(_vm.errors.campo))]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mt-4" },
+                [
+                  _c("vs-textarea", {
+                    staticClass: "vs-textarea",
+                    attrs: { label: "Observaciones" },
+                    model: {
+                      value: _vm.observations,
+                      callback: function($$v) {
+                        _vm.observations = $$v
+                      },
+                      expression: "observations"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.observations === "",
+                          expression: "observations === ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v(_vm._s(_vm.errors.campo))]
+                  )
+                ],
+                1
               )
             ],
             1
@@ -858,6 +917,96 @@ var render = function() {
                 )
               ],
               1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mt-4" },
+              [
+                _c("label", { staticClass: "vs-input--label" }, [
+                  _vm._v("Estado")
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    options: [
+                      { label: "No Disponible", value: 0 },
+                      { label: "Disponible", value: 1 },
+                      { label: "Oferta", value: 2 },
+                      { label: "Agotado", value: 3 }
+                    ],
+                    dir: _vm.$vs.rtl ? "rtl" : "ltr"
+                  },
+                  model: {
+                    value: _vm.status,
+                    callback: function($$v) {
+                      _vm.status = $$v
+                    },
+                    expression: "status"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.status === "",
+                        expression: "status === ''"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.campo))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mt-4" },
+              [
+                _c("label", { staticClass: "vs-input--label" }, [
+                  _vm._v("Regulado")
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    options: [
+                      { label: "No", value: 0 },
+                      { label: "Si", value: 1 }
+                    ],
+                    dir: _vm.$vs.rtl ? "rtl" : "ltr"
+                  },
+                  model: {
+                    value: _vm.regulated,
+                    callback: function($$v) {
+                      _vm.regulated = $$v
+                    },
+                    expression: "regulated"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.regulated === "",
+                        expression: "regulated === ''"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.campo))]
+                )
+              ],
+              1
             )
           ]),
           _vm._v(" "),
@@ -876,6 +1025,12 @@ var render = function() {
                       attrs: {
                         color: "success",
                         disabled:
+                          _vm.regulated == null ||
+                          _vm.regulated == "" ||
+                          _vm.observations == null ||
+                          _vm.observations == "" ||
+                          _vm.status == null ||
+                          _vm.status == "" ||
                           _vm.name == null ||
                           _vm.name == "" ||
                           _vm.image == "images/medicamentos/default.png" ||

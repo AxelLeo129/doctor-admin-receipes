@@ -63,6 +63,11 @@
                     </vx-input-group>
                     <span class="text-danger text-sm" v-show="cost === ''">{{ errors.campo }}</span>
 
+                    <div class="mt-4">
+                        <vs-textarea class="vs-textarea" label="Observaciones" v-model="observations" />
+                        <span class="text-danger text-sm" v-show="observations === ''">{{ errors.campo }}</span>
+                    </div>
+
                 </div>
 
                 <div class="vx-col md:w-1/2 w-full">
@@ -94,6 +99,18 @@
                     <v-select class="w-full mt-4" :options="['NOVEMED']" :dir="$vs.rtl ? 'rtl' : 'ltr'"
                         v-model="warehouse" />
                     <span class="text-danger text-sm" v-show="warehouse === ''">{{ errors.campo }}</span>
+
+                    <div class="mt-4">
+                        <label class="vs-input--label">Estado</label>
+                        <v-select :options="[{label: 'No Disponible', value: 0},{label: 'Disponible', value: 1}, {label: 'Oferta', value: 2}, {label: 'Agotado', value: 3}]" v-model="status" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+                        <span class="text-danger text-sm" v-show="status === ''">{{ errors.campo }}</span>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="vs-input--label">Regulado</label>
+                        <v-select :options="[{label: 'No', value: 0},{label: 'Si', value: 1}]" v-model="regulated" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+                        <span class="text-danger text-sm" v-show="regulated === ''">{{ errors.campo }}</span>
+                    </div>
                 </div>
 
                 <div class="vx-row">
@@ -136,6 +153,9 @@
                 image1: null,
                 name: null,
                 cost: null,
+                status: null,
+                regulated: null,
+                observations: null,
                 imageName: null,
                 precentation: [],
                 precentation1: [],
@@ -279,6 +299,7 @@
                         }
                     })
                     .then(Response => {
+                        console.log(Response.data);
                         if (Response.data.length == 0) {
                             axios({
                                     method: "get",
@@ -289,6 +310,7 @@
                                     }
                                 })
                                 .then(Response => {
+                                    console.log(Response.data);
                                     if (Response.data.length == 0) {
                                         this.activeLoading = false;
                                         this.$vs.loading.close();
@@ -307,7 +329,10 @@
                                         this.base64textString = Response.data[0].image;
                                         this.quantity = Response.data[0].quantity;
                                         this.description = Response.data[0].description;
+                                        this.status = Response.data[0].status;
+                                        this.regulated = Response.data[0].regulated;
                                         let p = parseInt(Response.data[0].precentation);
+                                        this.observations = Response.data[0].observations;
                                         this.getPre(p);
                                         this.price = Response.data[0].price;
                                         let l = parseInt(Response.data[0].laboratory);
@@ -336,6 +361,30 @@
                             this.quantity = Response.data[0].quantity;
                             this.description = Response.data[0].description;
                             this.cost = Response.data[0].cost;
+                            this.observations = Response.data[0].observations;
+                            this.status = Response.data[0].status;
+                            if(this.status == 0){
+                                this.status = {label: 'No Disponible', value: 0};
+                            } else if(this.status == 1){
+                                this.status = {label: 'Disponible', value: 1};
+                            }else if(this.status == 2){
+                                this.status = {label: 'Oferta', value: 2};
+                            }else{
+                                this.status = {label: 'Agotado', value: 3};
+                            }
+                            this.regulated = Response.data[0].regulated;
+                            if(this.regulated == 0){
+                                this.regulated = {
+                                    label: 'No',
+                                    value: 0
+                                }
+                            }else{
+                                this.regulated = {
+                                    label: 'Si',
+                                    value: 1
+                                }
+                            }
+                            console.log(this.regulated);
                             let p = parseInt(Response.data[0].precentation);
                             this.getPre(p);
                             this.price = Response.data[0].price;
@@ -412,6 +461,7 @@
                 if (l == undefined) {
                     l = this.laboratory1;
                 }
+                console.log(this.id, this.name, this.imageName, this.image1, this.description, this.price, this.cost, p, l, this.warehouse, this.quantity, idu)
                 let formData = new FormData();
                 formData.append('id', this.id);
                 formData.append('name', this.name);
@@ -422,12 +472,15 @@
                 formData.append('cost', this.cost);
                 formData.append('precentation', p);
                 formData.append('laboratory', l);
+                formData.append('status', this.status.value);
+                formData.append('regulated', this.regulated.value);
+                formData.append('observations', this.observations);
                 formData.append('warehouse', this.warehouse);
                 formData.append('quantity', this.quantity);
                 formData.append('user_id', idu)
                 console.log(formData)
                 axios({
-                        method: "put",
+                        method: "post",
                         url: "http://127.0.0.1:8000/api/putProduct",
                         data: formData,
                         headers: {

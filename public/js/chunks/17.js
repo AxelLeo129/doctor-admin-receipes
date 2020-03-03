@@ -129,6 +129,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -149,6 +166,9 @@ __webpack_require__.r(__webpack_exports__);
       image1: null,
       name: null,
       cost: null,
+      status: null,
+      regulated: null,
+      observations: null,
       imageName: null,
       precentation: [],
       precentation1: [],
@@ -297,6 +317,8 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        console.log(Response.data);
+
         if (Response.data.length == 0) {
           axios__WEBPACK_IMPORTED_MODULE_1___default()({
             method: "get",
@@ -306,6 +328,8 @@ __webpack_require__.r(__webpack_exports__);
               "content-type": "application/json"
             }
           }).then(function (Response) {
+            console.log(Response.data);
+
             if (Response.data.length == 0) {
               _this3.activeLoading = false;
 
@@ -327,7 +351,10 @@ __webpack_require__.r(__webpack_exports__);
               _this3.base64textString = Response.data[0].image;
               _this3.quantity = Response.data[0].quantity;
               _this3.description = Response.data[0].description;
+              _this3.status = Response.data[0].status;
+              _this3.regulated = Response.data[0].regulated;
               var p = parseInt(Response.data[0].precentation);
+              _this3.observations = Response.data[0].observations;
 
               _this3.getPre(p);
 
@@ -363,6 +390,46 @@ __webpack_require__.r(__webpack_exports__);
           _this3.quantity = Response.data[0].quantity;
           _this3.description = Response.data[0].description;
           _this3.cost = Response.data[0].cost;
+          _this3.observations = Response.data[0].observations;
+          _this3.status = Response.data[0].status;
+
+          if (_this3.status == 0) {
+            _this3.status = {
+              label: 'No Disponible',
+              value: 0
+            };
+          } else if (_this3.status == 1) {
+            _this3.status = {
+              label: 'Disponible',
+              value: 1
+            };
+          } else if (_this3.status == 2) {
+            _this3.status = {
+              label: 'Oferta',
+              value: 2
+            };
+          } else {
+            _this3.status = {
+              label: 'Agotado',
+              value: 3
+            };
+          }
+
+          _this3.regulated = Response.data[0].regulated;
+
+          if (_this3.regulated == 0) {
+            _this3.regulated = {
+              label: 'No',
+              value: 0
+            };
+          } else {
+            _this3.regulated = {
+              label: 'Si',
+              value: 1
+            };
+          }
+
+          console.log(_this3.regulated);
           var p = parseInt(Response.data[0].precentation);
 
           _this3.getPre(p);
@@ -457,6 +524,7 @@ __webpack_require__.r(__webpack_exports__);
         l = this.laboratory1;
       }
 
+      console.log(this.id, this.name, this.imageName, this.image1, this.description, this.price, this.cost, p, l, this.warehouse, this.quantity, idu);
       var formData = new FormData();
       formData.append('id', this.id);
       formData.append('name', this.name);
@@ -467,12 +535,15 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('cost', this.cost);
       formData.append('precentation', p);
       formData.append('laboratory', l);
+      formData.append('status', this.status.value);
+      formData.append('regulated', this.regulated.value);
+      formData.append('observations', this.observations);
       formData.append('warehouse', this.warehouse);
       formData.append('quantity', this.quantity);
       formData.append('user_id', idu);
       console.log(formData);
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        method: "put",
+        method: "post",
         url: "http://127.0.0.1:8000/api/putProduct",
         data: formData,
         headers: {
@@ -954,6 +1025,41 @@ var render = function() {
                     staticClass: "text-danger text-sm"
                   },
                   [_vm._v(_vm._s(_vm.errors.campo))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "mt-4" },
+                  [
+                    _c("vs-textarea", {
+                      staticClass: "vs-textarea",
+                      attrs: { label: "Observaciones" },
+                      model: {
+                        value: _vm.observations,
+                        callback: function($$v) {
+                          _vm.observations = $$v
+                        },
+                        expression: "observations"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.observations === "",
+                            expression: "observations === ''"
+                          }
+                        ],
+                        staticClass: "text-danger text-sm"
+                      },
+                      [_vm._v(_vm._s(_vm.errors.campo))]
+                    )
+                  ],
+                  1
                 )
               ],
               1
@@ -1127,6 +1233,96 @@ var render = function() {
                     staticClass: "text-danger text-sm"
                   },
                   [_vm._v(_vm._s(_vm.errors.campo))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "mt-4" },
+                  [
+                    _c("label", { staticClass: "vs-input--label" }, [
+                      _vm._v("Estado")
+                    ]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        options: [
+                          { label: "No Disponible", value: 0 },
+                          { label: "Disponible", value: 1 },
+                          { label: "Oferta", value: 2 },
+                          { label: "Agotado", value: 3 }
+                        ],
+                        dir: _vm.$vs.rtl ? "rtl" : "ltr"
+                      },
+                      model: {
+                        value: _vm.status,
+                        callback: function($$v) {
+                          _vm.status = $$v
+                        },
+                        expression: "status"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.status === "",
+                            expression: "status === ''"
+                          }
+                        ],
+                        staticClass: "text-danger text-sm"
+                      },
+                      [_vm._v(_vm._s(_vm.errors.campo))]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "mt-4" },
+                  [
+                    _c("label", { staticClass: "vs-input--label" }, [
+                      _vm._v("Regulado")
+                    ]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        options: [
+                          { label: "No", value: 0 },
+                          { label: "Si", value: 1 }
+                        ],
+                        dir: _vm.$vs.rtl ? "rtl" : "ltr"
+                      },
+                      model: {
+                        value: _vm.regulated,
+                        callback: function($$v) {
+                          _vm.regulated = $$v
+                        },
+                        expression: "regulated"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.regulated === "",
+                            expression: "regulated === ''"
+                          }
+                        ],
+                        staticClass: "text-danger text-sm"
+                      },
+                      [_vm._v(_vm._s(_vm.errors.campo))]
+                    )
+                  ],
+                  1
                 )
               ],
               1

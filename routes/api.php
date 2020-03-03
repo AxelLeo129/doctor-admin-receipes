@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('getProduct/{id}', 'Products\ProductController@show');
     Route::get('getProduct1/{id}', 'Products\ProductController@show1');
     Route::get('deleteProduct/{id}', 'Products\ProductController@destroy');
-    Route::put('putProduct', 'Products\ProductController@update');
+    Route::post('putProduct', 'Products\ProductController@update');
     Route::post('postProdCate', 'Products\ProductController@storeCategory');
     Route::get('deleteProdCate/{id}', 'Products\ProductController@destroyCategory');
     //Recetas

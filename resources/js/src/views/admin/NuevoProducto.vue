@@ -55,6 +55,11 @@
                     </vx-input-group>
 
                     <span class="text-danger text-sm" v-show="cost === ''">{{ errors.campo }}</span>
+
+                    <div class="mt-4">
+                        <vs-textarea class="vs-textarea" label="Observaciones" v-model="observations" />
+                        <span class="text-danger text-sm" v-show="observations === ''">{{ errors.campo }}</span>
+                    </div>
                 </div>
 
                 <div class="vx-col md:w-1/2 w-full">
@@ -84,6 +89,19 @@
                         <v-select :options="['NOVEMED']" v-model="warehouse" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
                         <span class="text-danger text-sm" v-show="warehouse === ''">{{ errors.campo }}</span>
                     </div>
+
+                    <div class="mt-4">
+                        <label class="vs-input--label">Estado</label>
+                        <v-select :options="[{label: 'No Disponible', value: 0},{label: 'Disponible', value: 1}, {label: 'Oferta', value: 2}, {label: 'Agotado', value: 3}]" v-model="status" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+                        <span class="text-danger text-sm" v-show="status === ''">{{ errors.campo }}</span>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="vs-input--label">Regulado</label>
+                        <v-select :options="[{label: 'No', value: 0},{label: 'Si', value: 1}]" v-model="regulated" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+                        <span class="text-danger text-sm" v-show="regulated === ''">{{ errors.campo }}</span>
+                    </div>
+                                        
                 </div>
 
                 <div class="vx-row">
@@ -93,7 +111,7 @@
                     <div class="vx-col w-full">
                         <div class="mt-8 flex flex-wrap items-center justify-end">
                             <vs-button class="ml-auto mt-2" color="success" @click="doSave"
-                                :disabled="name == null || name == '' || image == 'images/medicamentos/default.png' || bol == 'as' || quantity == null || quantity == '' || description == null || description == '' || precentation == null || precentation == '' || price == null || price == '' || cost == null || cost == '' || laboratory == null || laboratory == '' || category == null || category.length == 0 || warehouse == null || warehouse == ''">
+                                :disabled="regulated == null || regulated == '' || observations == null || observations == '' || status == null || status == '' || name == null || name == '' || image == 'images/medicamentos/default.png' || bol == 'as' || quantity == null || quantity == '' || description == null || description == '' || precentation == null || precentation == '' || price == null || price == '' || cost == null || cost == '' || laboratory == null || laboratory == '' || category == null || category.length == 0 || warehouse == null || warehouse == ''">
                                 Guardar</vs-button>
                             <vs-button class="ml-4 mt-2" type="border" color="danger" @click="cancel">Cancelar
                             </vs-button>
@@ -126,6 +144,9 @@
                 image: "images/medicamentos/default.png",
                 image1: null,
                 name: null,
+                status: null,
+                regulated: null,
+                observations: null,
                 precentation: null,
                 description: null,
                 activado: false,
@@ -249,6 +270,9 @@
                 formData.append('price', this.price);
                 formData.append('cost', this.cost);
                 formData.append('precentation', this.precentation.value);
+                formData.append('status', this.status.value);
+                formData.append('regulated', this.regulated.value);
+                formData.append('observations', this.observations);
                 formData.append('laboratory', this.laboratory.value);
                 formData.append('warehouse', this.warehouse);
                 formData.append('quantity', this.quantity);

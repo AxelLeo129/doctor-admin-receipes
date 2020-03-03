@@ -91,12 +91,12 @@
 
                   <vs-td>
                     <span>
-                      <!-- <vs-button
+                      <vs-button
                         color="warning"
                         type="filled"
                         size="small"
                         @click="edit(tr.id)"
-                      >Editar</vs-button> -->
+                      >Editar</vs-button>
                       <vs-button
                         color="danger"
                         type="filled"
