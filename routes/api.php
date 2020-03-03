@@ -110,7 +110,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('postPre', 'Presentations\PresentationController@store');
     Route::get('getPre/{id}', 'Presentations\PresentationController@show');
     Route::put('putPre', 'Presentations\PresentationController@update');
-
+    //Transacciones-Comisiones
+    Route::get('getComiProd/{id_producto}/{id_medico}/{id_cliente}', 'Transactions\TransactionController@index');
 });
 
 Route::fallback(function(){

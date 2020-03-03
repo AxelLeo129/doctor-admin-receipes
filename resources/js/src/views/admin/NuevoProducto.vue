@@ -277,7 +277,7 @@
                 formData.append('warehouse', this.warehouse);
                 formData.append('quantity', this.quantity);
                 formData.append('user_id', idu);
-                console.log(formData);
+                //console.log(formData);
                 axios({
                         method: "post",
                         url: "http://127.0.0.1:8000/api/postProducts",

@@ -461,7 +461,7 @@
                 if (l == undefined) {
                     l = this.laboratory1;
                 }
-                console.log(this.id, this.name, this.imageName, this.image1, this.description, this.price, this.cost, p, l, this.warehouse, this.quantity, idu)
+                //console.log(this.id, this.name, this.imageName, this.image1, this.description, this.price, this.cost, p, l, this.warehouse, this.quantity, idu)
                 let formData = new FormData();
                 formData.append('id', this.id);
                 formData.append('name', this.name);
@@ -478,7 +478,7 @@
                 formData.append('warehouse', this.warehouse);
                 formData.append('quantity', this.quantity);
                 formData.append('user_id', idu)
-                console.log(formData)
+                //console.log(formData)
                 axios({
                         method: "post",
                         url: "http://127.0.0.1:8000/api/putProduct",

@@ -13,9 +13,9 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id_producto, $id_medico, $id_cliente)
     {
-        //
+        return \DB::select("SELECT MAX(numero_compra_medico) AS numero_compra_medico, id_producto, fecha_compra FROM transactions WHERE id_producto = $id_producto AND id_medico = $id_medico AND id_cliente = $id_cliente");
     }
 
     /**

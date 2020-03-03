@@ -258,7 +258,7 @@
                                                 Receta
                                             </vs-button>
                                             <vs-button color="primary" class="mt-5" type="filled" size="small" v-show="mail.status == 'Nuevo' || mail.permission == 1"
-                                                @click="openModal(mail.phone, mail.id, mail.status)">Posibles Clientes
+                                                @click="openModal(mail.phone, mail.id, mail.status, mail.origen, mail.origen, mail.idMedico)">Posibles Clientes
                                             </vs-button>
                                         </div>
                                     </div>
@@ -347,6 +347,8 @@
                 popupActive: false,
                 message: "",
                 idRecipe: null,
+                origen: null,
+                idMedico: null,
                 users: [],
                 popupActive2: false,
                 addNewDataSidebar: false,
@@ -517,10 +519,12 @@
                 this.sidebarData = data1;
                 this.toggleDataSidebar(true);
             },
-            openModal(phone, id, status) {
+            openModal(phone, id, status, origen, id1) {
                 //console.log(status);
                 //if (status == "Nuevo") {
                     this.idRecipe = id;
+                    this.origen = origen;
+                    this.idMedico = id1;
                     this.users = [];
                     let token = localStorage.getItem("tu");
                     axios({
@@ -617,7 +621,7 @@
                     })
                     .then(Response => {
                         this.recipes = [];
-                        console.log(Response.data);
+                        //console.log(Response.data);
                         Response.data.forEach(element => {
                             element.color = 'warning';
                             element.status = 'Facturación';
@@ -666,6 +670,7 @@
                             element.status = this.status[element.status - 1];
                             element.permission = 0;
                             element.origen = 1;
+                            element.idMedico = element.doctor_id;
                             //console.log(element.status);
                             this.doctors.forEach(e => {
                                 if (e.id == element.doctor_id) {

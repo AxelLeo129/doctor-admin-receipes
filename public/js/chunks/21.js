@@ -320,26 +320,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -830,63 +810,6 @@ var render = function() {
                     "div",
                     { staticClass: "p-6 filter-container" },
                     [
-                      _c("h6", { staticClass: "font-bold mb-4" }, [
-                        _vm._v("Categorías")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "ais-hierarchical-menu",
-                        { attrs: { attributes: _vm.algoliaCategories } },
-                        [
-                          _c("div", [
-                            _c(
-                              "ul",
-                              [
-                                _c(
-                                  "li",
-                                  {
-                                    staticClass:
-                                      "flex items-center cursor-pointer py-1",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.filterCate = 0
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Todos")]
-                                ),
-                                _vm._v(" "),
-                                _vm._l(_vm.categorias, function(item, index) {
-                                  return _c(
-                                    "li",
-                                    {
-                                      key: index,
-                                      staticClass:
-                                        "flex items-center cursor-pointer py-1",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.filterCate = item.id
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                  " +
-                                          _vm._s(item.name) +
-                                          "\n                  "
-                                      )
-                                    ]
-                                  )
-                                })
-                              ],
-                              2
-                            )
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("vs-divider"),
-                      _vm._v(" "),
                       _c("h6", { staticClass: "font-bold mb-4" }, [
                         _vm._v("Marcas")
                       ]),

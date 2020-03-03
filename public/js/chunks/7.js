@@ -1582,7 +1582,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         discountedAmount: 5700,
         total: 108300
       }
-    }, _defineProperty(_ref, "medicinas", []), _defineProperty(_ref, "popupActive", false), _defineProperty(_ref, "message", ""), _defineProperty(_ref, "idRecipe", null), _defineProperty(_ref, "users", []), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "addNewDataSidebar", false), _defineProperty(_ref, "sidebarData", {}), _defineProperty(_ref, "status", ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado"]), _defineProperty(_ref, "buscar", ""), _defineProperty(_ref, "clickNotClose", true), _defineProperty(_ref, "isEmailSidebarActive", true), _defineProperty(_ref, "mailFilter", "inbox"), _defineProperty(_ref, "settings", {
+    }, _defineProperty(_ref, "medicinas", []), _defineProperty(_ref, "popupActive", false), _defineProperty(_ref, "message", ""), _defineProperty(_ref, "idRecipe", null), _defineProperty(_ref, "origen", null), _defineProperty(_ref, "idMedico", null), _defineProperty(_ref, "users", []), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "addNewDataSidebar", false), _defineProperty(_ref, "sidebarData", {}), _defineProperty(_ref, "status", ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado"]), _defineProperty(_ref, "buscar", ""), _defineProperty(_ref, "clickNotClose", true), _defineProperty(_ref, "isEmailSidebarActive", true), _defineProperty(_ref, "mailFilter", "inbox"), _defineProperty(_ref, "settings", {
       maxScrollbarLength: 60,
       wheelSpeed: 0.3
     }), _defineProperty(_ref, "recipes", []), _defineProperty(_ref, "doctors", []), _defineProperty(_ref, "primary", "primary"), _ref;
@@ -1743,12 +1743,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.sidebarData = data1;
       this.toggleDataSidebar(true);
     },
-    openModal: function openModal(phone, id, status) {
+    openModal: function openModal(phone, id, status, origen, id1) {
       var _this3 = this;
 
       //console.log(status);
       //if (status == "Nuevo") {
       this.idRecipe = id;
+      this.origen = origen;
+      this.idMedico = id1;
       this.users = [];
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -1842,8 +1844,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this5.recipes = [];
-        console.log(Response.data);
+        _this5.recipes = []; //console.log(Response.data);
+
         Response.data.forEach(function (element) {
           element.color = 'warning';
           element.status = 'Facturación'; //console.log(element.status);
@@ -1894,7 +1896,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           element.color = _this6.colore(element.status);
           element.status = _this6.status[element.status - 1];
           element.permission = 0;
-          element.origen = 1; //console.log(element.status);
+          element.origen = 1;
+          element.idMedico = element.doctor_id; //console.log(element.status);
 
           _this6.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
@@ -4609,7 +4612,10 @@ var render = function() {
                                                 return _vm.openModal(
                                                   mail.phone,
                                                   mail.id,
-                                                  mail.status
+                                                  mail.status,
+                                                  mail.origen,
+                                                  mail.origen,
+                                                  mail.idMedico
                                                 )
                                               }
                                             }

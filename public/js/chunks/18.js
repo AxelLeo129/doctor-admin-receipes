@@ -290,8 +290,8 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('laboratory', this.laboratory.value);
       formData.append('warehouse', this.warehouse);
       formData.append('quantity', this.quantity);
-      formData.append('user_id', idu);
-      console.log(formData);
+      formData.append('user_id', idu); //console.log(formData);
+
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "post",
         url: "http://127.0.0.1:8000/api/postProducts",

@@ -117,26 +117,6 @@
           v-model="isFilterSidebarActive"
         >
           <div class="p-6 filter-container">
-            <!-- CATEGORIES -->
-            <h6 class="font-bold mb-4">Categorías</h6>
-            <ais-hierarchical-menu :attributes="algoliaCategories">
-              <div>
-                <ul>
-                  <li class="flex items-center cursor-pointer py-1" @click="filterCate = 0">Todos</li>
-                  <li
-                    v-for="(item, index) in categorias"
-                    :key="index"
-                    class="flex items-center cursor-pointer py-1"
-                    @click="filterCate = item.id"
-                  >
-                    {{item.name}}
-                    <!-- <vs-checkbox v-model="buscar1" :vs-value="item.id">{{item.name}}</vs-checkbox> -->
-                  </li>
-                </ul>
-              </div>
-            </ais-hierarchical-menu>
-
-            <vs-divider />
 
             <!-- Brands -->
             <h6 class="font-bold mb-4">Marcas</h6>

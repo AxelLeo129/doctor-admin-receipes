@@ -522,9 +522,9 @@ __webpack_require__.r(__webpack_exports__);
 
       if (l == undefined) {
         l = this.laboratory1;
-      }
+      } //console.log(this.id, this.name, this.imageName, this.image1, this.description, this.price, this.cost, p, l, this.warehouse, this.quantity, idu)
 
-      console.log(this.id, this.name, this.imageName, this.image1, this.description, this.price, this.cost, p, l, this.warehouse, this.quantity, idu);
+
       var formData = new FormData();
       formData.append('id', this.id);
       formData.append('name', this.name);
@@ -540,8 +540,8 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('observations', this.observations);
       formData.append('warehouse', this.warehouse);
       formData.append('quantity', this.quantity);
-      formData.append('user_id', idu);
-      console.log(formData);
+      formData.append('user_id', idu); //console.log(formData)
+
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "post",
         url: "http://127.0.0.1:8000/api/putProduct",
