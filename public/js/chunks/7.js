@@ -286,6 +286,143 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -323,10 +460,13 @@ __webpack_require__.r(__webpack_exports__);
       codigoe: null,
       telefonoe: null,
       //Demás variables
+      idMedico: null,
+      origen: null,
       cont: 0,
       popupActive4: false,
       cantidades: [],
       totales: [],
+      fechaHoy: null,
       departamentos: [{
         id: "Alta Verapaz",
         name: "Alta Verapaz"
@@ -395,6 +535,7 @@ __webpack_require__.r(__webpack_exports__);
         name: "Zacapa"
       }],
       users: [],
+      numeroCompra: [],
       tipe: 0,
       idRecipe: null,
       checkBox1: "true",
@@ -551,6 +692,8 @@ __webpack_require__.r(__webpack_exports__);
         this.addressf = client_addressf;
         this.addressc = this.addressf;
         this.idRecipe = this.data.idRecipies;
+        this.idMedico = this.data.idMedico;
+        this.origen = this.data.origen;
         this.nuevo = false;
         this.initValues();
       } // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -576,7 +719,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    getDate: function getDate() {
+      var f = new Date();
+      this.fechaHoy = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+    },
     agregarL: function agregarL(data) {
+      var _this = this;
+
       function sumarDias(fecha, dias) {
         fecha.setDate(fecha.getDate() + dias);
         return fecha;
@@ -598,6 +747,23 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var h = f + "-" + e + "-" + g;
+
+      if (this.idCliente == null || this.idCliente == undefined || this.idCliente == "") {
+        this.idCliente = 0;
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getComiProd/" + data.id + "/" + this.idMedico + "/" + this.idCliente,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this.numeroCompra.push(Response.data[0].numero_compra_medico);
+      }).catch(function (err) {
+        console.log(err);
+      });
       this.medicines.push({
         id: data.id,
         name: data.name,
@@ -607,7 +773,8 @@ __webpack_require__.r(__webpack_exports__);
         totale: 0,
         unidad: "Pastillas",
         repro: false,
-        next: h
+        next: h,
+        origen: 3
       });
       var p = parseFloat(data.price);
       this.sumar(p, 1, this.cont);
@@ -615,7 +782,7 @@ __webpack_require__.r(__webpack_exports__);
       this.popupActive4 = false;
     },
     agregarP: function agregarP() {
-      var _this = this;
+      var _this2 = this;
 
       var token = localStorage.getItem("tu");
       this.users = [];
@@ -633,23 +800,23 @@ __webpack_require__.r(__webpack_exports__);
 
           if (element.quantity > 0) {
             //this.numberData = this.numberData + 1;
-            _this.users.push(element);
+            _this2.users.push(element);
           }
         }); //console.log(this.users);
 
-        _this.popupActive4 = true;
+        _this2.popupActive4 = true;
       }).catch(function (err) {
         console.log(err);
       });
     },
     sumar: function sumar(price, cantidad, index) {
-      var _this2 = this;
+      var _this3 = this;
 
       function trunc(x) {
         var posiciones = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
         var s = x.toString();
         var l = s.length;
-        var decimalLength = s.indexOf('.') + 1;
+        var decimalLength = s.indexOf(".") + 1;
 
         if (l - decimalLength <= posiciones) {
           return x;
@@ -677,8 +844,8 @@ __webpack_require__.r(__webpack_exports__);
       this.totales[index] = price * cantidad;
       this.totales.forEach(function (element) {
         //console.log(element);
-        _this2.total = _this2.total + element;
-        _this2.total = trunc(_this2.total, 2); //this.total = parseFloat(this.total).toFixed(2);
+        _this3.total = _this3.total + element;
+        _this3.total = trunc(_this3.total, 2); //this.total = parseFloat(this.total).toFixed(2);
       });
     },
     openLoading: function openLoading() {
@@ -688,7 +855,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     notificacion: function notificacion() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -718,7 +885,16 @@ __webpack_require__.r(__webpack_exports__);
         status = 1;
       } else {
         date = "";
-      } //console.log(date);
+      } //this.origen
+
+      /*let idsProductos = [];
+      let namesProductos = [];
+      this.medicines.forEach(element => {
+          idsProductos.push(element.id);
+          namesProductos.push(element.id);
+      });*/
+      //this.medicines.forEach
+      //console.log(date);
 
 
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -760,11 +936,11 @@ __webpack_require__.r(__webpack_exports__);
           url: "http://127.0.0.1:8000/api/postOrder",
           data: JSON.stringify({
             client_id: Response.data.mess.id,
-            namet: _this3.nameT,
-            numbert: _this3.numberT,
-            numbertr: _this3.numberTr,
-            datetr: _this3.datetr,
-            total: _this3.total
+            namet: _this4.nameT,
+            numbert: _this4.numberT,
+            numbertr: _this4.numberTr,
+            datetr: _this4.datetr,
+            total: _this4.total
           }),
           headers: {
             authorization: "Bearer " + token,
@@ -776,7 +952,7 @@ __webpack_require__.r(__webpack_exports__);
             method: "post",
             url: "http://127.0.0.1:8000/api/postOrderProd",
             data: JSON.stringify({
-              cantidad: _this3.cantidades,
+              cantidad: _this4.cantidades,
               medicines: ids,
               order_id: Response.data.mess.id
             }),
@@ -785,12 +961,12 @@ __webpack_require__.r(__webpack_exports__);
               "content-type": "application/json"
             }
           }).then(function (Response) {
-            _this3.datetr = null;
+            _this4.datetr = null;
             axios__WEBPACK_IMPORTED_MODULE_1___default()({
               method: "put",
               url: "http://127.0.0.1:8000/api/putReceSta",
               data: JSON.stringify({
-                id: _this3.idRecipe,
+                id: _this4.idRecipe,
                 status: 2,
                 status1: date,
                 status2: status
@@ -800,50 +976,51 @@ __webpack_require__.r(__webpack_exports__);
                 "content-type": "application/json"
               }
             }).then(function (Response) {
-              _this3.isSidebarActiveLocal = false;
-              _this3.activeLoading = false;
+              var idOrder = Response.data.mess.id;
+              _this4.isSidebarActiveLocal = false;
+              _this4.activeLoading = false;
 
-              _this3.$vs.loading.close();
+              _this4.$vs.loading.close();
 
-              _this3.$vs.notify({
+              _this4.$vs.notify({
                 title: "Satisfactorio",
                 text: "Pedido enviado al facturador exitosamente.",
                 color: "success"
               });
             }).catch(function (err) {
-              _this3.activeLoading = false;
+              _this4.activeLoading = false;
 
-              _this3.$vs.loading.close();
+              _this4.$vs.loading.close();
 
               activado = true;
               console.log(err);
             });
           }).catch(function (err) {
-            _this3.activeLoading = false;
+            _this4.activeLoading = false;
 
-            _this3.$vs.loading.close();
+            _this4.$vs.loading.close();
 
             activado = true; //console.log(err);
           });
         }).catch(function (err) {
-          _this3.activeLoading = false;
+          _this4.activeLoading = false;
 
-          _this3.$vs.loading.close();
+          _this4.$vs.loading.close();
 
           activado = true;
           console.log(err);
         });
       }).catch(function (err) {
-        _this3.activeLoading = false;
+        _this4.activeLoading = false;
 
-        _this3.$vs.loading.close();
+        _this4.$vs.loading.close();
 
         activado = true;
         console.log(err);
       });
     },
     notificacion1: function notificacion1() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -908,17 +1085,17 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(_this4.datetr);
+        console.log(_this5.datetr);
         axios__WEBPACK_IMPORTED_MODULE_1___default()({
           method: "post",
           url: "http://127.0.0.1:8000/api/postOrder",
           data: JSON.stringify({
             client_id: Response.data.mess.id,
-            namet: _this4.nameT,
-            numbert: _this4.numberT,
-            datetr: _this4.datetr,
-            numbertr: _this4.numberTr,
-            total: _this4.total
+            namet: _this5.nameT,
+            numbert: _this5.numberT,
+            datetr: _this5.datetr,
+            numbertr: _this5.numberTr,
+            total: _this5.total
           }),
           headers: {
             authorization: "Bearer " + token,
@@ -930,7 +1107,7 @@ __webpack_require__.r(__webpack_exports__);
             method: "post",
             url: "http://127.0.0.1:8000/api/postOrderProd",
             data: JSON.stringify({
-              cantidad: _this4.cantidades,
+              cantidad: _this5.cantidades,
               medicines: ids,
               order_id: Response.data.mess.id
             }),
@@ -943,7 +1120,7 @@ __webpack_require__.r(__webpack_exports__);
               method: "put",
               url: "http://127.0.0.1:8000/api/putReceSta",
               data: JSON.stringify({
-                id: _this4.idRecipe,
+                id: _this5.idRecipe,
                 status: 2,
                 status1: date,
                 status2: status
@@ -953,45 +1130,45 @@ __webpack_require__.r(__webpack_exports__);
                 "content-type": "application/json"
               }
             }).then(function (Response) {
-              _this4.isSidebarActiveLocal = false;
-              _this4.activeLoading = false;
+              _this5.isSidebarActiveLocal = false;
+              _this5.activeLoading = false;
 
-              _this4.$vs.loading.close();
+              _this5.$vs.loading.close();
 
-              _this4.$vs.notify({
+              _this5.$vs.notify({
                 title: "Satisfactorio",
                 text: "Pedido enviado al despachador exitosamente.",
                 color: "success"
               });
 
-              _this4.$router.go();
+              _this5.$router.go();
             }).catch(function (err) {
-              _this4.activeLoading = false;
+              _this5.activeLoading = false;
 
-              _this4.$vs.loading.close();
+              _this5.$vs.loading.close();
 
               activado = true;
               console.log(err);
             });
           }).catch(function (err) {
-            _this4.activeLoading = false;
+            _this5.activeLoading = false;
 
-            _this4.$vs.loading.close();
+            _this5.$vs.loading.close();
 
             activado = true; //console.log(err);
           });
         }).catch(function (err) {
-          _this4.activeLoading = false;
+          _this5.activeLoading = false;
 
-          _this4.$vs.loading.close();
+          _this5.$vs.loading.close();
 
           activado = true;
           console.log(err);
         });
       }).catch(function (err) {
-        _this4.activeLoading = false;
+        _this5.activeLoading = false;
 
-        _this4.$vs.loading.close();
+        _this5.$vs.loading.close();
 
         activado = true;
         console.log(err);
@@ -1007,7 +1184,7 @@ __webpack_require__.r(__webpack_exports__);
       this.dataImg = null;
     },
     getItem: function getItem(id) {
-      var _this5 = this;
+      var _this6 = this;
 
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -1019,7 +1196,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this5.itms.push(element.product_id);
+          _this6.itms.push(element.product_id);
         });
       }).catch(function (err) {
         console.log(err);
@@ -1027,7 +1204,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateData: function updateData() {},
     nuevoCliente: function nuevoCliente() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.openLoading();
 
@@ -1079,45 +1256,45 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this6.name = null;
-        _this6.nit = null;
-        _this6.phone = null;
-        _this6.genre = null;
-        _this6.email = null;
-        _this6.date = null;
-        _this6.paisf = null;
-        _this6.deparf = null;
-        _this6.callef = null;
-        _this6.apartamentof = null;
-        _this6.municipiof = null;
-        _this6.residenciaf = null;
-        _this6.codigof = null;
-        _this6.telefonof = null;
-        _this6.paise = null;
-        _this6.depare = null;
-        _this6.callee = null;
-        _this6.apartamentoe = null;
-        _this6.municipioe = null;
-        _this6.residenciae = null;
-        _this6.codigoe = null;
-        _this6.telefonoe = null;
-        _this6.activeLoading = false;
+        _this7.name = null;
+        _this7.nit = null;
+        _this7.phone = null;
+        _this7.genre = null;
+        _this7.email = null;
+        _this7.date = null;
+        _this7.paisf = null;
+        _this7.deparf = null;
+        _this7.callef = null;
+        _this7.apartamentof = null;
+        _this7.municipiof = null;
+        _this7.residenciaf = null;
+        _this7.codigof = null;
+        _this7.telefonof = null;
+        _this7.paise = null;
+        _this7.depare = null;
+        _this7.callee = null;
+        _this7.apartamentoe = null;
+        _this7.municipioe = null;
+        _this7.residenciae = null;
+        _this7.codigoe = null;
+        _this7.telefonoe = null;
+        _this7.activeLoading = false;
 
-        _this6.$vs.loading.close();
+        _this7.$vs.loading.close();
 
-        _this6.isSidebarActiveLocal = false;
+        _this7.isSidebarActiveLocal = false;
 
-        _this6.$vs.notify({
+        _this7.$vs.notify({
           title: "Satisfactorio",
           text: "Cliente creado exitosamente.",
           color: "success"
         });
       }).catch(function (err) {
-        _this6.activeLoading = false;
+        _this7.activeLoading = false;
 
-        _this6.$vs.loading.close();
+        _this7.$vs.loading.close();
 
-        _this6.$vs.notify({
+        _this7.$vs.notify({
           title: "Error",
           text: "Error, por favor intentelo más tarde.",
           color: "danger"
@@ -1127,7 +1304,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     submitData: function submitData() {
-      var _this7 = this;
+      var _this8 = this;
 
       if (this.checkBox1 == "true") {
         this.paise = this.paisf;
@@ -1153,16 +1330,35 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log;
-        _this7.medicines = [];
+        //console.log(Response.data);
+        _this8.getDate();
+
+        _this8.medicines = [];
 
         function sumarDias(fecha, dias) {
           fecha.setDate(fecha.getDate() + dias);
           return fecha;
         }
 
-        _this7.cont = 0;
+        if (_this8.idCliente == null || _this8.idCliente == undefined || _this8.idCliente == "") {
+          _this8.idCliente = 0;
+        }
+
+        _this8.cont = 0;
         Response.data.forEach(function (element) {
+          console.log(element);
+          axios__WEBPACK_IMPORTED_MODULE_1___default()({
+            method: "get",
+            url: "http://127.0.0.1:8000/api/getComiProd/" + element.product_id + "/" + _this8.idMedico + "/" + _this8.idCliente,
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          }).then(function (Response) {
+            _this8.numeroCompra.push(Response.data[0].numero_compra_medico);
+          }).catch(function (err) {
+            console.log(err);
+          });
           var d = new Date();
           var c = parseInt(element.cantidad);
           var a = sumarDias(d, c);
@@ -1180,7 +1376,7 @@ __webpack_require__.r(__webpack_exports__);
 
           var h = f + "-" + e + "-" + g;
 
-          _this7.medicines.push({
+          _this8.medicines.push({
             id: element.product_id,
             name: element.name,
             presentacion: element.presentacion,
@@ -1190,29 +1386,30 @@ __webpack_require__.r(__webpack_exports__);
             totale: 0,
             unidad: "Pastillas",
             repro: false,
-            next: h
+            next: h,
+            origen: 1
           });
 
           var p = parseFloat(element.price);
 
-          _this7.sumar(p, 1, _this7.cont);
+          _this8.sumar(p, 1, _this8.cont);
 
-          _this7.cont = _this7.cont + 1;
-        }); //console.log(this.medicines);
+          _this8.cont = _this8.cont + 1;
+        }); //console.log(this.numeroCompra, this.medicines,this.idRecipe,this.idMedico,this.origen,this.idCliente, this.fechaHoy);
 
-        _this7.popupActive2 = true;
+        _this8.popupActive2 = true;
       }).catch(function (err) {
         console.log(err);
       });
     },
     updateCurrImg: function updateCurrImg(input) {
-      var _this8 = this;
+      var _this9 = this;
 
       if (input.target.files && input.target.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-          _this8.dataImg = e.target.result;
+          _this9.dataImg = e.target.result;
         };
 
         reader.readAsDataURL(input.target.files[0]);
@@ -1732,12 +1929,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.$vs.loading.close();
       });
     },
-    editData: function editData(data, id) {
+    editData: function editData(data, id, id1, id2) {
+      console.log(data, id, id1, id2);
       this.popupActive2 = false; // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
 
       var data1 = {
         data: data,
-        idRecipies: id
+        idRecipies: id,
+        idMedico: id1,
+        origen: id2
       }; //console.log(data1);
 
       this.sidebarData = data1;
@@ -1746,8 +1946,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     openModal: function openModal(phone, id, status, origen, id1) {
       var _this3 = this;
 
-      //console.log(status);
+      console.log('Modal');
+      console.log(id1); //console.log(status);
       //if (status == "Nuevo") {
+
       this.idRecipe = id;
       this.origen = origen;
       this.idMedico = id1;
@@ -1773,10 +1975,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.sidebarData = {};
       this.toggleDataSidebar(true);
     },
-    addNewData1: function addNewData1(id) {
+    addNewData1: function addNewData1(id, id1) {
       var data = {
         data: {},
-        idRecipies: id
+        idRecipies: id,
+        idMedico: id1
       };
       this.popupActive2 = false;
       this.sidebarData = data;
@@ -1948,7 +2151,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           element.color = _this7.colore(element.status);
           element.status = _this7.status[element.status - 1];
           element.permission = 1;
-          element.origen = 3; //console.log(element.status);
+          element.origen = 3;
+          element.idMedico = element.doctor_id; //console.log(element.status);
 
           _this7.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
@@ -2287,9 +2491,9 @@ var render = function() {
                                         { attrs: { data: data[indextr].name } },
                                         [
                                           _vm._v(
-                                            "\n                                        " +
+                                            "\n                    " +
                                               _vm._s(data[indextr].name) +
-                                              "\n                                        "
+                                              "\n                    "
                                           ),
                                           _c(
                                             "vs-checkbox",
@@ -2318,11 +2522,11 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                                        " +
+                                            "\n                    " +
                                               _vm._s(
                                                 data[indextr].presentacion
                                               ) +
-                                              "\n                                        "
+                                              "\n                    "
                                           ),
                                           _c("vs-input", {
                                             staticClass: "inputx mt-5",
@@ -2404,8 +2608,9 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "Q\n                                        " +
-                                              _vm._s(data[indextr].price)
+                                            "\n                    Q\n                    " +
+                                              _vm._s(data[indextr].price) +
+                                              "\n                  "
                                           )
                                         ]
                                       ),
@@ -2424,7 +2629,7 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                                        Q " +
+                                            "Q " +
                                               _vm._s(data[indextr].subtotal)
                                           )
                                         ]
@@ -2756,11 +2961,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [
-                                _vm._v(
-                                  "\n                            Realizar el Pedido"
-                                )
-                              ]
+                              [_vm._v("Realizar el Pedido")]
                             )
                           : _vm._e(),
                         _vm._v(" "),
@@ -2790,11 +2991,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [
-                                _vm._v(
-                                  "\n                            Realizar el Pedido"
-                                )
-                              ]
+                              [_vm._v("Realizar el Pedido")]
                             )
                           : _vm._e(),
                         _vm._v(" "),
@@ -2817,7 +3014,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "Realizar el\n                            Pedido"
+                                  "\n              Realizar el\n              Pedido\n            "
                                 )
                               ]
                             )
@@ -2842,7 +3039,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "Realizar el\n                            Pedido"
+                                  "\n              Realizar el\n              Pedido\n            "
                                 )
                               ]
                             )
@@ -3298,11 +3495,7 @@ var render = function() {
                         expression: "checkBox1"
                       }
                     },
-                    [
-                      _vm._v(
-                        "Dirección envio igual a facturación.\n                        "
-                      )
-                    ]
+                    [_vm._v("Dirección envio igual a facturación.")]
                   )
                 ],
                 1
@@ -3847,7 +4040,12 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.stopPropagation()
-                                    return _vm.editData(tr, _vm.idRecipe)
+                                    return _vm.editData(
+                                      tr,
+                                      _vm.idRecipe,
+                                      _vm.idMedico,
+                                      _vm.origen
+                                    )
                                   }
                                 }
                               })
@@ -3894,7 +4092,7 @@ var render = function() {
                   attrs: { "icon-pack": "feather", icon: "icon-plus" },
                   on: {
                     click: function($event) {
-                      return _vm.addNewData1(_vm.idRecipe)
+                      return _vm.addNewData1(_vm.idRecipe, _vm.idMedico)
                     }
                   }
                 },
@@ -4613,7 +4811,6 @@ var render = function() {
                                                   mail.phone,
                                                   mail.id,
                                                   mail.status,
-                                                  mail.origen,
                                                   mail.origen,
                                                   mail.idMedico
                                                 )

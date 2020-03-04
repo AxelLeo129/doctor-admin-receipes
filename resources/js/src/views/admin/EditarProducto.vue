@@ -11,7 +11,7 @@
                 <div class="vx-col w-full">
                     <div class="flex items-start flex-col sm:flex-row">
                         <!-- <img v-bind:src="imagen" class="mr-8 rounded h-24 w-24" /> -->
-                        <img :src="imagen" alt="" class="mr-8 rounded h-24 w-24">
+                        <img :src="imagen" alt="" class="mr-8 rounded w-24">
                         <!-- <vs-avatar :src="data.avatar" size="80px" class="mr-4" /> -->
                         <div>
                             <p class="text-lg font-medium mb-2 mt-4 sm:mt-0" v-text="name"></p>
@@ -102,7 +102,7 @@
 
                     <div class="mt-4">
                         <label class="vs-input--label">Estado</label>
-                        <v-select :options="[{label: 'No Disponible', value: 0},{label: 'Disponible', value: 1}, {label: 'Oferta', value: 2}, {label: 'Agotado', value: 3}]" v-model="status" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+                        <v-select :options="[{label: 'No Disponible', value: 0},{label: 'Disponible', value: 1}, {label: 'Oferta', value: 2}, {label: 'Agotado', value: 3}, {label: 'Descontinuado', value: 4}]" v-model="status" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
                         <span class="text-danger text-sm" v-show="status === ''">{{ errors.campo }}</span>
                     </div>
 

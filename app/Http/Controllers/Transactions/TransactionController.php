@@ -36,7 +36,39 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $errores = [];
+        $succes = [];
+        $cont = 0;
+        foreach($request->idsProductos as $element){
+            $transaction = new Transaction();
+            $transaction->origen = $request->origenes[$cont];
+            $transaction->id_producto = $element;
+            $transaction->nombre_producto = $request->namesProductos[$cont];
+            $transaction->orden_id = $request->orden_id;
+            $transaction->id_cliente = $request->id_cliente;
+            $transaction->fecha_compra = $request->fecha_compra;
+            $transaction->cantidad = $request->cantidadesProductos[$cont];
+            $transaction->precio_facturacion = $request->precio;
+            $transaction->porcentaje_iva = $request->fecha_compra;
+            $transaction->ingreso_neto = $request->ingresosIva[$cont];
+            $transaction->iva = $request->ivas[$cont];
+            $transaction->forma_pago = $request->forma_pago;
+            $transaction->porcentaje_tc = $request->porcentaje_tc;
+            $transaction->costo = $request->costsProductos[$cont];
+            $transaction->margen_bruto = $request->margenes[$cont];
+            $transaction->numero_compra_medico = $request->numeroCompra[$cont];
+            $transaction->id_medico = $request->id_medico;
+            $transaction->porcent_comi_med = $request->porcent_comi_med[$cont];
+            
+            if($transaction->save()){
+                array_push($succes, $transaction);
+                $cont = $cont + 1;
+            }else{
+                array_push($errores, $transaction);
+                $cont = $cont + 1;
+            }
+        }
+        return ['result' => $succes, "result1"=>$errores];
     }
 
     /**

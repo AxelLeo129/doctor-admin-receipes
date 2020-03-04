@@ -157,8 +157,14 @@ __webpack_require__.r(__webpack_exports__);
       image: "images/medicamentos/default.png",
       image1: null,
       name: null,
-      status: null,
-      regulated: null,
+      status: {
+        label: 'Disponible',
+        value: 1
+      },
+      regulated: {
+        label: 'No',
+        value: 0
+      },
       observations: null,
       precentation: null,
       description: null,
@@ -168,8 +174,11 @@ __webpack_require__.r(__webpack_exports__);
       cost: null,
       message: "Error en el servidor, Intente más tarde.",
       laboratory: null,
-      warehouse: null,
-      category: [],
+      warehouse: 'NOVEMED',
+      category: [{
+        label: "General",
+        value: 10
+      }],
       base64textString: "",
       categorias: [],
       laboratorios: [],
@@ -460,7 +469,7 @@ var render = function() {
                 { staticClass: "flex items-start flex-col sm:flex-row" },
                 [
                   _c("img", {
-                    staticClass: "mr-8 rounded h-24 w-24",
+                    staticClass: "mr-8 rounded w-24",
                     attrs: { alt: "hola", src: _vm.image }
                   }),
                   _vm._v(" "),
@@ -933,7 +942,8 @@ var render = function() {
                       { label: "No Disponible", value: 0 },
                       { label: "Disponible", value: 1 },
                       { label: "Oferta", value: 2 },
-                      { label: "Agotado", value: 3 }
+                      { label: "Agotado", value: 3 },
+                      { label: "Descontinuado", value: 4 }
                     ],
                     dir: _vm.$vs.rtl ? "rtl" : "ltr"
                   },
@@ -1027,8 +1037,6 @@ var render = function() {
                         disabled:
                           _vm.regulated == null ||
                           _vm.regulated == "" ||
-                          _vm.observations == null ||
-                          _vm.observations == "" ||
                           _vm.status == null ||
                           _vm.status == "" ||
                           _vm.name == null ||

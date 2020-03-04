@@ -23,14 +23,14 @@
                         </vs-td>
                         <vs-td>
                             <vs-button type="border" size="small" icon-pack="feather" icon="icon-send" class="mr-2"
-                                @click.stop="editData(tr, idRecipe)"></vs-button>
+                                @click.stop="editData(tr, idRecipe, idMedico, origen)"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>
             </vs-table>
             <div class="mr-3">
                 <vs-button class="bg-primary-gradient w-full" icon-pack="feather" icon="icon-plus"
-                    @click="addNewData1(idRecipe)">Nuevo Cliente</vs-button>
+                    @click="addNewData1(idRecipe, idMedico)">Nuevo Cliente</vs-button>
             </div>
         </vs-popup>
         <vs-popup fullscreen class="holamundo" title="Detalles de la Receta" :active.sync="popupActive">
@@ -258,7 +258,7 @@
                                                 Receta
                                             </vs-button>
                                             <vs-button color="primary" class="mt-5" type="filled" size="small" v-show="mail.status == 'Nuevo' || mail.permission == 1"
-                                                @click="openModal(mail.phone, mail.id, mail.status, mail.origen, mail.origen, mail.idMedico)">Posibles Clientes
+                                                @click="openModal(mail.phone, mail.id, mail.status, mail.origen, mail.idMedico)">Posibles Clientes
                                             </vs-button>
                                         </div>
                                     </div>
@@ -508,18 +508,23 @@
                         this.$vs.loading.close();
                     });
             },
-            editData(data, id) {
+            editData(data, id, id1, id2) {
+                console.log(data, id, id1, id2);
                 this.popupActive2 = false;
                 // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
                 let data1 = {
                     data: data,
-                    idRecipies: id
+                    idRecipies: id,
+                    idMedico: id1,
+                    origen: id2
                 };
                 //console.log(data1);
                 this.sidebarData = data1;
                 this.toggleDataSidebar(true);
             },
             openModal(phone, id, status, origen, id1) {
+                console.log('Modal');
+                console.log(id1);
                 //console.log(status);
                 //if (status == "Nuevo") {
                     this.idRecipe = id;
@@ -550,10 +555,11 @@
                 this.sidebarData = {};
                 this.toggleDataSidebar(true);
             },
-            addNewData1(id) {
+            addNewData1(id, id1) {
                 let data = {
                     data: {},
-                    idRecipies: id
+                    idRecipies: id,
+                    idMedico: id1
                 };
                 this.popupActive2 = false;
                 this.sidebarData = data;
@@ -719,6 +725,7 @@
                             element.status = this.status[element.status - 1];
                             element.permission = 1;
                             element.origen = 3;
+                            element.idMedico = element.doctor_id;
                             //console.log(element.status);
                             this.doctors.forEach(e => {
                                 if (e.id == element.doctor_id) {

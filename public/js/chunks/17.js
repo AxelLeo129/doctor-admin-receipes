@@ -776,7 +776,7 @@ var render = function() {
                 { staticClass: "flex items-start flex-col sm:flex-row" },
                 [
                   _c("img", {
-                    staticClass: "mr-8 rounded h-24 w-24",
+                    staticClass: "mr-8 rounded w-24",
                     attrs: { src: _vm.imagen, alt: "" }
                   }),
                   _vm._v(" "),
@@ -1249,7 +1249,8 @@ var render = function() {
                           { label: "No Disponible", value: 0 },
                           { label: "Disponible", value: 1 },
                           { label: "Oferta", value: 2 },
-                          { label: "Agotado", value: 3 }
+                          { label: "Agotado", value: 3 },
+                          { label: "Descontinuado", value: 4 }
                         ],
                         dir: _vm.$vs.rtl ? "rtl" : "ltr"
                       },
