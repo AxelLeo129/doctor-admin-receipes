@@ -297,132 +297,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -752,6 +626,7 @@ __webpack_require__.r(__webpack_exports__);
         this.idCliente = 0;
       }
 
+      var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "get",
         url: "http://127.0.0.1:8000/api/getComiProd/" + data.id + "/" + this.idMedico + "/" + this.idCliente,
@@ -771,6 +646,7 @@ __webpack_require__.r(__webpack_exports__);
         price: data.price,
         cantidad: 1,
         totale: 0,
+        costo: data.cost,
         unidad: "Pastillas",
         repro: false,
         next: h,
@@ -854,6 +730,9 @@ __webpack_require__.r(__webpack_exports__);
         type: "default"
       });
     },
+    cantidadess: function cantidadess() {
+      console.log(this.medicines);
+    },
     notificacion: function notificacion() {
       var _this4 = this;
 
@@ -885,17 +764,112 @@ __webpack_require__.r(__webpack_exports__);
         status = 1;
       } else {
         date = "";
-      } //this.origen
+      }
 
-      /*let idsProductos = [];
-      let namesProductos = [];
-      this.medicines.forEach(element => {
-          idsProductos.push(element.id);
-          namesProductos.push(element.id);
-      });*/
-      //this.medicines.forEach
+      var idsProductos = [];
+      var namesProductos = [];
+      var origenes = [];
+      var cantidadesProductos = [];
+      var precios = [];
+      var ingresosIva = [];
+      var porcentaje_iva = 12;
+      var ivas = [];
+      var formapago = 0;
+      var porcentaje_tc = 0;
+
+      if (this.switch1 == 1) {
+        formapago = 1;
+        porcentaje_tc = 2.5;
+      } else {
+        formapago = 2;
+      }
+
+      var costsProductos = [];
+      var margenes = [];
+      var tc = [];
+      var contador = 0;
+      var idCallcenter = localStorage.getItem('ui');
+      var idVisitador = 0; //this.idMedico 
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getVisitador1/" + this.idMedico,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        idVisitador = Response.data[0].id_visitador;
+      }).catch(function (err) {
+        console.log(err);
+        _this4.activeLoading = false;
+
+        _this4.$vs.loading.close();
+      });
+      var porcent_comi_med = 0;
+      var porcent_comi_vist = 2;
+      var porcent_comi_callcenter = 0;
+      var valor_comi_med = [];
+      var valor_comision_visitador = [];
+      var valor_comision_callcenter = [];
+      var total_comisiones = [];
+      var saldo_margen = [];
+      this.medicines.forEach(function (element) {
+        idsProductos.push(element.id);
+        namesProductos.push(element.name);
+        origenes.push(element.origen);
+        cantidadesProductos.push(element.cantidad);
+        precios.push(parseFloat(element.price) * parseInt(element.cantidad));
+        var iN = parseFloat(element.price) / (1 + porcentaje_iva / 100);
+        ingresosIva.push(iN);
+        var iva = iN * porcentaje_iva / 100;
+        ivas.push(iva);
+        var cost = parseFloat(element.costo);
+        costsProductos.push(cost);
+        var t = iN * porcentaje_tc / 100;
+        tc.push(t);
+        var margen = iN - t - cost;
+        margenes.push(margen);
+
+        if (_this4.numeroCompra[contador] == null) {
+          porcent_comi_med = 20;
+          porcent_comi_callcenter = 0;
+          _this4.numeroCompra[contador] = _this4.numeroCompra[contador] + 1;
+        } else if (_this4.numeroCompra[contador] == 1) {
+          porcent_comi_med = 15;
+          porcent_comi_callcenter = 1;
+          _this4.numeroCompra[contador] = _this4.numeroCompra[contador] + 1;
+        } else if (_this4.numeroCompra[contador] == 2) {
+          porcent_comi_callcenter = 1;
+          porcent_comi_med = 10;
+          _this4.numeroCompra[contador] = _this4.numeroCompra[contador] + 1;
+        } else if (_this4.numeroCompra[contador] == 3) {
+          porcent_comi_callcenter = 1;
+          porcent_comi_med = 5;
+          _this4.numeroCompra[contador] = _this4.numeroCompra[contador] + 1;
+        } else if (_this4.numeroCompra[contador] == 4) {
+          porcent_comi_callcenter = 1;
+          porcent_comi_med = 0;
+          _this4.numeroCompra[contador] = _this4.numeroCompra[contador] + 1;
+        } else {
+          porcent_comi_callcenter = 1;
+          porcent_comi_med = 0;
+          _this4.numeroCompra[contador] = _this4.numeroCompra[contador] + 1;
+        }
+
+        var m = margen * porcent_comi_med / 100;
+        var v = margen * porcent_comi_vist / 100;
+        var c = margen * porcent_comi_callcenter / 100;
+        valor_comi_med.push(m);
+        valor_comision_visitador.push(v);
+        valor_comision_callcenter.push(c);
+        total_comisiones.push(m + v + c);
+        saldo_margen.push(margen - (m + v + c));
+        contador = contador + 1;
+      }); //this.orden_id = 
+      //this.idCliente
+      //this.fechaHoy;
       //console.log(date);
-
 
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "put",
@@ -948,6 +922,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (Response) {
           //console.log(Response);
+          var idOrder = Response.data.mess.id;
           axios__WEBPACK_IMPORTED_MODULE_1___default()({
             method: "post",
             url: "http://127.0.0.1:8000/api/postOrderProd",
@@ -976,23 +951,70 @@ __webpack_require__.r(__webpack_exports__);
                 "content-type": "application/json"
               }
             }).then(function (Response) {
-              var idOrder = Response.data.mess.id;
-              _this4.isSidebarActiveLocal = false;
-              _this4.activeLoading = false;
+              //Response.data.mess.id;
+              axios__WEBPACK_IMPORTED_MODULE_1___default()({
+                method: "post",
+                url: "http://127.0.0.1:8000/api/postTransaction",
+                data: JSON.stringify({
+                  origenes: origenes,
+                  idsProductos: idsProductos,
+                  namesProductos: namesProductos,
+                  orden_id: idOrder,
+                  id_cliente: _this4.idCliente,
+                  fecha_compra: _this4.fechaHoy,
+                  cantidadesProductos: cantidadesProductos,
+                  precios: precios,
+                  porcentaje_iva: porcentaje_iva,
+                  ingresosIva: ingresosIva,
+                  ivas: ivas,
+                  forma_pago: formapago,
+                  porcentaje_tc: porcentaje_tc,
+                  tc: tc,
+                  costsProductos: costsProductos,
+                  margenes: margenes,
+                  numeroCompra: _this4.numeroCompra,
+                  id_medico: _this4.idMedico,
+                  porcent_comi_med: porcent_comi_med,
+                  valor_comi_med: valor_comi_med,
+                  id_visitador: idVisitador,
+                  porcent_comi_vist: porcent_comi_vist,
+                  valor_comision_vistador: valor_comision_visitador,
+                  id_callcenter: idCallcenter,
+                  porcent_comi_callcenter: porcent_comi_callcenter,
+                  valor_comision_callcenter: valor_comision_callcenter,
+                  total_comisiones: total_comisiones,
+                  saldo_margen: saldo_margen
+                }),
+                headers: {
+                  authorization: "Bearer " + token,
+                  "content-type": "application/json"
+                }
+              }).then(function (Response) {
+                _this4.isSidebarActiveLocal = false;
+                _this4.activeLoading = false;
 
-              _this4.$vs.loading.close();
+                _this4.$vs.loading.close();
 
-              _this4.$vs.notify({
-                title: "Satisfactorio",
-                text: "Pedido enviado al facturador exitosamente.",
-                color: "success"
+                _this4.$vs.notify({
+                  title: "Satisfactorio",
+                  text: "Pedido enviado al facturador exitosamente.",
+                  color: "success"
+                });
+
+                _this4.$router.go();
+              }).catch(function (err) {
+                console.log(err);
+                _this4.isSidebarActiveLocal = false;
+                _this4.activeLoading = false;
+
+                _this4.$vs.loading.close();
               });
             }).catch(function (err) {
               _this4.activeLoading = false;
 
-              _this4.$vs.loading.close();
+              _this4.$vs.loading.close(); //activado = true;
 
-              activado = true;
+
               console.log(err);
             });
           }).catch(function (err) {
@@ -1137,7 +1159,7 @@ __webpack_require__.r(__webpack_exports__);
 
               _this5.$vs.notify({
                 title: "Satisfactorio",
-                text: "Pedido enviado al despachador exitosamente.",
+                text: "Pedido enviado al facturador exitosamente.",
                 color: "success"
               });
 
@@ -1382,6 +1404,7 @@ __webpack_require__.r(__webpack_exports__);
             presentacion: element.presentacion,
             dispensing: element.dispensing,
             price: element.price,
+            costo: element.cost,
             cantidad: 1,
             totale: 0,
             unidad: "Pastillas",
@@ -2491,9 +2514,9 @@ var render = function() {
                                         { attrs: { data: data[indextr].name } },
                                         [
                                           _vm._v(
-                                            "\n                    " +
+                                            "\n                                        " +
                                               _vm._s(data[indextr].name) +
-                                              "\n                    "
+                                              "\n                                        "
                                           ),
                                           _c(
                                             "vs-checkbox",
@@ -2522,11 +2545,11 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                    " +
+                                            "\n                                        " +
                                               _vm._s(
                                                 data[indextr].presentacion
                                               ) +
-                                              "\n                    "
+                                              "\n                                        "
                                           ),
                                           _c("vs-input", {
                                             staticClass: "inputx mt-5",
@@ -2608,9 +2631,9 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                    Q\n                    " +
+                                            "\n                                        Q\n                                        " +
                                               _vm._s(data[indextr].price) +
-                                              "\n                  "
+                                              "\n                                    "
                                           )
                                         ]
                                       ),
@@ -2629,7 +2652,7 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "Q " +
+                                            "\n                                        Q " +
                                               _vm._s(data[indextr].subtotal)
                                           )
                                         ]
@@ -2961,7 +2984,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Realizar el Pedido")]
+                              [
+                                _vm._v(
+                                  "\n                            Realizar el Pedido"
+                                )
+                              ]
                             )
                           : _vm._e(),
                         _vm._v(" "),
@@ -2991,7 +3018,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Realizar el Pedido")]
+                              [
+                                _vm._v(
+                                  "\n                            Realizar el Pedido"
+                                )
+                              ]
                             )
                           : _vm._e(),
                         _vm._v(" "),
@@ -3014,7 +3045,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n              Realizar el\n              Pedido\n            "
+                                  "\n                            Realizar el\n                            Pedido\n                        "
                                 )
                               ]
                             )
@@ -3039,7 +3070,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n              Realizar el\n              Pedido\n            "
+                                  "\n                            Realizar el\n                            Pedido\n                        "
                                 )
                               ]
                             )
@@ -3495,7 +3526,11 @@ var render = function() {
                         expression: "checkBox1"
                       }
                     },
-                    [_vm._v("Dirección envio igual a facturación.")]
+                    [
+                      _vm._v(
+                        "Dirección envio igual a facturación.\n                        "
+                      )
+                    ]
                   )
                 ],
                 1

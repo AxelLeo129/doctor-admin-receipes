@@ -225,112 +225,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    ItemGridView: function ItemGridView() {
-      return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ../../components/eCommerce/ItemGridView.vue */ "./resources/js/src/components/eCommerce/ItemGridView.vue"));
-    },
-    ItemListView: function ItemListView() {
-      return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ../../components/eCommerce/ItemListView.vue */ "./resources/js/src/components/eCommerce/ItemListView.vue"));
-    },
     AisClearRefinements: vue_instantsearch__WEBPACK_IMPORTED_MODULE_0__["AisClearRefinements"],
     AisHierarchicalMenu: vue_instantsearch__WEBPACK_IMPORTED_MODULE_0__["AisHierarchicalMenu"],
     AisHits: vue_instantsearch__WEBPACK_IMPORTED_MODULE_0__["AisHits"],
@@ -385,7 +284,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       return this.medicamentosList.filter(function (medicina) {
-        if (_this.filterCate == 0 && _this.filterMar == 0) return medicina.name.toLowerCase().includes(_this.buscar.toLowerCase()) || medicina.precentacion.toLowerCase().includes(_this.buscar.toLowerCase()) || medicina.description.toLowerCase().includes(_this.buscar.toLowerCase());else if (_this.categoriasId.includes(_this.filterCate) && _this.filterMar == 0) return medicina.categories.includes(_this.filterCate) && (medicina.name.toLowerCase().includes(_this.buscar.toLowerCase()) || medicina.precentacion.toLowerCase().includes(_this.buscar.toLowerCase()) || medicina.description.toLowerCase().includes(_this.buscar.toLowerCase()));else if (_this.marcasId.includes(_this.filterMar) && _this.filterCate == 0) return medicina.laboratory == _this.filterMar && (medicina.name.toLowerCase().includes(_this.buscar.toLowerCase()) || medicina.precentacion.toLowerCase().includes(_this.buscar.toLowerCase()) || medicina.description.toLowerCase().includes(_this.buscar.toLowerCase()));else if (_this.marcasId.includes(_this.filterMar) && _this.categoriasId.includes(_this.filterCate)) return medicina.laboratory == _this.filterMar && medicina.categories.includes(_this.filterCate) && (medicina.name.toLowerCase().includes(_this.buscar.toLowerCase()) || medicina.precentacion.toLowerCase().includes(_this.buscar.toLowerCase()) || medicina.description.toLowerCase().includes(_this.buscar.toLowerCase()));
+        if (_this.filterMar == 0) return medicina.name.toLowerCase().includes(_this.buscar.toLowerCase()) || medicina.precentacion.toLowerCase().includes(_this.buscar.toLowerCase()) || medicina.description.toLowerCase().includes(_this.buscar.toLowerCase());else if (_this.marcasId.includes(_this.filterMar)) return medicina.laboratory == _this.filterMar && (medicina.name.toLowerCase().includes(_this.buscar.toLowerCase()) || medicina.precentacion.toLowerCase().includes(_this.buscar.toLowerCase()) || medicina.description.toLowerCase().includes(_this.buscar.toLowerCase()));
       });
     },
     // GRID VIEW
@@ -415,8 +314,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     limpiar: function limpiar() {
       this.buscar = "";
-      this.filterCate = 0;
-      this.filterCate = 0;
+      this.filterMar = 0;
     },
     getNum: function getNum() {
       var num = JSON.parse(localStorage.getItem("nuevaRecetaData"));
@@ -470,29 +368,8 @@ __webpack_require__.r(__webpack_exports__);
       this.precentacion = precentacion;
       this.image = id;
     },
-    getCategorias: function getCategorias() {
-      var _this4 = this;
-
-      var token = localStorage.getItem("tu");
-      axios__WEBPACK_IMPORTED_MODULE_2___default()({
-        method: "get",
-        url: "http://127.0.0.1:8000/api/getCategories",
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      }).then(function (Response) {
-        //console.log(Response.data);
-        _this4.categorias = Response.data;
-        Response.data.forEach(function (element) {
-          _this4.categoriasId.push(element.id);
-        });
-      }).catch(function (err) {
-        console.log(err);
-      });
-    },
     getMarcas: function getMarcas() {
-      var _this5 = this;
+      var _this4 = this;
 
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_2___default()({
@@ -505,19 +382,19 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         //console.log(Response.data);
         Response.data.forEach(function (element) {
-          _this5.marcas.push({
+          _this4.marcas.push({
             label: element.name,
             value: element.id
           });
 
-          _this5.marcasId.push(element.id);
+          _this4.marcasId.push(element.id);
         }); //this.marcas = Response.data;
       }).catch(function (err) {
         console.log(err);
       });
     },
     getData: function getData() {
-      var _this6 = this;
+      var _this5 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -533,27 +410,21 @@ __webpack_require__.r(__webpack_exports__);
         Response.data.forEach(function (element) {
           element.quantity = parseInt(element.quantity);
           element.laboratory = parseInt(element.laboratory);
-          var arrayc = [];
-          arrayc = element.categories.split(",");
-          element.categories = [];
-          arrayc.forEach(function (e) {
-            element.categories.push(parseInt(e));
-          });
 
           if (element.quantity > 0) {
-            _this6.numberData = _this6.numberData + 1;
+            _this5.numberData = _this5.numberData + 1;
 
-            _this6.medicamentosList.push(element);
+            _this5.medicamentosList.push(element);
           }
         }); //console.log(this.medicamentosList);
 
-        _this6.$vs.loading.close();
+        _this5.$vs.loading.close();
 
-        _this6.activado = true;
+        _this5.activado = true;
       }).catch(function (err) {
-        _this6.$vs.loading.close();
+        _this5.$vs.loading.close();
 
-        _this6.activado = true;
+        _this5.activado = true;
         console.log(err);
       });
     },
@@ -598,7 +469,6 @@ __webpack_require__.r(__webpack_exports__);
     this.registro = localStorage.getItem("regi");
     this.getNum();
     this.setSidebarWidth();
-    this.getCategorias();
     this.getMarcas();
     this.getData();
   }
@@ -763,20 +633,118 @@ var render = function() {
           _c(
             "vs-popup",
             {
-              staticClass: "holamundo",
-              attrs: { title: "Dosificación", active: _vm.popupActive },
+              attrs: { title: "Medicamento Recetado", active: _vm.activar },
               on: {
                 "update:active": function($event) {
-                  _vm.popupActive = $event
+                  _vm.activar = $event
                 }
               }
             },
             [
-              _c("h3", [
+              _c("h4", { staticClass: "mb-2" }, [
                 _c("strong", { domProps: { textContent: _vm._s(_vm.nombre) } })
               ]),
               _vm._v(" "),
-              _c("p", { domProps: { textContent: _vm._s(_vm.descripcion) } })
+              _c("h5", {
+                staticClass: "mb-2",
+                domProps: { textContent: _vm._s(_vm.precentacion) }
+              }),
+              _vm._v(" "),
+              _c("h6", {
+                staticClass: "mb-2",
+                domProps: { textContent: _vm._s(_vm.descripcion) }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mt-4" },
+                [
+                  _c("vs-textarea", {
+                    staticClass: "vs-textarea",
+                    attrs: { label: "Descripción de uso" },
+                    model: {
+                      value: _vm.uso,
+                      callback: function($$v) {
+                        _vm.uso = $$v
+                      },
+                      expression: "uso"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.uso == "",
+                          expression: "uso == ''"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Este\n                    campo es requerido.\n                "
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "vx-row" }, [
+                _c(
+                  "div",
+                  { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+                  [
+                    _c(
+                      "vs-button",
+                      {
+                        attrs: {
+                          color: "rgb(62, 201, 214)",
+                          type: "filled",
+                          disabled: _vm.uso == null || _vm.uso == ""
+                        },
+                        on: { click: _vm.agregarmF }
+                      },
+                      [_vm._v("Agregar & Finalizar")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base" },
+                  [
+                    _c(
+                      "div",
+                      { attrs: { align: "right" } },
+                      [
+                        _c(
+                          "vs-button",
+                          {
+                            attrs: {
+                              color: "primary",
+                              type: "filled",
+                              disabled: _vm.uso == null || _vm.uso == ""
+                            },
+                            on: { click: _vm.agregarM }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            Agregar &\n                            Continuar\n                        "
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ]
+                )
+              ])
             ]
           ),
           _vm._v(" "),
@@ -822,7 +790,6 @@ var render = function() {
                             fn: function(ref) {
                               var items = ref.items
                               var isFromSearch = ref.isFromSearch
-                              var refine = ref.refine
                               return _c("div", {}, [
                                 _c(
                                   "ul",
@@ -1051,259 +1018,81 @@ var render = function() {
                                         "vx-col w-full sm:w-1/3 lg:w-1/3 mb-base"
                                     },
                                     [
-                                      _c(
-                                        "vx-card",
-                                        [
-                                          _c(
-                                            "div",
-                                            {
-                                              attrs: { slot: "no-body" },
-                                              slot: "no-body"
-                                            },
-                                            [
-                                              _c(
-                                                "div",
-                                                { attrs: { align: "center" } },
-                                                [
-                                                  _c("img", {
-                                                    staticClass:
-                                                      "responsive pt-8 card-img-top h-48 w-48",
-                                                    attrs: {
-                                                      src:
-                                                        "https://pharmazone.app/images/productos/" +
-                                                        item.img_url,
-                                                      alt: "content-img"
-                                                    }
-                                                  })
-                                                ]
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("h5", { staticClass: "mb-2" }, [
-                                            _vm._v(_vm._s(item.name))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("h6", { staticClass: "mb-2" }, [
-                                            _vm._v(_vm._s(item.precentacion))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("p", { staticClass: "text-grey" }),
-                                          _vm._v(" "),
-                                          _c(
-                                            "p",
-                                            { staticClass: "text-grey" },
-                                            [_vm._v(_vm._s(item.description))]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "vs-popup",
-                                            {
-                                              attrs: {
-                                                title: "Medicamento Recetado",
-                                                active: _vm.activar
-                                              },
-                                              on: {
-                                                "update:active": function(
-                                                  $event
-                                                ) {
-                                                  _vm.activar = $event
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "h4",
-                                                { staticClass: "mb-2" },
-                                                [
-                                                  _c("strong", {
-                                                    domProps: {
-                                                      textContent: _vm._s(
-                                                        _vm.nombre
-                                                      )
-                                                    }
-                                                  })
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c("h5", {
-                                                staticClass: "mb-2",
-                                                domProps: {
-                                                  textContent: _vm._s(
-                                                    _vm.precentacion
-                                                  )
-                                                }
-                                              }),
-                                              _vm._v(" "),
-                                              _c("h6", {
-                                                staticClass: "mb-2",
-                                                domProps: {
-                                                  textContent: _vm._s(
-                                                    _vm.descripcion
-                                                  )
-                                                }
-                                              }),
-                                              _vm._v(" "),
-                                              _c(
-                                                "div",
-                                                { staticClass: "mt-4" },
-                                                [
-                                                  _c("vs-textarea", {
-                                                    staticClass: "vs-textarea",
-                                                    attrs: {
-                                                      label:
-                                                        "Descripción de uso"
-                                                    },
-                                                    model: {
-                                                      value: _vm.uso,
-                                                      callback: function($$v) {
-                                                        _vm.uso = $$v
-                                                      },
-                                                      expression: "uso"
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "span",
-                                                    {
-                                                      directives: [
-                                                        {
-                                                          name: "show",
-                                                          rawName: "v-show",
-                                                          value: _vm.uso == "",
-                                                          expression:
-                                                            "uso == ''"
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "text-danger text-sm"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                          Este\n                          campo es requerido.\n                        "
-                                                      )
-                                                    ]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "div",
-                                                { staticClass: "vx-row" },
-                                                [
-                                                  _c(
-                                                    "div",
-                                                    {
-                                                      staticClass:
-                                                        "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base"
-                                                    },
-                                                    [
-                                                      _c(
-                                                        "vs-button",
-                                                        {
-                                                          attrs: {
-                                                            color:
-                                                              "rgb(62, 201, 214)",
-                                                            type: "filled",
-                                                            disabled:
-                                                              _vm.uso == null ||
-                                                              _vm.uso == ""
-                                                          },
-                                                          on: {
-                                                            click: _vm.agregarmF
-                                                          }
-                                                        },
-                                                        [
-                                                          _vm._v(
-                                                            "Agregar & Finalizar"
-                                                          )
-                                                        ]
-                                                      )
-                                                    ],
-                                                    1
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "div",
-                                                    {
-                                                      staticClass:
-                                                        "vx-col w-full sm:w-1/2 lg:w-1/2 mb-base"
-                                                    },
-                                                    [
-                                                      _c(
-                                                        "div",
-                                                        {
-                                                          attrs: {
-                                                            align: "right"
-                                                          }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "vs-button",
-                                                            {
-                                                              attrs: {
-                                                                color:
-                                                                  "primary",
-                                                                type: "filled",
-                                                                disabled:
-                                                                  _vm.uso ==
-                                                                    null ||
-                                                                  _vm.uso == ""
-                                                              },
-                                                              on: {
-                                                                click:
-                                                                  _vm.agregarM
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                "\n                              Agregar &\n                              Continuar\n                            "
-                                                              )
-                                                            ]
-                                                          )
-                                                        ],
-                                                        1
-                                                      )
-                                                    ]
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            {
-                                              staticClass:
-                                                "flex justify-between flex-wrap"
-                                            },
-                                            [
-                                              _c(
-                                                "vs-button",
-                                                {
+                                      _c("vx-card", [
+                                        _c(
+                                          "div",
+                                          {
+                                            attrs: { slot: "no-body" },
+                                            slot: "no-body"
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              { attrs: { align: "center" } },
+                                              [
+                                                _c("img", {
                                                   staticClass:
-                                                    "mt-4 mr-2 alineacion",
-                                                  on: {
-                                                    click: function($event) {
-                                                      ;(_vm.activar = true),
-                                                        _vm.setData(
-                                                          item.id,
-                                                          item.name,
-                                                          item.description,
-                                                          item.precentacion
-                                                        )
-                                                    }
+                                                    "responsive pt-8 card-img-top h-48 w-48",
+                                                  attrs: {
+                                                    src:
+                                                      "https://pharmazone.app/images/productos/" +
+                                                      item.img_url,
+                                                    alt: "content-img"
                                                   }
-                                                },
-                                                [_vm._v("Agregar Medicamento")]
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        ],
-                                        1
-                                      )
+                                                })
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("h5", { staticClass: "mb-2" }, [
+                                          _vm._v(_vm._s(item.name))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("h6", { staticClass: "mb-2" }, [
+                                          _vm._v(_vm._s(item.precentacion))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("p", { staticClass: "text-grey" }),
+                                        _vm._v(" "),
+                                        _c("p", { staticClass: "text-grey" }, [
+                                          _vm._v(_vm._s(item.description))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "flex justify-between flex-wrap"
+                                          },
+                                          [
+                                            _c(
+                                              "vs-button",
+                                              {
+                                                staticClass:
+                                                  "mt-4 mr-2 alineacion",
+                                                on: {
+                                                  click: function($event) {
+                                                    ;(_vm.activar = true),
+                                                      _vm.setData(
+                                                        item.id,
+                                                        item.name,
+                                                        item.description,
+                                                        item.precentacion
+                                                      )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                Agregar Medicamento"
+                                                )
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ])
                                     ],
                                     1
                                   )

@@ -61,6 +61,9 @@ class UserController extends Controller
         return User::where('email', $request->email)->get();
     }
 
+    public function getVisitador($id){
+        return User::where('id', $id)->get();
+    }
     /** 
          * Register api 
          * 

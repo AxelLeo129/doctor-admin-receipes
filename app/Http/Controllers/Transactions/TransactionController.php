@@ -48,18 +48,27 @@ class TransactionController extends Controller
             $transaction->id_cliente = $request->id_cliente;
             $transaction->fecha_compra = $request->fecha_compra;
             $transaction->cantidad = $request->cantidadesProductos[$cont];
-            $transaction->precio_facturacion = $request->precio;
-            $transaction->porcentaje_iva = $request->fecha_compra;
+            $transaction->precio_facturacion = $request->precios[$cont];
+            $transaction->porcentaje_iva = $request->porcentaje_iva;
             $transaction->ingreso_neto = $request->ingresosIva[$cont];
             $transaction->iva = $request->ivas[$cont];
             $transaction->forma_pago = $request->forma_pago;
-            $transaction->porcentaje_tc = $request->porcentaje_tc;
+            $transaction->porcetaje_tc = $request->porcentaje_tc;
+            $transaction->tc = $request->tc[$cont];
             $transaction->costo = $request->costsProductos[$cont];
             $transaction->margen_bruto = $request->margenes[$cont];
             $transaction->numero_compra_medico = $request->numeroCompra[$cont];
             $transaction->id_medico = $request->id_medico;
-            $transaction->porcent_comi_med = $request->porcent_comi_med[$cont];
-            
+            $transaction->porcent_comi_med = $request->porcent_comi_med;
+            $transaction->valor_comision_med = $request->valor_comi_med[$cont];
+            $transaction->id_visitador = $transaction->id_visitador;
+            $transaction->porcent_comi_vist = $request->porcent_comi_vist;
+            $transaction->valor_comision_vistador = $request->valor_comision_visitador[$cont];
+            $transaction->id_callcenter = $request->id_callcenter;
+            $transaction->porcent_comi_callcenter = $request->porcent_comi_callcenter;
+            $transaction->valor_comi_callcenter = $request->valor_comision_callcenter[$cont];
+            $transaction->total_comisiones = $request->total_comisiones[$cont];
+            $transaction->saldo_margen = $request->saldo_margen[$cont];
             if($transaction->save()){
                 array_push($succes, $transaction);
                 $cont = $cont + 1;

@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('putUser3', 'User\UserController@update3');
     Route::get('getUser1/{id}', 'User\UserController@show');
     Route::get('getUser2/{id}', 'User\UserController@show1');
+    Route::get('getVisitador1/{id}', 'User\UserController@getVisitador');
     Route::post('resetPassword', 'User\UserController@changePassword');
     Route::post('forgotPassword', 'User\UserController@resetPassword');
     //Visitador
@@ -112,6 +113,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('putPre', 'Presentations\PresentationController@update');
     //Transacciones-Comisiones
     Route::get('getComiProd/{id_producto}/{id_medico}/{id_cliente}', 'Transactions\TransactionController@index');
+    Route::post('postTransaction', 'Transactions\TransactionController@store');
 });
 
 Route::fallback(function(){
