@@ -99,6 +99,8 @@
                             <vs-button class="mt-5 mr-3" @click="popupActive2=false, isSidebarActiveLocal = false"
                                 color="warning" type="filled">Regresar</vs-button>
                             <vs-button class="mt-5 mr-3" @click="agregarP" type="filled">Nuevo Producto</vs-button>
+                            <vs-button class="mt-5 mr-3" @click="visitadrasdf" type="filled">Nuevo</vs-button>
+                            
                         </div>
                     </vx-card>
                 </div>
@@ -745,6 +747,24 @@
             cantidadess() {
                 console.log(this.medicines);
             },
+            visitadrasdf(){
+                let token = localStorage.getItem('tu');
+                axios({
+                    method: "get",
+                    url: "http://127.0.0.1:8000/api/getVisitador1/" + this.idMedico,
+                    headers: {
+                        authorization: "Bearer " + token,
+                        "content-type": "application/json"
+                    }
+                }).then(Response => {
+                    let idVisitador = Response.data[0].id_visitador;
+                    console.log(idVisitador);
+                }).catch(err => {
+                    console.log(err);
+                    this.activeLoading = false;
+                    this.$vs.loading.close();
+                });
+            },
             notificacion() {
                 this.openLoading();
                 let token = localStorage.getItem("tu");
@@ -806,6 +826,7 @@
                         "content-type": "application/json"
                     }
                 }).then(Response => {
+                    console.log(Response);
                     idVisitador = Response.data[0].id_visitador;
                 }).catch(err => {
                     console.log(err);
@@ -988,7 +1009,7 @@
                                                         valor_comi_med: valor_comi_med,
                                                         id_visitador: idVisitador,
                                                         porcent_comi_vist: porcent_comi_vist,
-                                                        valor_comision_vistador: valor_comision_visitador,
+                                                        valor_comision_visitador: valor_comision_visitador,
                                                         id_callcenter: idCallcenter,
                                                         porcent_comi_callcenter: porcent_comi_callcenter,
                                                         valor_comision_callcenter: valor_comision_callcenter,
@@ -1075,6 +1096,105 @@
                 } else {
                     date = "";
                 }
+                let idsProductos = [];
+                let namesProductos = [];
+                let origenes = [];
+                let cantidadesProductos = [];
+                let precios = [];
+                let ingresosIva = [];
+                let porcentaje_iva = 12;
+                let ivas = [];
+                let formapago = 0;
+                let porcentaje_tc = 0;
+                if (this.switch1 == 1) {
+                    formapago = 1;
+                    porcentaje_tc = 2.5;
+                } else {
+                    formapago = 2;
+                }
+                let costsProductos = [];
+                let margenes = [];
+                let tc = [];
+                let contador = 0;
+                let idCallcenter = localStorage.getItem('ui');
+                let idVisitador = 0;
+                //this.idMedico 
+                axios({
+                    method: "get",
+                    url: "http://127.0.0.1:8000/api/getVisitador1/" + this.idMedico,
+                    headers: {
+                        authorization: "Bearer " + token,
+                        "content-type": "application/json"
+                    }
+                }).then(Response => {
+                    console.log(Response);
+                    idVisitador = Response.data[0].id_visitador;
+                }).catch(err => {
+                    console.log(err);
+                    this.activeLoading = false;
+                    this.$vs.loading.close();
+                });
+                let porcent_comi_med = 0;
+                let porcent_comi_vist = 2;
+                let porcent_comi_callcenter = 0;
+                let valor_comi_med = [];
+                let valor_comision_visitador = [];
+                let valor_comision_callcenter = [];
+                let total_comisiones = [];
+                let saldo_margen = [];
+                this.medicines.forEach(element => {
+                    idsProductos.push(element.id);
+                    namesProductos.push(element.name);
+                    origenes.push(element.origen);
+                    cantidadesProductos.push(element.cantidad);
+                    precios.push(parseFloat(element.price) * parseInt(element.cantidad));
+                    let iN = parseFloat(element.price) / (1 + (porcentaje_iva / 100));
+                    ingresosIva.push(iN);
+                    let iva = (iN * porcentaje_iva) / 100;
+                    ivas.push(iva);
+                    let cost = parseFloat(element.costo);
+                    costsProductos.push(cost);
+                    let t = (iN * porcentaje_tc) / 100;
+                    tc.push(t);
+                    let margen = (iN - t - cost);
+                    margenes.push(margen);
+                    if (this.numeroCompra[contador] == null) {
+                        porcent_comi_med = 20;
+                        porcent_comi_callcenter = 0;
+                        this.numeroCompra[contador] = this.numeroCompra[contador] + 1;
+
+                    } else if (this.numeroCompra[contador] == 1) {
+                        porcent_comi_med = 15;
+                        porcent_comi_callcenter = 1;
+                        this.numeroCompra[contador] = this.numeroCompra[contador] + 1;
+                    } else if (this.numeroCompra[contador] == 2) {
+                        porcent_comi_callcenter = 1;
+                        porcent_comi_med = 10;
+                        this.numeroCompra[contador] = this.numeroCompra[contador] + 1;
+                    } else if (this.numeroCompra[contador] == 3) {
+                        porcent_comi_callcenter = 1;
+                        porcent_comi_med = 5;
+                        this.numeroCompra[contador] = this.numeroCompra[contador] + 1;
+                    } else if (this.numeroCompra[contador] == 4) {
+                        porcent_comi_callcenter = 1;
+                        porcent_comi_med = 0;
+                        this.numeroCompra[contador] = this.numeroCompra[contador] + 1;
+                    } else {
+                        porcent_comi_callcenter = 1;
+                        porcent_comi_med = 0;
+                        this.numeroCompra[contador] = this.numeroCompra[contador] + 1;
+                    }
+                    let m = (margen * porcent_comi_med) / 100;
+                    let v = (margen * porcent_comi_vist) / 100;
+                    let c = (margen * porcent_comi_callcenter) / 100;
+                    valor_comi_med.push(m);
+                    valor_comision_visitador.push(v);
+                    valor_comision_callcenter.push(c);
+                    total_comisiones.push((m + v + c));
+                    saldo_margen.push((margen - (m + v + c)));
+                    contador = contador + 1;
+                });
+
                 axios({
                         method: "post",
                         url: "http://127.0.0.1:8000/api/postCliente",
@@ -1109,6 +1229,7 @@
                     })
                     .then(Response => {
                         console.log(this.datetr);
+                        let idC = Response.data.mess.id;
                         axios({
                                 method: "post",
                                 url: "http://127.0.0.1:8000/api/postOrder",
@@ -1127,6 +1248,7 @@
                             })
                             .then(Response => {
                                 //console.log(Response);
+                                let idOrder = Response.data.mess.id;
                                 axios({
                                         method: "post",
                                         url: "http://127.0.0.1:8000/api/postOrderProd",
@@ -1156,15 +1278,59 @@
                                                 }
                                             })
                                             .then(Response => {
-                                                this.isSidebarActiveLocal = false;
-                                                this.activeLoading = false;
-                                                this.$vs.loading.close();
-                                                this.$vs.notify({
-                                                    title: "Satisfactorio",
-                                                    text: "Pedido enviado al facturador exitosamente.",
-                                                    color: "success"
+                                                axios({
+                                                    method: "post",
+                                                    url: "http://127.0.0.1:8000/api/postTransaction",
+                                                    data: JSON.stringify({
+                                                        origenes: origenes,
+                                                        idsProductos: idsProductos,
+                                                        namesProductos: namesProductos,
+                                                        orden_id: idOrder,
+                                                        id_cliente: idC,
+                                                        fecha_compra: this.fechaHoy,
+                                                        cantidadesProductos: cantidadesProductos,
+                                                        precios: precios,
+                                                        porcentaje_iva: porcentaje_iva,
+                                                        ingresosIva: ingresosIva,
+                                                        ivas: ivas,
+                                                        forma_pago: formapago,
+                                                        porcentaje_tc: porcentaje_tc,
+                                                        tc: tc,
+                                                        costsProductos: costsProductos,
+                                                        margenes: margenes,
+                                                        numeroCompra: this.numeroCompra,
+                                                        id_medico: this.idMedico,
+                                                        porcent_comi_med: porcent_comi_med,
+                                                        valor_comi_med: valor_comi_med,
+                                                        id_visitador: idVisitador,
+                                                        porcent_comi_vist: porcent_comi_vist,
+                                                        valor_comision_visitador: valor_comision_visitador,
+                                                        id_callcenter: idCallcenter,
+                                                        porcent_comi_callcenter: porcent_comi_callcenter,
+                                                        valor_comision_callcenter: valor_comision_callcenter,
+                                                        total_comisiones: total_comisiones,
+                                                        saldo_margen: saldo_margen
+                                                    }),
+                                                    headers: {
+                                                        authorization: "Bearer " + token,
+                                                        "content-type": "application/json"
+                                                    }
+                                                }).then(Response => {
+                                                    this.isSidebarActiveLocal = false;
+                                                    this.activeLoading = false;
+                                                    this.$vs.loading.close();
+                                                    this.$vs.notify({
+                                                        title: "Satisfactorio",
+                                                        text: "Pedido enviado al facturador exitosamente.",
+                                                        color: "success"
+                                                    });
+                                                    this.$router.go();
+                                                }).catch(err => {
+                                                    console.log(err);
+                                                    this.isSidebarActiveLocal = false;
+                                                    this.activeLoading = false;
+                                                    this.$vs.loading.close();
                                                 });
-                                                this.$router.go();
                                             })
                                             .catch(err => {
                                                 this.activeLoading = false;

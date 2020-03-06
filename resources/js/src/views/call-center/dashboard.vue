@@ -194,6 +194,13 @@
                                     <span class="text-lg ml-3">Descartadas</span>
                                 </div>
                             </li>
+                            <li @click="getRecipes('Reagendado')" tag="span"
+                                class="flex items-center justify-between items-center mt-4 cursor-pointer" :class="{'text-primary': activado == 'Reagendado'}">
+                                <div class="flex items-center mb-2">
+                                    <feather-icon icon="ClockIcon"></feather-icon>
+                                    <span class="text-lg ml-3">Reagendado</span>
+                                </div>
+                            </li>
                             <li @click="getRerecipes('Reprogramada')" tag="span"
                                 class="flex items-center justify-between items-center mt-4 cursor-pointer" :class="{'text-primary': activado == 'Reprogramada'}">
                                 <div class="flex items-center mb-2">
@@ -250,14 +257,17 @@
                                                 </div>
                                                 <span>{{ mail.status }}</span>
                                             </div>
-                                            <vs-button @click="descartar(mail.id)" v-show="mail.status == 'Nuevo'"
+                                            <vs-button @click="reagendar(mail.id)" v-show="mail.status == 'Nuevo'"
+                                                color="rgb(249, 142, 5)" class="mt-5" size="small" type="filled">Reagendar
+                                            </vs-button>
+                                            <vs-button @click="descartar(mail.id)" v-show="mail.status == 'Nuevo' || mail.status == 'Reagendado'"
                                                 color="danger" class="mt-5" size="small" type="filled">Descartar
                                             </vs-button>
                                             <vs-button @click="verReceta(mail.id, mail.doctor_id)"
                                                 color="rgb(62, 201, 214)" class="mt-5" size="small" type="filled">Ver
                                                 Receta
                                             </vs-button>
-                                            <vs-button color="primary" class="mt-5" type="filled" size="small" v-show="mail.status == 'Nuevo' || mail.permission == 1"
+                                            <vs-button color="primary" class="mt-5" type="filled" size="small" v-show="mail.status == 'Nuevo' || mail.status == 'Reagendado' || mail.permission == 1"
                                                 @click="openModal(mail.phone, mail.id, mail.status, mail.origen, mail.idMedico)">Posibles Clientes
                                             </vs-button>
                                         </div>
@@ -353,7 +363,7 @@
                 popupActive2: false,
                 addNewDataSidebar: false,
                 sidebarData: {},
-                status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado"],
+                status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado"],
                 buscar: "",
                 clickNotClose: true,
                 isEmailSidebarActive: true,
@@ -391,6 +401,37 @@
             this.getRecipes("Nuevo");
         },
         methods: {
+            reagendar(id){
+                this.openLoading();
+                let token = localStorage.getItem('tu');
+                axios({
+                    method: "put",
+                    url: "http://127.0.0.1:8000/api/changeStatus",
+                    data: JSON.stringify({
+                      id: id,
+                      status: 6
+                    }),
+                    headers: {
+                      authorization: "Bearer " + token,
+                      "content-type": "application/json"
+                    }
+                  })
+                    .then(Response => {
+                      this.activeLoading = false;
+                      this.$vs.loading.close();
+                      this.getRecipes("Nuevo");
+                      this.$vs.notify({
+                        title: "Satisfactorio",
+                        text: "Pedido reagendado exitosamente.",
+                        color: "success"
+                      });
+                    })
+                    .catch(err => {
+                      this.activeLoading = false;
+                      this.$vs.loading.close();
+                      console.log(err);
+                    });
+            },
             descartar(id){
                 this.openLoading();
                 let token = localStorage.getItem('tu');
@@ -604,7 +645,7 @@
                 if (a == 3) return "warning";
                 if (a == 4) return "success";
                 if (a == 5) return "danger";
-                if (a == 6) return "danger";
+                if (a == 6) return "warning";
                 return "primary";
             },
             getFacturacion(a){

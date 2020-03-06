@@ -297,6 +297,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -733,8 +735,29 @@ __webpack_require__.r(__webpack_exports__);
     cantidadess: function cantidadess() {
       console.log(this.medicines);
     },
-    notificacion: function notificacion() {
+    visitadrasdf: function visitadrasdf() {
       var _this4 = this;
+
+      var token = localStorage.getItem('tu');
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getVisitador1/" + this.idMedico,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        var idVisitador = Response.data[0].id_visitador;
+        console.log(idVisitador);
+      }).catch(function (err) {
+        console.log(err);
+        _this4.activeLoading = false;
+
+        _this4.$vs.loading.close();
+      });
+    },
+    notificacion: function notificacion() {
+      var _this5 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -799,12 +822,13 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        console.log(Response);
         idVisitador = Response.data[0].id_visitador;
       }).catch(function (err) {
         console.log(err);
-        _this4.activeLoading = false;
+        _this5.activeLoading = false;
 
-        _this4.$vs.loading.close();
+        _this5.$vs.loading.close();
       });
       var porcent_comi_med = 0;
       var porcent_comi_vist = 2;
@@ -831,30 +855,30 @@ __webpack_require__.r(__webpack_exports__);
         var margen = iN - t - cost;
         margenes.push(margen);
 
-        if (_this4.numeroCompra[contador] == null) {
+        if (_this5.numeroCompra[contador] == null) {
           porcent_comi_med = 20;
           porcent_comi_callcenter = 0;
-          _this4.numeroCompra[contador] = _this4.numeroCompra[contador] + 1;
-        } else if (_this4.numeroCompra[contador] == 1) {
+          _this5.numeroCompra[contador] = _this5.numeroCompra[contador] + 1;
+        } else if (_this5.numeroCompra[contador] == 1) {
           porcent_comi_med = 15;
           porcent_comi_callcenter = 1;
-          _this4.numeroCompra[contador] = _this4.numeroCompra[contador] + 1;
-        } else if (_this4.numeroCompra[contador] == 2) {
+          _this5.numeroCompra[contador] = _this5.numeroCompra[contador] + 1;
+        } else if (_this5.numeroCompra[contador] == 2) {
           porcent_comi_callcenter = 1;
           porcent_comi_med = 10;
-          _this4.numeroCompra[contador] = _this4.numeroCompra[contador] + 1;
-        } else if (_this4.numeroCompra[contador] == 3) {
+          _this5.numeroCompra[contador] = _this5.numeroCompra[contador] + 1;
+        } else if (_this5.numeroCompra[contador] == 3) {
           porcent_comi_callcenter = 1;
           porcent_comi_med = 5;
-          _this4.numeroCompra[contador] = _this4.numeroCompra[contador] + 1;
-        } else if (_this4.numeroCompra[contador] == 4) {
+          _this5.numeroCompra[contador] = _this5.numeroCompra[contador] + 1;
+        } else if (_this5.numeroCompra[contador] == 4) {
           porcent_comi_callcenter = 1;
           porcent_comi_med = 0;
-          _this4.numeroCompra[contador] = _this4.numeroCompra[contador] + 1;
+          _this5.numeroCompra[contador] = _this5.numeroCompra[contador] + 1;
         } else {
           porcent_comi_callcenter = 1;
           porcent_comi_med = 0;
-          _this4.numeroCompra[contador] = _this4.numeroCompra[contador] + 1;
+          _this5.numeroCompra[contador] = _this5.numeroCompra[contador] + 1;
         }
 
         var m = margen * porcent_comi_med / 100;
@@ -910,11 +934,11 @@ __webpack_require__.r(__webpack_exports__);
           url: "http://127.0.0.1:8000/api/postOrder",
           data: JSON.stringify({
             client_id: Response.data.mess.id,
-            namet: _this4.nameT,
-            numbert: _this4.numberT,
-            numbertr: _this4.numberTr,
-            datetr: _this4.datetr,
-            total: _this4.total
+            namet: _this5.nameT,
+            numbert: _this5.numberT,
+            numbertr: _this5.numberTr,
+            datetr: _this5.datetr,
+            total: _this5.total
           }),
           headers: {
             authorization: "Bearer " + token,
@@ -927,7 +951,7 @@ __webpack_require__.r(__webpack_exports__);
             method: "post",
             url: "http://127.0.0.1:8000/api/postOrderProd",
             data: JSON.stringify({
-              cantidad: _this4.cantidades,
+              cantidad: _this5.cantidades,
               medicines: ids,
               order_id: Response.data.mess.id
             }),
@@ -936,12 +960,12 @@ __webpack_require__.r(__webpack_exports__);
               "content-type": "application/json"
             }
           }).then(function (Response) {
-            _this4.datetr = null;
+            _this5.datetr = null;
             axios__WEBPACK_IMPORTED_MODULE_1___default()({
               method: "put",
               url: "http://127.0.0.1:8000/api/putReceSta",
               data: JSON.stringify({
-                id: _this4.idRecipe,
+                id: _this5.idRecipe,
                 status: 2,
                 status1: date,
                 status2: status
@@ -960,8 +984,8 @@ __webpack_require__.r(__webpack_exports__);
                   idsProductos: idsProductos,
                   namesProductos: namesProductos,
                   orden_id: idOrder,
-                  id_cliente: _this4.idCliente,
-                  fecha_compra: _this4.fechaHoy,
+                  id_cliente: _this5.idCliente,
+                  fecha_compra: _this5.fechaHoy,
                   cantidadesProductos: cantidadesProductos,
                   precios: precios,
                   porcentaje_iva: porcentaje_iva,
@@ -972,13 +996,13 @@ __webpack_require__.r(__webpack_exports__);
                   tc: tc,
                   costsProductos: costsProductos,
                   margenes: margenes,
-                  numeroCompra: _this4.numeroCompra,
-                  id_medico: _this4.idMedico,
+                  numeroCompra: _this5.numeroCompra,
+                  id_medico: _this5.idMedico,
                   porcent_comi_med: porcent_comi_med,
                   valor_comi_med: valor_comi_med,
                   id_visitador: idVisitador,
                   porcent_comi_vist: porcent_comi_vist,
-                  valor_comision_vistador: valor_comision_visitador,
+                  valor_comision_visitador: valor_comision_visitador,
                   id_callcenter: idCallcenter,
                   porcent_comi_callcenter: porcent_comi_callcenter,
                   valor_comision_callcenter: valor_comision_callcenter,
@@ -990,59 +1014,59 @@ __webpack_require__.r(__webpack_exports__);
                   "content-type": "application/json"
                 }
               }).then(function (Response) {
-                _this4.isSidebarActiveLocal = false;
-                _this4.activeLoading = false;
+                _this5.isSidebarActiveLocal = false;
+                _this5.activeLoading = false;
 
-                _this4.$vs.loading.close();
+                _this5.$vs.loading.close();
 
-                _this4.$vs.notify({
+                _this5.$vs.notify({
                   title: "Satisfactorio",
                   text: "Pedido enviado al facturador exitosamente.",
                   color: "success"
                 });
 
-                _this4.$router.go();
+                _this5.$router.go();
               }).catch(function (err) {
                 console.log(err);
-                _this4.isSidebarActiveLocal = false;
-                _this4.activeLoading = false;
+                _this5.isSidebarActiveLocal = false;
+                _this5.activeLoading = false;
 
-                _this4.$vs.loading.close();
+                _this5.$vs.loading.close();
               });
             }).catch(function (err) {
-              _this4.activeLoading = false;
+              _this5.activeLoading = false;
 
-              _this4.$vs.loading.close(); //activado = true;
+              _this5.$vs.loading.close(); //activado = true;
 
 
               console.log(err);
             });
           }).catch(function (err) {
-            _this4.activeLoading = false;
+            _this5.activeLoading = false;
 
-            _this4.$vs.loading.close();
+            _this5.$vs.loading.close();
 
             activado = true; //console.log(err);
           });
         }).catch(function (err) {
-          _this4.activeLoading = false;
+          _this5.activeLoading = false;
 
-          _this4.$vs.loading.close();
+          _this5.$vs.loading.close();
 
           activado = true;
           console.log(err);
         });
       }).catch(function (err) {
-        _this4.activeLoading = false;
+        _this5.activeLoading = false;
 
-        _this4.$vs.loading.close();
+        _this5.$vs.loading.close();
 
         activado = true;
         console.log(err);
       });
     },
     notificacion1: function notificacion1() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -1075,6 +1099,108 @@ __webpack_require__.r(__webpack_exports__);
         date = "";
       }
 
+      var idsProductos = [];
+      var namesProductos = [];
+      var origenes = [];
+      var cantidadesProductos = [];
+      var precios = [];
+      var ingresosIva = [];
+      var porcentaje_iva = 12;
+      var ivas = [];
+      var formapago = 0;
+      var porcentaje_tc = 0;
+
+      if (this.switch1 == 1) {
+        formapago = 1;
+        porcentaje_tc = 2.5;
+      } else {
+        formapago = 2;
+      }
+
+      var costsProductos = [];
+      var margenes = [];
+      var tc = [];
+      var contador = 0;
+      var idCallcenter = localStorage.getItem('ui');
+      var idVisitador = 0; //this.idMedico 
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getVisitador1/" + this.idMedico,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        console.log(Response);
+        idVisitador = Response.data[0].id_visitador;
+      }).catch(function (err) {
+        console.log(err);
+        _this6.activeLoading = false;
+
+        _this6.$vs.loading.close();
+      });
+      var porcent_comi_med = 0;
+      var porcent_comi_vist = 2;
+      var porcent_comi_callcenter = 0;
+      var valor_comi_med = [];
+      var valor_comision_visitador = [];
+      var valor_comision_callcenter = [];
+      var total_comisiones = [];
+      var saldo_margen = [];
+      this.medicines.forEach(function (element) {
+        idsProductos.push(element.id);
+        namesProductos.push(element.name);
+        origenes.push(element.origen);
+        cantidadesProductos.push(element.cantidad);
+        precios.push(parseFloat(element.price) * parseInt(element.cantidad));
+        var iN = parseFloat(element.price) / (1 + porcentaje_iva / 100);
+        ingresosIva.push(iN);
+        var iva = iN * porcentaje_iva / 100;
+        ivas.push(iva);
+        var cost = parseFloat(element.costo);
+        costsProductos.push(cost);
+        var t = iN * porcentaje_tc / 100;
+        tc.push(t);
+        var margen = iN - t - cost;
+        margenes.push(margen);
+
+        if (_this6.numeroCompra[contador] == null) {
+          porcent_comi_med = 20;
+          porcent_comi_callcenter = 0;
+          _this6.numeroCompra[contador] = _this6.numeroCompra[contador] + 1;
+        } else if (_this6.numeroCompra[contador] == 1) {
+          porcent_comi_med = 15;
+          porcent_comi_callcenter = 1;
+          _this6.numeroCompra[contador] = _this6.numeroCompra[contador] + 1;
+        } else if (_this6.numeroCompra[contador] == 2) {
+          porcent_comi_callcenter = 1;
+          porcent_comi_med = 10;
+          _this6.numeroCompra[contador] = _this6.numeroCompra[contador] + 1;
+        } else if (_this6.numeroCompra[contador] == 3) {
+          porcent_comi_callcenter = 1;
+          porcent_comi_med = 5;
+          _this6.numeroCompra[contador] = _this6.numeroCompra[contador] + 1;
+        } else if (_this6.numeroCompra[contador] == 4) {
+          porcent_comi_callcenter = 1;
+          porcent_comi_med = 0;
+          _this6.numeroCompra[contador] = _this6.numeroCompra[contador] + 1;
+        } else {
+          porcent_comi_callcenter = 1;
+          porcent_comi_med = 0;
+          _this6.numeroCompra[contador] = _this6.numeroCompra[contador] + 1;
+        }
+
+        var m = margen * porcent_comi_med / 100;
+        var v = margen * porcent_comi_vist / 100;
+        var c = margen * porcent_comi_callcenter / 100;
+        valor_comi_med.push(m);
+        valor_comision_visitador.push(v);
+        valor_comision_callcenter.push(c);
+        total_comisiones.push(m + v + c);
+        saldo_margen.push(margen - (m + v + c));
+        contador = contador + 1;
+      });
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "post",
         url: "http://127.0.0.1:8000/api/postCliente",
@@ -1107,17 +1233,18 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(_this5.datetr);
+        console.log(_this6.datetr);
+        var idC = Response.data.mess.id;
         axios__WEBPACK_IMPORTED_MODULE_1___default()({
           method: "post",
           url: "http://127.0.0.1:8000/api/postOrder",
           data: JSON.stringify({
             client_id: Response.data.mess.id,
-            namet: _this5.nameT,
-            numbert: _this5.numberT,
-            datetr: _this5.datetr,
-            numbertr: _this5.numberTr,
-            total: _this5.total
+            namet: _this6.nameT,
+            numbert: _this6.numberT,
+            datetr: _this6.datetr,
+            numbertr: _this6.numberTr,
+            total: _this6.total
           }),
           headers: {
             authorization: "Bearer " + token,
@@ -1125,11 +1252,12 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (Response) {
           //console.log(Response);
+          var idOrder = Response.data.mess.id;
           axios__WEBPACK_IMPORTED_MODULE_1___default()({
             method: "post",
             url: "http://127.0.0.1:8000/api/postOrderProd",
             data: JSON.stringify({
-              cantidad: _this5.cantidades,
+              cantidad: _this6.cantidades,
               medicines: ids,
               order_id: Response.data.mess.id
             }),
@@ -1142,7 +1270,7 @@ __webpack_require__.r(__webpack_exports__);
               method: "put",
               url: "http://127.0.0.1:8000/api/putReceSta",
               data: JSON.stringify({
-                id: _this5.idRecipe,
+                id: _this6.idRecipe,
                 status: 2,
                 status1: date,
                 status2: status
@@ -1152,45 +1280,90 @@ __webpack_require__.r(__webpack_exports__);
                 "content-type": "application/json"
               }
             }).then(function (Response) {
-              _this5.isSidebarActiveLocal = false;
-              _this5.activeLoading = false;
+              axios__WEBPACK_IMPORTED_MODULE_1___default()({
+                method: "post",
+                url: "http://127.0.0.1:8000/api/postTransaction",
+                data: JSON.stringify({
+                  origenes: origenes,
+                  idsProductos: idsProductos,
+                  namesProductos: namesProductos,
+                  orden_id: idOrder,
+                  id_cliente: idC,
+                  fecha_compra: _this6.fechaHoy,
+                  cantidadesProductos: cantidadesProductos,
+                  precios: precios,
+                  porcentaje_iva: porcentaje_iva,
+                  ingresosIva: ingresosIva,
+                  ivas: ivas,
+                  forma_pago: formapago,
+                  porcentaje_tc: porcentaje_tc,
+                  tc: tc,
+                  costsProductos: costsProductos,
+                  margenes: margenes,
+                  numeroCompra: _this6.numeroCompra,
+                  id_medico: _this6.idMedico,
+                  porcent_comi_med: porcent_comi_med,
+                  valor_comi_med: valor_comi_med,
+                  id_visitador: idVisitador,
+                  porcent_comi_vist: porcent_comi_vist,
+                  valor_comision_visitador: valor_comision_visitador,
+                  id_callcenter: idCallcenter,
+                  porcent_comi_callcenter: porcent_comi_callcenter,
+                  valor_comision_callcenter: valor_comision_callcenter,
+                  total_comisiones: total_comisiones,
+                  saldo_margen: saldo_margen
+                }),
+                headers: {
+                  authorization: "Bearer " + token,
+                  "content-type": "application/json"
+                }
+              }).then(function (Response) {
+                _this6.isSidebarActiveLocal = false;
+                _this6.activeLoading = false;
 
-              _this5.$vs.loading.close();
+                _this6.$vs.loading.close();
 
-              _this5.$vs.notify({
-                title: "Satisfactorio",
-                text: "Pedido enviado al facturador exitosamente.",
-                color: "success"
+                _this6.$vs.notify({
+                  title: "Satisfactorio",
+                  text: "Pedido enviado al facturador exitosamente.",
+                  color: "success"
+                });
+
+                _this6.$router.go();
+              }).catch(function (err) {
+                console.log(err);
+                _this6.isSidebarActiveLocal = false;
+                _this6.activeLoading = false;
+
+                _this6.$vs.loading.close();
               });
-
-              _this5.$router.go();
             }).catch(function (err) {
-              _this5.activeLoading = false;
+              _this6.activeLoading = false;
 
-              _this5.$vs.loading.close();
+              _this6.$vs.loading.close();
 
               activado = true;
               console.log(err);
             });
           }).catch(function (err) {
-            _this5.activeLoading = false;
+            _this6.activeLoading = false;
 
-            _this5.$vs.loading.close();
+            _this6.$vs.loading.close();
 
             activado = true; //console.log(err);
           });
         }).catch(function (err) {
-          _this5.activeLoading = false;
+          _this6.activeLoading = false;
 
-          _this5.$vs.loading.close();
+          _this6.$vs.loading.close();
 
           activado = true;
           console.log(err);
         });
       }).catch(function (err) {
-        _this5.activeLoading = false;
+        _this6.activeLoading = false;
 
-        _this5.$vs.loading.close();
+        _this6.$vs.loading.close();
 
         activado = true;
         console.log(err);
@@ -1206,7 +1379,7 @@ __webpack_require__.r(__webpack_exports__);
       this.dataImg = null;
     },
     getItem: function getItem(id) {
-      var _this6 = this;
+      var _this7 = this;
 
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -1218,7 +1391,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this6.itms.push(element.product_id);
+          _this7.itms.push(element.product_id);
         });
       }).catch(function (err) {
         console.log(err);
@@ -1226,7 +1399,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateData: function updateData() {},
     nuevoCliente: function nuevoCliente() {
-      var _this7 = this;
+      var _this8 = this;
 
       this.openLoading();
 
@@ -1278,45 +1451,45 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this7.name = null;
-        _this7.nit = null;
-        _this7.phone = null;
-        _this7.genre = null;
-        _this7.email = null;
-        _this7.date = null;
-        _this7.paisf = null;
-        _this7.deparf = null;
-        _this7.callef = null;
-        _this7.apartamentof = null;
-        _this7.municipiof = null;
-        _this7.residenciaf = null;
-        _this7.codigof = null;
-        _this7.telefonof = null;
-        _this7.paise = null;
-        _this7.depare = null;
-        _this7.callee = null;
-        _this7.apartamentoe = null;
-        _this7.municipioe = null;
-        _this7.residenciae = null;
-        _this7.codigoe = null;
-        _this7.telefonoe = null;
-        _this7.activeLoading = false;
+        _this8.name = null;
+        _this8.nit = null;
+        _this8.phone = null;
+        _this8.genre = null;
+        _this8.email = null;
+        _this8.date = null;
+        _this8.paisf = null;
+        _this8.deparf = null;
+        _this8.callef = null;
+        _this8.apartamentof = null;
+        _this8.municipiof = null;
+        _this8.residenciaf = null;
+        _this8.codigof = null;
+        _this8.telefonof = null;
+        _this8.paise = null;
+        _this8.depare = null;
+        _this8.callee = null;
+        _this8.apartamentoe = null;
+        _this8.municipioe = null;
+        _this8.residenciae = null;
+        _this8.codigoe = null;
+        _this8.telefonoe = null;
+        _this8.activeLoading = false;
 
-        _this7.$vs.loading.close();
+        _this8.$vs.loading.close();
 
-        _this7.isSidebarActiveLocal = false;
+        _this8.isSidebarActiveLocal = false;
 
-        _this7.$vs.notify({
+        _this8.$vs.notify({
           title: "Satisfactorio",
           text: "Cliente creado exitosamente.",
           color: "success"
         });
       }).catch(function (err) {
-        _this7.activeLoading = false;
+        _this8.activeLoading = false;
 
-        _this7.$vs.loading.close();
+        _this8.$vs.loading.close();
 
-        _this7.$vs.notify({
+        _this8.$vs.notify({
           title: "Error",
           text: "Error, por favor intentelo más tarde.",
           color: "danger"
@@ -1326,7 +1499,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     submitData: function submitData() {
-      var _this8 = this;
+      var _this9 = this;
 
       if (this.checkBox1 == "true") {
         this.paise = this.paisf;
@@ -1353,31 +1526,31 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         //console.log(Response.data);
-        _this8.getDate();
+        _this9.getDate();
 
-        _this8.medicines = [];
+        _this9.medicines = [];
 
         function sumarDias(fecha, dias) {
           fecha.setDate(fecha.getDate() + dias);
           return fecha;
         }
 
-        if (_this8.idCliente == null || _this8.idCliente == undefined || _this8.idCliente == "") {
-          _this8.idCliente = 0;
+        if (_this9.idCliente == null || _this9.idCliente == undefined || _this9.idCliente == "") {
+          _this9.idCliente = 0;
         }
 
-        _this8.cont = 0;
+        _this9.cont = 0;
         Response.data.forEach(function (element) {
           console.log(element);
           axios__WEBPACK_IMPORTED_MODULE_1___default()({
             method: "get",
-            url: "http://127.0.0.1:8000/api/getComiProd/" + element.product_id + "/" + _this8.idMedico + "/" + _this8.idCliente,
+            url: "http://127.0.0.1:8000/api/getComiProd/" + element.product_id + "/" + _this9.idMedico + "/" + _this9.idCliente,
             headers: {
               authorization: "Bearer " + token,
               "content-type": "application/json"
             }
           }).then(function (Response) {
-            _this8.numeroCompra.push(Response.data[0].numero_compra_medico);
+            _this9.numeroCompra.push(Response.data[0].numero_compra_medico);
           }).catch(function (err) {
             console.log(err);
           });
@@ -1398,7 +1571,7 @@ __webpack_require__.r(__webpack_exports__);
 
           var h = f + "-" + e + "-" + g;
 
-          _this8.medicines.push({
+          _this9.medicines.push({
             id: element.product_id,
             name: element.name,
             presentacion: element.presentacion,
@@ -1415,24 +1588,24 @@ __webpack_require__.r(__webpack_exports__);
 
           var p = parseFloat(element.price);
 
-          _this8.sumar(p, 1, _this8.cont);
+          _this9.sumar(p, 1, _this9.cont);
 
-          _this8.cont = _this8.cont + 1;
+          _this9.cont = _this9.cont + 1;
         }); //console.log(this.numeroCompra, this.medicines,this.idRecipe,this.idMedico,this.origen,this.idCliente, this.fechaHoy);
 
-        _this8.popupActive2 = true;
+        _this9.popupActive2 = true;
       }).catch(function (err) {
         console.log(err);
       });
     },
     updateCurrImg: function updateCurrImg(input) {
-      var _this9 = this;
+      var _this10 = this;
 
       if (input.target.files && input.target.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-          _this9.dataImg = e.target.result;
+          _this10.dataImg = e.target.result;
         };
 
         reader.readAsDataURL(input.target.files[0]);
@@ -1459,6 +1632,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DataViewSidebar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../DataViewSidebar.vue */ "./resources/js/src/views/DataViewSidebar.vue");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1802,7 +1985,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         discountedAmount: 5700,
         total: 108300
       }
-    }, _defineProperty(_ref, "medicinas", []), _defineProperty(_ref, "popupActive", false), _defineProperty(_ref, "message", ""), _defineProperty(_ref, "idRecipe", null), _defineProperty(_ref, "origen", null), _defineProperty(_ref, "idMedico", null), _defineProperty(_ref, "users", []), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "addNewDataSidebar", false), _defineProperty(_ref, "sidebarData", {}), _defineProperty(_ref, "status", ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado"]), _defineProperty(_ref, "buscar", ""), _defineProperty(_ref, "clickNotClose", true), _defineProperty(_ref, "isEmailSidebarActive", true), _defineProperty(_ref, "mailFilter", "inbox"), _defineProperty(_ref, "settings", {
+    }, _defineProperty(_ref, "medicinas", []), _defineProperty(_ref, "popupActive", false), _defineProperty(_ref, "message", ""), _defineProperty(_ref, "idRecipe", null), _defineProperty(_ref, "origen", null), _defineProperty(_ref, "idMedico", null), _defineProperty(_ref, "users", []), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "addNewDataSidebar", false), _defineProperty(_ref, "sidebarData", {}), _defineProperty(_ref, "status", ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado"]), _defineProperty(_ref, "buscar", ""), _defineProperty(_ref, "clickNotClose", true), _defineProperty(_ref, "isEmailSidebarActive", true), _defineProperty(_ref, "mailFilter", "inbox"), _defineProperty(_ref, "settings", {
       maxScrollbarLength: 60,
       wheelSpeed: 0.3
     }), _defineProperty(_ref, "recipes", []), _defineProperty(_ref, "doctors", []), _defineProperty(_ref, "primary", "primary"), _ref;
@@ -1833,8 +2016,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getRecipes("Nuevo");
   },
   methods: {
-    descartar: function descartar(id) {
+    reagendar: function reagendar(id) {
       var _this = this;
+
+      this.openLoading();
+      var token = localStorage.getItem('tu');
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "put",
+        url: "http://127.0.0.1:8000/api/changeStatus",
+        data: JSON.stringify({
+          id: id,
+          status: 6
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
+
+        _this.getRecipes("Nuevo");
+
+        _this.$vs.notify({
+          title: "Satisfactorio",
+          text: "Pedido reagendado exitosamente.",
+          color: "success"
+        });
+      }).catch(function (err) {
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
+
+        console.log(err);
+      });
+    },
+    descartar: function descartar(id) {
+      var _this2 = this;
 
       this.openLoading();
       var token = localStorage.getItem('tu');
@@ -1850,27 +2069,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this.activeLoading = false;
+        _this2.activeLoading = false;
 
-        _this.$vs.loading.close();
+        _this2.$vs.loading.close();
 
-        _this.getRecipes("Nuevo");
+        _this2.getRecipes("Nuevo");
 
-        _this.$vs.notify({
+        _this2.$vs.notify({
           title: "Satisfactorio",
           text: "Pedido descartado exitosamente.",
           color: "success"
         });
       }).catch(function (err) {
-        _this.activeLoading = false;
+        _this2.activeLoading = false;
 
-        _this.$vs.loading.close();
+        _this2.$vs.loading.close();
 
         console.log(err);
       });
     },
     verReceta: function verReceta(id, id1) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.popupActive = true;
       var token = localStorage.getItem("tu");
@@ -1886,10 +2105,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (Response) {
         var f = new Date();
         var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-        _this2.nuevaRecetaData.dateIssue = fecha;
-        _this2.pName = Response.data[0].name;
-        _this2.pPhone = Response.data[0].phone;
-        _this2.rId = Response.data[0].id;
+        _this3.nuevaRecetaData.dateIssue = fecha;
+        _this3.pName = Response.data[0].name;
+        _this3.pPhone = Response.data[0].phone;
+        _this3.rId = Response.data[0].id;
         axios__WEBPACK_IMPORTED_MODULE_1___default()({
           method: "get",
           url: "http://127.0.0.1:8000/api/getInfoRecipie/" + idu,
@@ -1898,10 +2117,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             "content-type": "application/json"
           }
         }).then(function (Response) {
-          _this2.medicinas = []; //console.log(Response);
+          _this3.medicinas = []; //console.log(Response);
 
           Response.data.forEach(function (element) {
-            _this2.medicinas.push(element);
+            _this3.medicinas.push(element);
           });
           console.log(idm);
           axios__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -1912,44 +2131,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               "content-type": "application/json"
             }
           }).then(function (Response) {
-            _this2.drName = Response.data.name;
+            _this3.drName = Response.data.name;
 
             if (Response.data.clinicPhone == null || Response.data.clinicPhone == '') {
-              _this2.clPhone = '+502: 8452-9862';
+              _this3.clPhone = '+502: 8452-9862';
             } else {
-              _this2.clPhone = Response.data.clinicPhone;
+              _this3.clPhone = Response.data.clinicPhone;
             }
 
             if (Response.data.clinicAddress == null || Response.data.clinicAddress == '') {
-              _this2.clAddress = 'Via 4 zona 4 Guatemala';
+              _this3.clAddress = 'Via 4 zona 4 Guatemala';
             } else {
-              _this2.clAddress = Response.data.clinicAddress;
+              _this3.clAddress = Response.data.clinicAddress;
             }
 
-            _this2.drEmail = Response.data.email;
+            _this3.drEmail = Response.data.email;
 
             if (Response.data.phone == null || Response.data.phone == "") {
-              _this2.drPhone = "+502: 8452-9862";
+              _this3.drPhone = "+502: 8452-9862";
             } else {
-              _this2.drPhone = "+502: " + Response.data.phone;
+              _this3.drPhone = "+502: " + Response.data.phone;
             }
           }).catch(function (err) {
             console.log(err);
-            _this2.activeLoading = false;
+            _this3.activeLoading = false;
 
-            _this2.$vs.loading.close();
+            _this3.$vs.loading.close();
           });
         }).catch(function (err) {
           console.log(err);
-          _this2.activeLoading = false;
+          _this3.activeLoading = false;
 
-          _this2.$vs.loading.close();
+          _this3.$vs.loading.close();
         });
       }).catch(function (err) {
         console.log(err);
-        _this2.activeLoading = false;
+        _this3.activeLoading = false;
 
-        _this2.$vs.loading.close();
+        _this3.$vs.loading.close();
       });
     },
     editData: function editData(data, id, id1, id2) {
@@ -1967,7 +2186,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.toggleDataSidebar(true);
     },
     openModal: function openModal(phone, id, status, origen, id1) {
-      var _this3 = this;
+      var _this4 = this;
 
       console.log('Modal');
       console.log(id1); //console.log(status);
@@ -1987,9 +2206,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this3.users.push(element);
+          _this4.users.push(element);
         });
-        _this3.popupActive2 = true;
+        _this4.popupActive2 = true;
       }).catch(function (err) {
         console.log(err);
       }); //}
@@ -2020,7 +2239,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     getUsers: function getUsers() {
-      var _this4 = this;
+      var _this5 = this;
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -2033,7 +2252,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this4.doctors.push({
+          _this5.doctors.push({
             id: element.id,
             name: element.name
           });
@@ -2048,11 +2267,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (a == 3) return "warning";
       if (a == 4) return "success";
       if (a == 5) return "danger";
-      if (a == 6) return "danger";
+      if (a == 6) return "warning";
       return "primary";
     },
     getFacturacion: function getFacturacion(a) {
-      var _this5 = this;
+      var _this6 = this;
 
       console.log(a);
       this.activado = a;
@@ -2070,36 +2289,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this5.recipes = []; //console.log(Response.data);
+        _this6.recipes = []; //console.log(Response.data);
 
         Response.data.forEach(function (element) {
           element.color = 'warning';
           element.status = 'Facturación'; //console.log(element.status);
 
-          _this5.doctors.forEach(function (e) {
+          _this6.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
               element.doctor_name = e.name;
             }
           });
 
-          _this5.recipes.push(element);
+          _this6.recipes.push(element);
 
-          if (_this5.recipes.length == 0) {
-            _this5.message = "No hay resultados.";
+          if (_this6.recipes.length == 0) {
+            _this6.message = "No hay resultados.";
           }
         });
-        _this5.activeLoading = false;
+        _this6.activeLoading = false;
 
-        _this5.$vs.loading.close();
+        _this6.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
-        _this5.activeLoading = false;
+        _this6.activeLoading = false;
 
-        _this5.$vs.loading.close();
+        _this6.$vs.loading.close();
       });
     },
     getRecipes: function getRecipes(a) {
-      var _this6 = this;
+      var _this7 = this;
 
       this.activado = a;
       this.openLoading();
@@ -2116,41 +2335,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this6.recipes = []; //console.log(Response.data);
+        _this7.recipes = []; //console.log(Response.data);
 
         Response.data.forEach(function (element) {
-          element.color = _this6.colore(element.status);
-          element.status = _this6.status[element.status - 1];
+          element.color = _this7.colore(element.status);
+          element.status = _this7.status[element.status - 1];
           element.permission = 0;
           element.origen = 1;
           element.idMedico = element.doctor_id; //console.log(element.status);
 
-          _this6.doctors.forEach(function (e) {
+          _this7.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
               element.doctor_name = e.name;
             }
           });
 
           if (element.status == a) {
-            _this6.recipes.push(element);
+            _this7.recipes.push(element);
           }
 
-          if (_this6.recipes.length == 0) {
-            _this6.message = "No hay resultados.";
+          if (_this7.recipes.length == 0) {
+            _this7.message = "No hay resultados.";
           }
         });
-        _this6.activeLoading = false;
+        _this7.activeLoading = false;
 
-        _this6.$vs.loading.close();
+        _this7.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
-        _this6.activeLoading = false;
+        _this7.activeLoading = false;
 
-        _this6.$vs.loading.close();
+        _this7.$vs.loading.close();
       });
     },
     getRerecipes: function getRerecipes(a) {
-      var _this7 = this;
+      var _this8 = this;
 
       this.activado = a;
       this.openLoading();
@@ -2168,35 +2387,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }).then(function (Response) {
         console.log(Response);
-        _this7.recipes = []; //console.log(Response.data);
+        _this8.recipes = []; //console.log(Response.data);
 
         Response.data.forEach(function (element) {
-          element.color = _this7.colore(element.status);
-          element.status = _this7.status[element.status - 1];
+          element.color = _this8.colore(element.status);
+          element.status = _this8.status[element.status - 1];
           element.permission = 1;
           element.origen = 3;
           element.idMedico = element.doctor_id; //console.log(element.status);
 
-          _this7.doctors.forEach(function (e) {
+          _this8.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
               element.doctor_id = e.name;
             }
           });
 
-          _this7.recipes.push(element);
+          _this8.recipes.push(element);
 
-          if (_this7.recipes.length == 0) {
-            _this7.message = "No hay resultados.";
+          if (_this8.recipes.length == 0) {
+            _this8.message = "No hay resultados.";
           }
         });
-        _this7.activeLoading = false;
+        _this8.activeLoading = false;
 
-        _this7.$vs.loading.close();
+        _this8.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
-        _this7.activeLoading = false;
+        _this8.activeLoading = false;
 
-        _this7.$vs.loading.close();
+        _this8.$vs.loading.close();
       });
     }
   }
@@ -2722,6 +2941,16 @@ var render = function() {
                           on: { click: _vm.agregarP }
                         },
                         [_vm._v("Nuevo Producto")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-button",
+                        {
+                          staticClass: "mt-5 mr-3",
+                          attrs: { type: "filled" },
+                          on: { click: _vm.visitadrasdf }
+                        },
+                        [_vm._v("Nuevo")]
                       )
                     ],
                     1
@@ -4588,6 +4817,39 @@ var render = function() {
                           staticClass:
                             "flex items-center justify-between items-center mt-4 cursor-pointer",
                           class: {
+                            "text-primary": _vm.activado == "Reagendado"
+                          },
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Reagendado")
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "flex items-center mb-2" },
+                            [
+                              _c("feather-icon", {
+                                attrs: { icon: "ClockIcon" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-lg ml-3" }, [
+                                _vm._v("Reagendado")
+                              ])
+                            ],
+                            1
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          staticClass:
+                            "flex items-center justify-between items-center mt-4 cursor-pointer",
+                          class: {
                             "text-primary": _vm.activado == "Reprogramada"
                           },
                           attrs: { tag: "span" },
@@ -4778,6 +5040,39 @@ var render = function() {
                                             ],
                                             staticClass: "mt-5",
                                             attrs: {
+                                              color: "rgb(249, 142, 5)",
+                                              size: "small",
+                                              type: "filled"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.reagendar(mail.id)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "Reagendar\n                                        "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "vs-button",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value:
+                                                  mail.status == "Nuevo" ||
+                                                  mail.status == "Reagendado",
+                                                expression:
+                                                  "mail.status == 'Nuevo' || mail.status == 'Reagendado'"
+                                              }
+                                            ],
+                                            staticClass: "mt-5",
+                                            attrs: {
                                               color: "danger",
                                               size: "small",
                                               type: "filled"
@@ -4829,9 +5124,10 @@ var render = function() {
                                                 rawName: "v-show",
                                                 value:
                                                   mail.status == "Nuevo" ||
+                                                  mail.status == "Reagendado" ||
                                                   mail.permission == 1,
                                                 expression:
-                                                  "mail.status == 'Nuevo' || mail.permission == 1"
+                                                  "mail.status == 'Nuevo' || mail.status == 'Reagendado' || mail.permission == 1"
                                               }
                                             ],
                                             staticClass: "mt-5",
