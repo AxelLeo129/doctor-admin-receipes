@@ -99,7 +99,7 @@
                             <vs-button class="mt-5 mr-3" @click="popupActive2=false, isSidebarActiveLocal = false"
                                 color="warning" type="filled">Regresar</vs-button>
                             <vs-button class="mt-5 mr-3" @click="agregarP" type="filled">Nuevo Producto</vs-button>
-                            <vs-button class="mt-5 mr-3" @click="visitadrasdf" type="filled">Nuevo</vs-button>
+                            <!-- <vs-button class="mt-5 mr-3" @click="visitadrasdf" type="filled">Nuevo</vs-button> -->
                             
                         </div>
                     </vx-card>
@@ -305,6 +305,7 @@
         data() {
             return {
                 //Dirección de facturación
+                idVisitador: null,
                 paisf: "Guatemala",
                 deparf: null,
                 callef: null,
@@ -421,6 +422,7 @@
                 ],
                 users: [],
                 numeroCompra: [],
+                fechasCompra: [],
                 tipe: 0,
                 idRecipe: null,
                 checkBox1: "true",
@@ -505,6 +507,7 @@
                     this.nuevo = true;
                     //console.log(this.nuevo);
                     this.initValues();
+                    this.visitadrasdf();
                     //this.$validator.reset()
                 } else {
                     //console.log(this.data);
@@ -580,6 +583,7 @@
                     this.origen = this.data.origen;
                     this.nuevo = false;
                     this.initValues();
+                    this.visitadrasdf();
                 }
                 // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
             }
@@ -650,6 +654,7 @@
                     }
                 }).then(Response => {
                     this.numeroCompra.push(Response.data[0].numero_compra_medico);
+                    this.fechasCompra.push(Response.data[0].fecha_compra);
                 }).catch(err => {
                     console.log(err);
                 });
@@ -757,8 +762,8 @@
                         "content-type": "application/json"
                     }
                 }).then(Response => {
-                    let idVisitador = Response.data[0].id_visitador;
-                    console.log(idVisitador);
+                    this.idVisitador = Response.data[0].id_visitador;
+                    //console.log(this.idVisitador);
                 }).catch(err => {
                     console.log(err);
                     this.activeLoading = false;
@@ -769,7 +774,7 @@
                 this.openLoading();
                 let token = localStorage.getItem("tu");
                 let ids = [];
-                let fecha = [];
+                let fechass = [];
                 this.medicines.forEach(element => {
                     ids.push(element.id);
                 });
@@ -778,6 +783,23 @@
                         fecha.push(element.next);
                     }
                 });
+                function sumarDias(fecha, dias) {
+                    fecha.setDate(fecha.getDate() + dias);
+                    return fecha;
+                }
+                let d = new Date();
+                let c = 1;
+                let a = sumarDias(d, 45);
+                let e = (a.getMonth() + 1).toString();
+                let f = a.getFullYear().toString();
+                let g = a.getDate().toString();
+                if (e.length == 1) {
+                    e = "0" + e;
+                }
+                if (g.length == 1) {
+                    g = "0" + g;
+                }
+                let fs45 = f + "-" + e + "-" + g;
                 let date = null;
                 let status = 0;
                 //console.log(this.medicines, fecha);
@@ -816,31 +838,16 @@
                 let tc = [];
                 let contador = 0;
                 let idCallcenter = localStorage.getItem('ui');
-                let idVisitador = 0;
-                //this.idMedico 
-                axios({
-                    method: "get",
-                    url: "http://127.0.0.1:8000/api/getVisitador1/" + this.idMedico,
-                    headers: {
-                        authorization: "Bearer " + token,
-                        "content-type": "application/json"
-                    }
-                }).then(Response => {
-                    console.log(Response);
-                    idVisitador = Response.data[0].id_visitador;
-                }).catch(err => {
-                    console.log(err);
-                    this.activeLoading = false;
-                    this.$vs.loading.close();
-                });
                 let porcent_comi_med = 0;
                 let porcent_comi_vist = 2;
+                let porcent_comi_mensajero = 0.5;
                 let porcent_comi_callcenter = 0;
                 let valor_comi_med = [];
                 let valor_comision_visitador = [];
                 let valor_comision_callcenter = [];
                 let total_comisiones = [];
                 let saldo_margen = [];
+                let valor_comision_mensajero =[];
                 this.medicines.forEach(element => {
                     idsProductos.push(element.id);
                     namesProductos.push(element.name);
@@ -886,18 +893,15 @@
                     let m = (margen * porcent_comi_med) / 100;
                     let v = (margen * porcent_comi_vist) / 100;
                     let c = (margen * porcent_comi_callcenter) / 100;
+                    let me = (margen * porcent_comi_mensajero) / 100;                    
                     valor_comi_med.push(m);
+                    valor_comision_mensajero.push(me);
                     valor_comision_visitador.push(v);
                     valor_comision_callcenter.push(c);
                     total_comisiones.push((m + v + c));
                     saldo_margen.push((margen - (m + v + c)));
                     contador = contador + 1;
                 });
-
-                //this.orden_id = 
-                //this.idCliente
-                //this.fechaHoy;
-                //console.log(date);
                 axios({
                         method: "put",
                         url: "http://127.0.0.1:8000/api/putCliente",
@@ -932,7 +936,7 @@
                         }
                     })
                     .then(Response => {
-                        console.log(Response);
+                        //console.log(Response);
                         axios({
                                 method: "post",
                                 url: "http://127.0.0.1:8000/api/postOrder",
@@ -1007,12 +1011,14 @@
                                                         id_medico: this.idMedico,
                                                         porcent_comi_med: porcent_comi_med,
                                                         valor_comi_med: valor_comi_med,
-                                                        id_visitador: idVisitador,
+                                                        id_visitador: this.idVisitador,
                                                         porcent_comi_vist: porcent_comi_vist,
                                                         valor_comision_visitador: valor_comision_visitador,
                                                         id_callcenter: idCallcenter,
                                                         porcent_comi_callcenter: porcent_comi_callcenter,
                                                         valor_comision_callcenter: valor_comision_callcenter,
+                                                        porcent_comi_mensajero: porcent_comi_mensajero,
+                                                        valor_comision_mensajero: valor_comision_mensajero,
                                                         total_comisiones: total_comisiones,
                                                         saldo_margen: saldo_margen
                                                     }),
@@ -1070,7 +1076,7 @@
                 this.openLoading();
                 let token = localStorage.getItem("tu");
                 let ids = [];
-                let fecha = [];
+                let fechass = [];
                 this.medicines.forEach(element => {
                     ids.push(element.id);
                 });
@@ -1117,31 +1123,16 @@
                 let tc = [];
                 let contador = 0;
                 let idCallcenter = localStorage.getItem('ui');
-                let idVisitador = 0;
-                //this.idMedico 
-                axios({
-                    method: "get",
-                    url: "http://127.0.0.1:8000/api/getVisitador1/" + this.idMedico,
-                    headers: {
-                        authorization: "Bearer " + token,
-                        "content-type": "application/json"
-                    }
-                }).then(Response => {
-                    console.log(Response);
-                    idVisitador = Response.data[0].id_visitador;
-                }).catch(err => {
-                    console.log(err);
-                    this.activeLoading = false;
-                    this.$vs.loading.close();
-                });
                 let porcent_comi_med = 0;
                 let porcent_comi_vist = 2;
                 let porcent_comi_callcenter = 0;
+                let porcent_comi_mensajero = 0.5;
                 let valor_comi_med = [];
                 let valor_comision_visitador = [];
                 let valor_comision_callcenter = [];
                 let total_comisiones = [];
                 let saldo_margen = [];
+                let valor_comision_mensajero = [];
                 this.medicines.forEach(element => {
                     idsProductos.push(element.id);
                     namesProductos.push(element.name);
@@ -1186,9 +1177,11 @@
                     }
                     let m = (margen * porcent_comi_med) / 100;
                     let v = (margen * porcent_comi_vist) / 100;
+                    let me = (margen * porcent_comi_mensajero) / 100;
                     let c = (margen * porcent_comi_callcenter) / 100;
                     valor_comi_med.push(m);
                     valor_comision_visitador.push(v);
+                    valor_comision_mensajero.push(me);
                     valor_comision_callcenter.push(c);
                     total_comisiones.push((m + v + c));
                     saldo_margen.push((margen - (m + v + c)));
@@ -1228,7 +1221,7 @@
                         }
                     })
                     .then(Response => {
-                        console.log(this.datetr);
+                        //console.log(this.datetr);
                         let idC = Response.data.mess.id;
                         axios({
                                 method: "post",
@@ -1302,7 +1295,7 @@
                                                         id_medico: this.idMedico,
                                                         porcent_comi_med: porcent_comi_med,
                                                         valor_comi_med: valor_comi_med,
-                                                        id_visitador: idVisitador,
+                                                        id_visitador: this.idVisitador,
                                                         porcent_comi_vist: porcent_comi_vist,
                                                         valor_comision_visitador: valor_comision_visitador,
                                                         id_callcenter: idCallcenter,
@@ -1522,7 +1515,7 @@
                         }
                         this.cont = 0;
                         Response.data.forEach(element => {
-                            console.log(element);
+                            //console.log(element);
                             axios({
                                 method: "get",
                                 url: "http://127.0.0.1:8000/api/getComiProd/" +
@@ -1537,6 +1530,7 @@
                                 }
                             }).then(Response => {
                                 this.numeroCompra.push(Response.data[0].numero_compra_medico);
+                                this.fechasCompra.push(Response.data[0].fecha_compra);
                             }).catch(err => {
                                 console.log(err);
                             });

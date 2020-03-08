@@ -216,10 +216,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -227,8 +223,31 @@ __webpack_require__.r(__webpack_exports__);
     vSelect: vue_select__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   methods: {
-    getusers: function getusers() {
+    getTransaction: function getTransaction(id) {
       var _this = this;
+
+      this.ids = [];
+      var token = localStorage.getItem("tu");
+      axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getTransactions/" + id,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        //console.log(Response);
+        Response.data.forEach(function (element) {
+          _this.ids.push(element.id);
+        }); //console.log(this.ids);
+
+        _this.popupEnvio = true;
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    getusers: function getusers() {
+      var _this2 = this;
 
       this.users = [];
       var token = localStorage.getItem("tu");
@@ -241,11 +260,11 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(Response.data);
+        //console.log(Response.data);
         Response.data.forEach(function (element) {
           element.cliente.client_addresse = element.cliente.callee + ' ' + element.cliente.apartamentoe + ' ' + element.cliente.residenciae + ' zona ' + element.cliente.codigoe + ' ' + element.cliente.municipioe + ' ' + element.cliente.depare + ' ' + element.cliente.paise;
 
-          _this.users.push(element);
+          _this2.users.push(element);
         }); //console.log("USUARIO");
         //console.log(this.users);
       }).catch(function (err) {
@@ -260,7 +279,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          _this.deliveryP.push({
+          _this2.deliveryP.push({
             label: element.name,
             value: element.id
           });
@@ -280,7 +299,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     inprogress: function inprogress(id_receta) {
-      var _this2 = this;
+      var _this3 = this;
 
       var token = localStorage.getItem("tu");
       var idu = localStorage.getItem("ui");
@@ -303,31 +322,70 @@ __webpack_require__.r(__webpack_exports__);
             "content-type": "application/json"
           }
         }).then(function (Response) {
-          _this2.activeLoading = false;
+          if (_this3.ids.length > 0) {
+            axios__WEBPACK_IMPORTED_MODULE_0___default()({
+              method: "put",
+              url: "http://127.0.0.1:8000/api/putTransaction",
+              data: JSON.stringify({
+                order_id: _this3.idOrder,
+                ids: _this3.ids,
+                id_mensajero: _this3.select.value
+              }),
+              headers: {
+                authorization: "Bearer " + token,
+                "content-type": "application/json"
+              }
+            }).then(function (Response) {
+              _this3.activeLoading = false;
 
-          _this2.$vs.loading.close();
+              _this3.$vs.loading.close();
 
-          _this2.popupEnvio = false;
+              _this3.popupEnvio = false;
 
-          _this2.getusers();
+              _this3.getusers();
 
-          _this2.$vs.notify({
-            title: "En proceso",
-            text: "El pedido del cliente ahora está en proceso de envío.",
-            color: "success"
-          });
+              _this3.$vs.notify({
+                title: "En proceso",
+                text: "El pedido del cliente ahora está en proceso de envío.",
+                color: "success"
+              });
+            }).catch(function (err) {
+              console.log(err);
+              _this3.activeLoading = false;
+
+              _this3.$vs.loading.close();
+
+              _this3.popupEnvio = false;
+            });
+          } else {
+            _this3.activeLoading = false;
+
+            _this3.$vs.loading.close();
+
+            _this3.popupEnvio = false;
+
+            _this3.getusers();
+
+            _this3.$vs.notify({
+              title: "En proceso",
+              text: "El pedido del cliente ahora está en proceso de envío.",
+              color: "success"
+            });
+          }
         }).catch(function (err) {
-          _this2.popupEnvio = false;
-          _this2.activeLoading = false;
+          _this3.popupEnvio = false;
+          _this3.activeLoading = false;
 
-          _this2.$vs.loading.close();
+          _this3.$vs.loading.close();
 
           console.log(err);
         });
       }
     },
-    setClient: function setClient(id) {
+    setClient: function setClient(id, idOrder) {
       this.id_recipies = id;
+      this.idOrder = idOrder;
+      this.getTransaction(this.idOrder);
     },
     realizarEM: function realizarEM() {
       if (this.mensajeroEM == null) {
@@ -338,7 +396,7 @@ __webpack_require__.r(__webpack_exports__);
         this.openLoading();
 
         for (var i = 0; i <= Object.keys(this.selected).length - 1; i++) {
-          console.log("Objeto No:" + i);
+          //console.log("Objeto No:" + i);
           this.crearPedido(this.selected[i].cliente.order_id);
         }
 
@@ -354,7 +412,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     crearPedido: function crearPedido(id_receta) {
-      var _this3 = this;
+      var _this4 = this;
 
       var token = localStorage.getItem("tu");
       var idu = localStorage.getItem("ui");
@@ -370,16 +428,16 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this3.activeLoading = false;
+        _this4.activeLoading = false;
 
-        _this3.$vs.loading.close();
+        _this4.$vs.loading.close();
 
-        _this3.popupEnvio = false;
+        _this4.popupEnvio = false;
       }).catch(function (err) {
-        _this3.popupEnvio = false;
-        _this3.activeLoading = false;
+        _this4.popupEnvio = false;
+        _this4.activeLoading = false;
 
-        _this3.$vs.loading.close();
+        _this4.$vs.loading.close();
 
         console.log(err);
       });
@@ -411,7 +469,9 @@ __webpack_require__.r(__webpack_exports__);
       address: "",
       errors: [],
       errorsEM: [],
-      selected: []
+      selected: [],
+      idOrder: null,
+      ids: []
     };
   },
   created: function created() {
@@ -433,7 +493,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "[dir] #table-search{\n  margin-top:-55px;\n}\n@media only screen and (max-width:600px){\n[dir] #table-search{\n    margin-top:0px;\n}\n[dir] #btn-envio{\n    margin-top:10px;\n}\n[dir=ltr] #btn-envio{\n    float:left;\n}\n[dir=rtl] #btn-envio{\n    float:right;\n}\n}\n", ""]);
+exports.push([module.i, "[dir] #table-search {\n  margin-top: -55px;\n}\n@media only screen and (max-width:600px) {\n[dir] #table-search {\n    margin-top: 0px;\n}\n[dir] #btn-envio {\n    margin-top: 10px;\n}\n[dir=ltr] #btn-envio {\n    float: left;\n}\n[dir=rtl] #btn-envio {\n    float: right;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -489,6 +549,7 @@ var render = function() {
     "div",
     [
       _c("h4", [_vm._v("Información de los pedidos")]),
+      _vm._v(" "),
       _c("p", [
         _vm._v("Seleccione más de un registro para hacer un envío múltiple.")
       ]),
@@ -709,10 +770,10 @@ var render = function() {
                                     },
                                     on: {
                                       click: function($event) {
-                                        ;(_vm.popupEnvio = true),
-                                          _vm.setClient(
-                                            data[indextr].cliente.order_id
-                                          )
+                                        return _vm.setClient(
+                                          data[indextr].cliente.order_id,
+                                          data[indextr].cliente.order_id
+                                        )
                                       }
                                     }
                                   })
@@ -734,10 +795,10 @@ var render = function() {
                                     },
                                     on: {
                                       click: function($event) {
-                                        ;(_vm.popupEnvio = true),
-                                          _vm.setClient(
-                                            data[indextr].cliente.order_id
-                                          )
+                                        return _vm.setClient(
+                                          data[indextr].cliente.order_id,
+                                          data[indextr].cliente.order_id
+                                        )
                                       }
                                     }
                                   })
@@ -768,7 +829,7 @@ var render = function() {
             [
               _c("vs-th", [_vm._v("ID")]),
               _vm._v(" "),
-              _c("vs-th", [_vm._v("Paciente")]),
+              _c("vs-th", [_vm._v("Cliente")]),
               _vm._v(" "),
               _c("vs-th", [_vm._v("Teléfono")]),
               _vm._v(" "),

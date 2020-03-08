@@ -67,6 +67,8 @@ class TransactionController extends Controller
             $transaction->id_callcenter = $request->id_callcenter;
             $transaction->porcent_comi_callcenter = $request->porcent_comi_callcenter;
             $transaction->valor_comi_callcenter = $request->valor_comision_callcenter[$cont];
+            $transaction->porcent_comi_mensajero = $request->porcent_comi_mensajero;
+            $transaction->valor_comision_mensajero = $request->valor_comision_mensajero[$cont];
             $transaction->total_comisiones = $request->total_comisiones[$cont];
             $transaction->saldo_margen = $request->saldo_margen[$cont];
             if($transaction->save()){
@@ -88,7 +90,7 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        //
+        return \DB::select("SELECT * FROM `transactions` WHERE orden_id = $id");
     }
 
     /**
@@ -109,9 +111,11 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        foreach($request->ids as $element){   
+            \DB::table('transactions')->where('orden_id', $request->order_id)->where('id', $element)->update(['id_mensajero' => $request->id_mensajero]);
+        }
     }
 
     /**

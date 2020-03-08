@@ -318,6 +318,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       //Dirección de facturación
+      idVisitador: null,
       paisf: "Guatemala",
       deparf: null,
       callef: null,
@@ -412,6 +413,7 @@ __webpack_require__.r(__webpack_exports__);
       }],
       users: [],
       numeroCompra: [],
+      fechasCompra: [],
       tipe: 0,
       idRecipe: null,
       checkBox1: "true",
@@ -489,7 +491,8 @@ __webpack_require__.r(__webpack_exports__);
       if (Object.entries(this.data).length === 0) {
         this.nuevo = true; //console.log(this.nuevo);
 
-        this.initValues(); //this.$validator.reset()
+        this.initValues();
+        this.visitadrasdf(); //this.$validator.reset()
       } else {
         //console.log(this.data);
         var _JSON$parse = JSON.parse(JSON.stringify(this.data.data)),
@@ -572,6 +575,7 @@ __webpack_require__.r(__webpack_exports__);
         this.origen = this.data.origen;
         this.nuevo = false;
         this.initValues();
+        this.visitadrasdf();
       } // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
 
     }
@@ -638,6 +642,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (Response) {
         _this.numeroCompra.push(Response.data[0].numero_compra_medico);
+
+        _this.fechasCompra.push(Response.data[0].fecha_compra);
       }).catch(function (err) {
         console.log(err);
       });
@@ -747,8 +753,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        var idVisitador = Response.data[0].id_visitador;
-        console.log(idVisitador);
+        _this4.idVisitador = Response.data[0].id_visitador; //console.log(this.idVisitador);
       }).catch(function (err) {
         console.log(err);
         _this4.activeLoading = false;
@@ -762,7 +767,7 @@ __webpack_require__.r(__webpack_exports__);
       this.openLoading();
       var token = localStorage.getItem("tu");
       var ids = [];
-      var fecha = [];
+      var fechass = [];
       this.medicines.forEach(function (element) {
         ids.push(element.id);
       });
@@ -771,6 +776,28 @@ __webpack_require__.r(__webpack_exports__);
           fecha.push(element.next);
         }
       });
+
+      function sumarDias(fecha, dias) {
+        fecha.setDate(fecha.getDate() + dias);
+        return fecha;
+      }
+
+      var d = new Date();
+      var c = 1;
+      var a = sumarDias(d, 45);
+      var e = (a.getMonth() + 1).toString();
+      var f = a.getFullYear().toString();
+      var g = a.getDate().toString();
+
+      if (e.length == 1) {
+        e = "0" + e;
+      }
+
+      if (g.length == 1) {
+        g = "0" + g;
+      }
+
+      var fs45 = f + "-" + e + "-" + g;
       var date = null;
       var status = 0; //console.log(this.medicines, fecha);
 
@@ -812,32 +839,16 @@ __webpack_require__.r(__webpack_exports__);
       var tc = [];
       var contador = 0;
       var idCallcenter = localStorage.getItem('ui');
-      var idVisitador = 0; //this.idMedico 
-
-      axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        method: "get",
-        url: "http://127.0.0.1:8000/api/getVisitador1/" + this.idMedico,
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      }).then(function (Response) {
-        console.log(Response);
-        idVisitador = Response.data[0].id_visitador;
-      }).catch(function (err) {
-        console.log(err);
-        _this5.activeLoading = false;
-
-        _this5.$vs.loading.close();
-      });
       var porcent_comi_med = 0;
       var porcent_comi_vist = 2;
+      var porcent_comi_mensajero = 0.5;
       var porcent_comi_callcenter = 0;
       var valor_comi_med = [];
       var valor_comision_visitador = [];
       var valor_comision_callcenter = [];
       var total_comisiones = [];
       var saldo_margen = [];
+      var valor_comision_mensajero = [];
       this.medicines.forEach(function (element) {
         idsProductos.push(element.id);
         namesProductos.push(element.name);
@@ -884,17 +895,15 @@ __webpack_require__.r(__webpack_exports__);
         var m = margen * porcent_comi_med / 100;
         var v = margen * porcent_comi_vist / 100;
         var c = margen * porcent_comi_callcenter / 100;
+        var me = margen * porcent_comi_mensajero / 100;
         valor_comi_med.push(m);
+        valor_comision_mensajero.push(me);
         valor_comision_visitador.push(v);
         valor_comision_callcenter.push(c);
         total_comisiones.push(m + v + c);
         saldo_margen.push(margen - (m + v + c));
         contador = contador + 1;
-      }); //this.orden_id = 
-      //this.idCliente
-      //this.fechaHoy;
-      //console.log(date);
-
+      });
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "put",
         url: "http://127.0.0.1:8000/api/putCliente",
@@ -928,7 +937,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(Response);
+        //console.log(Response);
         axios__WEBPACK_IMPORTED_MODULE_1___default()({
           method: "post",
           url: "http://127.0.0.1:8000/api/postOrder",
@@ -1000,12 +1009,14 @@ __webpack_require__.r(__webpack_exports__);
                   id_medico: _this5.idMedico,
                   porcent_comi_med: porcent_comi_med,
                   valor_comi_med: valor_comi_med,
-                  id_visitador: idVisitador,
+                  id_visitador: _this5.idVisitador,
                   porcent_comi_vist: porcent_comi_vist,
                   valor_comision_visitador: valor_comision_visitador,
                   id_callcenter: idCallcenter,
                   porcent_comi_callcenter: porcent_comi_callcenter,
                   valor_comision_callcenter: valor_comision_callcenter,
+                  porcent_comi_mensajero: porcent_comi_mensajero,
+                  valor_comision_mensajero: valor_comision_mensajero,
                   total_comisiones: total_comisiones,
                   saldo_margen: saldo_margen
                 }),
@@ -1071,7 +1082,7 @@ __webpack_require__.r(__webpack_exports__);
       this.openLoading();
       var token = localStorage.getItem("tu");
       var ids = [];
-      var fecha = [];
+      var fechass = [];
       this.medicines.forEach(function (element) {
         ids.push(element.id);
       });
@@ -1122,32 +1133,16 @@ __webpack_require__.r(__webpack_exports__);
       var tc = [];
       var contador = 0;
       var idCallcenter = localStorage.getItem('ui');
-      var idVisitador = 0; //this.idMedico 
-
-      axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        method: "get",
-        url: "http://127.0.0.1:8000/api/getVisitador1/" + this.idMedico,
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      }).then(function (Response) {
-        console.log(Response);
-        idVisitador = Response.data[0].id_visitador;
-      }).catch(function (err) {
-        console.log(err);
-        _this6.activeLoading = false;
-
-        _this6.$vs.loading.close();
-      });
       var porcent_comi_med = 0;
       var porcent_comi_vist = 2;
       var porcent_comi_callcenter = 0;
+      var porcent_comi_mensajero = 0.5;
       var valor_comi_med = [];
       var valor_comision_visitador = [];
       var valor_comision_callcenter = [];
       var total_comisiones = [];
       var saldo_margen = [];
+      var valor_comision_mensajero = [];
       this.medicines.forEach(function (element) {
         idsProductos.push(element.id);
         namesProductos.push(element.name);
@@ -1193,9 +1188,11 @@ __webpack_require__.r(__webpack_exports__);
 
         var m = margen * porcent_comi_med / 100;
         var v = margen * porcent_comi_vist / 100;
+        var me = margen * porcent_comi_mensajero / 100;
         var c = margen * porcent_comi_callcenter / 100;
         valor_comi_med.push(m);
         valor_comision_visitador.push(v);
+        valor_comision_mensajero.push(me);
         valor_comision_callcenter.push(c);
         total_comisiones.push(m + v + c);
         saldo_margen.push(margen - (m + v + c));
@@ -1233,7 +1230,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(_this6.datetr);
+        //console.log(this.datetr);
         var idC = Response.data.mess.id;
         axios__WEBPACK_IMPORTED_MODULE_1___default()({
           method: "post",
@@ -1304,7 +1301,7 @@ __webpack_require__.r(__webpack_exports__);
                   id_medico: _this6.idMedico,
                   porcent_comi_med: porcent_comi_med,
                   valor_comi_med: valor_comi_med,
-                  id_visitador: idVisitador,
+                  id_visitador: _this6.idVisitador,
                   porcent_comi_vist: porcent_comi_vist,
                   valor_comision_visitador: valor_comision_visitador,
                   id_callcenter: idCallcenter,
@@ -1541,7 +1538,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this9.cont = 0;
         Response.data.forEach(function (element) {
-          console.log(element);
+          //console.log(element);
           axios__WEBPACK_IMPORTED_MODULE_1___default()({
             method: "get",
             url: "http://127.0.0.1:8000/api/getComiProd/" + element.product_id + "/" + _this9.idMedico + "/" + _this9.idCliente,
@@ -1551,6 +1548,8 @@ __webpack_require__.r(__webpack_exports__);
             }
           }).then(function (Response) {
             _this9.numeroCompra.push(Response.data[0].numero_compra_medico);
+
+            _this9.fechasCompra.push(Response.data[0].fecha_compra);
           }).catch(function (err) {
             console.log(err);
           });
@@ -2121,8 +2120,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           Response.data.forEach(function (element) {
             _this3.medicinas.push(element);
-          });
-          console.log(idm);
+          }); //console.log(idm);
+
           axios__WEBPACK_IMPORTED_MODULE_1___default()({
             method: "get",
             url: "http://127.0.0.1:8000/api/getUser/" + idm,
@@ -2172,7 +2171,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     editData: function editData(data, id, id1, id2) {
-      console.log(data, id, id1, id2);
+      //console.log(data, id, id1, id2);
       this.popupActive2 = false; // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
 
       var data1 = {
@@ -2188,10 +2187,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     openModal: function openModal(phone, id, status, origen, id1) {
       var _this4 = this;
 
-      console.log('Modal');
-      console.log(id1); //console.log(status);
+      //console.log('Modal');
+      //console.log(id1);
+      //console.log(status);
       //if (status == "Nuevo") {
-
       this.idRecipe = id;
       this.origen = origen;
       this.idMedico = id1;
@@ -2273,7 +2272,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getFacturacion: function getFacturacion(a) {
       var _this6 = this;
 
-      console.log(a);
+      //console.log(a);
       this.activado = a;
       this.openLoading();
       var token = localStorage.getItem("tu");
@@ -2941,16 +2940,6 @@ var render = function() {
                           on: { click: _vm.agregarP }
                         },
                         [_vm._v("Nuevo Producto")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-button",
-                        {
-                          staticClass: "mt-5 mr-3",
-                          attrs: { type: "filled" },
-                          on: { click: _vm.visitadrasdf }
-                        },
-                        [_vm._v("Nuevo")]
                       )
                     ],
                     1

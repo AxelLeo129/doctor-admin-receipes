@@ -1,31 +1,35 @@
 <style>
-    #table-search{
-        margin-top:-55px;
+    #table-search {
+        margin-top: -55px;
     }
-    @media only screen and (max-width:600px){
-        #table-search{
-            margin-top:0px;
+
+    @media only screen and (max-width:600px) {
+        #table-search {
+            margin-top: 0px;
         }
 
-        #btn-envio{
-            float:left;
-            margin-top:10px;
+        #btn-envio {
+            float: left;
+            margin-top: 10px;
         }
 
     }
+
 </style>
 <template>
 
 
     <div>
-        <h4>Información de los pedidos</h4><p>Seleccione más de un registro para hacer un envío múltiple.</p>
+        <h4>Información de los pedidos</h4>
+        <p>Seleccione más de un registro para hacer un envío múltiple.</p>
         <br>
-        <vs-button id="btn-envio" @click="popupEnvioMultiple=true" v-if="Object.keys(this.selected).length >= 2" color="primary" type="filled" icon-pack="feather" icon="icon-truck" icon-after>Enviar pedidos</vs-button>
-        <vs-table id="table-search" multiple v-model="selected" max-items="10" search  pagination :data="users">
+        <vs-button id="btn-envio" @click="popupEnvioMultiple=true" v-if="Object.keys(this.selected).length >= 2"
+            color="primary" type="filled" icon-pack="feather" icon="icon-truck" icon-after>Enviar pedidos</vs-button>
+        <vs-table id="table-search" multiple v-model="selected" max-items="10" search pagination :data="users">
 
             <template slot="thead">
                 <vs-th>ID</vs-th>
-                <vs-th>Paciente</vs-th>
+                <vs-th>Cliente</vs-th>
                 <vs-th>Teléfono</vs-th>
                 <vs-th>Dirección</vs-th>
                 <vs-th>Estatus</vs-th>
@@ -48,11 +52,13 @@
                         {{ data[indextr].cliente.client_phone }}
                     </vs-td>
 
-                    <vs-td v-if="data[indextr].cliente.client_addresse.length > 25" :data="data[indextr].cliente.client_addresse">
+                    <vs-td v-if="data[indextr].cliente.client_addresse.length > 25"
+                        :data="data[indextr].cliente.client_addresse">
                         {{ data[indextr].cliente.client_addresse.substring(0,25) + "..." }}
                     </vs-td>
 
-                    <vs-td v-if="data[indextr].cliente.client_addresse.length <= 25" :data="data[indextr].cliente.client_addresse">
+                    <vs-td v-if="data[indextr].cliente.client_addresse.length <= 25"
+                        :data="data[indextr].cliente.client_addresse">
                         {{ data[indextr].cliente.client_addresse.substring(0,25) }}
                     </vs-td>
 
@@ -78,14 +84,22 @@
 
                     <vs-td>
                         <span style="float:left;">
-                            <vs-button size="small" @click="popupActive=true, setData(data[indextr].medicamentos, data[indextr].cliente.client_addresse)" radius color="warning" type="filled" icon-pack="feather" icon="icon-eye"></vs-button>
+                            <vs-button size="small"
+                                @click="popupActive=true, setData(data[indextr].medicamentos, data[indextr].cliente.client_addresse)"
+                                radius color="warning" type="filled" icon-pack="feather" icon="icon-eye"></vs-button>
                         </span>
                         <span style="float:right;">
                             <div v-if="data[indextr].cliente.status == 1">
-                                <vs-button size="small" @click="popupEnvio=true, setClient(data[indextr].cliente.order_id)" radius color="primary" type="filled" icon-pack="feather" icon="icon-truck"></vs-button>
+                                <vs-button size="small"
+                                    @click="setClient(data[indextr].cliente.order_id, data[indextr].cliente.order_id)"
+                                    radius color="primary" type="filled" icon-pack="feather" icon="icon-truck">
+                                </vs-button>
                             </div>
                             <div v-else>
-                                <vs-button disabled size="small" @click="popupEnvio=true, setClient(data[indextr].cliente.order_id)" radius color="primary" type="filled" icon-pack="feather" icon="icon-truck"></vs-button>
+                                <vs-button disabled size="small"
+                                    @click="setClient(data[indextr].cliente.order_id, data[indextr].cliente.order_id)"
+                                    radius color="primary" type="filled" icon-pack="feather" icon="icon-truck">
+                                </vs-button>
                             </div>
                         </span>
                     </vs-td>
@@ -93,7 +107,7 @@
             </template>
         </vs-table>
         <!--PopUp para ver la receta que tiene el cliente-->
-        <vs-popup class="holamundo" fullscreen  title="Ver información del Pedido
+        <vs-popup class="holamundo" fullscreen title="Ver información del Pedido
         " :active.sync="popupActive">
             <p>Medicamentos Pedidos:</p><br>
             <vs-table v-model="selected" max-items="10" :data="recipie">
@@ -156,50 +170,32 @@
         <!--PopUp para realizar el envío del cliente-->
         <vs-popup class="holamundo" title="Configurar envío" :active.sync="popupEnvio">
             <p>Seleccionar al encargado del envío:</p><br>
-                <p v-if="errors.length">
-                    <ul>
+            <p v-if="errors.length">
+                <ul>
                     <li class="text-danger" v-for="error in errors" v-bind:key="error">{{ error }}</li>
-                    </ul>
-                </p>
-            <v-select
-              :closeOnSelect="true"
-              v-model="select"
-              :options="deliveryP"
-              :required="!select"
-              :dir="$vs.rtl ? 'rtl' : 'ltr'"
-            />
+                </ul>
+            </p>
+            <v-select :closeOnSelect="true" v-model="select" :options="deliveryP" :required="!select"
+                :dir="$vs.rtl ? 'rtl' : 'ltr'" />
             <br><br><br><br>
-            <vs-button
-                color="success"
-                type="filled"
-                @click="inprogress(id_recipies)"
-                >Realizar envío
+            <vs-button color="success" type="filled" @click="inprogress(id_recipies)">Realizar envío
             </vs-button>
         </vs-popup>
 
         <!--PopUp para realizar envíos multiples a un mensajero-->
         <vs-popup class="holamundo" title="Configurar envío" :active.sync="popupEnvioMultiple">
             <p>Seleccionar al encargado para los envíos:</p><br>
-                <p v-if="errorsEM.length">
-                    <ul>
+            <p v-if="errorsEM.length">
+                <ul>
                     <li class="text-danger" v-for="error in errorsEM" v-bind:key="error">{{ error }}</li>
-                    </ul>
-                </p>
-            <v-select
-              :closeOnSelect="true"
-              v-model="mensajeroEM"
-              :options="deliveryP"
-              :required="!mensajeroEM"
-              :dir="$vs.rtl ? 'rtl' : 'ltr'"
-            />
+                </ul>
+            </p>
+            <v-select :closeOnSelect="true" v-model="mensajeroEM" :options="deliveryP" :required="!mensajeroEM"
+                :dir="$vs.rtl ? 'rtl' : 'ltr'" />
             <br>
             <p>Si el envío previamente ya se realizó, no se tomará en cuenta.</p>
             <br><br><br><br>
-            <vs-button
-                color="success"
-                type="filled"
-                @click="realizarEM()"
-                >Realizar envío
+            <vs-button color="success" type="filled" @click="realizarEM()">Realizar envío
             </vs-button>
         </vs-popup>
     </div>
@@ -210,55 +206,81 @@
     import vSelect from "vue-select";
 
     export default {
-        components:{
+        components: {
             vSelect
         },
         methods: {
-            getusers(){
+            getTransaction(id) {
+                this.ids = [];
+                let token = localStorage.getItem("tu");
+                axios({
+                        method: "get",
+                        url: "http://127.0.0.1:8000/api/getTransactions/" + id,
+                        headers: {
+                            authorization: "Bearer " + token,
+                            "content-type": "application/json"
+                        }
+                    })
+                    .then(Response => {
+                        //console.log(Response);
+                        Response.data.forEach(element => {
+                            this.ids.push(element.id);
+                        });
+                        //console.log(this.ids);
+                        this.popupEnvio = true;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
+            getusers() {
                 this.users = [];
                 let token = localStorage.getItem("tu");
                 let id = localStorage.getItem("ui");
                 axios({
-                    method: "get",
-                    url: "http://127.0.0.1:8000/api/getCliente",
-                    headers: {
-                    authorization: "Bearer " + token,
-                    "content-type": "application/json"
-                }
-                })
-                .then(Response => {
-                    console.log(Response.data);
-                    Response.data.forEach(element => {
-                    element.cliente.client_addresse = (element.cliente.callee + ' ' + element.cliente.apartamentoe + ' ' + element.cliente.residenciae + ' zona ' + element.cliente.codigoe + ' ' + element.cliente.municipioe + ' ' + element.cliente.depare + ' ' + element.cliente.paise);
-                    this.users.push(element);
-                });
-                    //console.log("USUARIO");
-                    //console.log(this.users);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+                        method: "get",
+                        url: "http://127.0.0.1:8000/api/getCliente",
+                        headers: {
+                            authorization: "Bearer " + token,
+                            "content-type": "application/json"
+                        }
+                    })
+                    .then(Response => {
+                        //console.log(Response.data);
+                        Response.data.forEach(element => {
+                            element.cliente.client_addresse = (element.cliente.callee + ' ' + element
+                                .cliente.apartamentoe + ' ' + element.cliente.residenciae + ' zona ' +
+                                element.cliente.codigoe + ' ' + element.cliente.municipioe + ' ' +
+                                element.cliente.depare + ' ' + element.cliente.paise);
+                            this.users.push(element);
+                        });
+                        //console.log("USUARIO");
+                        //console.log(this.users);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
 
                 axios({
-                    method: "get",
-                    url: "http://127.0.0.1:8000/api/getDelivery",
-                    headers: {
-                    authorization: "Bearer " + token,
-                    "content-type": "application/json"
-                }
-                })
-                .then(Response => {
-                    Response.data.forEach(element => {
-                    this.deliveryP.push({
-                        label:element.name,
-                        value:element.id
+                        method: "get",
+                        url: "http://127.0.0.1:8000/api/getDelivery",
+                        headers: {
+                            authorization: "Bearer " + token,
+                            "content-type": "application/json"
+                        }
+                    })
+                    .then(Response => {
+                        Response.data.forEach(element => {
+                            this.deliveryP.push({
+                                label: element.name,
+                                value: element.id
+                            });
+                        });
+                        //console.log(this.deliveryP);
+                    })
+                    .catch(err => {
+                        console.log(err);
                     });
-                });
-                    //console.log(this.deliveryP);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
 
             },
             setData(recipie, address) {
@@ -271,63 +293,95 @@
                     type: "default"
                 });
             },
-            inprogress(id_receta){
+            inprogress(id_receta) {
                 let token = localStorage.getItem("tu");
                 let idu = localStorage.getItem("ui");
-                if(this.select == null){
+                if (this.select == null) {
                     this.errors.push('Debe de seleccionar un mensajero');
                     this.activeLoading = false;
                     this.$vs.loading.close();
-                }else{  
+                } else {
                     this.openLoading();
                     axios({
-                        method: "post",
-                        url: "http://127.0.0.1:8000/api/postShipping",
-                        data: JSON.stringify({
-                        id_recipies: id_receta,
-                        delivery: this.select.value
+                            method: "post",
+                            url: "http://127.0.0.1:8000/api/postShipping",
+                            data: JSON.stringify({
+                                id_recipies: id_receta,
+                                delivery: this.select.value
                             }),
                             headers: {
-                            authorization: "Bearer " + token,
-                            "content-type": "application/json"
-                        }
-                    })
-                    .then(Response => {
-                        this.activeLoading = false;
-                        this.$vs.loading.close();
-                        this.popupEnvio = false;
-                        this.getusers();
-                        this.$vs.notify({
-                            title: "En proceso",
-                            text: "El pedido del cliente ahora está en proceso de envío.",
-                            color: "success"
-                        });
+                                authorization: "Bearer " + token,
+                                "content-type": "application/json"
+                            }
                         })
-                    .catch(err => {
-                        this.popupEnvio = false;
-                        this.activeLoading = false;
-                        this.$vs.loading.close();
-                        console.log(err);
-                    });
+                        .then(Response => {
+                            if (this.ids.length > 0) {
+                                axios({
+                                    method: "put",
+                                    url: "http://127.0.0.1:8000/api/putTransaction",
+                                    data: JSON.stringify({
+                                        order_id: this.idOrder,
+                                        ids: this.ids,
+                                        id_mensajero: this.select.value
+                                    }),
+                                    headers: {
+                                        authorization: "Bearer " + token,
+                                        "content-type": "application/json"
+                                    }
+                                }).then(Response => {
+                                    this.activeLoading = false;
+                                    this.$vs.loading.close();
+                                    this.popupEnvio = false;
+                                    this.getusers();
+                                    this.$vs.notify({
+                                        title: "En proceso",
+                                        text: "El pedido del cliente ahora está en proceso de envío.",
+                                        color: "success"
+                                    });
+                                }).catch(err => {
+                                    console.log(err);
+                                    this.activeLoading = false;
+                                    this.$vs.loading.close();
+                                    this.popupEnvio = false;
+                                });
+                            } else {
+                                this.activeLoading = false;
+                                this.$vs.loading.close();
+                                this.popupEnvio = false;
+                                this.getusers();
+                                this.$vs.notify({
+                                    title: "En proceso",
+                                    text: "El pedido del cliente ahora está en proceso de envío.",
+                                    color: "success"
+                                });
+                            }
+                        }).catch(err => {
+                            this.popupEnvio = false;
+                            this.activeLoading = false;
+                            this.$vs.loading.close();
+                            console.log(err);
+                        });
                 }
             },
-            setClient(id){
+            setClient(id, idOrder) {
                 this.id_recipies = id;
+                this.idOrder = idOrder;
+                this.getTransaction(this.idOrder);
             },
-            realizarEM(){
-                if(this.mensajeroEM == null){
+            realizarEM() {
+                if (this.mensajeroEM == null) {
                     this.errorsEM.push('Debe de seleccionar un mensajero');
                     this.activeLoading = false;
                     this.$vs.loading.close();
-                }else{
+                } else {
                     this.openLoading();
-                    for(var i =0; i<=(Object.keys(this.selected).length -1);i++){
-                        console.log("Objeto No:"+i);
+                    for (var i = 0; i <= (Object.keys(this.selected).length - 1); i++) {
+                        //console.log("Objeto No:" + i);
                         this.crearPedido(this.selected[i].cliente.order_id);
                     }
-                    
+
                     this.getusers();
-                    
+
                     this.activeLoading = false;
                     this.$vs.loading.close();
                     this.popupEnvioMultiple = false;
@@ -338,43 +392,42 @@
                     });
                 }
             },
-            crearPedido(id_receta){
+            crearPedido(id_receta) {
                 let token = localStorage.getItem("tu");
                 let idu = localStorage.getItem("ui");
                 axios({
-                    method: "post",
-                    url: "http://127.0.0.1:8000/api/postShipping",
-                    data: JSON.stringify({
-                    id_recipies: id_receta,
-                    delivery: this.mensajeroEM.value
+                        method: "post",
+                        url: "http://127.0.0.1:8000/api/postShipping",
+                        data: JSON.stringify({
+                            id_recipies: id_receta,
+                            delivery: this.mensajeroEM.value
                         }),
                         headers: {
-                        authorization: "Bearer " + token,
-                        "content-type": "application/json"
-                    }
-                })
-                .then(Response => {
-                    this.activeLoading = false;
-                    this.$vs.loading.close();
-                    this.popupEnvio = false;
+                            authorization: "Bearer " + token,
+                            "content-type": "application/json"
+                        }
                     })
-                .catch(err => {
-                    this.popupEnvio = false;
-                    this.activeLoading = false;
-                    this.$vs.loading.close();
-                    console.log(err);
-                });
+                    .then(Response => {
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                        this.popupEnvio = false;
+                    })
+                    .catch(err => {
+                        this.popupEnvio = false;
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                        console.log(err);
+                    });
             },
-            format(input){
-                var num = input.value.replace(/\./g,'');
-                if(!isNaN(num)){
-                num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
-                num = num.split('').reverse().join('').replace(/^[\.]/,'');
-                input.value = num;
-                }
-                
-                else{ alert('Solo se permiten numeros');
-                input.value = input.value.replace(/[^\d\.]*/g,'');
+            format(input) {
+                var num = input.value.replace(/\./g, '');
+                if (!isNaN(num)) {
+                    num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g, '$1.');
+                    num = num.split('').reverse().join('').replace(/^[\.]/, '');
+                    input.value = num;
+                } else {
+                    alert('Solo se permiten numeros');
+                    input.value = input.value.replace(/[^\d\.]*/g, '');
                 }
             }
         },
@@ -387,14 +440,17 @@
             popupEnvioMultiple: false,
             select: null,
             mensajeroEM: null,
-            id_recipies : 0,
-            address : "",
+            id_recipies: 0,
+            address: "",
             errors: [],
             errorsEM: [],
-            selected: []
+            selected: [],
+            idOrder: null,
+            ids: []
         }),
-        created(){this.getusers()}
+        created() {
+            this.getusers()
+        }
     }
-</script>
 
- 
+</script>

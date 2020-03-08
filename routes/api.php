@@ -114,6 +114,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     //Transacciones-Comisiones
     Route::get('getComiProd/{id_producto}/{id_medico}/{id_cliente}', 'Transactions\TransactionController@index');
     Route::post('postTransaction', 'Transactions\TransactionController@store');
+    Route::put('putTransaction', 'Transactions\TransactionController@update');
+    Route::get('getTransactions/{id}', 'Transactions\TransactionController@show');
 });
 
 Route::fallback(function(){

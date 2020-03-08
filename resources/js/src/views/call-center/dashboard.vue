@@ -498,7 +498,7 @@
                                 Response.data.forEach(element => {
                                     this.medicinas.push(element);
                                 });
-                                console.log(idm);
+                                //console.log(idm);
                                 axios({
                                         method: "get",
                                         url: "http://127.0.0.1:8000/api/getUser/" + idm,
@@ -550,7 +550,7 @@
                     });
             },
             editData(data, id, id1, id2) {
-                console.log(data, id, id1, id2);
+                //console.log(data, id, id1, id2);
                 this.popupActive2 = false;
                 // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
                 let data1 = {
@@ -564,8 +564,8 @@
                 this.toggleDataSidebar(true);
             },
             openModal(phone, id, status, origen, id1) {
-                console.log('Modal');
-                console.log(id1);
+                //console.log('Modal');
+                //console.log(id1);
                 //console.log(status);
                 //if (status == "Nuevo") {
                     this.idRecipe = id;
@@ -649,7 +649,7 @@
                 return "primary";
             },
             getFacturacion(a){
-                console.log(a);
+                //console.log(a);
                 this.activado = a;
                 this.openLoading();
                 let token = localStorage.getItem("tu");
