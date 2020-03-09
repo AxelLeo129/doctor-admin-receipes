@@ -124,6 +124,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      bol: null,
       rId: '',
       clAddress: '',
       clPhone: '',
@@ -181,31 +182,73 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {},
+  watch: {
+    mailTo: function mailTo(val, oldVal) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      this.bol = re.test(String(val).toLowerCase());
+    }
+  },
   created: function created() {
+    this.openLoading();
     this.getMendinas();
-    this.getProducts();
     this.getUser();
     this.getRecipe();
   },
   methods: {
-    getProducts: function getProducts() {
+    openLoading: function openLoading() {
+      this.activeLoading = true;
+      this.$vs.loading({
+        type: "default"
+      });
+    },
+    enviarReceta: function enviarReceta() {
       var _this = this;
 
-      var token = localStorage.getItem("tu");
+      this.openLoading();
+      var token = localStorage.getItem('tu');
+      var medicinass = [];
+      this.medicinas.forEach(function (item) {
+        medicinass.push(item.name + ' ' + item.presentacion + ' ' + item.dispensing);
+      });
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
-        method: "get",
-        url: "http://127.0.0.1:8000/api/getProducts",
+        method: "post",
+        url: "http://127.0.0.1:8000/api/sendRecipe",
+        data: JSON.stringify({
+          no: 12,
+          img: this.imgenRes,
+          fecha: this.nuevaRecetaData.dateIssue,
+          nameP: this.pName,
+          phoneP: this.pPhone,
+          direccionC: this.clAddress,
+          nameD: this.drName,
+          phoneC: this.clPhone,
+          emailD: this.drEmail,
+          phoneD: this.drPhone,
+          medicamentos: medicinass,
+          email: this.mailTo,
+          name: this.nuevaRecetaData.name
+        }),
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(Response);
-      }).catch(function (err) {
+        _this.mailTo = "";
+        _this.bol = null;
+        _this.activeLoading = false;
+
         _this.$vs.loading.close();
 
-        _this.activado = true;
+        _this.$vs.notify({
+          title: "Enviado",
+          text: "Receta enviada exitosamente.",
+          color: "success"
+        });
+      }).catch(function (err) {
         console.log(err);
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
       });
     },
     getMendinas: function getMendinas() {
@@ -224,8 +267,7 @@ __webpack_require__.r(__webpack_exports__);
         //console.log(Response);
         Response.data.forEach(function (element) {
           _this2.medicinas.push(element);
-        });
-        console.log(_this2.medicinas);
+        }); //console.log(this.medicinas);
       }).catch(function (err) {
         console.log(err);
         _this2.activeLoading = false;
@@ -252,6 +294,9 @@ __webpack_require__.r(__webpack_exports__);
         _this3.pName = Response.data[0].name;
         _this3.pPhone = Response.data[0].phone;
         _this3.rId = Response.data[0].id;
+        _this3.activeLoading = false;
+
+        _this3.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
         _this3.activeLoading = false;
@@ -387,6 +432,12 @@ var render = function() {
     "div",
     { attrs: { id: "invoice-page" } },
     [
+      _vm.bol === false && _vm.mailTo !== ""
+        ? _c("span", { staticClass: "text-danger text-sm" }, [
+            _vm._v("Ingrese un email válido.")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "flex flex-wrap items-center justify-between" },
@@ -415,14 +466,20 @@ var render = function() {
                       "vs-button",
                       {
                         staticClass: "whitespace-no-wrap",
-                        attrs: { type: "border" },
-                        on: {
-                          click: function($event) {
-                            _vm.mailTo = ""
-                          }
-                        }
+                        attrs: {
+                          type: "border",
+                          disabled:
+                            _vm.mailTo == "" ||
+                            _vm.mailTo == null ||
+                            _vm.bol == false
+                        },
+                        on: { click: _vm.enviarReceta }
                       },
-                      [_vm._v("Enviar Receta")]
+                      [
+                        _vm._v(
+                          "Enviar\n                        Receta\n                    "
+                        )
+                      ]
                     )
                   ],
                   1
@@ -443,7 +500,7 @@ var render = function() {
                   attrs: { "icon-pack": "feather", icon: "icon icon-file" },
                   on: { click: _vm.printInvoice }
                 },
-                [_vm._v("Imprimir")]
+                [_vm._v("Imprimir\n            ")]
               )
             ],
             1

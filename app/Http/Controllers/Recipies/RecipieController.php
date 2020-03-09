@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Recipie;
 use App\Recipies_product;
+use Illuminate\Cache\RetrievesMultipleKeys;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 
 class RecipieController extends Controller
@@ -178,5 +180,14 @@ class RecipieController extends Controller
 
     public function getPaciente($id, $id1){
         return \DB::select("SELECT * FROM `recipies` WHERE observations != '' AND id = $id AND doctor_id = $id1");
+    }
+
+    public function sendRecipe(Request $request){
+        Mail::send('recipe', ['request' => $request], function($message) use ($request){
+            $message->from('pharmazone@insayd.com', 'Pharmazone.app');
+            $message->to($request->email, $request->name)->subject('Receta Visita de Hoy');
+        });
+    
+        return "Receta enviada exitosamente.";
     }
 }

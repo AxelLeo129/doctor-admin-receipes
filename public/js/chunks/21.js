@@ -128,15 +128,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      bol: null,
+      imgenRes: null,
       clPhone: '',
       clAddress: '',
       image: "/images/medicamentos/demol.PNG",
@@ -192,13 +189,75 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.getUser();
     var data = JSON.parse(localStorage.getItem("nuevaRecetaData"));
-    this.nuevaRecetaData = data;
-    console.log(this.nuevaRecetaData);
+    this.nuevaRecetaData = data; //console.log(this.nuevaRecetaData);
+  },
+  watch: {
+    mailTo: function mailTo(val, oldVal) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      this.bol = re.test(String(val).toLowerCase());
+    }
   },
   methods: {
-    getUser: function getUser() {
+    openLoading: function openLoading() {
+      this.activeLoading = true;
+      this.$vs.loading({
+        type: "default"
+      });
+    },
+    enviarReceta: function enviarReceta() {
       var _this = this;
 
+      this.openLoading();
+      var token = localStorage.getItem('tu');
+      var medicinas = [];
+      this.nuevaRecetaData.medicamentos.forEach(function (item) {
+        medicinas.push(item.nombre + ' ' + item.precentacion + ' ' + item.descripcion);
+      });
+      axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: "post",
+        url: "http://127.0.0.1:8000/api/sendRecipe",
+        data: JSON.stringify({
+          no: 12,
+          img: this.imgenRes,
+          fecha: this.nuevaRecetaData.dateIssue,
+          nameP: this.nuevaRecetaData.name,
+          phoneP: this.nuevaRecetaData.phone,
+          direccionC: this.clAddress,
+          nameD: this.drName,
+          phoneC: this.clPhone,
+          emailD: this.drEmail,
+          phoneD: this.drPhone,
+          medicamentos: medicinas,
+          email: this.mailTo,
+          name: this.nuevaRecetaData.name
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this.mailTo = "";
+        _this.bol = null;
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
+
+        _this.$vs.notify({
+          title: "Enviado",
+          text: "Receta enviada exitosamente.",
+          color: "success"
+        });
+      }).catch(function (err) {
+        console.log(err);
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
+      });
+    },
+    getUser: function getUser() {
+      var _this2 = this;
+
+      this.openLoading();
       var token = localStorage.getItem("tu");
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: "get",
@@ -210,40 +269,41 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         //console.log(Response);
         if (Response.data.success.clinicLogo == null || Response.data.success.clinicLogo == "") {
-          _this.image = "/images/medicamentos/demol.PNG";
+          _this2.image = "/images/medicamentos/demol.PNG";
         } else {
-          _this.image = "data:image/png;base64," + Response.data.success.clinicLogo;
+          _this2.image = "data:image/png;base64," + Response.data.success.clinicLogo;
         }
 
-        _this.drName = Response.data.success.name;
-        _this.drEmail = Response.data.success.email;
+        _this2.imgenRes = Response.data.success.clinicLogo;
+        _this2.drName = Response.data.success.name;
+        _this2.drEmail = Response.data.success.email;
 
         if (Response.data.success.clinicPhone == null || Response.data.success.clinicPhone == '') {
-          _this.clPhone = '+502: 8452-9862';
+          _this2.clPhone = '+502: 8452-9862';
         } else {
-          _this.clPhone = Response.data.success.clinicPhone;
+          _this2.clPhone = Response.data.success.clinicPhone;
         }
 
         if (Response.data.success.clinicAddress == null || Response.data.success.clinicAddress == '') {
-          _this.clAddress = 'Via 4 zona 4 Guatemala';
+          _this2.clAddress = 'Via 4 zona 4 Guatemala';
         } else {
-          _this.clAddress = Response.data.success.clinicAddress;
+          _this2.clAddress = Response.data.success.clinicAddress;
         }
 
         if (Response.data.success.phone == null || Response.data.success.phone == "") {
-          _this.drPhone = '+502: 8452-9862';
+          _this2.drPhone = '+502: 8452-9862';
         } else {
-          _this.drPhone = '+502: ' + Response.data.success.phone;
+          _this2.drPhone = '+502: ' + Response.data.success.phone;
         }
 
-        _this.activeLoading = false;
+        _this2.activeLoading = false;
 
-        _this.$vs.loading.close();
+        _this2.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
-        _this.activeLoading = false;
+        _this2.activeLoading = false;
 
-        _this.$vs.loading.close();
+        _this2.$vs.loading.close();
       });
     },
     printInvoice: function printInvoice() {
@@ -344,6 +404,12 @@ var render = function() {
     "div",
     { attrs: { id: "invoice-page" } },
     [
+      _vm.bol === false && _vm.mailTo !== ""
+        ? _c("span", { staticClass: "text-danger text-sm" }, [
+            _vm._v("Ingrese un email válido.")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "flex flex-wrap items-center justify-between" },
@@ -372,14 +438,20 @@ var render = function() {
                       "vs-button",
                       {
                         staticClass: "whitespace-no-wrap",
-                        attrs: { type: "border" },
-                        on: {
-                          click: function($event) {
-                            _vm.mailTo = ""
-                          }
-                        }
+                        attrs: {
+                          type: "border",
+                          disabled:
+                            _vm.mailTo == "" ||
+                            _vm.mailTo == null ||
+                            _vm.bol == false
+                        },
+                        on: { click: _vm.enviarReceta }
                       },
-                      [_vm._v("Enviar Receta")]
+                      [
+                        _vm._v(
+                          "Enviar\n                        Receta\n                    "
+                        )
+                      ]
                     )
                   ],
                   1
@@ -400,7 +472,7 @@ var render = function() {
                   attrs: { "icon-pack": "feather", icon: "icon icon-file" },
                   on: { click: _vm.printInvoice }
                 },
-                [_vm._v("Imprimir")]
+                [_vm._v("Imprimir\n            ")]
               ),
               _vm._v(" "),
               _c(

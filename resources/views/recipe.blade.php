@@ -1,48 +1,54 @@
-<div>
-    <div>
-        <p style="text-align: left; padding: 0">12/02/2020</p>
-    </div>
-</div>
-<table style="max-width: 800px; padding: 10px; margin:0 auto; border-collapse: collapse;">
-    <tr>
-        <td style="text-align: left; padding: 0">
-            <img width="20%" style="display:block; margin: 1.5% 3%"
-                src="https://pharmazone.app/images/logo/login/logo.png">
-        </td>
-    </tr>
+<table style="max-width: 600px; padding: 10px; margin:0 auto; border-collapse: collapse;">
 
     <tr>
-        <td>
-            <div style="color: #003DA5; margin: 4% 10% 2%; text-align: justify;font-family: sans-serif">
-                <div align="right">
-                    <h2 style="color: #003DA5; margin: 0 0 7px">Receta</h2>
-                    <p style="font-size: 15px">Recata No. 1</p>
-                    <p style="margin: 2px; font-size: 15px">Fecha Receta</p>
-                    <p style="margin: 2px; font-size: 15px">12/02/2020</p>
-                </div>
-                <div align="left">
-                    <h4 style="color: #003DA5; margin: 2px">Paciente</h4>
-                    <p style="margin: 2px; font-size: 15px">Carlos López</p>
-                    <p style="margin: 2px; font-size: 15px">Guatemala</p>
-                    <p style="margin: 2px; font-size: 15px">1234 5678</p>
-                </div>
-                <div align="right">
-                    <p style="margin: 2px; font-size: 15px">Avenida Reforma</p>
-                    <p style="margin: 2px; font-size: 15px"><strong>Luis Médico</strong></p>
-                    <p style="margin: 2px; font-size: 15px">Correo: luis@email.com</p>
-                    <p style="margin: 2px; font-size: 15px">Teléfono: 1234 5678</p>
-                </div>
+        <td style="background-color: #EDEDED">
+            <div style="color: #000000; margin: 4% 10% 2%; text-align: justify;font-family: sans-serif">
+                <table>
+                    <tr>
+                        <td style="background-color: #EDEDED; text-align: left; width: 350px;">
+                            <img width="30%" src="data:image/png;base64,{{chunk_split(base64_encode($request->img))}}">
+                        </td>
+                        <td>
+                            <div align="right">
+                                <h3 style="color: #000000; margin: 0 0 7px"><strong>Receta</strong></h3>
+                                <p style="margin: 2px; font-size: 15px">Receta No. {{$request->no}}</p>
+                                <p style="margin: 5px; font-size: 15px">Fecha Receta</p>
+                                <p style="margin: 2px; font-size: 10px">{{$request->fecha}}</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
                 <br>
-                <div>
-                    <table>
-                        <tr>
-                            <td>Primer Producto</td>
-                            <td>Segundo Producto</td>
-                        </tr>
-                    </table>
-                </div>
+                <table>
+                    <tr>
+                        <td style="width: 260px;">
+                            <p style="margin: 2px; font-size: 15px">
+                                <h3><strong>Paciente</strong></h3>{{$request->nameP}}<br>Guatemala<br>{{$request->phoneP}}
+                            </p>
+                        </td>
+                        <td>
+                            <div align="right">
+                                <p style="margin: 2px; font-size: 15px">
+                                    {{$request->direccionC}}<br><strong>{{$request->nameD}}</strong><br>{{$request->phoneC}}<br>{{$request->emailD}}<br>{{$request->phoneD}}
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <table style="font-size: 15px;  margin: 10px">
+                    <tbody style="border: gray 2px solid;">
+                        @foreach ($request->medicamentos as $item)
+                            <tr>
+                                <td style="padding: 5px;">{{$item}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <br>
                 <div align="right">
-                    <p style="color: #b3b3b3; font-size: 12px; text-align: center;margin: 30px 0 0">PHARMAZone 2020</p>
+                    <p style="margin: 10px; font-size: 15px">
+                        PHARMAZone.app</p>
                 </div>
             </div>
         </td>
