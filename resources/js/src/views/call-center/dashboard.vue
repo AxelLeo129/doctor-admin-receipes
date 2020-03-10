@@ -33,12 +33,18 @@
                     @click="addNewData1(idRecipe, idMedico)">Nuevo Cliente</vs-button>
             </div>
         </vs-popup>
+        <vs-popup class="holamundo" title="Reagendar la receta" :active.sync="popact">
+            <p>Seleccione la fecha para reagendar.</p>
+            <vs-input class="inputx" v-model="fechaR" type="date"/>
+            <span class="text-danger text-sm" v-if="fechaR == ''">Este campo es requerido.</span>
+            <vs-button color="primary" type="filled" class="mt-5" :disabled="fechaR == null || fechaR == ''" @click="reagendar">Reagendar</vs-button>
+        </vs-popup>
         <vs-popup fullscreen class="holamundo" title="Detalles de la Receta" :active.sync="popupActive">
             <vx-card id="invoice-container">
                 <!-- INVOICE METADATA -->
                 <div class="vx-row leading-loose p-base">
                     <div class="vx-col w-full md:w-1/2 mt-base">
-                        <img v-bind:src="image" class="mr-8 rounded h-24" />
+                        <img v-bind:src="image" class="mr-8 rounded h-24" />()
                     </div>
                     <div class="vx-col w-full md:w-1/2 text-right">
                         <h1>Receta</h1>
@@ -150,7 +156,8 @@
                         <div class="px-6 pb-2 flex flex-col">
                             <!-- inbox -->
                             <li tag="span" @click="getRecipes('Nuevo')"
-                                class="flex justify-between items-center cursor-pointer" :class="{'text-primary': activado == 'Nuevo'}">
+                                class="flex justify-between items-center cursor-pointer"
+                                :class="{'text-primary': activado == 'Nuevo'}">
                                 <div class="flex items-center mb-2">
                                     <feather-icon icon="PlusIcon"></feather-icon>
                                     <span class="text-lg ml-3">Nuevos</span>
@@ -165,14 +172,16 @@
 
                             <!-- sent -->
                             <li tag="span" @click="getRecipes('Empaquetando')"
-                                class="flex items-center mt-4 mb-2 cursor-pointer" :class="{'text-primary': activado == 'Empaquetando'}">
+                                class="flex items-center mt-4 mb-2 cursor-pointer"
+                                :class="{'text-primary': activado == 'Empaquetando'}">
                                 <feather-icon icon="ArchiveIcon"></feather-icon>
                                 <span class="text-lg ml-3">Despacho</span>
                             </li>
 
                             <!-- draft -->
                             <li tag="span" @click="getRecipes('Entregando')"
-                                class="flex justify-between items-center mt-4 cursor-pointer" :class="{'text-primary': activado == 'Entregando'}">
+                                class="flex justify-between items-center mt-4 cursor-pointer"
+                                :class="{'text-primary': activado == 'Entregando'}">
                                 <div class="flex items-center mb-2">
                                     <feather-icon icon="TruckIcon"></feather-icon>
                                     <span class="text-lg ml-3">Entregando</span>
@@ -181,28 +190,32 @@
 
                             <!-- starred -->
                             <li tag="span" @click="getRecipes('Entregado')"
-                                class="flex items-center mt-4 mb-2 cursor-pointer" :class="{'text-primary': activado == 'Entregado'}">
+                                class="flex items-center mt-4 mb-2 cursor-pointer"
+                                :class="{'text-primary': activado == 'Entregado'}">
                                 <feather-icon icon="MapPinIcon"></feather-icon>
                                 <span class="text-lg ml-3">Entregados</span>
                             </li>
 
                             <!-- spam -->
                             <li @click="getRecipes('Cancelado')" tag="span"
-                                class="flex items-center justify-between items-center mt-4 cursor-pointer" :class="{'text-primary': activado == 'Cancelado'}">
+                                class="flex items-center justify-between items-center mt-4 cursor-pointer"
+                                :class="{'text-primary': activado == 'Cancelado'}">
                                 <div class="flex items-center mb-2">
                                     <feather-icon icon="HexagonIcon"></feather-icon>
                                     <span class="text-lg ml-3">Descartadas</span>
                                 </div>
                             </li>
                             <li @click="getRecipes('Reagendado')" tag="span"
-                                class="flex items-center justify-between items-center mt-4 cursor-pointer" :class="{'text-primary': activado == 'Reagendado'}">
+                                class="flex items-center justify-between items-center mt-4 cursor-pointer"
+                                :class="{'text-primary': activado == 'Reagendado'}">
                                 <div class="flex items-center mb-2">
                                     <feather-icon icon="ClockIcon"></feather-icon>
                                     <span class="text-lg ml-3">Reagendado</span>
                                 </div>
                             </li>
                             <li @click="getRerecipes('Reprogramada')" tag="span"
-                                class="flex items-center justify-between items-center mt-4 cursor-pointer" :class="{'text-primary': activado == 'Reprogramada'}">
+                                class="flex items-center justify-between items-center mt-4 cursor-pointer"
+                                :class="{'text-primary': activado == 'Reprogramada'}">
                                 <div class="flex items-center mb-2">
                                     <feather-icon icon="WatchIcon"></feather-icon>
                                     <span class="text-lg ml-3">Reprogramada</span>
@@ -257,19 +270,36 @@
                                                 </div>
                                                 <span>{{ mail.status }}</span>
                                             </div>
-                                            <vs-button @click="reagendar(mail.id)" v-show="mail.status == 'Nuevo'"
-                                                color="rgb(249, 142, 5)" class="mt-5" size="small" type="filled">Reagendar
-                                            </vs-button>
-                                            <vs-button @click="descartar(mail.id)" v-show="mail.status == 'Nuevo' || mail.status == 'Reagendado'"
-                                                color="danger" class="mt-5" size="small" type="filled">Descartar
-                                            </vs-button>
-                                            <vs-button @click="verReceta(mail.id, mail.doctor_id)"
-                                                color="rgb(62, 201, 214)" class="mt-5" size="small" type="filled">Ver
-                                                Receta
-                                            </vs-button>
-                                            <vs-button color="primary" class="mt-5" type="filled" size="small" v-show="mail.status == 'Nuevo' || mail.status == 'Reagendado' || mail.permission == 1"
-                                                @click="openModal(mail.phone, mail.id, mail.status, mail.origen, mail.idMedico)">Posibles Clientes
-                                            </vs-button>
+                                            <br>
+                                            <div class="vx-row">
+                                                <vx-tooltip text="Reagendar">
+                                                    <vs-button @click="openReagendar(mail.id)"
+                                                        v-show="mail.status == 'Nuevo'" color="rgb(249, 142, 5)"
+                                                        size="small" type="filled" class="mr-3" icon-pack="feather"
+                                                        icon="icon-clock">
+                                                    </vs-button>
+                                                </vx-tooltip>
+                                                <vx-tooltip text="Descartar">
+                                                    <vs-button @click="descartar(mail.id)"
+                                                        v-show="mail.status == 'Nuevo' || mail.status == 'Reagendado'"
+                                                        color="danger" size="small" type="filled" class="mr-3"
+                                                        icon-pack="feather" icon="icon-trash">
+                                                    </vs-button>
+                                                </vx-tooltip>
+                                                <vx-tooltip text="Ver Receta">
+                                                    <vs-button @click="verReceta(mail.id, mail.doctor_id)"
+                                                        color="rgb(62, 201, 214)" class="mr-3" size="small"
+                                                        type="filled" icon-pack="feather" icon="icon-eye">
+                                                    </vs-button>
+                                                </vx-tooltip>
+                                                <vx-tooltip text="Nuevo">
+                                                    <vs-button color="primary" class="mr-5" type="filled" size="small"
+                                                        v-show="mail.status == 'Nuevo' || mail.status == 'Reagendado' || mail.permission == 1"
+                                                        @click="openModal(mail.phone, mail.id, mail.status, mail.origen, mail.idMedico)"
+                                                        icon-pack="feather" icon="icon-send">
+                                                    </vs-button>
+                                                </vx-tooltip>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -312,6 +342,8 @@
     export default {
         data() {
             return {
+                idReceta: null,
+                fechaR: null,
                 activado: 'Nuevo',
                 companyDetails: {
                     name: "",
@@ -359,6 +391,7 @@
                 idRecipe: null,
                 origen: null,
                 idMedico: null,
+                popact: false,
                 users: [],
                 popupActive2: false,
                 addNewDataSidebar: false,
@@ -401,66 +434,72 @@
             this.getRecipes("Nuevo");
         },
         methods: {
-            reagendar(id){
+            openReagendar(id) {
+                this.popact = true;
+                this.idReceta = id;
+            },
+            reagendar() {
                 this.openLoading();
                 let token = localStorage.getItem('tu');
                 axios({
-                    method: "put",
-                    url: "http://127.0.0.1:8000/api/changeStatus",
-                    data: JSON.stringify({
-                      id: id,
-                      status: 6
-                    }),
-                    headers: {
-                      authorization: "Bearer " + token,
-                      "content-type": "application/json"
-                    }
-                  })
+                        method: "put",
+                        url: "http://127.0.0.1:8000/api/changeStatus",
+                        data: JSON.stringify({
+                            id: this.idReceta,
+                            status: 6
+                        }),
+                        headers: {
+                            authorization: "Bearer " + token,
+                            "content-type": "application/json"
+                        }
+                    })
                     .then(Response => {
-                      this.activeLoading = false;
-                      this.$vs.loading.close();
-                      this.getRecipes("Nuevo");
-                      this.$vs.notify({
-                        title: "Satisfactorio",
-                        text: "Pedido reagendado exitosamente.",
-                        color: "success"
-                      });
+                        this.fechaR = null;
+                        this.popact = false; 
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                        this.getRecipes("Nuevo");
+                        this.$vs.notify({
+                            title: "Satisfactorio",
+                            text: "Pedido reagendado exitosamente.",
+                            color: "success"
+                        });
                     })
                     .catch(err => {
-                      this.activeLoading = false;
-                      this.$vs.loading.close();
-                      console.log(err);
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                        console.log(err);
                     });
             },
-            descartar(id){
+            descartar(id) {
                 this.openLoading();
                 let token = localStorage.getItem('tu');
                 axios({
-                    method: "put",
-                    url: "http://127.0.0.1:8000/api/changeStatus",
-                    data: JSON.stringify({
-                      id: id,
-                      status: 5
-                    }),
-                    headers: {
-                      authorization: "Bearer " + token,
-                      "content-type": "application/json"
-                    }
-                  })
+                        method: "put",
+                        url: "http://127.0.0.1:8000/api/changeStatus",
+                        data: JSON.stringify({
+                            id: id,
+                            status: 5
+                        }),
+                        headers: {
+                            authorization: "Bearer " + token,
+                            "content-type": "application/json"
+                        }
+                    })
                     .then(Response => {
-                      this.activeLoading = false;
-                      this.$vs.loading.close();
-                      this.getRecipes("Nuevo");
-                      this.$vs.notify({
-                        title: "Satisfactorio",
-                        text: "Pedido descartado exitosamente.",
-                        color: "success"
-                      });
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                        this.getRecipes("Nuevo");
+                        this.$vs.notify({
+                            title: "Satisfactorio",
+                            text: "Pedido descartado exitosamente.",
+                            color: "success"
+                        });
                     })
                     .catch(err => {
-                      this.activeLoading = false;
-                      this.$vs.loading.close();
-                      console.log(err);
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                        console.log(err);
                     });
             },
             verReceta(id, id1) {
@@ -568,28 +607,28 @@
                 //console.log(id1);
                 //console.log(status);
                 //if (status == "Nuevo") {
-                    this.idRecipe = id;
-                    this.origen = origen;
-                    this.idMedico = id1;
-                    this.users = [];
-                    let token = localStorage.getItem("tu");
-                    axios({
-                            method: "get",
-                            url: "http://127.0.0.1:8000/api/getCliente1/" + phone,
-                            headers: {
-                                authorization: "Bearer " + token,
-                                "content-type": "application/json"
-                            }
-                        })
-                        .then(Response => {
-                            Response.data.forEach(element => {
-                                this.users.push(element);
-                            });
-                            this.popupActive2 = true;
-                        })
-                        .catch(err => {
-                            console.log(err);
+                this.idRecipe = id;
+                this.origen = origen;
+                this.idMedico = id1;
+                this.users = [];
+                let token = localStorage.getItem("tu");
+                axios({
+                        method: "get",
+                        url: "http://127.0.0.1:8000/api/getCliente1/" + phone,
+                        headers: {
+                            authorization: "Bearer " + token,
+                            "content-type": "application/json"
+                        }
+                    })
+                    .then(Response => {
+                        Response.data.forEach(element => {
+                            this.users.push(element);
                         });
+                        this.popupActive2 = true;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
                 //}
             },
             addNewData() {
@@ -648,7 +687,7 @@
                 if (a == 6) return "warning";
                 return "primary";
             },
-            getFacturacion(a){
+            getFacturacion(a) {
                 //console.log(a);
                 this.activado = a;
                 this.openLoading();

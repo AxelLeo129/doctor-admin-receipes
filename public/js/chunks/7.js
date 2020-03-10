@@ -1937,6 +1937,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1945,6 +1975,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      idReceta: null,
+      fechaR: null,
       activado: 'Nuevo',
       companyDetails: {
         name: "",
@@ -1984,7 +2016,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         discountedAmount: 5700,
         total: 108300
       }
-    }, _defineProperty(_ref, "medicinas", []), _defineProperty(_ref, "popupActive", false), _defineProperty(_ref, "message", ""), _defineProperty(_ref, "idRecipe", null), _defineProperty(_ref, "origen", null), _defineProperty(_ref, "idMedico", null), _defineProperty(_ref, "users", []), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "addNewDataSidebar", false), _defineProperty(_ref, "sidebarData", {}), _defineProperty(_ref, "status", ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado"]), _defineProperty(_ref, "buscar", ""), _defineProperty(_ref, "clickNotClose", true), _defineProperty(_ref, "isEmailSidebarActive", true), _defineProperty(_ref, "mailFilter", "inbox"), _defineProperty(_ref, "settings", {
+    }, _defineProperty(_ref, "medicinas", []), _defineProperty(_ref, "popupActive", false), _defineProperty(_ref, "message", ""), _defineProperty(_ref, "idRecipe", null), _defineProperty(_ref, "origen", null), _defineProperty(_ref, "idMedico", null), _defineProperty(_ref, "popact", false), _defineProperty(_ref, "users", []), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "addNewDataSidebar", false), _defineProperty(_ref, "sidebarData", {}), _defineProperty(_ref, "status", ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado"]), _defineProperty(_ref, "buscar", ""), _defineProperty(_ref, "clickNotClose", true), _defineProperty(_ref, "isEmailSidebarActive", true), _defineProperty(_ref, "mailFilter", "inbox"), _defineProperty(_ref, "settings", {
       maxScrollbarLength: 60,
       wheelSpeed: 0.3
     }), _defineProperty(_ref, "recipes", []), _defineProperty(_ref, "doctors", []), _defineProperty(_ref, "primary", "primary"), _ref;
@@ -2015,7 +2047,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getRecipes("Nuevo");
   },
   methods: {
-    reagendar: function reagendar(id) {
+    openReagendar: function openReagendar(id) {
+      this.popact = true;
+      this.idReceta = id;
+    },
+    reagendar: function reagendar() {
       var _this = this;
 
       this.openLoading();
@@ -2024,7 +2060,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         method: "put",
         url: "http://127.0.0.1:8000/api/changeStatus",
         data: JSON.stringify({
-          id: id,
+          id: this.idReceta,
           status: 6
         }),
         headers: {
@@ -2032,6 +2068,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        _this.fechaR = null;
+        _this.popact = false;
         _this.activeLoading = false;
 
         _this.$vs.loading.close();
@@ -4362,6 +4400,55 @@ var render = function() {
         "vs-popup",
         {
           staticClass: "holamundo",
+          attrs: { title: "Reagendar la receta", active: _vm.popact },
+          on: {
+            "update:active": function($event) {
+              _vm.popact = $event
+            }
+          }
+        },
+        [
+          _c("p", [_vm._v("Seleccione la fecha para reagendar.")]),
+          _vm._v(" "),
+          _c("vs-input", {
+            staticClass: "inputx",
+            attrs: { type: "date" },
+            model: {
+              value: _vm.fechaR,
+              callback: function($$v) {
+                _vm.fechaR = $$v
+              },
+              expression: "fechaR"
+            }
+          }),
+          _vm._v(" "),
+          _vm.fechaR == ""
+            ? _c("span", { staticClass: "text-danger text-sm" }, [
+                _vm._v("Este campo es requerido.")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              staticClass: "mt-5",
+              attrs: {
+                color: "primary",
+                type: "filled",
+                disabled: _vm.fechaR == null || _vm.fechaR == ""
+              },
+              on: { click: _vm.reagendar }
+            },
+            [_vm._v("Reagendar")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          staticClass: "holamundo",
           attrs: {
             fullscreen: "",
             title: "Detalles de la Receta",
@@ -4380,7 +4467,8 @@ var render = function() {
                 _c("img", {
                   staticClass: "mr-8 rounded h-24",
                   attrs: { src: _vm.image }
-                })
+                }),
+                _vm._v("()\n                ")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "vx-col w-full md:w-1/2 text-right" }, [
@@ -5015,136 +5103,157 @@ var render = function() {
                                           ]
                                         ),
                                         _vm._v(" "),
-                                        _c(
-                                          "vs-button",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: mail.status == "Nuevo",
-                                                expression:
-                                                  "mail.status == 'Nuevo'"
-                                              }
-                                            ],
-                                            staticClass: "mt-5",
-                                            attrs: {
-                                              color: "rgb(249, 142, 5)",
-                                              size: "small",
-                                              type: "filled"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.reagendar(mail.id)
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Reagendar\n                                        "
-                                            )
-                                          ]
-                                        ),
+                                        _c("br"),
                                         _vm._v(" "),
                                         _c(
-                                          "vs-button",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value:
-                                                  mail.status == "Nuevo" ||
-                                                  mail.status == "Reagendado",
-                                                expression:
-                                                  "mail.status == 'Nuevo' || mail.status == 'Reagendado'"
-                                              }
-                                            ],
-                                            staticClass: "mt-5",
-                                            attrs: {
-                                              color: "danger",
-                                              size: "small",
-                                              type: "filled"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.descartar(mail.id)
-                                              }
-                                            }
-                                          },
+                                          "div",
+                                          { staticClass: "vx-row" },
                                           [
-                                            _vm._v(
-                                              "Descartar\n                                        "
+                                            _c(
+                                              "vx-tooltip",
+                                              { attrs: { text: "Reagendar" } },
+                                              [
+                                                _c("vs-button", {
+                                                  directives: [
+                                                    {
+                                                      name: "show",
+                                                      rawName: "v-show",
+                                                      value:
+                                                        mail.status == "Nuevo",
+                                                      expression:
+                                                        "mail.status == 'Nuevo'"
+                                                    }
+                                                  ],
+                                                  staticClass: "mr-3",
+                                                  attrs: {
+                                                    color: "rgb(249, 142, 5)",
+                                                    size: "small",
+                                                    type: "filled",
+                                                    "icon-pack": "feather",
+                                                    icon: "icon-clock"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.openReagendar(
+                                                        mail.id
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "vx-tooltip",
+                                              { attrs: { text: "Descartar" } },
+                                              [
+                                                _c("vs-button", {
+                                                  directives: [
+                                                    {
+                                                      name: "show",
+                                                      rawName: "v-show",
+                                                      value:
+                                                        mail.status ==
+                                                          "Nuevo" ||
+                                                        mail.status ==
+                                                          "Reagendado",
+                                                      expression:
+                                                        "mail.status == 'Nuevo' || mail.status == 'Reagendado'"
+                                                    }
+                                                  ],
+                                                  staticClass: "mr-3",
+                                                  attrs: {
+                                                    color: "danger",
+                                                    size: "small",
+                                                    type: "filled",
+                                                    "icon-pack": "feather",
+                                                    icon: "icon-trash"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.descartar(
+                                                        mail.id
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "vx-tooltip",
+                                              { attrs: { text: "Ver Receta" } },
+                                              [
+                                                _c("vs-button", {
+                                                  staticClass: "mr-3",
+                                                  attrs: {
+                                                    color: "rgb(62, 201, 214)",
+                                                    size: "small",
+                                                    type: "filled",
+                                                    "icon-pack": "feather",
+                                                    icon: "icon-eye"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.verReceta(
+                                                        mail.id,
+                                                        mail.doctor_id
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "vx-tooltip",
+                                              { attrs: { text: "Nuevo" } },
+                                              [
+                                                _c("vs-button", {
+                                                  directives: [
+                                                    {
+                                                      name: "show",
+                                                      rawName: "v-show",
+                                                      value:
+                                                        mail.status ==
+                                                          "Nuevo" ||
+                                                        mail.status ==
+                                                          "Reagendado" ||
+                                                        mail.permission == 1,
+                                                      expression:
+                                                        "mail.status == 'Nuevo' || mail.status == 'Reagendado' || mail.permission == 1"
+                                                    }
+                                                  ],
+                                                  staticClass: "mr-5",
+                                                  attrs: {
+                                                    color: "primary",
+                                                    type: "filled",
+                                                    size: "small",
+                                                    "icon-pack": "feather",
+                                                    icon: "icon-send"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.openModal(
+                                                        mail.phone,
+                                                        mail.id,
+                                                        mail.status,
+                                                        mail.origen,
+                                                        mail.idMedico
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ],
+                                              1
                                             )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "vs-button",
-                                          {
-                                            staticClass: "mt-5",
-                                            attrs: {
-                                              color: "rgb(62, 201, 214)",
-                                              size: "small",
-                                              type: "filled"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.verReceta(
-                                                  mail.id,
-                                                  mail.doctor_id
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Ver\n                                            Receta\n                                        "
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "vs-button",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value:
-                                                  mail.status == "Nuevo" ||
-                                                  mail.status == "Reagendado" ||
-                                                  mail.permission == 1,
-                                                expression:
-                                                  "mail.status == 'Nuevo' || mail.status == 'Reagendado' || mail.permission == 1"
-                                              }
-                                            ],
-                                            staticClass: "mt-5",
-                                            attrs: {
-                                              color: "primary",
-                                              type: "filled",
-                                              size: "small"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.openModal(
-                                                  mail.phone,
-                                                  mail.id,
-                                                  mail.status,
-                                                  mail.origen,
-                                                  mail.idMedico
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Posibles Clientes\n                                        "
-                                            )
-                                          ]
+                                          ],
+                                          1
                                         )
-                                      ],
-                                      1
+                                      ]
                                     )
                                   ]
                                 )

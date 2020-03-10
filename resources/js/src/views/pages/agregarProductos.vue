@@ -345,7 +345,6 @@
                 }
             },
             agregarmF() {
-                this.activar = false;
                 this.nuevaRecetaData = JSON.parse(
                     localStorage.getItem("nuevaRecetaData")
                 );
@@ -365,6 +364,7 @@
                     JSON.stringify(this.nuevaRecetaData)
                 );
                 this.uso = null;
+                this.activar = false;
                 this.$router.push("/editarReceta");
             },
             agregarM() {

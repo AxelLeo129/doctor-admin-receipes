@@ -69,6 +69,25 @@ const router = new Router({
           }
         },
         {
+          path: '/recuperar',
+          name: 'recuperar',
+          component: () => import('@/views/pages/recuperar.vue'),
+          beforeEnter(to, from, next) {
+            let rol = localStorage.getItem('ru');
+            let idu = localStorage.getItem('ui');
+            let token = localStorage.getItem('tu');
+            if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+              next();
+            } else if (rol == 1 || rol == 2 || rol == 3 || rol == 4 || rol == 5 || rol == 6) {
+              next({
+                name: 'home'
+              });
+            } else {
+              next();
+            }
+          }
+        },
+        {
           path: '/pages/error-404',
           name: 'page-error-404',
           component: () => import('@/views/pages/Error404.vue')

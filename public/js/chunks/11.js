@@ -141,15 +141,7 @@ __webpack_require__.r(__webpack_exports__);
         localStorage.setItem("ru", _this.rol);
         localStorage.setItem("ui", _this.user_id);
         localStorage.setItem("regi", registro);
-
-        if (_this.rol == 1) {
-          _this.$router.push("/consola");
-        } else if (_this.rol == 5) {
-          _this.$router.push("/boodskapper");
-        } else {
-          _this.$router.push("/home");
-        }
-
+        location.href = "/home";
         _this.activeLoading = false;
 
         _this.$vs.loading.close();

@@ -326,7 +326,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     agregarmF: function agregarmF() {
-      this.activar = false;
       this.nuevaRecetaData = JSON.parse(localStorage.getItem("nuevaRecetaData"));
       this.nuevaRecetaData.medicamentos.push({
         nombre: this.nombre,
@@ -338,6 +337,7 @@ __webpack_require__.r(__webpack_exports__);
       this.nuevaRecetaData.dispensing.push(this.uso);
       localStorage.setItem("nuevaRecetaData", JSON.stringify(this.nuevaRecetaData));
       this.uso = null;
+      this.activar = false;
       this.$router.push("/editarReceta");
     },
     agregarM: function agregarM() {

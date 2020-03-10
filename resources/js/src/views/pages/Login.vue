@@ -67,7 +67,7 @@
                         <!-- <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Recordarme</vs-checkbox> -->
                         <!-- <router-link to>¿Olvidó su Contraseña?</router-link> -->
                       </div>
-                      <!-- <vs-button type="border" @click="registro">Registro</vs-button> -->
+                      <!-- <router-link to="/recuperar">¿Olvidó su Contraseña?</router-link> -->
                       <vs-button class="float-right" @click="doLogin()">Ingresar</vs-button>
                     </form>
                   </div>
@@ -129,13 +129,7 @@ export default {
           localStorage.setItem("ru", this.rol);
           localStorage.setItem("ui", this.user_id);
           localStorage.setItem("regi", registro);
-          if (this.rol == 1) {
-            this.$router.push("/consola");
-          } else if (this.rol == 5) {
-            this.$router.push("/boodskapper");
-          } else {
-            this.$router.push("/home");
-          }
+          location.href = "/home";
           this.activeLoading = false;
           this.$vs.loading.close();
         })
