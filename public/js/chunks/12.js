@@ -130,23 +130,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -156,6 +139,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado"],
       check: null,
       checkpointReward: {},
       subscribersGained: {},
@@ -170,6 +154,15 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    colore: function colore(a) {
+      if (a == 1) return "primary";
+      if (a == 2) return "warning";
+      if (a == 3) return "warning";
+      if (a == 4) return "success";
+      if (a == 5) return "danger";
+      if (a == 6) return "danger";
+      return "primary";
+    },
     nuevaReceta: function nuevaReceta() {
       this.$router.push('/nuevoPaciente');
     },
@@ -194,6 +187,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         Response.data.forEach(function (element) {
           if (element.doctor_id == id && fecha == element.dateIssue) {
+            element.color = _this.colore(element.status);
+            element.status = _this.status[element.status - 1];
+
             _this.recipes.push(element);
           }
         });
@@ -313,7 +309,11 @@ var render = function() {
                   staticClass:
                     "xl:w-3/4 lg:w-4/5 md:w-2/3 w-4/5 mx-auto text-blue"
                 },
-                [_vm._v("Ingrese una nueva Receta y/o paciente.")]
+                [
+                  _vm._v(
+                    "Ingrese una nueva Receta y/o paciente.\n                "
+                  )
+                ]
               )
             ],
             1
@@ -414,8 +414,6 @@ var render = function() {
                           _vm._v(" "),
                           _c("vs-th", [_vm._v("FECHA")]),
                           _vm._v(" "),
-                          _c("vs-th", [_vm._v("PROXIMA CITA")]),
-                          _vm._v(" "),
                           _c("vs-th", [_vm._v("ACCIONES")])
                         ],
                         1
@@ -440,12 +438,13 @@ var render = function() {
                                     "flex items-center px-2 py-1 rounded"
                                 },
                                 [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "h-3 w-3 rounded-full mr-2"
-                                    },
-                                    [_vm._v("Pendiente")]
+                                  _c("div", {
+                                    staticClass: "h-2 w-2 rounded-full mr-2",
+                                    class: "bg-" + item.color
+                                  }),
+                                  _vm._v(
+                                    _vm._s(item.status) +
+                                      "\n                                    "
                                   )
                                 ]
                               )
@@ -473,17 +472,6 @@ var render = function() {
                                   textContent: _vm._s(item.dateIssue)
                                 }
                               })
-                            ]),
-                            _vm._v(" "),
-                            _c("vs-td", [
-                              item.nextAppointment == "" ||
-                              item.nextAppointment == null
-                                ? _c("span", [_vm._v("Por definir")])
-                                : _c("span", {
-                                    domProps: {
-                                      textContent: _vm._s(item.nextAppointment)
-                                    }
-                                  })
                             ]),
                             _vm._v(" "),
                             _c(
