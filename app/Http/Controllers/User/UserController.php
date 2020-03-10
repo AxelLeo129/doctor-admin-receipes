@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Support\Facades\Mail;
 use Hash;
+use Illuminate\Cache\RetrievesMultipleKeys;
 
 class UserController extends Controller
 {
@@ -58,7 +59,20 @@ class UserController extends Controller
     }
 
     public function resetPassword(Request $request){
-        return User::where('email', $request->email)->get();
+        $user = \DB::table('users')->where('email', $request->email)->first();
+        if(empty($user)){
+            return "Usuario no Encontrado";
+        }else{
+            $permited_chars = '0123456789abcdefghijklmnopqrs';
+            $pass = substr(str_shuffle($permited_chars), 0 , 6);
+            \DB::table('users')->where('email', $request->email)->update(['password' => bcrypt($pass)]);
+            Mail::send('reset', ['user' => $user, 'pass' => $pass], function($message) use ($request, $user){
+                $message->from('pharmazone@insayd.com', 'Pharmazone.app');
+                $message->to($request->email, $user->name)->subject('Cambio de Contraseña');
+            });
+
+            return 'Successfull';
+        }
     }
 
     public function getVisitador($id){

@@ -53,57 +53,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      errors: {
-        name: "Este campo es requerido.",
-        noCollegiate: "Este campo es requerido.",
-        email: "Este campo es requerido.",
-        email1: "Ingrese un email válido.",
-        password: "Este campo es requerido.",
-        password1: "Este campo debe tener al menos 8 caracteres.",
-        c_password: "Este campo es requerido.",
-        c_password1: "Este campo debe tener al menos 8 caracteres.",
-        c_password2: "La confirmación de contraseña no coincide."
-      },
       bol: null,
-      bol1: null,
-      bol2: null,
-      bol3: null,
-      name: null,
-      noCollegiate: null,
       email: null,
-      password: null,
-      confirmPassword: null,
-      activado: false,
       activado1: false,
-      message: "",
-      checkbox_remember_me: false
+      message: "Error en el Servidor."
     };
   },
   methods: {
@@ -119,43 +76,45 @@ __webpack_require__.r(__webpack_exports__);
       this.openLoading();
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: "post",
-        url: "http://127.0.0.1:8000/api/register",
+        url: "http://127.0.0.1:8000/api/forgotPassword",
         data: JSON.stringify({
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          userName: this.name,
-          noCollegiate: this.noCollegiate,
-          c_password: this.confirmPassword,
-          rol: "2",
-          id_visitador: 1
+          email: this.email
         }),
         headers: {
           "content-type": "application/json"
         }
       }).then(function (response) {
-        _this.name = null;
-        _this.email = null;
-        _this.password = null;
-        _this.confirmPassword = null;
-        _this.userName = null;
-        _this.bol = null;
-        _this.bol1 = null;
-        _this.bol2 = null;
-        _this.bol3 = null;
-        _this.activeLoading = false;
+        if (response.data == "Usuario no Encontrado") {
+          _this.$vs.loading.close();
 
-        _this.$vs.loading.close();
+          _this.activeLoading = false;
+          _this.message = "Usuario no Encontrado";
+          _this.activado1 = true;
+          _this.email = null;
+        } else {
+          _this.$vs.loading.close();
 
-        _this.activado = true;
-      }).catch(function (response) {
-        _this.message = "Ya existe un usuario con este email.";
+          _this.activeLoading = false;
+          _this.email = null;
+
+          _this.$vs.notify({
+            time: 4000,
+            title: 'Exitosamente',
+            text: 'Solicitud enviada exitosamente, por favor ingresa a tu corro electrónico.',
+            color: 'success'
+          });
+
+          _this.$router.push('/home');
+        }
+      }).catch(function (err) {
+        _this.message = "Error de servidor.";
         _this.activeLoading = false;
 
         _this.$vs.loading.close();
 
         _this.activado1 = true;
-        console.log(response);
+        _this.email = null;
+        console.log(err);
       });
     }
   },
@@ -163,26 +122,6 @@ __webpack_require__.r(__webpack_exports__);
     email: function email(val, oldVal) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       this.bol = re.test(String(val).toLowerCase());
-    },
-    password: function password(val, oldVal) {
-      if (val.length < 8) {
-        this.bol1 = false;
-      } else {
-        this.bol1 = true;
-      }
-    },
-    confirmPassword: function confirmPassword(val, oldVal) {
-      if (val.length < 8) {
-        this.bol2 = false;
-      } else {
-        this.bol2 = true;
-      }
-
-      if (val == this.password) {
-        this.bol3 = true;
-      } else {
-        this.bol3 = false;
-      }
     }
   }
 });
@@ -274,26 +213,6 @@ var render = function() {
                             "vs-alert",
                             {
                               attrs: {
-                                color: "success",
-                                title: "Success",
-                                active: _vm.activado,
-                                closable: "",
-                                "icon-pack": "feather",
-                                "close-icon": "icon-x"
-                              },
-                              on: {
-                                "update:active": function($event) {
-                                  _vm.activado = $event
-                                }
-                              }
-                            },
-                            [_vm._v("Solicitud enviada exitosamente")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-alert",
-                            {
-                              attrs: {
                                 color: "danger",
                                 title: "Error",
                                 active: _vm.activado1,
@@ -312,89 +231,89 @@ var render = function() {
                           _vm._v(" "),
                           _c("br"),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "clearfix" },
-                            [
-                              _c("vs-input", {
-                                staticClass: "w-full mt-5",
-                                attrs: {
-                                  "data-vv-validate-on": "blur",
-                                  name: "email",
-                                  type: "email",
-                                  label: "Email",
-                                  placeholder: "Email"
-                                },
-                                model: {
-                                  value: _vm.email,
-                                  callback: function($$v) {
-                                    _vm.email = $$v
-                                  },
-                                  expression: "email"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _vm.email === ""
-                                ? _c(
-                                    "span",
-                                    { staticClass: "text-danger text-sm" },
-                                    [_vm._v(_vm._s(_vm.errors.email))]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.bol === false && _vm.email !== ""
-                                ? _c(
-                                    "span",
-                                    { staticClass: "text-danger text-sm" },
-                                    [_vm._v(_vm._s(_vm.errors.email1))]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c(
-                                "vs-button",
-                                {
-                                  staticClass: "mt-6",
-                                  attrs: { type: "border", to: "/" }
-                                },
-                                [_vm._v("Inicia Sesión")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "vs-button",
-                                {
-                                  staticClass: "float-right mt-6",
+                          _c("div", { staticClass: "clearfix" }, [
+                            _c(
+                              "form",
+                              { attrs: { action: "" } },
+                              [
+                                _c("vs-input", {
+                                  staticClass: "w-full mt-5",
                                   attrs: {
-                                    disabled:
-                                      _vm.name == null ||
-                                      _vm.name == "" ||
-                                      _vm.noCollegiate == null ||
-                                      _vm.noCollegiate == "" ||
-                                      _vm.email == "" ||
-                                      _vm.email == null ||
-                                      _vm.bol == false ||
-                                      _vm.bol == null ||
-                                      _vm.password == null ||
-                                      _vm.password == "" ||
-                                      _vm.bol1 == false ||
-                                      _vm.bol1 == null ||
-                                      _vm.confirmPassword == "" ||
-                                      _vm.confirmPassword == null ||
-                                      _vm.bol2 == false ||
-                                      _vm.bol2 == null ||
-                                      _vm.bol3 == false ||
-                                      _vm.bol3 == null
+                                    "data-vv-validate-on": "blur",
+                                    name: "email",
+                                    type: "email",
+                                    label: "Email",
+                                    placeholder: "Email"
                                   },
-                                  on: { click: _vm.registrar }
-                                },
-                                [_vm._v("Solicitar")]
-                              )
-                            ],
-                            1
-                          )
+                                  model: {
+                                    value: _vm.email,
+                                    callback: function($$v) {
+                                      _vm.email = $$v
+                                    },
+                                    expression: "email"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.email === ""
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "text-danger text-sm" },
+                                      [
+                                        _vm._v(
+                                          "Este campo es\n                                        requerido."
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.bol === false && _vm.email !== ""
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "text-danger text-sm" },
+                                      [
+                                        _vm._v(
+                                          "Ingrese\n                                        un email válido."
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-button",
+                                  {
+                                    staticClass: "mt-6",
+                                    attrs: { type: "border", to: "/" }
+                                  },
+                                  [_vm._v("Inicia Sesión")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-button",
+                                  {
+                                    staticClass: "float-right mt-6",
+                                    attrs: {
+                                      disabled:
+                                        _vm.email == "" ||
+                                        _vm.email == null ||
+                                        _vm.bol == false ||
+                                        _vm.bol == null
+                                    },
+                                    on: { click: _vm.registrar }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        Solicitar"
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          ])
                         ],
                         1
                       )

@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'User\UserController@login');
 Route::any('register', 'User\UserController@register');
+Route::post('forgotPassword', 'User\UserController@resetPassword');
 Route::get('pdf', function () {
     $pdf = App::make('dompdf.wrapper');
 
@@ -41,7 +42,6 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('getUser2/{id}', 'User\UserController@show1');
     Route::get('getVisitador1/{id}', 'User\UserController@getVisitador');
     Route::post('resetPassword', 'User\UserController@changePassword');
-    Route::post('forgotPassword', 'User\UserController@resetPassword');
     //Visitador
     Route::get('getVisitador/{id}', "User\UserController@getMedics");
     Route::any('register1', 'User\UserController@register');

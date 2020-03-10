@@ -386,6 +386,12 @@ var render = function() {
                                     }),
                                     _vm._v(" "),
                                     _c(
+                                      "router-link",
+                                      { attrs: { to: "/recuperar" } },
+                                      [_vm._v("¿Olvidó su Contraseña?")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
                                       "vs-button",
                                       {
                                         staticClass: "float-right",

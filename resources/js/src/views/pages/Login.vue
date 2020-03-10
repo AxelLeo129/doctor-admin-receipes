@@ -67,7 +67,7 @@
                         <!-- <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Recordarme</vs-checkbox> -->
                         <!-- <router-link to>¿Olvidó su Contraseña?</router-link> -->
                       </div>
-                      <!-- <router-link to="/recuperar">¿Olvidó su Contraseña?</router-link> -->
+                      <router-link to="/recuperar">¿Olvidó su Contraseña?</router-link>
                       <vs-button class="float-right" @click="doLogin()">Ingresar</vs-button>
                     </form>
                   </div>
