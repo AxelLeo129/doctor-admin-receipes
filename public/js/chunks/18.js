@@ -211,8 +211,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -328,50 +326,48 @@ __webpack_require__.r(__webpack_exports__);
         this.status = 4;
       }
 
-      if (this.nombre_confirmacion == "") {
-        this.errorsEM.push('Debe de escribirse el nombre de recibido');
-        this.activeLoading = false;
-        this.$vs.loading.close();
-      } else {
-        var token = localStorage.getItem("tu");
-        var idu = localStorage.getItem("ui");
-        this.openLoading();
-        axios__WEBPACK_IMPORTED_MODULE_0___default()({
-          method: "post",
-          url: "http://127.0.0.1:8000/api/confirm-delivery",
-          data: JSON.stringify({
-            id_recipies: this.id_order,
-            name_recibed: this.nombre_confirmacion,
-            observations: this.observations,
-            status: this.status
-          }),
-          headers: {
-            authorization: "Bearer " + token,
-            "content-type": "application/json"
-          }
-        }).then(function (Response) {
-          _this3.activeLoading = false;
+      var token = localStorage.getItem("tu");
+      var idu = localStorage.getItem("ui");
+      this.openLoading();
+      axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: "post",
+        url: "http://127.0.0.1:8000/api/confirm-delivery",
+        data: JSON.stringify({
+          id_recipies: this.id_order,
+          name_recibed: this.nombre_confirmacion,
+          observations: this.observations,
+          status: this.status
+        }),
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        _this3.activeLoading = false;
 
-          _this3.$vs.loading.close();
+        _this3.$vs.loading.close();
 
-          _this3.popupEntrega = false;
+        _this3.popupEntrega = false;
 
-          _this3.getusers();
+        _this3.getusers();
 
-          _this3.$vs.notify({
-            title: "Entrega completada",
-            text: "Felicidades, completaste tu entrega",
-            color: "success"
-          });
-        }).catch(function (err) {
-          _this3.popupEntrega = false;
-          _this3.activeLoading = false;
+        _this3.nombre_confirmacion = null;
+        _this3.observations = null;
+        _this3.status = false;
 
-          _this3.$vs.loading.close();
-
-          console.log(err);
+        _this3.$vs.notify({
+          title: "Entrega completada",
+          text: "Felicidades, completaste tu entrega",
+          color: "success"
         });
-      }
+      }).catch(function (err) {
+        _this3.popupEntrega = false;
+        _this3.activeLoading = false;
+
+        _this3.$vs.loading.close();
+
+        console.log(err);
+      });
     }
   },
   data: function data() {
@@ -383,7 +379,7 @@ __webpack_require__.r(__webpack_exports__);
       popupEnvio: false,
       popupEntrega: false,
       select: null,
-      nombre_confirmacion: "",
+      nombre_confirmacion: null,
       observations: null,
       status: false,
       id_recipies: 0,
@@ -1027,20 +1023,6 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm.errorsEM.length
-            ? _c("p", [
-                _c(
-                  "ul",
-                  _vm._l(_vm.errorsEM, function(error) {
-                    return _c("li", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(error))
-                    ])
-                  }),
-                  0
-                )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
           _c("div", { staticClass: "vx-row mb-2" }, [
             _c(
               "div",
@@ -1056,7 +1038,13 @@ var render = function() {
                     },
                     expression: "nombre_confirmacion"
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.status == false && _vm.nombre_confirmacion == ""
+                  ? _c("span", { staticClass: "text-danger" }, [
+                      _vm._v("Este campo es requerido")
+                    ])
+                  : _vm._e()
               ],
               1
             )
@@ -1088,18 +1076,41 @@ var render = function() {
           _c("br"),
           _c("br"),
           _vm._v(" "),
-          _c(
-            "vs-button",
-            {
-              attrs: { color: "success", type: "filled" },
-              on: {
-                click: function($event) {
-                  return _vm.completarPedido()
-                }
-              }
-            },
-            [_vm._v("Completar pedido\n        ")]
-          )
+          _vm.status == false
+            ? _c(
+                "vs-button",
+                {
+                  attrs: {
+                    color: "success",
+                    type: "filled",
+                    disabled:
+                      _vm.nombre_confirmacion == "" ||
+                      _vm.nombre_confirmacion == null
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.completarPedido()
+                    }
+                  }
+                },
+                [_vm._v("Completar pedido\n        ")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.status == true
+            ? _c(
+                "vs-button",
+                {
+                  attrs: { color: "success", type: "filled" },
+                  on: {
+                    click: function($event) {
+                      return _vm.completarPedido()
+                    }
+                  }
+                },
+                [_vm._v("Completar pedido\n        ")]
+              )
+            : _vm._e()
         ],
         1
       )

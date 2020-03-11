@@ -175,14 +175,10 @@
                     </div>
                 </div>
             </div>
-            <p v-if="errorsEM.length">
-                <ul>
-                    <li class="text-danger" v-for="error in errorsEM">{{ error }}</li>
-                </ul>
-            </p>
             <div class="vx-row mb-2">
                 <div class="vx-col w-full">
                     <vs-input v-model="nombre_confirmacion" class="w-full" label-placeholder="Nombre de recibido" />
+                    <span class="text-danger" v-if="status == false && nombre_confirmacion == ''">Este campo es requerido</span>
                 </div>
             </div>
             <div class="vx-row mb-2">
@@ -192,7 +188,9 @@
             </div>
             <br>
             <br><br>
-            <vs-button color="success" type="filled" @click="completarPedido()">Completar pedido
+            <vs-button color="success" type="filled" @click="completarPedido()" v-if="status == false" :disabled="nombre_confirmacion == '' || nombre_confirmacion == null">Completar pedido
+            </vs-button>
+            <vs-button color="success" type="filled" @click="completarPedido()" v-if="status == true">Completar pedido
             </vs-button>
         </vs-popup>
     </div>
@@ -314,46 +312,43 @@
                 } else {
                     this.status = 4;
                 }
-                if (this.nombre_confirmacion == "") {
-                    this.errorsEM.push('Debe de escribirse el nombre de recibido');
-                    this.activeLoading = false;
-                    this.$vs.loading.close();
-                } else {
-                    let token = localStorage.getItem("tu");
-                    let idu = localStorage.getItem("ui");
-                    this.openLoading();
-                    axios({
-                            method: "post",
-                            url: "http://127.0.0.1:8000/api/confirm-delivery",
-                            data: JSON.stringify({
-                                id_recipies: this.id_order,
-                                name_recibed: this.nombre_confirmacion,
-                                observations: this.observations,
-                                status: this.status
-                            }),
-                            headers: {
-                                authorization: "Bearer " + token,
-                                "content-type": "application/json"
-                            }
-                        })
-                        .then(Response => {
-                            this.activeLoading = false;
-                            this.$vs.loading.close();
-                            this.popupEntrega = false;
-                            this.getusers();
-                            this.$vs.notify({
-                                title: "Entrega completada",
-                                text: "Felicidades, completaste tu entrega",
-                                color: "success"
-                            });
-                        })
-                        .catch(err => {
-                            this.popupEntrega = false;
-                            this.activeLoading = false;
-                            this.$vs.loading.close();
-                            console.log(err);
+                let token = localStorage.getItem("tu");
+                let idu = localStorage.getItem("ui");
+                this.openLoading();
+                axios({
+                        method: "post",
+                        url: "http://127.0.0.1:8000/api/confirm-delivery",
+                        data: JSON.stringify({
+                            id_recipies: this.id_order,
+                            name_recibed: this.nombre_confirmacion,
+                            observations: this.observations,
+                            status: this.status
+                        }),
+                        headers: {
+                            authorization: "Bearer " + token,
+                            "content-type": "application/json"
+                        }
+                    })
+                    .then(Response => {
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                        this.popupEntrega = false;
+                        this.getusers();
+                        this.nombre_confirmacion = null;
+                        this.observations = null;
+                        this.status = false;
+                        this.$vs.notify({
+                            title: "Entrega completada",
+                            text: "Felicidades, completaste tu entrega",
+                            color: "success"
                         });
-                }
+                    })
+                    .catch(err => {
+                        this.popupEntrega = false;
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                        console.log(err);
+                    });
             },
         },
         data: () => ({
@@ -364,7 +359,7 @@
             popupEnvio: false,
             popupEntrega: false,
             select: null,
-            nombre_confirmacion: "",
+            nombre_confirmacion: null,
             observations: null,
             status: false,
             id_recipies: 0,

@@ -114,6 +114,7 @@ export default {
   },
   methods: {
     getUser() {
+      this.openLoading();
       let token = localStorage.getItem("tu");
       axios({
         method: "get",
@@ -136,6 +137,8 @@ export default {
         })
         .catch(err => {
           console.log(err);
+          this.activeLoading = false;
+          this.$vs.loading.close();
         });
     },
     getRoles(r) {
