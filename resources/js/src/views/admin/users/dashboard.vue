@@ -63,6 +63,9 @@ export default {
       if (a == "4") return "Despachador";
       if (a == "5") return "Mensajero";
       if (a == "6") return "Visitador";
+      if (a == "7") return "Gerencia";
+      if (a == "8") return "Contabilidad";
+      if (a == "9") return "Facturador  ";
       return "";
     },
     edit(id) {

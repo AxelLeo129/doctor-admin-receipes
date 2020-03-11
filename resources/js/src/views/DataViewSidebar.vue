@@ -775,10 +775,13 @@
                 let token = localStorage.getItem("tu");
                 let ids = [];
                 let fechass = [];
+                let fecha = [];
+                //console.log(this.medicines);
                 this.medicines.forEach(element => {
                     ids.push(element.id);
                 });
                 this.medicines.forEach(element => {
+                    //console.log(element.next);
                     if (element.repro == true && element.next != "") {
                         fecha.push(element.next);
                     }
@@ -1077,10 +1080,13 @@
                 let token = localStorage.getItem("tu");
                 let ids = [];
                 let fechass = [];
+                let fecha = [];
+                //console.log(this.medicines);
                 this.medicines.forEach(element => {
                     ids.push(element.id);
                 });
                 this.medicines.forEach(element => {
+                    //console.log(element.next);
                     if (element.repro == true && element.next != "") {
                         fecha.push(element.next);
                     }

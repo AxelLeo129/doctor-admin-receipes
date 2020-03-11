@@ -768,10 +768,13 @@ __webpack_require__.r(__webpack_exports__);
       var token = localStorage.getItem("tu");
       var ids = [];
       var fechass = [];
+      var fecha = []; //console.log(this.medicines);
+
       this.medicines.forEach(function (element) {
         ids.push(element.id);
       });
       this.medicines.forEach(function (element) {
+        //console.log(element.next);
         if (element.repro == true && element.next != "") {
           fecha.push(element.next);
         }
@@ -1083,10 +1086,13 @@ __webpack_require__.r(__webpack_exports__);
       var token = localStorage.getItem("tu");
       var ids = [];
       var fechass = [];
+      var fecha = []; //console.log(this.medicines);
+
       this.medicines.forEach(function (element) {
         ids.push(element.id);
       });
       this.medicines.forEach(function (element) {
+        //console.log(element.next);
         if (element.repro == true && element.next != "") {
           fecha.push(element.next);
         }
