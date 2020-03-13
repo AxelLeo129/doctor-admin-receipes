@@ -661,7 +661,7 @@ __webpack_require__.r(__webpack_exports__);
         origen: 3
       });
       var p = parseFloat(data.price);
-      this.sumar(p, 1, this.cont);
+      this.sumar(1, p, this.cont);
       this.cont = this.cont + 1;
       this.popupActive4 = false;
     },
@@ -693,7 +693,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
-    sumar: function sumar(price, cantidad, index) {
+    sumar: function sumar(cantidad, price, index) {
       var _this3 = this;
 
       function trunc(x) {
@@ -723,8 +723,8 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.total = 0;
-      cantidad = parseFloat(cantidad);
-      this.cantidades[index] = price;
+      price = parseFloat(price);
+      this.cantidades[index] = cantidad;
       this.totales[index] = price * cantidad;
       this.totales.forEach(function (element) {
         //console.log(element);
