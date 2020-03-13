@@ -171,6 +171,14 @@
                             </li> -->
 
                             <!-- sent -->
+                            <li tag="span" @click="getRecipes('Facturando')"
+                                class="flex items-center mt-4 mb-2 cursor-pointer"
+                                :class="{'text-primary': activado == 'Facturando'}">
+                                <feather-icon icon="FileTextIcon"></feather-icon>
+                                <span class="text-lg ml-3">Facturando</span>
+                            </li>
+                            
+                            
                             <li tag="span" @click="getRecipes('Empaquetando')"
                                 class="flex items-center mt-4 mb-2 cursor-pointer"
                                 :class="{'text-primary': activado == 'Empaquetando'}">
@@ -396,7 +404,7 @@
                 popupActive2: false,
                 addNewDataSidebar: false,
                 sidebarData: {},
-                status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado"],
+                status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado", "Facturando"],
                 buscar: "",
                 clickNotClose: true,
                 isEmailSidebarActive: true,
@@ -685,6 +693,7 @@
                 if (a == 4) return "success";
                 if (a == 5) return "danger";
                 if (a == 6) return "warning";
+                if (a == 7) return "warning";
                 return "primary";
             },
             getFacturacion(a) {

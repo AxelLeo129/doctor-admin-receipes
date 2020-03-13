@@ -100,7 +100,7 @@
                                 color="warning" type="filled">Regresar</vs-button>
                             <vs-button class="mt-5 mr-3" @click="agregarP" type="filled">Nuevo Producto</vs-button>
                             <!-- <vs-button class="mt-5 mr-3" @click="visitadrasdf" type="filled">Nuevo</vs-button> -->
-                            
+
                         </div>
                     </vx-card>
                 </div>
@@ -672,7 +672,7 @@
                     origen: 3
                 });
                 let p = parseFloat(data.price);
-                this.sumar(p, 1, this.cont);
+                this.sumar(1, p, this.cont);
                 this.cont = this.cont + 1;
                 this.popupActive4 = false;
             },
@@ -703,7 +703,7 @@
                         console.log(err);
                     });
             },
-            sumar(price, cantidad, index) {
+            sumar(cantidad, price, index) {
                 function trunc(x, posiciones = 0) {
                     var s = x.toString();
                     var l = s.length;
@@ -733,8 +733,8 @@
                     return finalNum;
                 }
                 this.total = 0;
-                cantidad = parseFloat(cantidad);
-                this.cantidades[index] = price;
+                price = parseFloat(price);
+                this.cantidades[index] = cantidad;
                 this.totales[index] = price * cantidad;
                 this.totales.forEach(element => {
                     //console.log(element);
@@ -752,7 +752,7 @@
             cantidadess() {
                 console.log(this.medicines);
             },
-            visitadrasdf(){
+            visitadrasdf() {
                 let token = localStorage.getItem('tu');
                 axios({
                     method: "get",
@@ -776,9 +776,17 @@
                 let ids = [];
                 let fechass = [];
                 let fecha = [];
+                let quantita = [];
                 //console.log(this.medicines);
                 this.medicines.forEach(element => {
-                    ids.push(element.id);
+                    if (element.cantidad > 0) {
+                        ids.push(element.id);
+                    }
+                });
+                this.cantidades.forEach(element =>{
+                    if(element > 0){
+                        quantita.push(element);
+                    }
                 });
                 this.medicines.forEach(element => {
                     //console.log(element.next);
@@ -786,6 +794,7 @@
                         fecha.push(element.next);
                     }
                 });
+
                 function sumarDias(fecha, dias) {
                     fecha.setDate(fecha.getDate() + dias);
                     return fecha;
@@ -850,7 +859,7 @@
                 let valor_comision_callcenter = [];
                 let total_comisiones = [];
                 let saldo_margen = [];
-                let valor_comision_mensajero =[];
+                let valor_comision_mensajero = [];
                 this.medicines.forEach(element => {
                     idsProductos.push(element.id);
                     namesProductos.push(element.name);
@@ -896,7 +905,7 @@
                     let m = (margen * porcent_comi_med) / 100;
                     let v = (margen * porcent_comi_vist) / 100;
                     let c = (margen * porcent_comi_callcenter) / 100;
-                    let me = (margen * porcent_comi_mensajero) / 100;                    
+                    let me = (margen * porcent_comi_mensajero) / 100;
                     valor_comi_med.push(m);
                     valor_comision_mensajero.push(me);
                     valor_comision_visitador.push(v);
@@ -949,7 +958,8 @@
                                     numbert: this.numberT,
                                     numbertr: this.numberTr,
                                     datetr: this.datetr,
-                                    total: this.total
+                                    total: this.total,
+                                    recipe_id: this.idRecipe
                                 }),
                                 headers: {
                                     authorization: "Bearer " + token,
@@ -963,7 +973,7 @@
                                         method: "post",
                                         url: "http://127.0.0.1:8000/api/postOrderProd",
                                         data: JSON.stringify({
-                                            cantidad: this.cantidades,
+                                            cantidad: quantita,
                                             medicines: ids,
                                             order_id: Response.data.mess.id
                                         }),
@@ -979,7 +989,7 @@
                                                 url: "http://127.0.0.1:8000/api/putReceSta",
                                                 data: JSON.stringify({
                                                     id: this.idRecipe,
-                                                    status: 2,
+                                                    status: 7,
                                                     status1: date,
                                                     status2: status
                                                 }),
@@ -1081,9 +1091,17 @@
                 let ids = [];
                 let fechass = [];
                 let fecha = [];
+                let quantita = [];
                 //console.log(this.medicines);
                 this.medicines.forEach(element => {
-                    ids.push(element.id);
+                    if (element.cantidad > 0) {
+                        ids.push(element.id);
+                    }
+                });
+                this.cantidades.forEach(element =>{
+                    if(element > 0){
+                        quantita.push(element);
+                    }
                 });
                 this.medicines.forEach(element => {
                     //console.log(element.next);
@@ -1238,7 +1256,8 @@
                                     numbert: this.numberT,
                                     datetr: this.datetr,
                                     numbertr: this.numberTr,
-                                    total: this.total
+                                    total: this.total,
+                                    recipe_id: this.idRecipe
                                 }),
                                 headers: {
                                     authorization: "Bearer " + token,
@@ -1252,7 +1271,7 @@
                                         method: "post",
                                         url: "http://127.0.0.1:8000/api/postOrderProd",
                                         data: JSON.stringify({
-                                            cantidad: this.cantidades,
+                                            cantidad: quantita,
                                             medicines: ids,
                                             order_id: Response.data.mess.id
                                         }),
@@ -1267,7 +1286,7 @@
                                                 url: "http://127.0.0.1:8000/api/putReceSta",
                                                 data: JSON.stringify({
                                                     id: this.idRecipe,
-                                                    status: 2,
+                                                    status: 7,
                                                     status1: date,
                                                     status2: status
                                                 }),

@@ -298,7 +298,7 @@ __webpack_require__.r(__webpack_exports__);
         type: "default"
       });
     },
-    inprogress: function inprogress(id_receta) {
+    inprogress: function inprogress(id_receta, recipe_id) {
       var _this3 = this;
 
       var token = localStorage.getItem("tu");
@@ -336,6 +336,99 @@ __webpack_require__.r(__webpack_exports__);
                 "content-type": "application/json"
               }
             }).then(function (Response) {
+              if (_this3.recipe_id != null) {
+                axios__WEBPACK_IMPORTED_MODULE_0___default()({
+                  method: "put",
+                  url: "http://127.0.0.1:8000/api/changeStatus",
+                  data: JSON.stringify({
+                    id: _this3.recipe_id,
+                    status: 3
+                  }),
+                  headers: {
+                    authorization: "Bearer " + token,
+                    "content-type": "application/json"
+                  }
+                }).then(function (Response) {
+                  _this3.activeLoading = false;
+
+                  _this3.$vs.loading.close();
+
+                  _this3.popupEnvio = false;
+
+                  _this3.getusers();
+
+                  _this3.$vs.notify({
+                    title: "En proceso",
+                    text: "El pedido del cliente ahora está en proceso de envío.",
+                    color: "success"
+                  });
+                }).catch(function (err) {
+                  _this3.popupEnvio = false;
+                  _this3.activeLoading = false;
+
+                  _this3.$vs.loading.close();
+
+                  console.log(err);
+                });
+              } else {
+                _this3.activeLoading = false;
+
+                _this3.$vs.loading.close();
+
+                _this3.popupEnvio = false;
+
+                _this3.getusers();
+
+                _this3.$vs.notify({
+                  title: "En proceso",
+                  text: "El pedido del cliente ahora está en proceso de envío.",
+                  color: "success"
+                });
+              }
+            }).catch(function (err) {
+              console.log(err);
+              _this3.activeLoading = false;
+
+              _this3.$vs.loading.close();
+
+              _this3.popupEnvio = false;
+            });
+          } else {
+            if (_this3.recipe_id != null) {
+              axios__WEBPACK_IMPORTED_MODULE_0___default()({
+                method: "put",
+                url: "http://127.0.0.1:8000/api/changeStatus",
+                data: JSON.stringify({
+                  id: _this3.recipe_id,
+                  status: 3
+                }),
+                headers: {
+                  authorization: "Bearer " + token,
+                  "content-type": "application/json"
+                }
+              }).then(function (Response) {
+                _this3.activeLoading = false;
+
+                _this3.$vs.loading.close();
+
+                _this3.popupEnvio = false;
+
+                _this3.getusers();
+
+                _this3.$vs.notify({
+                  title: "En proceso",
+                  text: "El pedido del cliente ahora está en proceso de envío.",
+                  color: "success"
+                });
+              }).catch(function (err) {
+                _this3.popupEnvio = false;
+                _this3.activeLoading = false;
+
+                _this3.$vs.loading.close();
+
+                console.log(err);
+              });
+            } else {
               _this3.activeLoading = false;
 
               _this3.$vs.loading.close();
@@ -349,28 +442,7 @@ __webpack_require__.r(__webpack_exports__);
                 text: "El pedido del cliente ahora está en proceso de envío.",
                 color: "success"
               });
-            }).catch(function (err) {
-              console.log(err);
-              _this3.activeLoading = false;
-
-              _this3.$vs.loading.close();
-
-              _this3.popupEnvio = false;
-            });
-          } else {
-            _this3.activeLoading = false;
-
-            _this3.$vs.loading.close();
-
-            _this3.popupEnvio = false;
-
-            _this3.getusers();
-
-            _this3.$vs.notify({
-              title: "En proceso",
-              text: "El pedido del cliente ahora está en proceso de envío.",
-              color: "success"
-            });
+            }
           }
         }).catch(function (err) {
           _this3.popupEnvio = false;
@@ -382,9 +454,10 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    setClient: function setClient(id, idOrder) {
+    setClient: function setClient(id, idOrder, idRecipe) {
       this.id_recipies = id;
       this.idOrder = idOrder;
+      this.recipe_id = idRecipe;
       this.getTransaction(this.idOrder);
     },
     realizarEM: function realizarEM() {
@@ -466,6 +539,7 @@ __webpack_require__.r(__webpack_exports__);
       select: null,
       mensajeroEM: null,
       id_recipies: 0,
+      recipe_id: null,
       address: "",
       errors: [],
       errorsEM: [],
@@ -772,7 +846,8 @@ var render = function() {
                                       click: function($event) {
                                         return _vm.setClient(
                                           data[indextr].cliente.order_id,
-                                          data[indextr].cliente.order_id
+                                          data[indextr].cliente.order_id,
+                                          data[indextr].cliente.recipe_id
                                         )
                                       }
                                     }
@@ -797,7 +872,8 @@ var render = function() {
                                       click: function($event) {
                                         return _vm.setClient(
                                           data[indextr].cliente.order_id,
-                                          data[indextr].cliente.order_id
+                                          data[indextr].cliente.order_id,
+                                          data[indextr].cliente.recipe_id
                                         )
                                       }
                                     }
@@ -1095,7 +1171,7 @@ var render = function() {
               attrs: { color: "success", type: "filled" },
               on: {
                 click: function($event) {
-                  return _vm.inprogress(_vm.id_recipies)
+                  return _vm.inprogress(_vm.id_recipies, _vm.recipe_id)
                 }
               }
             },

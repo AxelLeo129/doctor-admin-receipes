@@ -122,7 +122,7 @@
     export default {
         data() {
             return {
-                status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado"],
+                status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado", "Facturando"],
                 check: null,
                 checkpointReward: {},
                 subscribersGained: {},
@@ -144,6 +144,7 @@
                 if (a == 4) return "success";
                 if (a == 5) return "danger";
                 if (a == 6) return "danger";
+                if (a == 7) return "warning";
                 return "primary";
             },
             nuevaReceta() {

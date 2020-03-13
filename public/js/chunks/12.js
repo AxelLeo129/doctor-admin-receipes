@@ -139,7 +139,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado"],
+      status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado", "Facturando"],
       check: null,
       checkpointReward: {},
       subscribersGained: {},
@@ -161,6 +161,7 @@ __webpack_require__.r(__webpack_exports__);
       if (a == 4) return "success";
       if (a == 5) return "danger";
       if (a == 6) return "danger";
+      if (a == 7) return "warning";
       return "primary";
     },
     nuevaReceta: function nuevaReceta() {

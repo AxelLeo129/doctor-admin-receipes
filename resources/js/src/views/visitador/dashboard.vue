@@ -91,13 +91,13 @@
                         <span style="float:right;">
                             <div v-if="data[indextr].cliente.status == 1">
                                 <vs-button size="small"
-                                    @click="setClient(data[indextr].cliente.order_id, data[indextr].cliente.order_id)"
+                                    @click="setClient(data[indextr].cliente.order_id, data[indextr].cliente.order_id, data[indextr].cliente.recipe_id)"
                                     radius color="primary" type="filled" icon-pack="feather" icon="icon-truck">
                                 </vs-button>
                             </div>
                             <div v-else>
                                 <vs-button disabled size="small"
-                                    @click="setClient(data[indextr].cliente.order_id, data[indextr].cliente.order_id)"
+                                    @click="setClient(data[indextr].cliente.order_id, data[indextr].cliente.order_id, data[indextr].cliente.recipe_id)"
                                     radius color="primary" type="filled" icon-pack="feather" icon="icon-truck">
                                 </vs-button>
                             </div>
@@ -178,7 +178,7 @@
             <v-select :closeOnSelect="true" v-model="select" :options="deliveryP" :required="!select"
                 :dir="$vs.rtl ? 'rtl' : 'ltr'" />
             <br><br><br><br>
-            <vs-button color="success" type="filled" @click="inprogress(id_recipies)">Realizar envío
+            <vs-button color="success" type="filled" @click="inprogress(id_recipies, recipe_id)">Realizar envío
             </vs-button>
         </vs-popup>
 
@@ -293,7 +293,7 @@
                     type: "default"
                 });
             },
-            inprogress(id_receta) {
+            inprogress(id_receta, recipe_id) {
                 let token = localStorage.getItem("tu");
                 let idu = localStorage.getItem("ui");
                 if (this.select == null) {
@@ -329,6 +329,85 @@
                                         "content-type": "application/json"
                                     }
                                 }).then(Response => {
+                                    if (this.recipe_id != null) {
+                                        axios({
+                                                method: "put",
+                                                url: "http://127.0.0.1:8000/api/changeStatus",
+                                                data: JSON.stringify({
+                                                    id: this.recipe_id,
+                                                    status: 3
+                                                }),
+                                                headers: {
+                                                    authorization: "Bearer " + token,
+                                                    "content-type": "application/json"
+                                                }
+                                            })
+                                            .then(Response => {
+                                                this.activeLoading = false;
+                                                this.$vs.loading.close();
+                                                this.popupEnvio = false;
+                                                this.getusers();
+                                                this.$vs.notify({
+                                                    title: "En proceso",
+                                                    text: "El pedido del cliente ahora está en proceso de envío.",
+                                                    color: "success"
+                                                });
+                                            })
+                                            .catch(err => {
+                                                this.popupEnvio = false;
+                                                this.activeLoading = false;
+                                                this.$vs.loading.close();
+                                                console.log(err);
+                                            });
+                                    } else {
+                                        this.activeLoading = false;
+                                        this.$vs.loading.close();
+                                        this.popupEnvio = false;
+                                        this.getusers();
+                                        this.$vs.notify({
+                                            title: "En proceso",
+                                            text: "El pedido del cliente ahora está en proceso de envío.",
+                                            color: "success"
+                                        });
+                                    }
+                                }).catch(err => {
+                                    console.log(err);
+                                    this.activeLoading = false;
+                                    this.$vs.loading.close();
+                                    this.popupEnvio = false;
+                                });
+                            } else {
+                                if (this.recipe_id != null) {
+                                    axios({
+                                            method: "put",
+                                            url: "http://127.0.0.1:8000/api/changeStatus",
+                                            data: JSON.stringify({
+                                                id: this.recipe_id,
+                                                status: 3
+                                            }),
+                                            headers: {
+                                                authorization: "Bearer " + token,
+                                                "content-type": "application/json"
+                                            }
+                                        })
+                                        .then(Response => {
+                                            this.activeLoading = false;
+                                            this.$vs.loading.close();
+                                            this.popupEnvio = false;
+                                            this.getusers();
+                                            this.$vs.notify({
+                                                title: "En proceso",
+                                                text: "El pedido del cliente ahora está en proceso de envío.",
+                                                color: "success"
+                                            });
+                                        })
+                                        .catch(err => {
+                                            this.popupEnvio = false;
+                                            this.activeLoading = false;
+                                            this.$vs.loading.close();
+                                            console.log(err);
+                                        });
+                                } else {
                                     this.activeLoading = false;
                                     this.$vs.loading.close();
                                     this.popupEnvio = false;
@@ -338,22 +417,7 @@
                                         text: "El pedido del cliente ahora está en proceso de envío.",
                                         color: "success"
                                     });
-                                }).catch(err => {
-                                    console.log(err);
-                                    this.activeLoading = false;
-                                    this.$vs.loading.close();
-                                    this.popupEnvio = false;
-                                });
-                            } else {
-                                this.activeLoading = false;
-                                this.$vs.loading.close();
-                                this.popupEnvio = false;
-                                this.getusers();
-                                this.$vs.notify({
-                                    title: "En proceso",
-                                    text: "El pedido del cliente ahora está en proceso de envío.",
-                                    color: "success"
-                                });
+                                }
                             }
                         }).catch(err => {
                             this.popupEnvio = false;
@@ -363,9 +427,10 @@
                         });
                 }
             },
-            setClient(id, idOrder) {
+            setClient(id, idOrder, idRecipe) {
                 this.id_recipies = id;
                 this.idOrder = idOrder;
+                this.recipe_id = idRecipe;
                 this.getTransaction(this.idOrder);
             },
             realizarEM() {
@@ -441,6 +506,7 @@
             select: null,
             mensajeroEM: null,
             id_recipies: 0,
+            recipe_id: null,
             address: "",
             errors: [],
             errorsEM: [],

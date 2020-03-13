@@ -768,10 +768,18 @@ __webpack_require__.r(__webpack_exports__);
       var token = localStorage.getItem("tu");
       var ids = [];
       var fechass = [];
-      var fecha = []; //console.log(this.medicines);
+      var fecha = [];
+      var quantita = []; //console.log(this.medicines);
 
       this.medicines.forEach(function (element) {
-        ids.push(element.id);
+        if (element.cantidad > 0) {
+          ids.push(element.id);
+        }
+      });
+      this.cantidades.forEach(function (element) {
+        if (element > 0) {
+          quantita.push(element);
+        }
       });
       this.medicines.forEach(function (element) {
         //console.log(element.next);
@@ -950,7 +958,8 @@ __webpack_require__.r(__webpack_exports__);
             numbert: _this5.numberT,
             numbertr: _this5.numberTr,
             datetr: _this5.datetr,
-            total: _this5.total
+            total: _this5.total,
+            recipe_id: _this5.idRecipe
           }),
           headers: {
             authorization: "Bearer " + token,
@@ -963,7 +972,7 @@ __webpack_require__.r(__webpack_exports__);
             method: "post",
             url: "http://127.0.0.1:8000/api/postOrderProd",
             data: JSON.stringify({
-              cantidad: _this5.cantidades,
+              cantidad: quantita,
               medicines: ids,
               order_id: Response.data.mess.id
             }),
@@ -978,7 +987,7 @@ __webpack_require__.r(__webpack_exports__);
               url: "http://127.0.0.1:8000/api/putReceSta",
               data: JSON.stringify({
                 id: _this5.idRecipe,
-                status: 2,
+                status: 7,
                 status1: date,
                 status2: status
               }),
@@ -1086,10 +1095,18 @@ __webpack_require__.r(__webpack_exports__);
       var token = localStorage.getItem("tu");
       var ids = [];
       var fechass = [];
-      var fecha = []; //console.log(this.medicines);
+      var fecha = [];
+      var quantita = []; //console.log(this.medicines);
 
       this.medicines.forEach(function (element) {
-        ids.push(element.id);
+        if (element.cantidad > 0) {
+          ids.push(element.id);
+        }
+      });
+      this.cantidades.forEach(function (element) {
+        if (element > 0) {
+          quantita.push(element);
+        }
       });
       this.medicines.forEach(function (element) {
         //console.log(element.next);
@@ -1247,7 +1264,8 @@ __webpack_require__.r(__webpack_exports__);
             numbert: _this6.numberT,
             datetr: _this6.datetr,
             numbertr: _this6.numberTr,
-            total: _this6.total
+            total: _this6.total,
+            recipe_id: _this6.idRecipe
           }),
           headers: {
             authorization: "Bearer " + token,
@@ -1260,7 +1278,7 @@ __webpack_require__.r(__webpack_exports__);
             method: "post",
             url: "http://127.0.0.1:8000/api/postOrderProd",
             data: JSON.stringify({
-              cantidad: _this6.cantidades,
+              cantidad: quantita,
               medicines: ids,
               order_id: Response.data.mess.id
             }),
@@ -1274,7 +1292,7 @@ __webpack_require__.r(__webpack_exports__);
               url: "http://127.0.0.1:8000/api/putReceSta",
               data: JSON.stringify({
                 id: _this6.idRecipe,
-                status: 2,
+                status: 7,
                 status1: date,
                 status2: status
               }),
@@ -1973,6 +1991,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2022,7 +2048,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         discountedAmount: 5700,
         total: 108300
       }
-    }, _defineProperty(_ref, "medicinas", []), _defineProperty(_ref, "popupActive", false), _defineProperty(_ref, "message", ""), _defineProperty(_ref, "idRecipe", null), _defineProperty(_ref, "origen", null), _defineProperty(_ref, "idMedico", null), _defineProperty(_ref, "popact", false), _defineProperty(_ref, "users", []), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "addNewDataSidebar", false), _defineProperty(_ref, "sidebarData", {}), _defineProperty(_ref, "status", ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado"]), _defineProperty(_ref, "buscar", ""), _defineProperty(_ref, "clickNotClose", true), _defineProperty(_ref, "isEmailSidebarActive", true), _defineProperty(_ref, "mailFilter", "inbox"), _defineProperty(_ref, "settings", {
+    }, _defineProperty(_ref, "medicinas", []), _defineProperty(_ref, "popupActive", false), _defineProperty(_ref, "message", ""), _defineProperty(_ref, "idRecipe", null), _defineProperty(_ref, "origen", null), _defineProperty(_ref, "idMedico", null), _defineProperty(_ref, "popact", false), _defineProperty(_ref, "users", []), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "addNewDataSidebar", false), _defineProperty(_ref, "sidebarData", {}), _defineProperty(_ref, "status", ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado", "Facturando"]), _defineProperty(_ref, "buscar", ""), _defineProperty(_ref, "clickNotClose", true), _defineProperty(_ref, "isEmailSidebarActive", true), _defineProperty(_ref, "mailFilter", "inbox"), _defineProperty(_ref, "settings", {
       maxScrollbarLength: 60,
       wheelSpeed: 0.3
     }), _defineProperty(_ref, "recipes", []), _defineProperty(_ref, "doctors", []), _defineProperty(_ref, "primary", "primary"), _ref;
@@ -2311,6 +2337,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (a == 4) return "success";
       if (a == 5) return "danger";
       if (a == 6) return "warning";
+      if (a == 7) return "warning";
       return "primary";
     },
     getFacturacion: function getFacturacion(a) {
@@ -4774,6 +4801,33 @@ var render = function() {
                             1
                           )
                         ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          staticClass:
+                            "flex items-center mt-4 mb-2 cursor-pointer",
+                          class: {
+                            "text-primary": _vm.activado == "Facturando"
+                          },
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Facturando")
+                            }
+                          }
+                        },
+                        [
+                          _c("feather-icon", {
+                            attrs: { icon: "FileTextIcon" }
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "text-lg ml-3" }, [
+                            _vm._v("Facturando")
+                          ])
+                        ],
+                        1
                       ),
                       _vm._v(" "),
                       _c(

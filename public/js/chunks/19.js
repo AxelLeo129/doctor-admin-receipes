@@ -225,6 +225,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -245,6 +247,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      popupActive2: false,
       registro: null,
       filterCate: 0,
       filterMar: 0,

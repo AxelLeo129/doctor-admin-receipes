@@ -211,6 +211,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -232,7 +235,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        //console.log(Response);
+        console.log(Response.data);
         Response.data.forEach(function (element) {
           element.cliente.client_addresse = element.cliente.callee + ' ' + element.cliente.apartamentoe + ' ' + element.cliente.residenciae + ' zona ' + element.cliente.codigoe + ' ' + element.cliente.municipioe + ' ' + element.cliente.depare + ' ' + element.cliente.paise;
 
@@ -314,8 +317,9 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
-    setConfirm: function setConfirm(id) {
+    setConfirm: function setConfirm(id, recipe_id) {
       this.id_order = id;
+      this.recipe_id = recipe_id;
     },
     completarPedido: function completarPedido() {
       var _this3 = this;
@@ -343,23 +347,62 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this3.activeLoading = false;
+        if (_this3.recipe_id != null || _this3.recipe_id != undefined || _this3.status == 4) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default()({
+            method: "put",
+            url: "http://127.0.0.1:8000/api/changeStatus",
+            data: JSON.stringify({
+              id: _this3.recipe_id,
+              status: 4
+            }),
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          }).then(function (Response) {
+            _this3.activeLoading = false;
 
-        _this3.$vs.loading.close();
+            _this3.$vs.loading.close();
 
-        _this3.popupEntrega = false;
+            _this3.popupEntrega = false;
 
-        _this3.getusers();
+            _this3.getusers();
 
-        _this3.nombre_confirmacion = null;
-        _this3.observations = null;
-        _this3.status = false;
+            _this3.nombre_confirmacion = null;
+            _this3.observations = null;
+            _this3.status = false;
 
-        _this3.$vs.notify({
-          title: "Entrega completada",
-          text: "Felicidades, completaste tu entrega",
-          color: "success"
-        });
+            _this3.$vs.notify({
+              title: "Entrega completada",
+              text: "Felicidades, completaste tu entrega",
+              color: "success"
+            });
+          }).catch(function (err) {
+            _this3.activeLoading = false;
+
+            _this3.$vs.loading.close();
+
+            console.log(err);
+          });
+        } else {
+          _this3.activeLoading = false;
+
+          _this3.$vs.loading.close();
+
+          _this3.popupEntrega = false;
+
+          _this3.getusers();
+
+          _this3.nombre_confirmacion = null;
+          _this3.observations = null;
+          _this3.status = false;
+
+          _this3.$vs.notify({
+            title: "Entrega completada",
+            text: "Felicidades, completaste tu entrega",
+            color: "success"
+          });
+        }
       }).catch(function (err) {
         _this3.popupEntrega = false;
         _this3.activeLoading = false;
@@ -382,6 +425,7 @@ __webpack_require__.r(__webpack_exports__);
       nombre_confirmacion: null,
       observations: null,
       status: false,
+      recipe_id: null,
       id_recipies: 0,
       id_order: 0,
       name_client: "",
@@ -697,7 +741,8 @@ var render = function() {
                                       click: function($event) {
                                         ;(_vm.popupEntrega = true),
                                           _vm.setConfirm(
-                                            data[indextr].cliente.order_id
+                                            data[indextr].cliente.order_id,
+                                            data[indextr].cliente.recipe_id
                                           )
                                       }
                                     }
@@ -1042,7 +1087,7 @@ var render = function() {
                 _vm._v(" "),
                 _vm.status == false && _vm.nombre_confirmacion == ""
                   ? _c("span", { staticClass: "text-danger" }, [
-                      _vm._v("Este campo es requerido")
+                      _vm._v("Este campo es\n                    requerido")
                     ])
                   : _vm._e()
               ],

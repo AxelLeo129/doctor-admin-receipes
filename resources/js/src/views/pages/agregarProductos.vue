@@ -79,6 +79,7 @@
 
                 <div class="mt-4">
                     <vs-textarea class="vs-textarea" label="Descripción de uso" v-model="uso" />
+                    <!-- <vs-input class="inputx mb-3" label="Descripción de uso" v-model="uso"/> -->
                     <span class="text-danger text-sm" v-show="uso == ''">
                         Este
                         campo es requerido.
@@ -188,6 +189,7 @@
                                                 <vs-button class="mt-4 mr-2 alineacion"
                                                     @click="activar=true, setData(item.id, item.name, item.description, item.precentacion)">
                                                     Agregar Medicamento</vs-button>
+                                                <!-- <vs-button @click="popupActive2=true" color="primary" type="filled">Open Popup</vs-button> -->
                                             </div>
                                         </vx-card>
                                     </div>
@@ -244,6 +246,7 @@
         },
         data() {
             return {
+                popupActive2: false,
                 registro: null,
                 filterCate: 0,
                 filterMar: 0,

@@ -282,21 +282,58 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this.noInvoice = null;
-        _this.dateInvoice = null;
-        _this.popupActive = false;
+        if (_this.recipe_id != null) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default()({
+            method: "put",
+            url: "http://127.0.0.1:8000/api/changeStatus",
+            data: JSON.stringify({
+              id: _this.recipe_id,
+              status: 2
+            }),
+            headers: {
+              authorization: "Bearer " + token,
+              "content-type": "application/json"
+            }
+          }).then(function (Response) {
+            _this.noInvoice = null;
+            _this.dateInvoice = null;
+            _this.popupActive = false;
 
-        _this.getusers();
+            _this.getusers();
 
-        _this.activeLoading = false;
+            _this.activeLoading = false;
 
-        _this.$vs.loading.close();
+            _this.$vs.loading.close();
 
-        _this.$vs.notify({
-          title: "Guardado",
-          text: "Factura guardada exitosamente.",
-          color: "success"
-        });
+            _this.$vs.notify({
+              title: "Guardado",
+              text: "Factura guardada exitosamente.",
+              color: "success"
+            });
+          }).catch(function (err) {
+            _this.activeLoading = false;
+
+            _this.$vs.loading.close();
+
+            console.log(err);
+          });
+        } else {
+          _this.noInvoice = null;
+          _this.dateInvoice = null;
+          _this.popupActive = false;
+
+          _this.getusers();
+
+          _this.activeLoading = false;
+
+          _this.$vs.loading.close();
+
+          _this.$vs.notify({
+            title: "Guardado",
+            text: "Factura guardada exitosamente.",
+            color: "success"
+          });
+        }
       }).catch(function (err) {
         _this.activeLoading = false;
 
@@ -320,7 +357,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(Response);
+        //console.log(Response);
         Response.data.forEach(function (element) {
           element.cliente.client_addresse = element.cliente.callef + ' ' + element.cliente.apartamentof + ' ' + element.cliente.residenciaf + ' zona ' + element.cliente.codigof + ' ' + element.cliente.municipiof + ' ' + element.cliente.deparf + ' ' + element.cliente.paisf;
 
@@ -348,13 +385,14 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
-    setData: function setData(order_id, recipie, address, nit, nombre, total) {
+    setData: function setData(order_id, recipie, address, nit, nombre, total, recipe_id) {
       this.recipie = recipie;
       this.address = address;
       this.nit = nit;
       this.nombre = nombre;
       this.total = total;
       this.order_id = order_id;
+      this.recipe_id = recipe_id;
     },
     openLoading: function openLoading() {
       this.activeLoading = true;
@@ -497,6 +535,7 @@ __webpack_require__.r(__webpack_exports__);
       total: null,
       noInvoice: null,
       dateInvoice: null,
+      recipe_id: null,
       order_id: null,
       errors: [],
       errorsEM: [],
@@ -740,7 +779,8 @@ var render = function() {
                                         data[indextr].cliente.client_addresse,
                                         data[indextr].cliente.client_nit,
                                         data[indextr].cliente.client_name,
-                                        data[indextr].cliente.total
+                                        data[indextr].cliente.total,
+                                        data[indextr].cliente.recipe_id
                                       )
                                   }
                                 }

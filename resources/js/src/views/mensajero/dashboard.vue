@@ -87,8 +87,9 @@
                         </div>
                         <div style="float:right;" v-if="data[indextr].cliente.status == 3">
                             <vs-button size="small"
-                                @click="popupEntrega=true, setConfirm(data[indextr].cliente.order_id)" radius
-                                color="success" type="filled" icon-pack="feather" icon="icon-check-circle"></vs-button>
+                                @click="popupEntrega=true, setConfirm(data[indextr].cliente.order_id, data[indextr].cliente.recipe_id)"
+                                radius color="success" type="filled" icon-pack="feather" icon="icon-check-circle">
+                            </vs-button>
                         </div>
                     </vs-td>
                 </vs-tr>
@@ -178,7 +179,8 @@
             <div class="vx-row mb-2">
                 <div class="vx-col w-full">
                     <vs-input v-model="nombre_confirmacion" class="w-full" label-placeholder="Nombre de recibido" />
-                    <span class="text-danger" v-if="status == false && nombre_confirmacion == ''">Este campo es requerido</span>
+                    <span class="text-danger" v-if="status == false && nombre_confirmacion == ''">Este campo es
+                        requerido</span>
                 </div>
             </div>
             <div class="vx-row mb-2">
@@ -188,7 +190,8 @@
             </div>
             <br>
             <br><br>
-            <vs-button color="success" type="filled" @click="completarPedido()" v-if="status == false" :disabled="nombre_confirmacion == '' || nombre_confirmacion == null">Completar pedido
+            <vs-button color="success" type="filled" @click="completarPedido()" v-if="status == false"
+                :disabled="nombre_confirmacion == '' || nombre_confirmacion == null">Completar pedido
             </vs-button>
             <vs-button color="success" type="filled" @click="completarPedido()" v-if="status == true">Completar pedido
             </vs-button>
@@ -218,7 +221,7 @@
                         }
                     })
                     .then(Response => {
-                        //console.log(Response);
+                        console.log(Response.data);
                         Response.data.forEach(element => {
                             element.cliente.client_addresse = (element.cliente.callee + ' ' + element
                                 .cliente.apartamentoe + ' ' + element.cliente.residenciae + ' zona ' +
@@ -303,8 +306,9 @@
                         console.log(err);
                     });
             },
-            setConfirm(id) {
+            setConfirm(id, recipe_id) {
                 this.id_order = id;
+                this.recipe_id = recipe_id;
             },
             completarPedido() {
                 if (this.status == true) {
@@ -330,18 +334,52 @@
                         }
                     })
                     .then(Response => {
-                        this.activeLoading = false;
-                        this.$vs.loading.close();
-                        this.popupEntrega = false;
-                        this.getusers();
-                        this.nombre_confirmacion = null;
-                        this.observations = null;
-                        this.status = false;
-                        this.$vs.notify({
-                            title: "Entrega completada",
-                            text: "Felicidades, completaste tu entrega",
-                            color: "success"
-                        });
+                        if (this.recipe_id != null || this.recipe_id != undefined || this.status == 4) {
+                            axios({
+                                    method: "put",
+                                    url: "http://127.0.0.1:8000/api/changeStatus",
+                                    data: JSON.stringify({
+                                        id: this.recipe_id,
+                                        status: 4
+                                    }),
+                                    headers: {
+                                        authorization: "Bearer " + token,
+                                        "content-type": "application/json"
+                                    }
+                                })
+                                .then(Response => {
+                                    this.activeLoading = false;
+                                    this.$vs.loading.close();
+                                    this.popupEntrega = false;
+                                    this.getusers();
+                                    this.nombre_confirmacion = null;
+                                    this.observations = null;
+                                    this.status = false;
+                                    this.$vs.notify({
+                                        title: "Entrega completada",
+                                        text: "Felicidades, completaste tu entrega",
+                                        color: "success"
+                                    });
+                                })
+                                .catch(err => {
+                                    this.activeLoading = false;
+                                    this.$vs.loading.close();
+                                    console.log(err);
+                                });
+                        } else {
+                            this.activeLoading = false;
+                            this.$vs.loading.close();
+                            this.popupEntrega = false;
+                            this.getusers();
+                            this.nombre_confirmacion = null;
+                            this.observations = null;
+                            this.status = false;
+                            this.$vs.notify({
+                                title: "Entrega completada",
+                                text: "Felicidades, completaste tu entrega",
+                                color: "success"
+                            });
+                        }
                     })
                     .catch(err => {
                         this.popupEntrega = false;
@@ -362,6 +400,7 @@
             nombre_confirmacion: null,
             observations: null,
             status: false,
+            recipe_id: null,
             id_recipies: 0,
             id_order: 0,
             name_client: "",

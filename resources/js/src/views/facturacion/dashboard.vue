@@ -95,7 +95,7 @@
                     <vs-td>
                         <span style="float:left;">
                             <vs-button size="small"
-                                @click="popupActive=true, setData(data[indextr].cliente.order_id, data[indextr].medicamentos, data[indextr].cliente.client_addresse, data[indextr].cliente.client_nit, data[indextr].cliente.client_name, data[indextr].cliente.total)"
+                                @click="popupActive=true, setData(data[indextr].cliente.order_id, data[indextr].medicamentos, data[indextr].cliente.client_addresse, data[indextr].cliente.client_nit, data[indextr].cliente.client_name, data[indextr].cliente.total, data[indextr].cliente.recipe_id)"
                                 color="primary" type="filled">Facturar</vs-button>
                         </span>
                         <!-- <span style="float:right;">
@@ -268,17 +268,50 @@
                         }
                     })
                     .then(Response => {
-                        this.noInvoice = null;
-                        this.dateInvoice = null;
-                        this.popupActive = false;
-                        this.getusers();
-                        this.activeLoading = false;
-                        this.$vs.loading.close();
-                        this.$vs.notify({
-                            title: "Guardado",
-                            text: "Factura guardada exitosamente.",
-                            color: "success"
-                        });
+                        if (this.recipe_id != null) {
+                            axios({
+                                    method: "put",
+                                    url: "http://127.0.0.1:8000/api/changeStatus",
+                                    data: JSON.stringify({
+                                        id: this.recipe_id,
+                                        status: 2
+                                    }),
+                                    headers: {
+                                        authorization: "Bearer " + token,
+                                        "content-type": "application/json"
+                                    }
+                                })
+                                .then(Response => {
+                                    this.noInvoice = null;
+                                    this.dateInvoice = null;
+                                    this.popupActive = false;
+                                    this.getusers();
+                                    this.activeLoading = false;
+                                    this.$vs.loading.close();
+                                    this.$vs.notify({
+                                        title: "Guardado",
+                                        text: "Factura guardada exitosamente.",
+                                        color: "success"
+                                    });
+                                })
+                                .catch(err => {
+                                    this.activeLoading = false;
+                                    this.$vs.loading.close();
+                                    console.log(err);
+                                });
+                        } else {
+                            this.noInvoice = null;
+                            this.dateInvoice = null;
+                            this.popupActive = false;
+                            this.getusers();
+                            this.activeLoading = false;
+                            this.$vs.loading.close();
+                            this.$vs.notify({
+                                title: "Guardado",
+                                text: "Factura guardada exitosamente.",
+                                color: "success"
+                            });
+                        }
                     })
                     .catch(err => {
                         this.activeLoading = false;
@@ -300,7 +333,7 @@
                         }
                     })
                     .then(Response => {
-                        console.log(Response);
+                        //console.log(Response);
                         Response.data.forEach(element => {
                             element.cliente.client_addresse = (element.cliente.callef + ' ' + element
                                 .cliente.apartamentof + ' ' + element.cliente.residenciaf + ' zona ' +
@@ -337,13 +370,14 @@
                     });
 
             },
-            setData(order_id, recipie, address, nit, nombre, total) {
+            setData(order_id, recipie, address, nit, nombre, total, recipe_id) {
                 this.recipie = recipie;
                 this.address = address;
                 this.nit = nit;
                 this.nombre = nombre;
                 this.total = total;
                 this.order_id = order_id;
+                this.recipe_id = recipe_id;
             },
             openLoading() {
                 this.activeLoading = true;
@@ -473,6 +507,7 @@
             total: null,
             noInvoice: null,
             dateInvoice: null,
+            recipe_id: null,
             order_id: null,
             errors: [],
             errorsEM: [],

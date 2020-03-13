@@ -15,17 +15,6 @@
                 </vx-input-group>
             </div>
             <div class="vx-col md:w-1/2 w-full">
-                <!-- <vx-input-group class="mb-base">
-          <vs-input placeholder="Laboratorio" />
-
-          <template slot="append">
-            <div class="append-text bg-primary">
-              <span>
-                <vs-icon icon="search"></vs-icon>
-              </span>
-            </div>
-          </template>
-        </vx-input-group>-->
             </div>
         </div>
         <div class="vx-row">
@@ -104,7 +93,7 @@
                 popupActive3: false,
                 recipes: [],
                 buscar: "",
-                status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "No Compró"]
+                status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "No Compró", "Facturando"]
             };
         },
         methods: {
@@ -115,6 +104,7 @@
                 if (a == 4) return "success";
                 if (a == 5) return "danger";
                 if (a == 6) return "danger";
+                if (a == 7) return "warning";
                 return "primary";
             },
             nuevo() {

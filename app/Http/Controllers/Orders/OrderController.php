@@ -43,6 +43,7 @@ class OrderController extends Controller
         $order->numbertr = $request->numbertr;
         $order->datetr = $request->datetr;   
         $order->total = $request->total;
+        $order->recipe_id = $request->recipe_id;
         $order->client_id = $request->client_id;
 
         if($order->save()){
@@ -88,7 +89,7 @@ class OrderController extends Controller
         $data = [];
         $clients= \DB::table('clients')
             ->join('orders', 'orders.client_id', '=', 'clients.id')
-            ->select('clients.id','clients.client_name','client_addresse' , 'clients.client_phone', 'paise', 'depare', 'callee', 'apartamentoe', 'municipioe', 'residenciae', 'codigoe', 'orders.status', 'orders.order_id', 'orders.delivery_date')
+            ->select('clients.id','clients.client_name','client_addresse' , 'clients.client_phone', 'paise', 'depare', 'callee', 'apartamentoe', 'municipioe', 'residenciae', 'codigoe', 'orders.status', 'orders.order_id', 'orders.delivery_date', 'orders.recipe_id')
             ->where('orders.status', '!=',0)
             ->get();
         foreach($clients as $client){
@@ -110,7 +111,7 @@ class OrderController extends Controller
         $data = [];
         $clients= \DB::table('clients')
             ->join('orders', 'orders.client_id', '=', 'clients.id')
-            ->select('orders.order_id','clients.id','clients.client_nit','clients.client_name','client_addresse' , 'clients.client_phone', 'paisf', 'deparf', 'callef', 'apartamentof', 'municipiof', 'residenciaf', 'codigof', 'orders.status', 'orders.order_id', 'orders.delivery_date', 'orders.total')
+            ->select('orders.order_id','clients.id','clients.client_nit','clients.client_name','client_addresse' , 'clients.client_phone', 'paisf', 'deparf', 'callef', 'apartamentof', 'municipiof', 'residenciaf', 'codigof', 'orders.status', 'orders.order_id', 'orders.delivery_date', 'orders.total', 'orders.recipe_id')
             ->where('orders.status',0)
             ->get();
         foreach($clients as $client){
