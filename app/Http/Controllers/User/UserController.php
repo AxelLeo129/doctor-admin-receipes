@@ -187,11 +187,10 @@ class UserController extends Controller
         public function update3(Request $request){
             $user = User::find($request->id);
             $user->name = $request->name;
-            $user->email = $request->email;
             $user->noCollegiate = $request->noCollegiate;
+            $user->email = $request->email;
             $user->rol = $request->rol;
-            $user->password = bcrypt($request->password);
-
+            //return ['result' => 'success', "mess"=>$user];
             if($user->save()){
                 return ['result' => 'success', "mess"=>$user];
             }else{

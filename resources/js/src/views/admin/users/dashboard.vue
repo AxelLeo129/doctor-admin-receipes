@@ -18,7 +18,7 @@
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-          <vs-td v-text="indextr + 1"></vs-td>
+          <vs-td :data="data[indextr].id">{{ data[indextr].id }}</vs-td>
 
           <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
 
@@ -27,7 +27,7 @@
           <vs-td :data="data[indextr].email">{{ data[indextr].email }}</vs-td>
 
           <vs-td>
-            <vs-button size="small" color="warning" @click="edit(tr.id)" disabled>Editar</vs-button>
+            <vs-button size="small" color="warning" @click="edit(tr.id)">Editar</vs-button>
           </vs-td>
         </vs-tr>
       </template>
