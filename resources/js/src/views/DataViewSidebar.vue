@@ -991,6 +991,7 @@
                                                     id: this.idRecipe,
                                                     status: 7,
                                                     status1: date,
+                                                    reproDate: this.fechaHoy,
                                                     status2: status
                                                 }),
                                                 headers: {
@@ -1288,6 +1289,7 @@
                                                     id: this.idRecipe,
                                                     status: 7,
                                                     status1: date,
+                                                    reproDate: this.fechaHoy,
                                                     status2: status
                                                 }),
                                                 headers: {

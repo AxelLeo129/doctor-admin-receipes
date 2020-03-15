@@ -265,20 +265,25 @@
                                 <div class="flex w-full justify-between items-start">
                                     <div class="mail__details">
                                         <h5 class="mb-1">{{ mail.name }}</h5>
-                                        <span v-if="mail.phone ">{{ mail.phone }}</span>
+                                        <span v-if="mail.phone">{{ mail.phone }}</span>
                                         <span v-else>(no subject)</span>
                                         <br>
+                                        <span v-if="mail.status1 != '2020'">Próxima llamada: {{ mail.status1 }}</span>
+                                        <br v-if="mail.status1 != '2020'">
                                         <span>{{ mail.doctor_name }}</span>
                                     </div>
 
                                     <div class="mail-item__meta flex items-center">
                                         <div class="mail__details">
                                             <div class="email__labels hidden sm:flex items-center">
-                                                <div class="h-2 w-2 rounded-full mr-2" :class="'bg-' + mail.color">
+                                                <div class="vx-row h-2 w-2 rounded-full mr-2" :class="'bg-' + mail.color">
                                                 </div>
                                                 <span>{{ mail.status }}</span>
                                             </div>
-                                            <br>
+                                            <br v-if="mail.reproDate == '2020'">  
+                                            <div v-if="mail.reproDate != '2020'" class="vx-row">
+                                                <span>{{mail.reproDate}}</span>
+                                            </div>
                                             <div class="vx-row">
                                                 <vx-tooltip text="Reagendar">
                                                     <vs-button @click="openReagendar(mail.id)"
@@ -449,12 +454,17 @@
             reagendar() {
                 this.openLoading();
                 let token = localStorage.getItem('tu');
+                let f = new Date();
+                        let fecha =
+                            f.getDate() + "-" + (f.getMonth() + 1) + "-" + f.getFullYear();
                 axios({
                         method: "put",
-                        url: "http://127.0.0.1:8000/api/changeStatus",
+                        url: "http://127.0.0.1:8000/api/reagendar",
                         data: JSON.stringify({
                             id: this.idReceta,
-                            status: 6
+                            status: 6,
+                            reproDate: fecha,
+                            status1: this.fechaR
                         }),
                         headers: {
                             authorization: "Bearer " + token,
@@ -806,19 +816,19 @@
                         }
                     })
                     .then(Response => {
-                        console.log(Response);
+                        //console.log(Response);
                         this.recipes = [];
                         //console.log(Response.data);
                         Response.data.forEach(element => {
-                            element.color = this.colore(element.status);
-                            element.status = this.status[element.status - 1];
+                            element.color = 'warning';
+                            element.status = 'Reprogramada';
                             element.permission = 1;
                             element.origen = 3;
                             element.idMedico = element.doctor_id;
                             //console.log(element.status);
                             this.doctors.forEach(e => {
                                 if (e.id == element.doctor_id) {
-                                    element.doctor_id = e.name;
+                                    element.doctor_name = e.name;
                                 }
                             });
                             this.recipes.push(element);

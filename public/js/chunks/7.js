@@ -989,6 +989,7 @@ __webpack_require__.r(__webpack_exports__);
                 id: _this5.idRecipe,
                 status: 7,
                 status1: date,
+                reproDate: _this5.fechaHoy,
                 status2: status
               }),
               headers: {
@@ -1294,6 +1295,7 @@ __webpack_require__.r(__webpack_exports__);
                 id: _this6.idRecipe,
                 status: 7,
                 status1: date,
+                reproDate: _this6.fechaHoy,
                 status2: status
               }),
               headers: {
@@ -1999,6 +2001,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2088,12 +2095,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.openLoading();
       var token = localStorage.getItem('tu');
+      var f = new Date();
+      var fecha = f.getDate() + "-" + (f.getMonth() + 1) + "-" + f.getFullYear();
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "put",
-        url: "http://127.0.0.1:8000/api/changeStatus",
+        url: "http://127.0.0.1:8000/api/reagendar",
         data: JSON.stringify({
           id: this.idReceta,
-          status: 6
+          status: 6,
+          reproDate: fecha,
+          status1: this.fechaR
         }),
         headers: {
           authorization: "Bearer " + token,
@@ -2456,19 +2467,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(Response);
+        //console.log(Response);
         _this8.recipes = []; //console.log(Response.data);
 
         Response.data.forEach(function (element) {
-          element.color = _this8.colore(element.status);
-          element.status = _this8.status[element.status - 1];
+          element.color = 'warning';
+          element.status = 'Reprogramada';
           element.permission = 1;
           element.origen = 3;
           element.idMedico = element.doctor_id; //console.log(element.status);
 
           _this8.doctors.forEach(function (e) {
             if (e.id == element.doctor_id) {
-              element.doctor_id = e.name;
+              element.doctor_name = e.name;
             }
           });
 
@@ -5130,6 +5141,17 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("br"),
                                   _vm._v(" "),
+                                  mail.status1 != "2020"
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "Próxima llamada: " +
+                                            _vm._s(mail.status1)
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  mail.status1 != "2020" ? _c("br") : _vm._e(),
+                                  _vm._v(" "),
                                   _c("span", [_vm._v(_vm._s(mail.doctor_name))])
                                 ]),
                                 _vm._v(" "),
@@ -5153,7 +5175,7 @@ var render = function() {
                                           [
                                             _c("div", {
                                               staticClass:
-                                                "h-2 w-2 rounded-full mr-2",
+                                                "vx-row h-2 w-2 rounded-full mr-2",
                                               class: "bg-" + mail.color
                                             }),
                                             _vm._v(" "),
@@ -5163,7 +5185,21 @@ var render = function() {
                                           ]
                                         ),
                                         _vm._v(" "),
-                                        _c("br"),
+                                        mail.reproDate == "2020"
+                                          ? _c("br")
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        mail.reproDate != "2020"
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "vx-row" },
+                                              [
+                                                _c("span", [
+                                                  _vm._v(_vm._s(mail.reproDate))
+                                                ])
+                                              ]
+                                            )
+                                          : _vm._e(),
                                         _vm._v(" "),
                                         _c(
                                           "div",

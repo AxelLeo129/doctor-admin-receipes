@@ -159,8 +159,6 @@
             registrar() {
                 this.openLoading();
                 let token = localStorage.getItem("tu");
-                console.log(this.rol);
-                console.log(this.rol.value);
                 axios({
                         method: "put",
                         url: "http://127.0.0.1:8000/api/putUser3",

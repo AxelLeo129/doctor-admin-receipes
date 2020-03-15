@@ -106,6 +106,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -238,7 +245,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".timeline {\n  list-style-type: none;\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n.li {\n  -webkit-transition: all 200ms ease-in;\n  transition: all 200ms ease-in;\n}\n.status {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-transition: all 200ms ease-in;\n  transition: all 200ms ease-in;\n}\n[dir] .status {\n  padding: 0px 40px;\n  border-top: 2px solid #d6dce0;\n}\n.status h4 {\n  font-weight: 600;\n}\n.status:before {\n  content: \"\";\n  width: 25px;\n  height: 25px;\n  position: absolute;\n  top: -15px;\n  -webkit-transition: all 200ms ease-in;\n  transition: all 200ms ease-in;\n}\n[dir] .status:before {\n  background-color: white;\n  border-radius: 25px;\n  border: 1px solid #ddd;\n}\n[dir=ltr] .status:before {\n  left: 42%;\n}\n[dir=rtl] .status:before {\n  right: 42%;\n}\n[dir] .li.complete .status {\n  border-top: 2px solid #003da5;\n}\n.li.complete .status:before {\n  -webkit-transition: all 200ms ease-in;\n  transition: all 200ms ease-in;\n}\n[dir] .li.complete .status:before {\n  background-color: #003da5;\n  border: none;\n}\n.li.complete .status h4 {\n  color: #003da5;\n}\n@media (min-device-width: 320px) and (max-device-width: 700px) {\n.timeline {\n    list-style-type: none;\n    display: block;\n}\n.li {\n    -webkit-transition: all 200ms ease-in;\n    transition: all 200ms ease-in;\n    display: -webkit-box;\n    display: flex;\n    width: inherit;\n}\n.timestamp {\n    width: 100px;\n}\n.status:before {\n    top: 30%;\n    -webkit-transition: all 200ms ease-in;\n    transition: all 200ms ease-in;\n}\n[dir=ltr] .status:before {\n    left: -8%;\n}\n[dir=rtl] .status:before {\n    right: -8%;\n}\n}", ""]);
+exports.push([module.i, ".timeline {\n  list-style-type: none;\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n.li {\n  -webkit-transition: all 200ms ease-in;\n  transition: all 200ms ease-in;\n}\n.status {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-transition: all 200ms ease-in;\n  transition: all 200ms ease-in;\n}\n[dir] .status {\n  padding: 0px 40px;\n  border-top: 2px solid #d6dce0;\n}\n.status h4 {\n  font-weight: 600;\n}\n.status:before {\n  content: \"\";\n  width: 25px;\n  height: 25px;\n  position: absolute;\n  top: -15px;\n  -webkit-transition: all 200ms ease-in;\n  transition: all 200ms ease-in;\n}\n[dir] .status:before {\n  background-color: white;\n  border-radius: 25px;\n  border: 1px solid #ddd;\n}\n[dir=ltr] .status:before {\n  left: 42%;\n}\n[dir=rtl] .status:before {\n  right: 42%;\n}\n[dir] .li.complete .status {\n  border-top: 2px solid #003da5;\n}\n.li.complete .status:before {\n  -webkit-transition: all 200ms ease-in;\n  transition: all 200ms ease-in;\n}\n[dir] .li.complete .status:before {\n  background-color: #003da5;\n  border: none;\n}\n.li.complete .status h4 {\n  color: #003da5;\n}\n@media (min-device-width: 320px) and (max-device-width: 700px) {\n.timeline {\n    list-style-type: none;\n    display: block;\n}\n.li {\n    -webkit-transition: all 200ms ease-in;\n    transition: all 200ms ease-in;\n    display: -webkit-box;\n    display: flex;\n    width: inherit;\n}\n.timestamp {\n    width: 100px;\n}\n.status:before {\n    top: 30%;\n    -webkit-transition: all 200ms ease-in;\n    transition: all 200ms ease-in;\n}\n[dir=ltr] .status:before {\n    left: -8%;\n}\n[dir=rtl] .status:before {\n    right: -8%;\n}\n.status h4 {\n    font-weight: 200;\n}\n}", ""]);
 
 // exports
 
@@ -295,61 +302,77 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "mt-5" }, [
       _vm.registro == 1
-        ? _c("div", { attrs: { align: "center" } }, [
-            _c(
-              "ul",
-              { staticClass: "timeline mt-5", attrs: { id: "timeline" } },
-              [
-                _c("li", { staticClass: "li complete" }, [
-                  _c("div", { staticClass: "status" }, [
-                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 1")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "li" }, [
-                  _c("div", { staticClass: "status" }, [
-                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 2")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "li" }, [
-                  _c("div", { staticClass: "status" }, [
-                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 3")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "li" }, [
-                  _c("div", { staticClass: "status" }, [
-                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 4")])
-                  ])
-                ])
-              ]
-            )
+        ? _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "flex mb-4" }, [
+              _c("div", { staticClass: "w-1/3" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "w-1/3" }, [
+                _c(
+                  "ul",
+                  { staticClass: "timeline mt-5", attrs: { id: "timeline" } },
+                  [
+                    _c("li", { staticClass: "li complete" }, [
+                      _c("div", { staticClass: "status" }, [
+                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 1")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "li" }, [
+                      _c("div", { staticClass: "status" }, [
+                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 2")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "li" }, [
+                      _c("div", { staticClass: "status" }, [
+                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 3")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "li" }, [
+                      _c("div", { staticClass: "status" }, [
+                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 4")])
+                      ])
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "w-1/3" })
+            ])
           ])
-        : _c("div", { attrs: { align: "center" } }, [
-            _c(
-              "ul",
-              { staticClass: "timeline mt-5", attrs: { id: "timeline" } },
-              [
-                _c("li", { staticClass: "li complete" }, [
-                  _c("div", { staticClass: "status" }, [
-                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 1")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "li" }, [
-                  _c("div", { staticClass: "status" }, [
-                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 2")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "li" }, [
-                  _c("div", { staticClass: "status" }, [
-                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 3")])
-                  ])
-                ])
-              ]
-            )
+        : _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "flex mb-4" }, [
+              _c("div", { staticClass: "w-1/3" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "w-1/3" }, [
+                _c(
+                  "ul",
+                  { staticClass: "timeline mt-5", attrs: { id: "timeline" } },
+                  [
+                    _c("li", { staticClass: "li complete" }, [
+                      _c("div", { staticClass: "status" }, [
+                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 1")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "li" }, [
+                      _c("div", { staticClass: "status" }, [
+                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 2")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "li" }, [
+                      _c("div", { staticClass: "status" }, [
+                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 3")])
+                      ])
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "w-1/3" })
+            ])
           ]),
       _vm._v(" "),
       _c("div", { staticClass: "vx-row" }, [
@@ -387,7 +410,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "\n          Este campo es\n          requerido.\n        "
+                  "\n                    Este campo es\n                    requerido.\n                "
                 )
               ]
             )
@@ -429,7 +452,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "\n          Este campo es\n          requerido.\n        "
+                  "\n                    Este campo es\n                    requerido.\n                "
                 )
               ]
             )
@@ -453,7 +476,7 @@ var render = function() {
                   attrs: { color: "primary", type: "filled" },
                   on: { click: _vm.formSubmitted }
                 },
-                [_vm._v("Siguiente")]
+                [_vm._v("Siguiente\n                    ")]
               )
             ],
             1
