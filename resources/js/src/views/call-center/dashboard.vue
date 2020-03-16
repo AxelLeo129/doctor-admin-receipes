@@ -155,7 +155,7 @@
                     <VuePerfectScrollbar :settings="settings" class="email-filter-scroll-area">
                         <div class="px-6 pb-2 flex flex-col">
                             <!-- inbox -->
-                            <li tag="span" @click="getRecipes('Nuevo')"
+                            <li tag="span" @click="getRecipesNew()"
                                 class="flex justify-between items-center cursor-pointer"
                                 :class="{'text-primary': activado == 'Nuevo'}">
                                 <div class="flex items-center mb-2">
@@ -187,12 +187,12 @@
                             </li>
 
                             <!-- draft -->
-                            <li tag="span" @click="getRecipes('Entregando')"
+                            <li tag="span" @click="getRecipes('En Ruta')"
                                 class="flex justify-between items-center mt-4 cursor-pointer"
-                                :class="{'text-primary': activado == 'Entregando'}">
+                                :class="{'text-primary': activado == 'En Ruta'}">
                                 <div class="flex items-center mb-2">
                                     <feather-icon icon="TruckIcon"></feather-icon>
-                                    <span class="text-lg ml-3">Entregando</span>
+                                    <span class="text-lg ml-3">En Ruta</span>
                                 </div>
                             </li>
 
@@ -205,14 +205,6 @@
                             </li>
 
                             <!-- spam -->
-                            <li @click="getRecipes('Cancelado')" tag="span"
-                                class="flex items-center justify-between items-center mt-4 cursor-pointer"
-                                :class="{'text-primary': activado == 'Cancelado'}">
-                                <div class="flex items-center mb-2">
-                                    <feather-icon icon="HexagonIcon"></feather-icon>
-                                    <span class="text-lg ml-3">Descartadas</span>
-                                </div>
-                            </li>
                             <li @click="getRecipes('Reagendado')" tag="span"
                                 class="flex items-center justify-between items-center mt-4 cursor-pointer"
                                 :class="{'text-primary': activado == 'Reagendado'}">
@@ -227,6 +219,14 @@
                                 <div class="flex items-center mb-2">
                                     <feather-icon icon="WatchIcon"></feather-icon>
                                     <span class="text-lg ml-3">Reprogramada</span>
+                                </div>
+                            </li>
+                            <li @click="getRecipes('Cancelado')" tag="span"
+                                class="flex items-center justify-between items-center mt-4 cursor-pointer"
+                                :class="{'text-primary': activado == 'Cancelado'}">
+                                <div class="flex items-center mb-2">
+                                    <feather-icon icon="HexagonIcon"></feather-icon>
+                                    <span class="text-lg ml-3">Descartadas</span>
                                 </div>
                             </li>
                         </div>
@@ -269,7 +269,8 @@
                                         <span v-else>(no subject)</span>
                                         <br>
                                         <span v-if="mail.status1 != '2020'">Próxima llamada: {{ mail.status1 }}</span>
-                                        <br v-if="mail.status1 != '2020'">
+                                        <span v-else>{{ mail.dateIssue }}</span>
+                                        <br>
                                         <span>{{ mail.doctor_name }}</span>
                                     </div>
 
@@ -409,7 +410,7 @@
                 popupActive2: false,
                 addNewDataSidebar: false,
                 sidebarData: {},
-                status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado", "Facturando"],
+                status: ["Nuevo", "Empaquetando", "En Ruta", "Entregado", "Cancelado", "Reagendado", "Facturando"],
                 buscar: "",
                 clickNotClose: true,
                 isEmailSidebarActive: true,
@@ -444,7 +445,7 @@
         },
         created() {
             this.getUsers();
-            this.getRecipes("Nuevo");
+            this.getRecipesNew();
         },
         methods: {
             openReagendar(id) {
@@ -476,7 +477,7 @@
                         this.popact = false; 
                         this.activeLoading = false;
                         this.$vs.loading.close();
-                        this.getRecipes("Nuevo");
+                        this.getRecipesNew();
                         this.$vs.notify({
                             title: "Satisfactorio",
                             text: "Pedido reagendado exitosamente.",
@@ -507,7 +508,7 @@
                     .then(Response => {
                         this.activeLoading = false;
                         this.$vs.loading.close();
-                        this.getRecipes("Nuevo");
+                        this.getRecipesNew();
                         this.$vs.notify({
                             title: "Satisfactorio",
                             text: "Pedido descartado exitosamente.",
@@ -750,18 +751,74 @@
                         this.$vs.loading.close();
                     });
             },
+            getRecipesNew(){
+                this.activado = 'Nuevo';
+                this.openLoading();
+                let token = localStorage.getItem("tu");
+                let id = localStorage.getItem("ui");
+                axios({
+                        method: "get",
+                        url: "http://127.0.0.1:8000/api/getReceNew",
+                        headers: {
+                            authorization: "Bearer " + token,
+                            "content-type": "application/json"
+                        }
+                    })
+                    .then(Response => {
+                        this.recipes = [];
+                        //console.log(Response.data);
+                        Response.data.forEach(element => {
+                            element.color = "primary";
+                            element.status = "Nuevo";
+                            element.permission = 0;
+                            element.origen = 1;
+                            element.idMedico = element.doctor_id;
+                            //console.log(element.status);
+                            this.doctors.forEach(e => {
+                                if (e.id == element.doctor_id) {
+                                    element.doctor_name = e.name;
+                                }
+                            });
+                            this.recipes.push(element);
+                            if (this.recipes.length == 0) {
+                                this.message = "No hay resultados.";
+                            }
+                        });
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                    });
+            },
             getRecipes(a) {
                 this.activado = a;
                 this.openLoading();
                 let token = localStorage.getItem("tu");
                 let id = localStorage.getItem("ui");
-                let f = new Date();
-                let fecha =
-                    f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-                fecha = fecha.toString();
-                axios({
+                if(a == 'Empaquetando'){
+                    a = 2;
+                }
+                else if(a == 'En Ruta'){
+                    a = 3;
+                }
+                else if(a == 'Entregado'){
+                    a = 4;
+                }
+                else if(a == 'Cancelado'){
+                    a = 5;
+                }
+                else if(a == 'Reagendado'){
+                    a = 6;
+                }
+                else if(a == 'Facturando'){
+                    a = 7;
+                }
+                    axios({
                         method: "get",
-                        url: "http://127.0.0.1:8000/api/getRecipes",
+                        url: "http://127.0.0.1:8000/api/getReceSta/" + a,
                         headers: {
                             authorization: "Bearer " + token,
                             "content-type": "application/json"
@@ -782,9 +839,7 @@
                                     element.doctor_name = e.name;
                                 }
                             });
-                            if (element.status == a) {
-                                this.recipes.push(element);
-                            }
+                            this.recipes.push(element);
                             if (this.recipes.length == 0) {
                                 this.message = "No hay resultados.";
                             }
@@ -800,13 +855,10 @@
             },
             getRerecipes(a) {
                 this.activado = a;
+
                 this.openLoading();
                 let token = localStorage.getItem("tu");
                 let id = localStorage.getItem("ui");
-                let f = new Date();
-                let fecha =
-                    f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-                fecha = fecha.toString();
                 axios({
                         method: "get",
                         url: "http://127.0.0.1:8000/api/getRerecipes",

@@ -136,7 +136,7 @@
             getDate() {
                 let f = new Date();
                 this.fecha =
-                    f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+                    f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate();
             },
             formSubmitted() {
                 if (this.nombres == null || this.nombres == "") {

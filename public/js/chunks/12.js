@@ -139,7 +139,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado", "Facturando"],
+      status: ["Nuevo", "Empaquetando", "En Ruta", "Entregado", "Cancelado", "Reagendado", "Facturando"],
       check: null,
       checkpointReward: {},
       subscribersGained: {},
@@ -175,24 +175,19 @@ __webpack_require__.r(__webpack_exports__);
 
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
-      var f = new Date();
-      var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-      fecha = fecha.toString();
       axios__WEBPACK_IMPORTED_MODULE_5___default()({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getRecipes",
+        url: "http://127.0.0.1:8000/api/getReceMed/" + id,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
       }).then(function (Response) {
         Response.data.forEach(function (element) {
-          if (element.doctor_id == id && fecha == element.dateIssue) {
-            element.color = _this.colore(element.status);
-            element.status = _this.status[element.status - 1];
+          element.color = _this.colore(element.status);
+          element.status = _this.status[element.status - 1];
 
-            _this.recipes.push(element);
-          }
+          _this.recipes.push(element);
         });
       }).catch(function (err) {
         console.log(err);

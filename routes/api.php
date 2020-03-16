@@ -34,6 +34,7 @@ Route::get('pdf', function () {
 Route::group(['middleware' => 'auth:api'], function(){
     //User
     Route::get('listUsers', "User\UserController@index");
+    Route::get('getMedicos', "User\UserController@index1");
     Route::get('details', 'User\UserController@details');
     Route::put('putUser1', 'User\UserController@update1');
     Route::put('putUser2', 'User\UserController@update2');
@@ -66,6 +67,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('getReceta/{id}', 'Recipies\RecipieController@show');
     Route::get('getRecipes', 'Recipies\RecipieController@index');
     Route::get('getReceProd/{id}', 'Recipies\RecipieController@getProduct');
+    Route::get('getReceMed/{id}', 'Recipies\RecipieController@index1');
+    Route::get('getReceMed1/{id}', 'Recipies\RecipieController@index2');
+    Route::get('getReceSta/{status}', 'Recipies\RecipieController@index3');
+    Route::get('getReceNew', 'Recipies\RecipieController@index4');
     Route::get('getInfoRecipie/{id}', 'Recipies\RecipieController@getInfoRecipie');
     Route::put('changeStatus', 'Recipies\RecipieController@updateStatus');
     Route::put('reagendar', 'Recipies\RecipieController@reagendarRecipe');

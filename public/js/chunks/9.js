@@ -145,7 +145,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getDate: function getDate() {
       var f = new Date();
-      this.fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+      this.fecha = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate();
     },
     formSubmitted: function formSubmitted() {
       if (this.nombres == null || this.nombres == "") {

@@ -20,6 +20,27 @@ class RecipieController extends Controller
     public function index()
     {
         return Recipie::all();
+        //SELECT * FROM `recipies` ORDER BY dateIssue
+    }
+
+    public function index1($id)
+    {
+        return \DB::select("SELECT * FROM `recipies` WHERE doctor_id = $id AND dateIssue = CURDATE()");
+    }
+
+    public function index2($id)
+    {
+        return \DB::select("SELECT * FROM `recipies` WHERE doctor_id = $id ORDER BY dateIssue DESC");
+    }
+
+    public function index3($status)
+    {
+        return \DB::select("SELECT * FROM `recipies` WHERE status = $status AND dateIssue >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK) ORDER BY dateIssue DESC");
+    }
+
+    public function index4()
+    {
+        return \DB::select("SELECT * FROM `recipies` WHERE status = 1 ORDER BY dateIssue DESC");
     }
 
     /**

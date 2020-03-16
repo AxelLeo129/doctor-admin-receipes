@@ -37,6 +37,11 @@ class UserController extends Controller
     {
         return User::all();
     }
+    
+    public function index1()
+    {
+        return \DB::select("SELECT * FROM `users` WHERE rol = 2");
+    }
 
     /**
      * Display a listing of the resource.

@@ -75,8 +75,8 @@
                                     </vs-td>
                                     <vs-td>
                                         <span class="flex items-center px-2 py-1 rounded">
-                                              <div class="h-2 w-2 rounded-full mr-2" :class="'bg-' + item.color">
-                                              </div>{{item.status}}
+                                            <div class="h-2 w-2 rounded-full mr-2" :class="'bg-' + item.color">
+                                            </div>{{item.status}}
                                         </span>
                                     </vs-td>
                                     <vs-td>
@@ -122,7 +122,7 @@
     export default {
         data() {
             return {
-                status: ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado", "Facturando"],
+                status: ["Nuevo", "Empaquetando", "En Ruta", "Entregado", "Cancelado", "Reagendado", "Facturando"],
                 check: null,
                 checkpointReward: {},
                 subscribersGained: {},
@@ -156,12 +156,9 @@
             getRecipes() {
                 let token = localStorage.getItem("tu");
                 let id = localStorage.getItem("ui");
-                let f = new Date();
-                let fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-                fecha = fecha.toString();
                 axios({
                         method: "get",
-                        url: "http://127.0.0.1:8000/api/getRecipes",
+                        url: "http://127.0.0.1:8000/api/getReceMed/" + id,
                         headers: {
                             authorization: "Bearer " + token,
                             "content-type": "application/json"
@@ -169,11 +166,9 @@
                     })
                     .then(Response => {
                         Response.data.forEach(element => {
-                            if (element.doctor_id == id && fecha == element.dateIssue) {
-                                element.color = this.colore(element.status);
-                                element.status = this.status[element.status - 1];
-                                this.recipes.push(element);
-                            }
+                            element.color = this.colore(element.status);
+                            element.status = this.status[element.status - 1];
+                            this.recipes.push(element);
                         });
                     })
                     .catch(err => {

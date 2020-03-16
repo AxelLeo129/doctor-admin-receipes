@@ -2006,6 +2006,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2055,7 +2056,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         discountedAmount: 5700,
         total: 108300
       }
-    }, _defineProperty(_ref, "medicinas", []), _defineProperty(_ref, "popupActive", false), _defineProperty(_ref, "message", ""), _defineProperty(_ref, "idRecipe", null), _defineProperty(_ref, "origen", null), _defineProperty(_ref, "idMedico", null), _defineProperty(_ref, "popact", false), _defineProperty(_ref, "users", []), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "addNewDataSidebar", false), _defineProperty(_ref, "sidebarData", {}), _defineProperty(_ref, "status", ["Nuevo", "Empaquetando", "Entregando", "Entregado", "Cancelado", "Reagendado", "Facturando"]), _defineProperty(_ref, "buscar", ""), _defineProperty(_ref, "clickNotClose", true), _defineProperty(_ref, "isEmailSidebarActive", true), _defineProperty(_ref, "mailFilter", "inbox"), _defineProperty(_ref, "settings", {
+    }, _defineProperty(_ref, "medicinas", []), _defineProperty(_ref, "popupActive", false), _defineProperty(_ref, "message", ""), _defineProperty(_ref, "idRecipe", null), _defineProperty(_ref, "origen", null), _defineProperty(_ref, "idMedico", null), _defineProperty(_ref, "popact", false), _defineProperty(_ref, "users", []), _defineProperty(_ref, "popupActive2", false), _defineProperty(_ref, "addNewDataSidebar", false), _defineProperty(_ref, "sidebarData", {}), _defineProperty(_ref, "status", ["Nuevo", "Empaquetando", "En Ruta", "Entregado", "Cancelado", "Reagendado", "Facturando"]), _defineProperty(_ref, "buscar", ""), _defineProperty(_ref, "clickNotClose", true), _defineProperty(_ref, "isEmailSidebarActive", true), _defineProperty(_ref, "mailFilter", "inbox"), _defineProperty(_ref, "settings", {
       maxScrollbarLength: 60,
       wheelSpeed: 0.3
     }), _defineProperty(_ref, "recipes", []), _defineProperty(_ref, "doctors", []), _defineProperty(_ref, "primary", "primary"), _ref;
@@ -2083,7 +2084,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.getUsers();
-    this.getRecipes("Nuevo");
+    this.getRecipesNew();
   },
   methods: {
     openReagendar: function openReagendar(id) {
@@ -2117,7 +2118,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.$vs.loading.close();
 
-        _this.getRecipes("Nuevo");
+        _this.getRecipesNew();
 
         _this.$vs.notify({
           title: "Satisfactorio",
@@ -2153,7 +2154,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this2.$vs.loading.close();
 
-        _this2.getRecipes("Nuevo");
+        _this2.getRecipesNew();
 
         _this2.$vs.notify({
           title: "Satisfactorio",
@@ -2398,19 +2399,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this6.$vs.loading.close();
       });
     },
-    getRecipes: function getRecipes(a) {
+    getRecipesNew: function getRecipesNew() {
       var _this7 = this;
 
-      this.activado = a;
+      this.activado = 'Nuevo';
       this.openLoading();
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
-      var f = new Date();
-      var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-      fecha = fecha.toString();
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getRecipes",
+        url: "http://127.0.0.1:8000/api/getReceNew",
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
@@ -2419,8 +2417,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this7.recipes = []; //console.log(Response.data);
 
         Response.data.forEach(function (element) {
-          element.color = _this7.colore(element.status);
-          element.status = _this7.status[element.status - 1];
+          element.color = "primary";
+          element.status = "Nuevo";
           element.permission = 0;
           element.origen = 1;
           element.idMedico = element.doctor_id; //console.log(element.status);
@@ -2431,9 +2429,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           });
 
-          if (element.status == a) {
-            _this7.recipes.push(element);
-          }
+          _this7.recipes.push(element);
 
           if (_this7.recipes.length == 0) {
             _this7.message = "No hay resultados.";
@@ -2449,32 +2445,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this7.$vs.loading.close();
       });
     },
-    getRerecipes: function getRerecipes(a) {
+    getRecipes: function getRecipes(a) {
       var _this8 = this;
 
       this.activado = a;
       this.openLoading();
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
-      var f = new Date();
-      var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-      fecha = fecha.toString();
+
+      if (a == 'Empaquetando') {
+        a = 2;
+      } else if (a == 'En Ruta') {
+        a = 3;
+      } else if (a == 'Entregado') {
+        a = 4;
+      } else if (a == 'Cancelado') {
+        a = 5;
+      } else if (a == 'Reagendado') {
+        a = 6;
+      } else if (a == 'Facturando') {
+        a = 7;
+      }
+
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getRerecipes",
+        url: "http://127.0.0.1:8000/api/getReceSta/" + a,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        //console.log(Response);
         _this8.recipes = []; //console.log(Response.data);
 
         Response.data.forEach(function (element) {
-          element.color = 'warning';
-          element.status = 'Reprogramada';
-          element.permission = 1;
-          element.origen = 3;
+          element.color = _this8.colore(element.status);
+          element.status = _this8.status[element.status - 1];
+          element.permission = 0;
+          element.origen = 1;
           element.idMedico = element.doctor_id; //console.log(element.status);
 
           _this8.doctors.forEach(function (e) {
@@ -2497,6 +2504,53 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this8.activeLoading = false;
 
         _this8.$vs.loading.close();
+      });
+    },
+    getRerecipes: function getRerecipes(a) {
+      var _this9 = this;
+
+      this.activado = a;
+      this.openLoading();
+      var token = localStorage.getItem("tu");
+      var id = localStorage.getItem("ui");
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getRerecipes",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        //console.log(Response);
+        _this9.recipes = []; //console.log(Response.data);
+
+        Response.data.forEach(function (element) {
+          element.color = 'warning';
+          element.status = 'Reprogramada';
+          element.permission = 1;
+          element.origen = 3;
+          element.idMedico = element.doctor_id; //console.log(element.status);
+
+          _this9.doctors.forEach(function (e) {
+            if (e.id == element.doctor_id) {
+              element.doctor_name = e.name;
+            }
+          });
+
+          _this9.recipes.push(element);
+
+          if (_this9.recipes.length == 0) {
+            _this9.message = "No hay resultados.";
+          }
+        });
+        _this9.activeLoading = false;
+
+        _this9.$vs.loading.close();
+      }).catch(function (err) {
+        console.log(err);
+        _this9.activeLoading = false;
+
+        _this9.$vs.loading.close();
       });
     }
   }
@@ -4792,7 +4846,7 @@ var render = function() {
                           attrs: { tag: "span" },
                           on: {
                             click: function($event) {
-                              return _vm.getRecipes("Nuevo")
+                              return _vm.getRecipesNew()
                             }
                           }
                         },
@@ -4873,13 +4927,11 @@ var render = function() {
                         {
                           staticClass:
                             "flex justify-between items-center mt-4 cursor-pointer",
-                          class: {
-                            "text-primary": _vm.activado == "Entregando"
-                          },
+                          class: { "text-primary": _vm.activado == "En Ruta" },
                           attrs: { tag: "span" },
                           on: {
                             click: function($event) {
-                              return _vm.getRecipes("Entregando")
+                              return _vm.getRecipes("En Ruta")
                             }
                           }
                         },
@@ -4893,7 +4945,7 @@ var render = function() {
                               }),
                               _vm._v(" "),
                               _c("span", { staticClass: "text-lg ml-3" }, [
-                                _vm._v("Entregando")
+                                _vm._v("En Ruta")
                               ])
                             ],
                             1
@@ -4924,39 +4976,6 @@ var render = function() {
                           ])
                         ],
                         1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        {
-                          staticClass:
-                            "flex items-center justify-between items-center mt-4 cursor-pointer",
-                          class: {
-                            "text-primary": _vm.activado == "Cancelado"
-                          },
-                          attrs: { tag: "span" },
-                          on: {
-                            click: function($event) {
-                              return _vm.getRecipes("Cancelado")
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "div",
-                            { staticClass: "flex items-center mb-2" },
-                            [
-                              _c("feather-icon", {
-                                attrs: { icon: "HexagonIcon" }
-                              }),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "text-lg ml-3" }, [
-                                _vm._v("Descartadas")
-                              ])
-                            ],
-                            1
-                          )
-                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -5018,6 +5037,39 @@ var render = function() {
                               _vm._v(" "),
                               _c("span", { staticClass: "text-lg ml-3" }, [
                                 _vm._v("Reprogramada")
+                              ])
+                            ],
+                            1
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          staticClass:
+                            "flex items-center justify-between items-center mt-4 cursor-pointer",
+                          class: {
+                            "text-primary": _vm.activado == "Cancelado"
+                          },
+                          attrs: { tag: "span" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getRecipes("Cancelado")
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "flex items-center mb-2" },
+                            [
+                              _c("feather-icon", {
+                                attrs: { icon: "HexagonIcon" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-lg ml-3" }, [
+                                _vm._v("Descartadas")
                               ])
                             ],
                             1
@@ -5148,9 +5200,11 @@ var render = function() {
                                             _vm._s(mail.status1)
                                         )
                                       ])
-                                    : _vm._e(),
+                                    : _c("span", [
+                                        _vm._v(_vm._s(mail.dateIssue))
+                                      ]),
                                   _vm._v(" "),
-                                  mail.status1 != "2020" ? _c("br") : _vm._e(),
+                                  _c("br"),
                                   _vm._v(" "),
                                   _c("span", [_vm._v(_vm._s(mail.doctor_name))])
                                 ]),

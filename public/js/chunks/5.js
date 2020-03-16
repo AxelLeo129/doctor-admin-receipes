@@ -7005,6 +7005,21 @@ __webpack_require__.r(__webpack_exports__);
   icon: "ListIcon",
   rol: 3,
   disabled: 3
+}, // {
+//   url: "/buscarRecetas",
+//   name: "Buscar Recetas",
+//   slug: "BuscarRecetas",
+//   icon: "ListIcon",
+//   rol: 3,
+//   disabled: 3
+// },
+{
+  url: "/buscarPedidos",
+  name: "Buscar Pedidos",
+  slug: "BuscarPedidos",
+  icon: "ListIcon",
+  rol: 3,
+  disabled: 3
 }, {
   url: "/1visitador",
   name: "Listado médicos",
