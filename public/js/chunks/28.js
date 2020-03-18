@@ -101,7 +101,9 @@ __webpack_require__.r(__webpack_exports__);
             time: 4000,
             title: 'Exitosamente',
             text: 'Solicitud enviada exitosamente, por favor ingresa a tu corro electrónico.',
-            color: 'success'
+            color: 'success',
+            iconPack: 'feather',
+            icon: 'icon-check'
           });
 
           _this.$router.push('/home');

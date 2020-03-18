@@ -146,6 +146,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -338,7 +341,9 @@ __webpack_require__.r(__webpack_exports__);
               _this3.$vs.notify({
                 title: "Atención",
                 text: "Producto no encontrado.",
-                color: "warning"
+                color: "warning",
+                iconPack: 'feather',
+                icon: 'icon-alert-circle'
               });
 
               _this3.$router.push("/consola");
@@ -377,7 +382,9 @@ __webpack_require__.r(__webpack_exports__);
             _this3.$vs.notify({
               title: "Precaución",
               text: "Producto no encontrado.",
-              color: "warning"
+              color: "warning",
+              iconPack: 'feather',
+              icon: 'icon-alert-circle'
             });
 
             _this3.$router.push("/consola");
@@ -464,7 +471,9 @@ __webpack_require__.r(__webpack_exports__);
         _this3.$vs.notify({
           title: "Precaución",
           text: "Producto no encontrado.",
-          color: "warning"
+          color: "warning",
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
         });
 
         _this3.$router.push("/consola");
@@ -581,7 +590,9 @@ __webpack_require__.r(__webpack_exports__);
             _this5.$vs.notify({
               title: "Actualizado",
               text: "Producto actualizado exitosamente.",
-              color: "success"
+              color: "success",
+              iconPack: 'feather',
+              icon: 'icon-check'
             });
           }).catch(function (err) {
             _this5.activeLoading = false;

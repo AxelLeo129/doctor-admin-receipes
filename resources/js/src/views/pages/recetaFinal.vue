@@ -10,7 +10,7 @@
 
 <template>
     <div id="invoice-page">
-      <span class="text-danger text-sm" v-if="(bol === false && mailTo !== '')">Ingrese un email válido.</span>  
+        <span class="text-danger text-sm" v-if="(bol === false && mailTo !== '')">Ingrese un email válido.</span>
         <div class="flex flex-wrap items-center justify-between">
             <vx-input-group class="mb-base mr-3">
                 <vs-input v-model="mailTo" placeholder="Email" />
@@ -30,7 +30,7 @@
                     @click="finalizar">Finalizar</vs-button>
             </div>
         </div>
-      
+
 
         <vx-card id="invoice-container">
             <!-- INVOICE METADATA -->
@@ -234,7 +234,9 @@
                     this.$vs.notify({
                         title: "Enviado",
                         text: "Receta enviada exitosamente.",
-                        color: "success"
+                        color: "success",
+                        iconPack: 'feather',
+                        icon: 'icon-check'
                     });
                 }).catch(err => {
                     console.log(err);

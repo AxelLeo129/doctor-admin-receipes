@@ -161,7 +161,7 @@
                                 <div slot="reset-icon" class="absolute top-0 right-0 py-4 px-6"
                                     v-show="currentRefinement">
                                     <feather-icon icon="XIcon" svgClasses="h-6 w-6 cursor-pointer"
-                                        @click="refine('')" />
+                                        @click="buscar = '', refine('')" />
                                 </div>
                             </div>
                         </div>
@@ -482,7 +482,9 @@
                         text: "Debe de agregar medicamentos.",
                         color: "warning",
                         time: 4000,
-                        position: "top-center"
+                        position: "top-center",
+                        iconPack: 'feather',
+                        icon: 'icon-alert-circle'
                     });
                 }
             },

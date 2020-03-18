@@ -439,128 +439,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -752,7 +630,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.$vs.notify({
           title: "Actualizado",
           text: "Usuario actualizado exitosamente.",
-          color: "success"
+          color: "success",
+          iconPack: 'feather',
+          icon: 'icon-check'
         });
 
         _this3.$router.go();
@@ -820,7 +700,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this4.$vs.notify({
               title: "Actualizado",
               text: "Perfil actualizado exitosamente.",
-              color: "success"
+              color: "success",
+              iconPack: 'feather',
+              icon: 'icon-check'
             });
           }).catch(function (err) {
             _this4.activeLoading = false;
@@ -877,7 +759,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this5.$vs.notify({
             title: "Actualizado",
             text: "Contraseña actualizada exitosamente.",
-            color: "success"
+            color: "success",
+            iconPack: 'feather',
+            icon: 'icon-check'
           });
         } else {
           _this5.mypassword = null;
@@ -890,7 +774,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this5.$vs.notify({
             title: "Atención",
             text: "La contraseña no es correcta.",
-            color: "danger"
+            color: "danger",
+            iconPack: 'feather',
+            icon: 'icon-alert-circle'
           });
         }
       }).catch(function (err) {
@@ -1384,7 +1270,7 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      "\n                      Error en el\n                      servidor, por favor intentelo más tarde.\n                    "
+                                      "\n                                            Error en el\n                                            servidor, por favor intentelo más tarde.\n                                        "
                                     )
                                   ]
                                 )
@@ -1424,7 +1310,7 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                        ¿Desea usar registro\n                        Clínico?\n                      "
+                                            "\n                                                ¿Desea usar registro\n                                                Clínico?\n                                            "
                                           )
                                         ]
                                       )
@@ -1601,7 +1487,11 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_vm._v("Guardar Cambios")]
+                                  [
+                                    _vm._v(
+                                      "Guardar\n                                            Cambios"
+                                    )
+                                  ]
                                 ),
                                 _vm._v(" "),
                                 _c(
@@ -1611,7 +1501,11 @@ var render = function() {
                                     attrs: { type: "border", color: "danger" },
                                     on: { click: _vm.getData }
                                   },
-                                  [_vm._v("Resetear")]
+                                  [
+                                    _vm._v(
+                                      "\n                                            Resetear"
+                                    )
+                                  ]
                                 )
                               ],
                               1
@@ -1648,7 +1542,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                        Error en el servidor,\n                        por favor intentelo más tarde.\n                      "
+                                        "\n                                                Error en el servidor,\n                                                por favor intentelo más tarde.\n                                            "
                                       )
                                     ]
                                   )
@@ -1709,7 +1603,11 @@ var render = function() {
                                             {
                                               staticClass: "text-danger text-sm"
                                             },
-                                            [_vm._v("Este campo es requerido")]
+                                            [
+                                              _vm._v(
+                                                "Este\n                                                        campo es requerido"
+                                              )
+                                            ]
                                           )
                                         : _vm._e(),
                                       _vm._v(" "),
@@ -1735,7 +1633,11 @@ var render = function() {
                                             {
                                               staticClass: "text-danger text-sm"
                                             },
-                                            [_vm._v("Este campo es requerido")]
+                                            [
+                                              _vm._v(
+                                                "Este\n                                                        campo es requerido"
+                                              )
+                                            ]
                                           )
                                         : _vm._e(),
                                       _vm._v(" "),
@@ -1747,7 +1649,7 @@ var render = function() {
                                             },
                                             [
                                               _vm._v(
-                                                "Este campo debe tener al menos 4 caracteres."
+                                                "Este campo debe\n                                                        tener al menos 4 caracteres."
                                               )
                                             ]
                                           )
@@ -1775,7 +1677,11 @@ var render = function() {
                                             {
                                               staticClass: "text-danger text-sm"
                                             },
-                                            [_vm._v("Este campo es requerido.")]
+                                            [
+                                              _vm._v(
+                                                "Este campo es\n                                                        requerido."
+                                              )
+                                            ]
                                           )
                                         : _vm._e(),
                                       _vm._v(" "),
@@ -1788,7 +1694,7 @@ var render = function() {
                                             },
                                             [
                                               _vm._v(
-                                                "Este campo debe tener al menos 4 caracteres."
+                                                "Este campo\n                                                        debe tener al menos 4 caracteres."
                                               )
                                             ]
                                           )
@@ -1804,7 +1710,7 @@ var render = function() {
                                             },
                                             [
                                               _vm._v(
-                                                "La confirmación de contraseña no coincide."
+                                                "La\n                                                        confirmación de contraseña no coincide."
                                               )
                                             ]
                                           )
@@ -1852,7 +1758,11 @@ var render = function() {
                                             }
                                           }
                                         },
-                                        [_vm._v("Guardar Cambios")]
+                                        [
+                                          _vm._v(
+                                            "\n                                                        Guardar Cambios"
+                                          )
+                                        ]
                                       ),
                                       _vm._v(" "),
                                       _c(
@@ -1916,7 +1826,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                  Error en el servidor,\n                  por favor intentelo más tarde.\n                "
+                                  "\n                                    Error en el servidor,\n                                    por favor intentelo más tarde.\n                                "
                                 )
                               ]
                             )
@@ -1975,7 +1885,7 @@ var render = function() {
                                             },
                                             [
                                               _vm._v(
-                                                "\n                              Logo\n                              Clínica\n                            "
+                                                "\n                                                            Logo\n                                                            Clínica\n                                                        "
                                               )
                                             ]
                                           ),
@@ -2048,7 +1958,7 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                            Error en el servidor, por favor\n                            intentelo más tarde.\n                          "
+                                              "\n                                                        Error en el servidor, por favor\n                                                        intentelo más tarde.\n                                                    "
                                             )
                                           ]
                                         )
@@ -2186,7 +2096,11 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_vm._v("Guardar Cambios")]
+                                  [
+                                    _vm._v(
+                                      "\n                                            Guardar Cambios"
+                                    )
+                                  ]
                                 ),
                                 _vm._v(" "),
                                 _c(
@@ -2196,7 +2110,11 @@ var render = function() {
                                     attrs: { type: "border", color: "danger" },
                                     on: { click: _vm.getData }
                                   },
-                                  [_vm._v("Resetear")]
+                                  [
+                                    _vm._v(
+                                      "\n                                            Resetear"
+                                    )
+                                  ]
                                 )
                               ],
                               1

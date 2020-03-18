@@ -230,7 +230,9 @@
                     this.$vs.notify({
                         title: "Enviado",
                         text: "Receta enviada exitosamente.",
-                        color: "success"
+                        color: "success",
+                        iconPack: 'feather',
+                        icon: 'icon-check'
                     });
                 }).catch(err => {
                     console.log(err);

@@ -521,7 +521,9 @@ export default {
           this.$vs.notify({
             title: "Actualizado",
             text: "Usuario actualizado exitosamente.",
-            color: "success"
+            color: "success",
+            iconPack: 'feather',
+                                                        icon: 'icon-check'
           });
           this.$router.push("/1visitador");
         })
@@ -585,7 +587,9 @@ export default {
                   this.$vs.notify({
                     title: "Actualizado",
                     text: "Médico actualizado exitosamente.",
-                    color: "success"
+                    color: "success",
+                    iconPack: 'feather',
+                                                        icon: 'icon-check'
                   });
                 })
                 .catch(err => {

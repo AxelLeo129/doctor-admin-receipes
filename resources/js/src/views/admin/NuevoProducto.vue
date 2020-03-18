@@ -92,16 +92,19 @@
 
                     <div class="mt-4">
                         <label class="vs-input--label">Estado</label>
-                        <v-select :options="[{label: 'No Disponible', value: 0},{label: 'Disponible', value: 1}, {label: 'Oferta', value: 2}, {label: 'Agotado', value: 3}, {label: 'Descontinuado', value: 4}]" v-model="status" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+                        <v-select
+                            :options="[{label: 'No Disponible', value: 0},{label: 'Disponible', value: 1}, {label: 'Oferta', value: 2}, {label: 'Agotado', value: 3}, {label: 'Descontinuado', value: 4}]"
+                            v-model="status" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
                         <span class="text-danger text-sm" v-show="status === ''">{{ errors.campo }}</span>
                     </div>
 
                     <div class="mt-4">
                         <label class="vs-input--label">Regulado</label>
-                        <v-select :options="[{label: 'No', value: 0},{label: 'Si', value: 1}]" v-model="regulated" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+                        <v-select :options="[{label: 'No', value: 0},{label: 'Si', value: 1}]" v-model="regulated"
+                            :dir="$vs.rtl ? 'rtl' : 'ltr'" />
                         <span class="text-danger text-sm" v-show="regulated === ''">{{ errors.campo }}</span>
                     </div>
-                                        
+
                 </div>
 
                 <div class="vx-row">
@@ -144,8 +147,14 @@
                 image: "images/medicamentos/default.png",
                 image1: null,
                 name: null,
-                status: {label: 'Disponible', value: 1},
-                regulated: {label: 'No', value: 0},
+                status: {
+                    label: 'Disponible',
+                    value: 1
+                },
+                regulated: {
+                    label: 'No',
+                    value: 0
+                },
                 observations: null,
                 precentation: null,
                 description: null,
@@ -156,7 +165,10 @@
                 message: "Error en el servidor, Intente más tarde.",
                 laboratory: null,
                 warehouse: 'NOVEMED',
-                category: [{label: "General", value: 10}],
+                category: [{
+                    label: "General",
+                    value: 10
+                }],
                 base64textString: "",
                 categorias: [],
                 laboratorios: [],
@@ -180,11 +192,11 @@
                         this.presentaciones = [];
                         Response.data.forEach(element => {
                             //if (element.user_id == idu) {
-                                this.presentaciones.push({
-                                    label: element.name + '-' + element.unidad + '-' + element
-                                        .cantidad,
-                                    value: element.id
-                                });
+                            this.presentaciones.push({
+                                label: element.name + '-' + element.unidad + '-' + element
+                                    .cantidad,
+                                value: element.id
+                            });
                             //}
                         });
                     })
@@ -207,10 +219,10 @@
                         this.laboratorios = [];
                         Response.data.forEach(element => {
                             //if (element.user_id == idu) {
-                                this.laboratorios.push({
-                                    label: element.name,
-                                    value: element.id
-                                });
+                            this.laboratorios.push({
+                                label: element.name,
+                                value: element.id
+                            });
                             //}
                         });
                     })
@@ -232,10 +244,10 @@
                     .then(Response => {
                         Response.data.forEach(element => {
                             //if (element.user_id == idu) {
-                                this.categorias.push({
-                                    label: element.name,
-                                    value: element.id
-                                });
+                            this.categorias.push({
+                                label: element.name,
+                                value: element.id
+                            });
                             //}
                         });
                     })
@@ -311,7 +323,9 @@
                                 this.$vs.notify({
                                     title: "Agregado",
                                     text: "Producto creado exitosamente.",
-                                    color: "success"
+                                    color: "success",
+                                    iconPack: 'feather',
+                                    icon: 'icon-check'
                                 });
                             })
                             .catch(err => {

@@ -126,6 +126,12 @@
                         console.log(err);
                         this.activeLoading = false;
                         this.$vs.loading.close();
+                        localStorage.removeItem("tu");
+                        localStorage.removeItem("ru");
+                        localStorage.removeItem("ui");
+                        localStorage.removeItem("regi");
+                        localStorage.removeItem("nuevaRecetaData");
+                        this.$router.push("/");
                     });
             },
             openLoading() {

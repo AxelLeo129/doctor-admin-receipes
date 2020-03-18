@@ -71,7 +71,7 @@
                 </div>
 
                 <div class="vx-col md:w-1/2 w-full">
-                    
+
                     <div class="mt-4">
                         <label class="vs-input--label">Categoría</label>
                         <v-select multiple :closeOnSelect="false" v-model="category" :options="categorias"
@@ -102,13 +102,16 @@
 
                     <div class="mt-4">
                         <label class="vs-input--label">Estado</label>
-                        <v-select :options="[{label: 'No Disponible', value: 0},{label: 'Disponible', value: 1}, {label: 'Oferta', value: 2}, {label: 'Agotado', value: 3}, {label: 'Descontinuado', value: 4}]" v-model="status" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+                        <v-select
+                            :options="[{label: 'No Disponible', value: 0},{label: 'Disponible', value: 1}, {label: 'Oferta', value: 2}, {label: 'Agotado', value: 3}, {label: 'Descontinuado', value: 4}]"
+                            v-model="status" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
                         <span class="text-danger text-sm" v-show="status === ''">{{ errors.campo }}</span>
                     </div>
 
                     <div class="mt-4">
                         <label class="vs-input--label">Regulado</label>
-                        <v-select :options="[{label: 'No', value: 0},{label: 'Si', value: 1}]" v-model="regulated" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+                        <v-select :options="[{label: 'No', value: 0},{label: 'Si', value: 1}]" v-model="regulated"
+                            :dir="$vs.rtl ? 'rtl' : 'ltr'" />
                         <span class="text-danger text-sm" v-show="regulated === ''">{{ errors.campo }}</span>
                     </div>
                 </div>
@@ -317,13 +320,16 @@
                                         this.$vs.notify({
                                             title: "Atención",
                                             text: "Producto no encontrado.",
-                                            color: "warning"
+                                            color: "warning",
+                                            iconPack: 'feather',
+                                            icon: 'icon-alert-circle'
                                         });
                                         this.$router.push("/consola");
                                     } else {
                                         this.name = Response.data[0].name;
                                         //this.imagen = "data:image/png;base64," + Response.data[0].image;
-                                        this.imagen = 'https://pharmazone.app/images/productos/' + Response.data[0].img_url;
+                                        this.imagen = 'https://pharmazone.app/images/productos/' + Response
+                                            .data[0].img_url;
                                         this.imageName = Response.data[0].img_url;
                                         this.cost = Response.data[0].cost;
                                         this.base64textString = Response.data[0].image;
@@ -349,7 +355,9 @@
                                     this.$vs.notify({
                                         title: "Precaución",
                                         text: "Producto no encontrado.",
-                                        color: "warning"
+                                        color: "warning",
+                                        iconPack: 'feather',
+                                        icon: 'icon-alert-circle'
                                     });
                                     this.$router.push("/consola");
                                 });
@@ -363,22 +371,34 @@
                             this.cost = Response.data[0].cost;
                             this.observations = Response.data[0].observations;
                             this.status = Response.data[0].status;
-                            if(this.status == 0){
-                                this.status = {label: 'No Disponible', value: 0};
-                            } else if(this.status == 1){
-                                this.status = {label: 'Disponible', value: 1};
-                            }else if(this.status == 2){
-                                this.status = {label: 'Oferta', value: 2};
-                            }else{
-                                this.status = {label: 'Agotado', value: 3};
+                            if (this.status == 0) {
+                                this.status = {
+                                    label: 'No Disponible',
+                                    value: 0
+                                };
+                            } else if (this.status == 1) {
+                                this.status = {
+                                    label: 'Disponible',
+                                    value: 1
+                                };
+                            } else if (this.status == 2) {
+                                this.status = {
+                                    label: 'Oferta',
+                                    value: 2
+                                };
+                            } else {
+                                this.status = {
+                                    label: 'Agotado',
+                                    value: 3
+                                };
                             }
                             this.regulated = Response.data[0].regulated;
-                            if(this.regulated == 0){
+                            if (this.regulated == 0) {
                                 this.regulated = {
                                     label: 'No',
                                     value: 0
                                 }
-                            }else{
+                            } else {
                                 this.regulated = {
                                     label: 'Si',
                                     value: 1
@@ -408,7 +428,9 @@
                         this.$vs.notify({
                             title: "Precaución",
                             text: "Producto no encontrado.",
-                            color: "warning"
+                            color: "warning",
+                            iconPack: 'feather',
+                            icon: 'icon-alert-circle'
                         });
                         this.$router.push("/consola");
                     });
@@ -489,7 +511,7 @@
                         }
                     })
                     .then(Response => {
-                      console.log(Response);
+                        console.log(Response);
                         axios({
                                 method: "get",
                                 url: "http://127.0.0.1:8000/api/deleteProdCate/" + this.id,
@@ -518,7 +540,9 @@
                                         this.$vs.notify({
                                             title: "Actualizado",
                                             text: "Producto actualizado exitosamente.",
-                                            color: "success"
+                                            color: "success",
+                                            iconPack: 'feather',
+                                            icon: 'icon-check'
                                         });
                                     })
                                     .catch(err => {

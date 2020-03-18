@@ -259,6 +259,12 @@ __webpack_require__.r(__webpack_exports__);
     vSelect: vue_select__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   methods: {
+    openLoading: function openLoading() {
+      this.activeLoading = true;
+      this.$vs.loading({
+        type: "default"
+      });
+    },
     update: function update() {
       var _this = this;
 
@@ -308,7 +314,9 @@ __webpack_require__.r(__webpack_exports__);
             _this.$vs.notify({
               title: "Guardado",
               text: "Factura guardada exitosamente.",
-              color: "success"
+              color: "success",
+              iconPack: 'feather',
+              icon: 'icon-check'
             });
           }).catch(function (err) {
             _this.activeLoading = false;
@@ -331,7 +339,9 @@ __webpack_require__.r(__webpack_exports__);
           _this.$vs.notify({
             title: "Guardado",
             text: "Factura guardada exitosamente.",
-            color: "success"
+            color: "success",
+            iconPack: 'feather',
+            icon: 'icon-check'
           });
         }
       }).catch(function (err) {
@@ -346,6 +356,7 @@ __webpack_require__.r(__webpack_exports__);
     getusers: function getusers() {
       var _this2 = this;
 
+      this.openLoading();
       this.users = [];
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -364,8 +375,23 @@ __webpack_require__.r(__webpack_exports__);
           _this2.users.push(element);
         }); //console.log("USUARIO");
         //console.log(this.users);
+
+        _this2.activeLoading = false;
+
+        _this2.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
+        _this2.activeLoading = false;
+
+        _this2.$vs.loading.close();
+
+        localStorage.removeItem("tu");
+        localStorage.removeItem("ru");
+        localStorage.removeItem("ui");
+        localStorage.removeItem("regi");
+        localStorage.removeItem("nuevaRecetaData");
+
+        _this2.$router.push("/");
       });
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: "get",
@@ -393,12 +419,6 @@ __webpack_require__.r(__webpack_exports__);
       this.total = total;
       this.order_id = order_id;
       this.recipe_id = recipe_id;
-    },
-    openLoading: function openLoading() {
-      this.activeLoading = true;
-      this.$vs.loading({
-        type: "default"
-      });
     },
     inprogress: function inprogress(id_receta) {
       var _this3 = this;
@@ -435,7 +455,9 @@ __webpack_require__.r(__webpack_exports__);
           _this3.$vs.notify({
             title: "En proceso",
             text: "El pedido del cliente ahora está en proceso de envío.",
-            color: "success"
+            color: "success",
+            iconPack: 'feather',
+            icon: 'icon-check'
           });
         }).catch(function (err) {
           _this3.popupEnvio = false;
@@ -470,7 +492,9 @@ __webpack_require__.r(__webpack_exports__);
         this.$vs.notify({
           title: "En proceso",
           text: "Se realizaron los pedidos correctamente.",
-          color: "success"
+          color: "success",
+          iconPack: 'feather',
+          icon: 'icon-check'
         });
       }
     },

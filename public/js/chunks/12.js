@@ -154,6 +154,12 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    openLoading: function openLoading() {
+      this.activeLoading = true;
+      this.$vs.loading({
+        type: "default"
+      });
+    },
     colore: function colore(a) {
       if (a == 1) return "primary";
       if (a == 2) return "warning";
@@ -173,6 +179,7 @@ __webpack_require__.r(__webpack_exports__);
     getRecipes: function getRecipes() {
       var _this = this;
 
+      this.openLoading();
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
       axios__WEBPACK_IMPORTED_MODULE_5___default()({
@@ -189,8 +196,22 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.recipes.push(element);
         });
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
+
+        localStorage.removeItem("tu");
+        localStorage.removeItem("ru");
+        localStorage.removeItem("ui");
+        localStorage.removeItem("regi");
+        localStorage.removeItem("nuevaRecetaData");
+
+        _this.$router.push("/");
       });
     }
   },

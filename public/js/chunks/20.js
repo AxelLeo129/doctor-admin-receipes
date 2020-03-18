@@ -135,9 +135,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -205,7 +202,9 @@ __webpack_require__.r(__webpack_exports__);
           text: "Debe de agregar medicamentos.",
           color: "warning",
           time: 4000,
-          position: "top-center"
+          position: "top-center",
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
         });
         this.$router.push("/agregarProductos");
       }
@@ -299,7 +298,9 @@ __webpack_require__.r(__webpack_exports__);
             _this3.$vs.notify({
               title: "Satisfactorio",
               text: "Receta creada exitosamente.",
-              color: "success"
+              color: "success",
+              iconPack: 'feather',
+              icon: 'icon-alert-circle'
             });
           }).catch(function (err) {
             _this3.activeLoading = false;
@@ -309,7 +310,9 @@ __webpack_require__.r(__webpack_exports__);
             _this3.$vs.notify({
               title: "Error",
               text: "No se puedo crear la receta.",
-              color: "danger"
+              color: "danger",
+              iconPack: 'feather',
+              icon: 'icon-alert-circle'
             }); //console.log(err);
 
           });
@@ -321,7 +324,9 @@ __webpack_require__.r(__webpack_exports__);
           _this3.$vs.notify({
             title: "Error",
             text: "No se puedo crear la receta.",
-            color: "danger"
+            color: "danger",
+            iconPack: 'feather',
+            icon: 'icon-alert-circle'
           }); //console.log(err);
 
         });

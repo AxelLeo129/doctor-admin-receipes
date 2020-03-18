@@ -224,6 +224,7 @@ __webpack_require__.r(__webpack_exports__);
     getusers: function getusers() {
       var _this = this;
 
+      this.openLoading();
       this.users = [];
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
@@ -241,8 +242,23 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.users.push(element);
         }); //console.log(this.users);
+
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
+
+        localStorage.removeItem("tu");
+        localStorage.removeItem("ru");
+        localStorage.removeItem("ui");
+        localStorage.removeItem("regi");
+        localStorage.removeItem("nuevaRecetaData");
+
+        _this.$router.push("/");
       });
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: "get",
@@ -306,7 +322,9 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$vs.notify({
           title: "En camino",
           text: "Cambiaste el estado de asignado a en camino",
-          color: "success"
+          color: "success",
+          iconPack: 'feather',
+          icon: 'icon-check'
         });
       }).catch(function (err) {
         _this2.popupEnvio = false;
@@ -375,7 +393,9 @@ __webpack_require__.r(__webpack_exports__);
             _this3.$vs.notify({
               title: "Entrega completada",
               text: "Felicidades, completaste tu entrega",
-              color: "success"
+              color: "success",
+              iconPack: 'feather',
+              icon: 'icon-check'
             });
           }).catch(function (err) {
             _this3.activeLoading = false;
@@ -400,7 +420,9 @@ __webpack_require__.r(__webpack_exports__);
           _this3.$vs.notify({
             title: "Entrega completada",
             text: "Felicidades, completaste tu entrega",
-            color: "success"
+            color: "success",
+            iconPack: 'feather',
+            icon: 'icon-check'
           });
         }
       }).catch(function (err) {

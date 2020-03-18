@@ -139,7 +139,9 @@ __webpack_require__.r(__webpack_exports__);
           _this.$vs.notify({
             title: "Atención",
             text: "Paciente no encontrado.",
-            color: "warning"
+            color: "warning",
+            iconPack: 'feather',
+            icon: 'icon-alert-circle'
           });
 
           _this.$router.push("/listadoPacientes");

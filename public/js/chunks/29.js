@@ -109,12 +109,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -125,6 +119,12 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    openLoading: function openLoading() {
+      this.activeLoading = true;
+      this.$vs.loading({
+        type: "default"
+      });
+    },
     nuevo: function nuevo() {
       this.$router.push("/nuevoProducto");
     },
@@ -134,6 +134,7 @@ __webpack_require__.r(__webpack_exports__);
     getData: function getData() {
       var _this = this;
 
+      this.openLoading();
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
@@ -149,8 +150,22 @@ __webpack_require__.r(__webpack_exports__);
           _this.medicamentos.push(element); //}
 
         });
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
+
+        localStorage.removeItem("tu");
+        localStorage.removeItem("ru");
+        localStorage.removeItem("ui");
+        localStorage.removeItem("regi");
+        localStorage.removeItem("nuevaRecetaData");
+
+        _this.$router.push("/");
       });
     },
     deleteProduct: function deleteProduct(id) {
@@ -172,7 +187,9 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$vs.notify({
           title: "Eliminado",
           text: "Producto eliminado exitosamente.",
-          color: "success"
+          color: "success",
+          iconPack: 'feather',
+          icon: 'icon-check'
         });
       }).catch(function (err) {
         console.log(err);
@@ -439,7 +456,11 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Aceptar")]
+                                [
+                                  _vm._v(
+                                    "Aceptar\n                                    "
+                                  )
+                                ]
                               ),
                               _vm._v(" "),
                               _c(
@@ -452,7 +473,11 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Cancelar")]
+                                [
+                                  _vm._v(
+                                    "Cancelar\n                                    "
+                                  )
+                                ]
                               )
                             ],
                             1

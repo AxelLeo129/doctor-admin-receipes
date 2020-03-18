@@ -97,6 +97,12 @@
             };
         },
         methods: {
+            openLoading() {
+                this.activeLoading = true;
+                this.$vs.loading({
+                    type: "default"
+                });
+            },
             colore(a) {
                 if (a == 1) return "primary";
                 if (a == 2) return "warning";
@@ -114,6 +120,7 @@
                 this.$router.push("/receta/" + id);
             },
             getRecipes() {
+                this.openLoading();
                 let token = localStorage.getItem("tu");
                 let id = localStorage.getItem("ui");
                 axios({
@@ -129,11 +136,20 @@
                             element.color = this.colore(element.status);
                             element.status = this.status[element.status - 1];
                             this.recipes.push(element);
-
                         });
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
                     })
                     .catch(err => {
                         console.log(err);
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                        localStorage.removeItem("tu");
+                        localStorage.removeItem("ru");
+                        localStorage.removeItem("ui");
+                        localStorage.removeItem("regi");
+                        localStorage.removeItem("nuevaRecetaData");
+                        this.$router.push("/");
                     });
             }
         },

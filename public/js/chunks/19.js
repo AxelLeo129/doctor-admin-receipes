@@ -449,7 +449,9 @@ __webpack_require__.r(__webpack_exports__);
           text: "Debe de agregar medicamentos.",
           color: "warning",
           time: 4000,
-          position: "top-center"
+          position: "top-center",
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
         });
       }
     },
@@ -987,7 +989,7 @@ var render = function() {
                                       },
                                       on: {
                                         click: function($event) {
-                                          return refine("")
+                                          ;(_vm.buscar = ""), refine("")
                                         }
                                       }
                                     })

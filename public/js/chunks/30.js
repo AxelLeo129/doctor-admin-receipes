@@ -60,18 +60,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -106,7 +94,9 @@ __webpack_require__.r(__webpack_exports__);
           _this.$vs.notify({
             title: "Atención",
             text: "Categoría no encontrada.",
-            color: "warning"
+            color: "warning",
+            iconPack: 'feather',
+            icon: 'icon-alert-circle'
           });
 
           _this.$router.push("/listadoCategorias");
@@ -125,7 +115,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.$vs.notify({
           title: "Precaución",
           text: "Categoría no encontrada.",
-          color: "warning"
+          color: "warning",
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
         });
 
         _this.$router.push("/listadoCategorias");
@@ -165,7 +157,9 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$vs.notify({
           title: "Actualizado",
           text: "Categoría actualizada exitosamente.",
-          color: "success"
+          color: "success",
+          iconPack: 'feather',
+          icon: 'icon-check'
         });
       }).catch(function (err) {
         _this2.activeLoading = false;
@@ -360,7 +354,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Resetear")]
+                          [_vm._v("Resetear\n                            ")]
                         )
                       ],
                       1
@@ -384,7 +378,7 @@ var render = function() {
               _vm._v(" "),
               _c("p", [
                 _vm._v(
-                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nobis quo sunt ducimus minima unde labore dolores saepe qui doloribus numquam, accusantium ad adipisci voluptates velit necessitatibus vel totam dolor?"
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nobis quo sunt ducimus minima unde\n                    labore dolores saepe qui doloribus numquam, accusantium ad adipisci voluptates velit\n                    necessitatibus vel totam dolor?"
                 )
               ])
             ])

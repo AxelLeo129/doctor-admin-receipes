@@ -537,7 +537,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.$vs.notify({
           title: "Actualizado",
           text: "Usuario actualizado exitosamente.",
-          color: "success"
+          color: "success",
+          iconPack: 'feather',
+          icon: 'icon-check'
         });
 
         _this3.$router.push("/1visitador");
@@ -605,7 +607,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this4.$vs.notify({
               title: "Actualizado",
               text: "Médico actualizado exitosamente.",
-              color: "success"
+              color: "success",
+              iconPack: 'feather',
+              icon: 'icon-check'
             });
           }).catch(function (err) {
             _this4.activeLoading = false;

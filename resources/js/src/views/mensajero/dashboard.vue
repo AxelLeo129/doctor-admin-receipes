@@ -209,6 +209,7 @@
         },
         methods: {
             getusers() {
+                this.openLoading();
                 this.users = [];
                 let token = localStorage.getItem("tu");
                 let id = localStorage.getItem("ui");
@@ -230,9 +231,19 @@
                             this.users.push(element);
                         });
                         //console.log(this.users);
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
                     })
                     .catch(err => {
                         console.log(err);
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                        localStorage.removeItem("tu");
+                        localStorage.removeItem("ru");
+                        localStorage.removeItem("ui");
+                        localStorage.removeItem("regi");
+                        localStorage.removeItem("nuevaRecetaData");
+                        this.$router.push("/");
                     });
 
                 axios({
@@ -296,7 +307,9 @@
                         this.$vs.notify({
                             title: "En camino",
                             text: "Cambiaste el estado de asignado a en camino",
-                            color: "success"
+                            color: "success",
+                            iconPack: 'feather',
+                            icon: 'icon-check'
                         });
                     })
                     .catch(err => {
@@ -358,7 +371,9 @@
                                     this.$vs.notify({
                                         title: "Entrega completada",
                                         text: "Felicidades, completaste tu entrega",
-                                        color: "success"
+                                        color: "success",
+                                        iconPack: 'feather',
+                                        icon: 'icon-check'
                                     });
                                 })
                                 .catch(err => {
@@ -377,7 +392,9 @@
                             this.$vs.notify({
                                 title: "Entrega completada",
                                 text: "Felicidades, completaste tu entrega",
-                                color: "success"
+                                color: "success",
+                                iconPack: 'feather',
+                                icon: 'icon-check'
                             });
                         }
                     })

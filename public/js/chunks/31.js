@@ -97,16 +97,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -148,6 +138,13 @@ __webpack_require__.r(__webpack_exports__);
         _this.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
+        localStorage.removeItem("tu");
+        localStorage.removeItem("ru");
+        localStorage.removeItem("ui");
+        localStorage.removeItem("regi");
+        localStorage.removeItem("nuevaRecetaData");
+
+        _this.$router.push("/");
       });
     },
     openLoading: function openLoading() {
@@ -175,7 +172,9 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$vs.notify({
           title: "Eliminado",
           text: "Categoría eliminada exitosamente.",
-          color: "success"
+          color: "success",
+          iconPack: 'feather',
+          icon: 'icon-check'
         });
       }).catch(function (err) {
         console.log(err);
@@ -413,7 +412,11 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Aceptar")]
+                                [
+                                  _vm._v(
+                                    "\n                                        Aceptar"
+                                  )
+                                ]
                               ),
                               _vm._v(" "),
                               _c(
@@ -426,7 +429,11 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Cancelar")]
+                                [
+                                  _vm._v(
+                                    "Cancelar\n                                    "
+                                  )
+                                ]
                               )
                             ],
                             1

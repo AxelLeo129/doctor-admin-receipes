@@ -192,21 +192,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -262,12 +247,19 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    openLoading: function openLoading() {
+      this.activeLoading = true;
+      this.$vs.loading({
+        type: "default"
+      });
+    },
     edit: function edit(id) {
       this.$router.push("/editarProducto/" + id);
     },
     getData: function getData() {
       var _this = this;
 
+      this.openLoading();
       var token = localStorage.getItem("tu");
       var id = localStorage.getItem("ui");
       axios__WEBPACK_IMPORTED_MODULE_5___default()({
@@ -283,8 +275,22 @@ __webpack_require__.r(__webpack_exports__);
           _this.medicamentos.push(element); //}
 
         });
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
       }).catch(function (err) {
         console.log(err);
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
+
+        localStorage.removeItem("tu");
+        localStorage.removeItem("ru");
+        localStorage.removeItem("ui");
+        localStorage.removeItem("regi");
+        localStorage.removeItem("nuevaRecetaData");
+
+        _this.$router.push("/");
       });
     },
     deleteProduct: function deleteProduct(id) {
@@ -306,7 +312,9 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$vs.notify({
           title: "Eliminado",
           text: "Producto eliminado exitosamente.",
-          color: "success"
+          color: "success",
+          iconPack: 'feather',
+          icon: 'icon-check'
         });
       }).catch(function (err) {
         console.log(err);
@@ -425,7 +433,7 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n            Ingrese un nuevo\n            medicamento/producto.\n          "
+                      "\n                        Ingrese un nuevo\n                        medicamento/producto.\n                    "
                     )
                   ]
                 )
@@ -548,7 +556,11 @@ var render = function() {
                                             }
                                           }
                                         },
-                                        [_vm._v("Editar")]
+                                        [
+                                          _vm._v(
+                                            "\n                                            Editar"
+                                          )
+                                        ]
                                       ),
                                       _vm._v(" "),
                                       _c(

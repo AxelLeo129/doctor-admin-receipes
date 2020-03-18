@@ -159,7 +159,9 @@ export default {
               this.$vs.notify({
                 title: "Satisfactorio",
                 text: "Médico creado satisfactoriamente",
-                color: "success"
+                color: "success",
+                iconPack: 'feather',
+                                                        icon: 'icon-check'
               });
               this.$router.push("/1visitador");
             })

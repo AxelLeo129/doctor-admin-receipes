@@ -98,13 +98,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -143,9 +136,6 @@ __webpack_require__.r(__webpack_exports__);
       } else if (this.observations == null || this.observations == "") {
         this.actiErr2 = true;
         this.observations = "";
-      } else if (this.nextAppointment == null || this.nextAppointment == "") {
-        this.actiErr3 = true;
-        this.nextAppointment = "";
       } else {
         this.openLoading();
         var token = localStorage.getItem("tu");
@@ -157,7 +147,7 @@ __webpack_require__.r(__webpack_exports__);
           symptom: this.symptom,
           diagnostics: this.diagnostics,
           observations: this.observations,
-          nextAppointment: this.nextAppointment,
+          nextAppointment: '',
           status: this.nuevaRecetaData.status,
           dateIssue: this.nuevaRecetaData.dateIssue,
           medicines: this.nuevaRecetaData.medicines,
@@ -207,7 +197,9 @@ __webpack_require__.r(__webpack_exports__);
             _this.$vs.notify({
               title: "Satisfactorio",
               text: "Receta creada exitosamente.",
-              color: "success"
+              color: "success",
+              iconPack: 'feather',
+              icon: 'icon-check'
             });
           }).catch(function (err) {
             _this.activeLoading = false;
@@ -217,7 +209,9 @@ __webpack_require__.r(__webpack_exports__);
             _this.$vs.notify({
               title: "Error",
               text: "No se puedo crear la receta.",
-              color: "danger"
+              color: "danger",
+              iconPack: 'feather',
+              icon: 'icon-alert-circle'
             }); //console.log(err);
 
           });
@@ -229,7 +223,9 @@ __webpack_require__.r(__webpack_exports__);
           _this.$vs.notify({
             title: "Error",
             text: "No se puedo crear la receta.",
-            color: "danger"
+            color: "danger",
+            iconPack: 'feather',
+            icon: 'icon-alert-circle'
           }); //console.log(err);
 
         });
@@ -357,7 +353,7 @@ var render = function() {
   return _c("vx-card", { attrs: { title: "Registro de la Consulta" } }, [
     _c("p", [
       _vm._v(
-        "Ingrese información sobre los síntomas, diagnóstico y cualquier otra información de utilizadad para el seguimiento de su paciente."
+        "Ingrese información sobre los síntomas, diagnóstico y cualquier otra información de utilizadad para el\n        seguimiento de su paciente."
       )
     ]),
     _vm._v(" "),
@@ -454,7 +450,7 @@ var render = function() {
                 ],
                 staticClass: "text-danger text-sm"
               },
-              [_vm._v("Este campo es requerido.")]
+              [_vm._v("Este campo es\n                    requerido.")]
             )
           ],
           1
@@ -492,52 +488,7 @@ var render = function() {
                 ],
                 staticClass: "text-danger text-sm"
               },
-              [_vm._v("Este campo es requerido.")]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "mt-4" },
-              [
-                _c("label", { staticClass: "text-sm" }, [
-                  _vm._v("Próxima Cita")
-                ]),
-                _vm._v(" "),
-                _c("flat-pickr", {
-                  staticClass: "w-full",
-                  attrs: {
-                    config: { dateFormat: "d F Y", minDate: new Date() },
-                    name: "nextAppointment"
-                  },
-                  model: {
-                    value: _vm.nextAppointment,
-                    callback: function($$v) {
-                      _vm.nextAppointment = $$v
-                    },
-                    expression: "nextAppointment"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value:
-                      _vm.nextAppointment === "" ||
-                      (_vm.nextAppointment === "" && _vm.actiErr3 == true),
-                    expression:
-                      "nextAppointment === '' || (nextAppointment === '' && actiErr3 == true)"
-                  }
-                ],
-                staticClass: "text-danger text-sm"
-              },
-              [_vm._v("Este campo es requerido.")]
+              [_vm._v("Este campo es\n                    requerido.")]
             )
           ],
           1
@@ -559,7 +510,7 @@ var render = function() {
                   attrs: { color: "primary", type: "filled" },
                   on: { click: _vm.formSubmitted }
                 },
-                [_vm._v("Finalizar")]
+                [_vm._v("Finalizar\n                    ")]
               )
             ],
             1

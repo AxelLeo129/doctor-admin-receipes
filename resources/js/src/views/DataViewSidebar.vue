@@ -783,8 +783,8 @@
                         ids.push(element.id);
                     }
                 });
-                this.cantidades.forEach(element =>{
-                    if(element > 0){
+                this.cantidades.forEach(element => {
+                    if (element > 0) {
                         quantita.push(element);
                     }
                 });
@@ -1047,7 +1047,9 @@
                                                     this.$vs.notify({
                                                         title: "Satisfactorio",
                                                         text: "Pedido enviado al facturador exitosamente.",
-                                                        color: "success"
+                                                        color: "success",
+                                                        iconPack: 'feather',
+                                                        icon: 'icon-check'
                                                     });
                                                     this.$router.go();
                                                 }).catch(err => {
@@ -1099,8 +1101,8 @@
                         ids.push(element.id);
                     }
                 });
-                this.cantidades.forEach(element =>{
-                    if(element > 0){
+                this.cantidades.forEach(element => {
+                    if (element > 0) {
                         quantita.push(element);
                     }
                 });
@@ -1342,7 +1344,9 @@
                                                     this.$vs.notify({
                                                         title: "Satisfactorio",
                                                         text: "Pedido enviado al facturador exitosamente.",
-                                                        color: "success"
+                                                        color: "success",
+                                                        iconPack: 'feather',
+                                                        icon: 'icon-check'
                                                     });
                                                     this.$router.go();
                                                 }).catch(err => {
@@ -1486,7 +1490,9 @@
                         this.$vs.notify({
                             title: "Satisfactorio",
                             text: "Cliente creado exitosamente.",
-                            color: "success"
+                            color: "success",
+                            iconPack: 'feather',
+                            icon: 'icon-check'
                         });
                     })
                     .catch(err => {
@@ -1495,7 +1501,9 @@
                         this.$vs.notify({
                             title: "Error",
                             text: "Error, por favor intentelo más tarde.",
-                            color: "danger"
+                            color: "danger",
+                            iconPack: 'feather',
+                            icon: 'icon-check'
                         });
                         console.log(err);
                     });

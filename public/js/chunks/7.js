@@ -1046,7 +1046,9 @@ __webpack_require__.r(__webpack_exports__);
                 _this5.$vs.notify({
                   title: "Satisfactorio",
                   text: "Pedido enviado al facturador exitosamente.",
-                  color: "success"
+                  color: "success",
+                  iconPack: 'feather',
+                  icon: 'icon-check'
                 });
 
                 _this5.$router.go();
@@ -1349,7 +1351,9 @@ __webpack_require__.r(__webpack_exports__);
                 _this6.$vs.notify({
                   title: "Satisfactorio",
                   text: "Pedido enviado al facturador exitosamente.",
-                  color: "success"
+                  color: "success",
+                  iconPack: 'feather',
+                  icon: 'icon-check'
                 });
 
                 _this6.$router.go();
@@ -1505,7 +1509,9 @@ __webpack_require__.r(__webpack_exports__);
         _this8.$vs.notify({
           title: "Satisfactorio",
           text: "Cliente creado exitosamente.",
-          color: "success"
+          color: "success",
+          iconPack: 'feather',
+          icon: 'icon-check'
         });
       }).catch(function (err) {
         _this8.activeLoading = false;
@@ -1515,7 +1521,9 @@ __webpack_require__.r(__webpack_exports__);
         _this8.$vs.notify({
           title: "Error",
           text: "Error, por favor intentelo más tarde.",
-          color: "danger"
+          color: "danger",
+          iconPack: 'feather',
+          icon: 'icon-check'
         });
 
         console.log(err);
@@ -2007,6 +2015,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -2123,7 +2133,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.$vs.notify({
           title: "Satisfactorio",
           text: "Pedido reagendado exitosamente.",
-          color: "success"
+          color: "success",
+          iconPack: 'feather',
+          icon: 'icon-check'
         });
       }).catch(function (err) {
         _this.activeLoading = false;
@@ -2159,7 +2171,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.$vs.notify({
           title: "Satisfactorio",
           text: "Pedido descartado exitosamente.",
-          color: "success"
+          color: "success",
+          iconPack: 'feather',
+          icon: 'icon-check'
         });
       }).catch(function (err) {
         _this2.activeLoading = false;
@@ -2397,6 +2411,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this6.activeLoading = false;
 
         _this6.$vs.loading.close();
+
+        localStorage.removeItem("tu");
+        localStorage.removeItem("ru");
+        localStorage.removeItem("ui");
+        localStorage.removeItem("regi");
+        localStorage.removeItem("nuevaRecetaData");
+
+        _this6.$router.push("/");
       });
     },
     getRecipesNew: function getRecipesNew() {
@@ -2443,6 +2465,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this7.activeLoading = false;
 
         _this7.$vs.loading.close();
+
+        localStorage.removeItem("tu");
+        localStorage.removeItem("ru");
+        localStorage.removeItem("ui");
+        localStorage.removeItem("regi");
+        localStorage.removeItem("nuevaRecetaData");
+
+        _this7.$router.push("/");
       });
     },
     getRecipes: function getRecipes(a) {
@@ -2504,6 +2534,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this8.activeLoading = false;
 
         _this8.$vs.loading.close();
+
+        localStorage.removeItem("tu");
+        localStorage.removeItem("ru");
+        localStorage.removeItem("ui");
+        localStorage.removeItem("regi");
+        localStorage.removeItem("nuevaRecetaData");
+
+        _this8.$router.push("/");
       });
     },
     getRerecipes: function getRerecipes(a) {
@@ -2551,6 +2589,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this9.activeLoading = false;
 
         _this9.$vs.loading.close();
+
+        localStorage.removeItem("tu");
+        localStorage.removeItem("ru");
+        localStorage.removeItem("ui");
+        localStorage.removeItem("regi");
+        localStorage.removeItem("nuevaRecetaData");
+
+        _this9.$router.push("/");
       });
     }
   }

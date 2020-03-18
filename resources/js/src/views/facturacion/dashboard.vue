@@ -246,6 +246,12 @@
             vSelect
         },
         methods: {
+            openLoading() {
+                this.activeLoading = true;
+                this.$vs.loading({
+                    type: "default"
+                });
+            },
             update() {
                 this.openLoading();
                 let token = localStorage.getItem("tu");
@@ -291,7 +297,9 @@
                                     this.$vs.notify({
                                         title: "Guardado",
                                         text: "Factura guardada exitosamente.",
-                                        color: "success"
+                                        color: "success",
+                                        iconPack: 'feather',
+                                        icon: 'icon-check'
                                     });
                                 })
                                 .catch(err => {
@@ -309,7 +317,9 @@
                             this.$vs.notify({
                                 title: "Guardado",
                                 text: "Factura guardada exitosamente.",
-                                color: "success"
+                                color: "success",
+                                iconPack: 'feather',
+                                icon: 'icon-check'
                             });
                         }
                     })
@@ -321,6 +331,7 @@
                     });
             },
             getusers() {
+                this.openLoading();
                 this.users = [];
                 let token = localStorage.getItem("tu");
                 let id = localStorage.getItem("ui");
@@ -343,9 +354,19 @@
                         });
                         //console.log("USUARIO");
                         //console.log(this.users);
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
                     })
                     .catch(err => {
                         console.log(err);
+                        this.activeLoading = false;
+                        this.$vs.loading.close();
+                        localStorage.removeItem("tu");
+                        localStorage.removeItem("ru");
+                        localStorage.removeItem("ui");
+                        localStorage.removeItem("regi");
+                        localStorage.removeItem("nuevaRecetaData");
+                        this.$router.push("/");
                     });
 
                 axios({
@@ -379,12 +400,6 @@
                 this.order_id = order_id;
                 this.recipe_id = recipe_id;
             },
-            openLoading() {
-                this.activeLoading = true;
-                this.$vs.loading({
-                    type: "default"
-                });
-            },
             inprogress(id_receta) {
                 let token = localStorage.getItem("tu");
                 let idu = localStorage.getItem("ui");
@@ -414,7 +429,9 @@
                             this.$vs.notify({
                                 title: "En proceso",
                                 text: "El pedido del cliente ahora está en proceso de envío.",
-                                color: "success"
+                                color: "success",
+                                iconPack: 'feather',
+                                icon: 'icon-check'
                             });
                         })
                         .catch(err => {
@@ -448,7 +465,9 @@
                     this.$vs.notify({
                         title: "En proceso",
                         text: "Se realizaron los pedidos correctamente.",
-                        color: "success"
+                        color: "success",
+                        iconPack: 'feather',
+                        icon: 'icon-check'
                     });
                 }
             },

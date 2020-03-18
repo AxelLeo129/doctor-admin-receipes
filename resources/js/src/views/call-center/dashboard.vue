@@ -35,9 +35,10 @@
         </vs-popup>
         <vs-popup class="holamundo" title="Reagendar la receta" :active.sync="popact">
             <p>Seleccione la fecha para reagendar.</p>
-            <vs-input class="inputx" v-model="fechaR" type="date"/>
+            <vs-input class="inputx" v-model="fechaR" type="date" />
             <span class="text-danger text-sm" v-if="fechaR == ''">Este campo es requerido.</span>
-            <vs-button color="primary" type="filled" class="mt-5" :disabled="fechaR == null || fechaR == ''" @click="reagendar">Reagendar</vs-button>
+            <vs-button color="primary" type="filled" class="mt-5" :disabled="fechaR == null || fechaR == ''"
+                @click="reagendar">Reagendar</vs-button>
         </vs-popup>
         <vs-popup fullscreen class="holamundo" title="Detalles de la Receta" :active.sync="popupActive">
             <vx-card id="invoice-container">
@@ -177,8 +178,8 @@
                                 <feather-icon icon="FileTextIcon"></feather-icon>
                                 <span class="text-lg ml-3">Facturando</span>
                             </li>
-                            
-                            
+
+
                             <li tag="span" @click="getRecipes('Empaquetando')"
                                 class="flex items-center mt-4 mb-2 cursor-pointer"
                                 :class="{'text-primary': activado == 'Empaquetando'}">
@@ -277,11 +278,12 @@
                                     <div class="mail-item__meta flex items-center">
                                         <div class="mail__details">
                                             <div class="email__labels hidden sm:flex items-center">
-                                                <div class="vx-row h-2 w-2 rounded-full mr-2" :class="'bg-' + mail.color">
+                                                <div class="vx-row h-2 w-2 rounded-full mr-2"
+                                                    :class="'bg-' + mail.color">
                                                 </div>
                                                 <span>{{ mail.status }}</span>
                                             </div>
-                                            <br v-if="mail.reproDate == '2020'">  
+                                            <br v-if="mail.reproDate == '2020'">
                                             <div v-if="mail.reproDate != '2020'" class="vx-row">
                                                 <span>{{mail.reproDate}}</span>
                                             </div>
@@ -456,8 +458,8 @@
                 this.openLoading();
                 let token = localStorage.getItem('tu');
                 let f = new Date();
-                        let fecha =
-                            f.getDate() + "-" + (f.getMonth() + 1) + "-" + f.getFullYear();
+                let fecha =
+                    f.getDate() + "-" + (f.getMonth() + 1) + "-" + f.getFullYear();
                 axios({
                         method: "put",
                         url: "http://127.0.0.1:8000/api/reagendar",
@@ -474,14 +476,16 @@
                     })
                     .then(Response => {
                         this.fechaR = null;
-                        this.popact = false; 
+                        this.popact = false;
                         this.activeLoading = false;
                         this.$vs.loading.close();
                         this.getRecipesNew();
                         this.$vs.notify({
                             title: "Satisfactorio",
                             text: "Pedido reagendado exitosamente.",
-                            color: "success"
+                            color: "success",
+                            iconPack: 'feather',
+                            icon: 'icon-check'
                         });
                     })
                     .catch(err => {
@@ -512,7 +516,9 @@
                         this.$vs.notify({
                             title: "Satisfactorio",
                             text: "Pedido descartado exitosamente.",
-                            color: "success"
+                            color: "success",
+                            iconPack: 'feather',
+                            icon: 'icon-check'
                         });
                     })
                     .catch(err => {
@@ -749,9 +755,15 @@
                         console.log(err);
                         this.activeLoading = false;
                         this.$vs.loading.close();
+                        localStorage.removeItem("tu");
+                        localStorage.removeItem("ru");
+                        localStorage.removeItem("ui");
+                        localStorage.removeItem("regi");
+                        localStorage.removeItem("nuevaRecetaData");
+                        this.$router.push("/");
                     });
             },
-            getRecipesNew(){
+            getRecipesNew() {
                 this.activado = 'Nuevo';
                 this.openLoading();
                 let token = localStorage.getItem("tu");
@@ -791,6 +803,12 @@
                         console.log(err);
                         this.activeLoading = false;
                         this.$vs.loading.close();
+                        localStorage.removeItem("tu");
+                        localStorage.removeItem("ru");
+                        localStorage.removeItem("ui");
+                        localStorage.removeItem("regi");
+                        localStorage.removeItem("nuevaRecetaData");
+                        this.$router.push("/");
                     });
             },
             getRecipes(a) {
@@ -798,25 +816,20 @@
                 this.openLoading();
                 let token = localStorage.getItem("tu");
                 let id = localStorage.getItem("ui");
-                if(a == 'Empaquetando'){
+                if (a == 'Empaquetando') {
                     a = 2;
-                }
-                else if(a == 'En Ruta'){
+                } else if (a == 'En Ruta') {
                     a = 3;
-                }
-                else if(a == 'Entregado'){
+                } else if (a == 'Entregado') {
                     a = 4;
-                }
-                else if(a == 'Cancelado'){
+                } else if (a == 'Cancelado') {
                     a = 5;
-                }
-                else if(a == 'Reagendado'){
+                } else if (a == 'Reagendado') {
                     a = 6;
-                }
-                else if(a == 'Facturando'){
+                } else if (a == 'Facturando') {
                     a = 7;
                 }
-                    axios({
+                axios({
                         method: "get",
                         url: "http://127.0.0.1:8000/api/getReceSta/" + a,
                         headers: {
@@ -851,6 +864,12 @@
                         console.log(err);
                         this.activeLoading = false;
                         this.$vs.loading.close();
+                        localStorage.removeItem("tu");
+                        localStorage.removeItem("ru");
+                        localStorage.removeItem("ui");
+                        localStorage.removeItem("regi");
+                        localStorage.removeItem("nuevaRecetaData");
+                        this.$router.push("/");
                     });
             },
             getRerecipes(a) {
@@ -895,6 +914,12 @@
                         console.log(err);
                         this.activeLoading = false;
                         this.$vs.loading.close();
+                        localStorage.removeItem("tu");
+                        localStorage.removeItem("ru");
+                        localStorage.removeItem("ui");
+                        localStorage.removeItem("regi");
+                        localStorage.removeItem("nuevaRecetaData");
+                        this.$router.push("/");
                     });
             }
         }
