@@ -246,6 +246,7 @@
         },
         data() {
             return {
+                wasSidebarOpen: null,
                 popupActive2: false,
                 registro: null,
                 filterCate: 0,
@@ -512,6 +513,13 @@
             this.setSidebarWidth();
             this.getMarcas();
             this.getData();
+        },
+        mounted() {
+            this.wasSidebarOpen = this.$store.state.reduceButton;
+            this.$store.commit('TOGGLE_REDUCE_BUTTON', true);
+        },
+        beforeDestroy(){
+            if (!this.wasSidebarOpen) this.$store.commit('TOGGLE_REDUCE_BUTTON', false);
         }
     };
 

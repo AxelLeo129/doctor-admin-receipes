@@ -247,6 +247,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      wasSidebarOpen: null,
       popupActive2: false,
       registro: null,
       filterCate: 0,
@@ -476,6 +477,13 @@ __webpack_require__.r(__webpack_exports__);
     this.setSidebarWidth();
     this.getMarcas();
     this.getData();
+  },
+  mounted: function mounted() {
+    this.wasSidebarOpen = this.$store.state.reduceButton;
+    this.$store.commit('TOGGLE_REDUCE_BUTTON', true);
+  },
+  beforeDestroy: function beforeDestroy() {
+    if (!this.wasSidebarOpen) this.$store.commit('TOGGLE_REDUCE_BUTTON', false);
   }
 });
 
