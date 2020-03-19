@@ -113,6 +113,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -121,7 +126,8 @@ __webpack_require__.r(__webpack_exports__);
       telefono: null,
       fecha: "",
       actiErr: false,
-      actiErr1: false
+      actiErr1: false,
+      call_center: true
     };
   },
   methods: {
@@ -136,6 +142,7 @@ __webpack_require__.r(__webpack_exports__);
         observations: "",
         nextAppointment: "",
         status: 1,
+        call_center: "",
         dateIssue: "",
         medicines: [],
         dispensing: [],
@@ -155,6 +162,12 @@ __webpack_require__.r(__webpack_exports__);
         this.actiErr1 = true;
         this.telefono = "";
       } else {
+        if (this.call_center == true) {
+          this.call_center = 1;
+        } else {
+          this.call_center = 0;
+        }
+
         var idu = localStorage.getItem("ui");
         idu = parseInt(idu);
         var nuevaRecetaData = {
@@ -167,6 +180,7 @@ __webpack_require__.r(__webpack_exports__);
           observations: "",
           nextAppointment: "",
           status: 1,
+          call_center: this.call_center,
           dateIssue: this.fecha,
           medicines: [],
           dispensing: [],
@@ -455,6 +469,29 @@ var render = function() {
                   "\n                    Este campo es\n                    requerido.\n                "
                 )
               ]
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "vx-row" }, [
+        _c(
+          "div",
+          { staticClass: "vx-col md:w-1/2 w-full mt-5" },
+          [
+            _c(
+              "vs-checkbox",
+              {
+                model: {
+                  value: _vm.call_center,
+                  callback: function($$v) {
+                    _vm.call_center = $$v
+                  },
+                  expression: "call_center"
+                }
+              },
+              [_vm._v("Llamar al Paciente")]
             )
           ],
           1

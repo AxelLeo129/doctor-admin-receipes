@@ -245,6 +245,7 @@
                         observations: this.nuevaRecetaData.observations,
                         nextAppointment: this.nuevaRecetaData.nextAppointment,
                         status: this.nuevaRecetaData.status,
+                        call_center: this.nuevaRecetaData.call_center,
                         dateIssue: this.nuevaRecetaData.dateIssue,
                         medicines: this.nuevaRecetaData.medicines,
                         medicamentos: this.nuevaRecetaData.medicamentos
@@ -264,6 +265,7 @@
                                 observations: this.nuevaRecetaData.observations,
                                 nextAppointment: this.nuevaRecetaData.nextAppointment,
                                 status: this.nuevaRecetaData.status,
+                                call_center: this.nuevaRecetaData.call_center,
                                 dateIssue: this.nuevaRecetaData.dateIssue
                             }),
                             headers: {

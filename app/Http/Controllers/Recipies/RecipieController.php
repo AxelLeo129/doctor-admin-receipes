@@ -35,12 +35,12 @@ class RecipieController extends Controller
 
     public function index3($status)
     {
-        return \DB::select("SELECT * FROM `recipies` WHERE status = $status AND dateIssue >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK) ORDER BY dateIssue DESC");
+        return \DB::select("SELECT * FROM `recipies` WHERE status = $status AND call_center = 1 AND dateIssue >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK) ORDER BY dateIssue DESC");
     }
 
     public function index4()
     {
-        return \DB::select("SELECT * FROM `recipies` WHERE status = 1 ORDER BY dateIssue DESC");
+        return \DB::select("SELECT * FROM `recipies` WHERE status = 1 AND call_center = 1 ORDER BY dateIssue DESC");
     }
 
     /**
@@ -71,6 +71,7 @@ class RecipieController extends Controller
         $recipe->nextAppointment = $request->nextAppointment;
         $recipe->status = $request->status;
         $recipe->dateIssue = $request->dateIssue;
+        $recipe->call_center = $request->call_center;
 
         if($recipe->save()){
             return ['result' => 'success', "mess"=>$recipe->id];
@@ -114,7 +115,7 @@ class RecipieController extends Controller
      */
     public function show($id)
     {
-        return \DB::select("SELECT reci.id, reci.phone, reci.name, reci.doctor_id, reci.symptom, reci.diagnostics, reci.observations, reci.nextAppointment, reci.status, GROUP_CONCAT(prod.id SEPARATOR ',') products FROM recipies_products pp INNER JOIN recipies reci ON pp.recipe_id=reci.id INNER JOIN products prod ON pp.product_id=prod.id WHERE reci.id = $id GROUP BY reci.id");
+        return \DB::select("SELECT reci.id, reci.phone, reci.name, reci.doctor_id, reci.symptom, reci.diagnostics, reci.observations, reci.call_center, reci.nextAppointment, reci.status, GROUP_CONCAT(prod.id SEPARATOR ',') products FROM recipies_products pp INNER JOIN recipies reci ON pp.recipe_id=reci.id INNER JOIN products prod ON pp.product_id=prod.id WHERE reci.id = $id GROUP BY reci.id");
     }
 
     /**
@@ -206,7 +207,7 @@ class RecipieController extends Controller
     }
 
     public function getRerecipe(){
-        return \DB::select("SELECT * FROM `recipies` WHERE status2 = 1 AND status1 >= CURRENT_TIMESTAMP () ORDER BY status1 ASC");
+        return \DB::select("SELECT * FROM `recipies` WHERE status2 = 1 AND call_center = 1 AND status1 >= CURRENT_TIMESTAMP () ORDER BY status1 ASC");
     }
 
     public function getPacientes(){

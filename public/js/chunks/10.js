@@ -149,6 +149,7 @@ __webpack_require__.r(__webpack_exports__);
           observations: this.observations,
           nextAppointment: '',
           status: this.nuevaRecetaData.status,
+          call_center: this.nuevaRecetaData.call_center,
           dateIssue: this.nuevaRecetaData.dateIssue,
           medicines: this.nuevaRecetaData.medicines,
           dispensing: this.nuevaRecetaData.dispensing,
@@ -167,6 +168,7 @@ __webpack_require__.r(__webpack_exports__);
             observations: this.observations,
             nextAppointment: this.nextAppointment,
             status: this.nuevaRecetaData.status,
+            call_center: this.nuevaRecetaData.call_center,
             dateIssue: this.nuevaRecetaData.dateIssue
           }),
           headers: {

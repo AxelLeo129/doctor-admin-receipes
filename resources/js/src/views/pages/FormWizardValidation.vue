@@ -89,6 +89,11 @@
                 </div>
             </div>
             <div class="vx-row">
+                <div class="vx-col md:w-1/2 w-full mt-5">
+                    <vs-checkbox v-model="call_center">Llamar al Paciente</vs-checkbox>
+                </div>
+            </div>
+            <div class="vx-row">
                 <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
                 </div>
                 <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
@@ -111,7 +116,8 @@
                 telefono: null,
                 fecha: "",
                 actiErr: false,
-                actiErr1: false
+                actiErr1: false,
+                call_center: true
             };
         },
         methods: {
@@ -126,6 +132,7 @@
                     observations: "",
                     nextAppointment: "",
                     status: 1,
+                    call_center: "",
                     dateIssue: "",
                     medicines: [],
                     dispensing: [],
@@ -146,6 +153,11 @@
                     this.actiErr1 = true;
                     this.telefono = "";
                 } else {
+                    if (this.call_center == true) {
+                        this.call_center = 1;
+                    } else {
+                        this.call_center = 0;
+                    }
                     let idu = localStorage.getItem("ui");
                     idu = parseInt(idu);
                     let nuevaRecetaData = {
@@ -158,6 +170,7 @@
                         observations: "",
                         nextAppointment: "",
                         status: 1,
+                        call_center: this.call_center,
                         dateIssue: this.fecha,
                         medicines: [],
                         dispensing: [],
