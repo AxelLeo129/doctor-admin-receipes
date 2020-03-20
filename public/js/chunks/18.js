@@ -342,6 +342,8 @@ __webpack_require__.r(__webpack_exports__);
     completarPedido: function completarPedido() {
       var _this3 = this;
 
+      this.openLoading();
+
       if (this.status == true) {
         this.status = 5;
       } else {
@@ -350,7 +352,6 @@ __webpack_require__.r(__webpack_exports__);
 
       var token = localStorage.getItem("tu");
       var idu = localStorage.getItem("ui");
-      this.openLoading();
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: "post",
         url: "http://127.0.0.1:8000/api/confirm-delivery",
@@ -368,10 +369,11 @@ __webpack_require__.r(__webpack_exports__);
         if (_this3.recipe_id != null || _this3.recipe_id != undefined || _this3.status == 4) {
           axios__WEBPACK_IMPORTED_MODULE_0___default()({
             method: "put",
-            url: "http://127.0.0.1:8000/api/changeStatus",
+            url: "http://127.0.0.1:8000/api/changeStatus1",
             data: JSON.stringify({
               id: _this3.recipe_id,
-              status: 4
+              status: 4,
+              receiver: _this3.nombre_confirmacion
             }),
             headers: {
               authorization: "Bearer " + token,

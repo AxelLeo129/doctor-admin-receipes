@@ -90,7 +90,7 @@
             </div>
             <div class="vx-row">
                 <div class="vx-col md:w-1/2 w-full mt-5">
-                    <vs-checkbox v-model="call_center">Llamar al Paciente</vs-checkbox>
+                    <vs-checkbox v-model="call_center">El paciente autoriza que le llamen para que le envíen su medicamento.</vs-checkbox>
                 </div>
             </div>
             <div class="vx-row">

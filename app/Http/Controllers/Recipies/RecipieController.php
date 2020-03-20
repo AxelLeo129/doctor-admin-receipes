@@ -151,6 +151,9 @@ class RecipieController extends Controller
     {
         $recipe = Recipie::find($request->id);
         $recipe->status = $request->status;
+        if ($request->status1 == null){
+            $request->status1 = '2020';
+        }
         $recipe->status1 = $request->status1;
         $recipe->status2 = $request->status2;
         $recipe->reproDate = $request->reproDate;
@@ -189,10 +192,25 @@ class RecipieController extends Controller
         }
     }
 
+    public function updateStatus1(Request $request){
+        $recipe = Recipie::find($request->id);
+        $recipe->status = $request->status;
+        $recipe->receiver = $request->receiver;
+
+        if($recipe->save()){
+            return ['result' => 'success', "mess"=>$recipe];
+        }else{
+            return ['result' => 'fail', "mess"=>$recipe];
+        }
+    }
+
     public function reagendarRecipe(Request $request){
         $recipe = Recipie::find($request->id);
         $recipe->status = $request->status;
         $recipe->reproDate = $request->reproDate;
+        if ($request->status1 == null){
+            $request->status1 = '2020';
+        }
         $recipe->status1 = $request->status1;
 
         if($recipe->save()){

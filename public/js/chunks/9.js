@@ -490,7 +490,11 @@ var render = function() {
                   expression: "call_center"
                 }
               },
-              [_vm._v("Llamar al Paciente")]
+              [
+                _vm._v(
+                  "El paciente autoriza que le llamen para que le envíen su medicamento."
+                )
+              ]
             )
           ],
           1

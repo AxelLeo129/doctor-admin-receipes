@@ -23,6 +23,7 @@
                     <vs-th sort-key="email">Nombre</vs-th>
                     <vs-th sort-key="username">Precentación</vs-th>
                     <vs-th sort-key="website">Descripción</vs-th>
+                    <vs-th sort-key="website">Precio</vs-th>
                     <vs-th sort-key="id">Acción</vs-th>
                 </template>
 
@@ -33,6 +34,8 @@
                         <vs-td :data="data[indextr].precentacion">{{ data[indextr].precentacion }}</vs-td>
 
                         <vs-td :data="data[indextr].description">{{ data[indextr].description }}</vs-td>
+
+                        <vs-td style="white-space: nowrap" :data="data[indextr].precentacion">Q {{ data[indextr].price }}</vs-td>
 
                         <vs-td>
                             <vs-button type="border" size="small" icon-pack="feather" icon="icon-plus" class="mr-2"

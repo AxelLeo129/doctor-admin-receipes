@@ -271,6 +271,8 @@
                                         <br>
                                         <span v-if="mail.status1 != '2020'">Próxima llamada: {{ mail.status1 }}</span>
                                         <span v-else>{{ mail.dateIssue }}</span>
+                                        <br v-if="mail.receiver != null">  
+                                        <span v-if="mail.receiver != null">Recivido por: {{ mail.receiver }}</span>
                                         <br>
                                         <span>{{ mail.doctor_name }}</span>
                                     </div>

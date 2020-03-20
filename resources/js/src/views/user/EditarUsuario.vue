@@ -80,10 +80,10 @@
                                     <div class="vx-col md:w-1/4 w-full">
                                         <ul>
                                             <li>
-                                                <vs-checkbox v-if="rol == 2" v-model="registro">
+                                                <!-- <vs-checkbox v-if="rol == 2" v-model="registro">
                                                     ¿Desea usar registro
                                                     Clínico?
-                                                </vs-checkbox>
+                                                </vs-checkbox> -->
                                             </li>
                                         </ul>
                                     </div>
@@ -597,7 +597,8 @@
                             noCollegiate: this.noCollegiate,
                             phone: this.phone,
                             birthDate: this.birthDate,
-                            clinicalRecord: this.clinicalRecord,
+                            //clinicalRecord: this.clinicalRecord,
+                            clinicalRecord: 0,
                             showAlerts: this.showAlerts,
                             email: this.email,
                             image: this.base64textString

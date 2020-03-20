@@ -324,6 +324,7 @@
                 this.recipe_id = recipe_id;
             },
             completarPedido() {
+                this.openLoading();
                 if (this.status == true) {
                     this.status = 5;
                 } else {
@@ -331,7 +332,6 @@
                 }
                 let token = localStorage.getItem("tu");
                 let idu = localStorage.getItem("ui");
-                this.openLoading();
                 axios({
                         method: "post",
                         url: "http://127.0.0.1:8000/api/confirm-delivery",
@@ -350,10 +350,11 @@
                         if (this.recipe_id != null || this.recipe_id != undefined || this.status == 4) {
                             axios({
                                     method: "put",
-                                    url: "http://127.0.0.1:8000/api/changeStatus",
+                                    url: "http://127.0.0.1:8000/api/changeStatus1",
                                     data: JSON.stringify({
                                         id: this.recipe_id,
-                                        status: 4
+                                        status: 4,
+                                        receiver: this.nombre_confirmacion
                                     }),
                                     headers: {
                                         authorization: "Bearer " + token,

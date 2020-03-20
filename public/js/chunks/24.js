@@ -609,7 +609,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           noCollegiate: this.noCollegiate,
           phone: this.phone,
           birthDate: this.birthDate,
-          clinicalRecord: this.clinicalRecord,
+          //clinicalRecord: this.clinicalRecord,
+          clinicalRecord: 0,
           showAlerts: this.showAlerts,
           email: this.email,
           image: this.base64textString
@@ -1291,33 +1292,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { staticClass: "vx-row" }, [
                           _c("div", { staticClass: "vx-col md:w-1/4 w-full" }, [
-                            _c("ul", [
-                              _c(
-                                "li",
-                                [
-                                  _vm.rol == 2
-                                    ? _c(
-                                        "vs-checkbox",
-                                        {
-                                          model: {
-                                            value: _vm.registro,
-                                            callback: function($$v) {
-                                              _vm.registro = $$v
-                                            },
-                                            expression: "registro"
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                ¿Desea usar registro\n                                                Clínico?\n                                            "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ],
-                                1
-                              )
-                            ])
+                            _c("ul", [_c("li")])
                           ])
                         ]),
                         _vm._v(" "),

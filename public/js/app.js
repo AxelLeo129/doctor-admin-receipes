@@ -57752,6 +57752,45 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         rule: 'editor'
       }
     }, {
+      path: '/call-center/receta/:idReceta/:idMedico',
+      name: 'recetaCallCenter',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 53).then(__webpack_require__.bind(null, /*! ./views/call-center/verReceta.vue */ "./resources/js/src/views/call-center/verReceta.vue"));
+      },
+      beforeEnter: function beforeEnter(to, from, next) {
+        var rol = localStorage.getItem('ru');
+        var idu = localStorage.getItem('ui');
+        var token = localStorage.getItem('tu');
+
+        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+          next({
+            name: 'page-login'
+          });
+        } else if (rol == 1) {
+          next({
+            name: 'consola'
+          });
+        } else if (rol == 2) {
+          next({
+            name: 'home'
+          });
+        } else if (rol == 3) {
+          next();
+        } else if (rol == 6) {
+          next({
+            name: "1visitador"
+          });
+        } else if (rol == 9) {
+          next({
+            name: "facturacion"
+          });
+        } else {
+          next({
+            name: 'page-login'
+          });
+        }
+      }
+    }, {
       path: '/buscarRecetas',
       name: 'BuscarRecetas',
       component: function component() {

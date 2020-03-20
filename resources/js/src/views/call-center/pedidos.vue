@@ -6,6 +6,7 @@
                 <vs-th sort-key="name">Nombre</vs-th>
                 <vs-th sort-key="phone">Teléfono</vs-th>
                 <vs-th sort-key="doctor_name">Nombre del Doctor</vs-th>
+                <vs-th sort-key="dateIssue">Fecha</vs-th>
                 <vs-th sort-key="status">Estatus</vs-th>
                 <vs-th sort-key="actions">Acciones</vs-th>
             </template>
@@ -20,6 +21,8 @@
 
                     <vs-td :data="data[indextr].doctor_name">{{ data[indextr].doctor_name }}</vs-td>
 
+                    <vs-td :data="data[indextr].dateIssue">{{ data[indextr].dateIssue }}</vs-td>
+
                     <vs-td>
                         <span class="flex items-center px-2 py-1 rounded">
                             <div class="h-2 w-2 rounded-full mr-2" :class="'bg-' + data[indextr].color">
@@ -28,8 +31,10 @@
                     </vs-td>
 
                     <vs-td>
-                        <vs-button size="small" color="rgb(62, 201, 214)" @click="edit(tr.id)" icon-pack="feather"
-                            icon="icon-eye" disabled></vs-button>
+                        <vx-tooltip text="Ver Receta" position="left">
+                            <vs-button size="small" color="rgb(62, 201, 214)" @click="edit(tr.id, tr.doctor_id)" icon-pack="feather"
+                                icon="icon-eye"></vs-button>
+                        </vx-tooltip>
                     </vs-td>
                 </vs-tr>
             </template>
@@ -60,8 +65,8 @@
             nuevo() {
                 this.$router.push('/nuevoUsuario');
             },
-            edit(id) {
-                this.$router.push("/editarUsuario/" + id);
+            edit(id, id1) {
+                this.$router.push("/call-center/receta/" + id  + "/" + id1);
             },
             getMedicos() {
                 this.openLoading();
@@ -109,6 +114,7 @@
                         }
                     })
                     .then(Response => {
+                        //console.log(Response);
                         Response.data.forEach(element => {
                             element.color = this.colore(element.status);
                             element.status = this.status[element.status - 1];

@@ -73,6 +73,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('getReceNew', 'Recipies\RecipieController@index4');
     Route::get('getInfoRecipie/{id}', 'Recipies\RecipieController@getInfoRecipie');
     Route::put('changeStatus', 'Recipies\RecipieController@updateStatus');
+    Route::put('changeStatus1', 'Recipies\RecipieController@updateStatus1');
     Route::put('reagendar', 'Recipies\RecipieController@reagendarRecipe');
     Route::get('getMedicines/{id}', 'Recipies\RecipieController@getMedicines');
     Route::put('putReceSta', 'Recipies\RecipieController@update');

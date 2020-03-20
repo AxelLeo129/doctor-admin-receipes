@@ -299,6 +299,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2017,6 +2020,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -2807,6 +2812,15 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "vs-td",
+                            {
+                              staticStyle: { "white-space": "nowrap" },
+                              attrs: { data: data[indextr].precentacion }
+                            },
+                            [_vm._v("Q " + _vm._s(data[indextr].price))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
                             [
                               _c("vs-button", {
                                 staticClass: "mr-2",
@@ -2848,6 +2862,10 @@ var render = function() {
                   _vm._v(" "),
                   _c("vs-th", { attrs: { "sort-key": "website" } }, [
                     _vm._v("Descripción")
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "website" } }, [
+                    _vm._v("Precio")
                   ]),
                   _vm._v(" "),
                   _c("vs-th", { attrs: { "sort-key": "id" } }, [
@@ -5247,6 +5265,17 @@ var render = function() {
                                     : _c("span", [
                                         _vm._v(_vm._s(mail.dateIssue))
                                       ]),
+                                  _vm._v(" "),
+                                  mail.receiver != null ? _c("br") : _vm._e(),
+                                  _vm._v(" "),
+                                  mail.receiver != null
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "Recivido por: " +
+                                            _vm._s(mail.receiver)
+                                        )
+                                      ])
+                                    : _vm._e(),
                                   _vm._v(" "),
                                   _c("br"),
                                   _vm._v(" "),
