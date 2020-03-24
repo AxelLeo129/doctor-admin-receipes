@@ -226,6 +226,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -264,6 +265,8 @@ __webpack_require__.r(__webpack_exports__);
       descripcion: "",
       medicamentosList: [],
       popupActive: false,
+      status: ['No Disponible', 'Disponible', 'Oferta', 'Agotado'],
+      colore: ['danger', 'success', 'primary', 'warning'],
       numberData: 0,
       searchClient: algoliasearch_lite__WEBPACK_IMPORTED_MODULE_1___default()("latency", "6be0576ff61c053d5f9a3225e2a90f76"),
       // Filter Sidebar
@@ -410,12 +413,14 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        //console.log(Response);
+        console.log(Response);
         Response.data.forEach(function (element) {
           element.quantity = parseInt(element.quantity);
           element.laboratory = parseInt(element.laboratory);
 
           if (element.quantity > 0) {
+            element.colore = _this5.colore[element.status];
+            element.status = _this5.status[element.status];
             _this5.numberData = _this5.numberData + 1;
 
             _this5.medicamentosList.push(element);
@@ -1095,6 +1100,15 @@ var render = function() {
                                         _c("h6", { staticClass: "mb-2" }, [
                                           _vm._v(_vm._s(item.precentacion))
                                         ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-sm",
+                                            class: "text-" + item.colore
+                                          },
+                                          [_vm._v(_vm._s(item.status))]
+                                        ),
                                         _vm._v(" "),
                                         _c("p", { staticClass: "text-grey" }),
                                         _vm._v(" "),

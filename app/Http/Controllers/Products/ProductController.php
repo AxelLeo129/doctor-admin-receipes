@@ -30,7 +30,7 @@ class ProductController extends Controller
     {
         //return Product::all();
         //return \DB::select("SELECT prod.id, prod.name, prod.description,(SELECT GROUP_CONCAT(name, '-', unidad, '-', cantidad) FROM presentations WHERE presentations.id = prod.precentation) as precentacion, prod.laboratory, prod.quantity, prod.user_id, GROUP_CONCAT(cat.id SEPARATOR ',') categories FROM products_categories pp INNER JOIN products prod ON pp.product_id=prod.id INNER JOIN categories cat ON pp.category_id=cat.id GROUP BY prod.id");
-        return \DB::select("SELECT products.id, products.name, products.img_url, products.description,(SELECT name FROM presentations WHERE presentations.id = products.precentation) as precentacion, products.laboratory, products.quantity, products.user_id FROM products");
+        return \DB::select("SELECT products.id, products.name, products.status, products.img_url, products.description,(SELECT name FROM presentations WHERE presentations.id = products.precentation) as precentacion, products.laboratory, products.quantity, products.user_id FROM products");
     }
 
     /**

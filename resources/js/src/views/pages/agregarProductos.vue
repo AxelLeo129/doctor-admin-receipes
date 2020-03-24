@@ -182,6 +182,7 @@
                                             </div>
                                             <h5 class="mb-2">{{ item.name }}</h5>
                                             <h6 class="mb-2">{{ item.precentacion }}</h6>
+                                            <span :class="'text-' + item.colore" class="text-sm">{{item.status}}</span>
                                             <p class="text-grey"></p>
                                             <p class="text-grey">{{ item.description }}</p>
                                             <div class="flex justify-between flex-wrap">
@@ -263,6 +264,8 @@
                 descripcion: "",
                 medicamentosList: [],
                 popupActive: false,
+                status: ['No Disponible', 'Disponible', 'Oferta', 'Agotado'],
+                colore: ['danger', 'success', 'primary', 'warning'],
                 numberData: 0,
                 searchClient: algoliasearch(
                     "latency",
@@ -444,11 +447,13 @@
                         }
                     })
                     .then(Response => {
-                        //console.log(Response);
+                        console.log(Response);
                         Response.data.forEach(element => {
                             element.quantity = parseInt(element.quantity);
                             element.laboratory = parseInt(element.laboratory);
                             if (element.quantity > 0) {
+                                element.colore = this.colore[element.status];
+                                element.status = this.status[element.status];
                                 this.numberData = this.numberData + 1;
                                 this.medicamentosList.push(element);
                             }
