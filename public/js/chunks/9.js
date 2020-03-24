@@ -107,17 +107,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -258,7 +247,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".timeline {\n  list-style-type: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.li {\n  transition: all 200ms ease-in;\n}\n.status {\n  display: flex;\n  justify-content: center;\n  position: relative;\n  transition: all 200ms ease-in;\n}\n[dir] .status {\n  padding: 0px 40px;\n  border-top: 2px solid #d6dce0;\n}\n.status h4 {\n  font-weight: 600;\n}\n.status:before {\n  content: \"\";\n  width: 25px;\n  height: 25px;\n  position: absolute;\n  top: -15px;\n  transition: all 200ms ease-in;\n}\n[dir] .status:before {\n  background-color: white;\n  border-radius: 25px;\n  border: 1px solid #ddd;\n}\n[dir=ltr] .status:before {\n  left: 42%;\n}\n[dir=rtl] .status:before {\n  right: 42%;\n}\n[dir] .li.complete .status {\n  border-top: 2px solid #003da5;\n}\n.li.complete .status:before {\n  transition: all 200ms ease-in;\n}\n[dir] .li.complete .status:before {\n  background-color: #003da5;\n  border: none;\n}\n.li.complete .status h4 {\n  color: #003da5;\n}\n@media (min-device-width: 320px) and (max-device-width: 700px) {\n.timeline {\n    list-style-type: none;\n    display: block;\n}\n.li {\n    transition: all 200ms ease-in;\n    display: flex;\n    width: inherit;\n}\n.timestamp {\n    width: 100px;\n}\n.status:before {\n    top: 30%;\n    transition: all 200ms ease-in;\n}\n[dir=ltr] .status:before {\n    left: -8%;\n}\n[dir=rtl] .status:before {\n    right: -8%;\n}\n.status h4 {\n    font-weight: 200;\n}\n}", ""]);
+exports.push([module.i, ".div {\n  max-width: 100px;\n}[dir] .div {\n  margin: auto;\n}\n.nav-flex {\n  display: flex;\n  flex-flow: row wrap;\n}\n.timeline {\n  list-style-type: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.li {\n  transition: all 200ms ease-in;\n}\n.status {\n  display: flex;\n  justify-content: center;\n  position: relative;\n  transition: all 200ms ease-in;\n}\n[dir] .status {\n  padding: 0px 40px;\n  border-top: 2px solid #d6dce0;\n}\n.status h4 {\n  font-weight: 600;\n}\n.status:before {\n  content: \"\";\n  width: 25px;\n  height: 25px;\n  position: absolute;\n  top: -15px;\n  transition: all 200ms ease-in;\n}\n[dir] .status:before {\n  background-color: white;\n  border-radius: 25px;\n  border: 1px solid #ddd;\n}\n[dir=ltr] .status:before {\n  left: 42%;\n}\n[dir=rtl] .status:before {\n  right: 42%;\n}\n[dir] .li.complete .status {\n  border-top: 2px solid #003da5;\n}\n.li.complete .status:before {\n  transition: all 200ms ease-in;\n}\n[dir] .li.complete .status:before {\n  background-color: #003da5;\n  border: none;\n}\n.li.complete .status h4 {\n  color: #003da5;\n}\n@media (min-device-width: 320px) and (max-device-width: 700px) {\n.status {\n    display: flex;\n    justify-content: center;\n    position: relative;\n    transition: all 200ms ease-in;\n}\n[dir] .status {\n    padding: 0px 20px;\n    border-top: 2px solid #d6dce0;\n}\n.status h4 {\n    font-weight: 600;\n    font-size: 100;\n}\n.status:before {\n    content: \"\";\n    width: 25px;\n    height: 25px;\n    position: absolute;\n    top: -15px;\n    transition: all 200ms ease-in;\n}\n[dir] .status:before {\n    background-color: white;\n    border-radius: 25px;\n    border: 1px solid #ddd;\n}\n[dir=ltr] .status:before {\n    left: 42%;\n}\n[dir=rtl] .status:before {\n    right: 42%;\n}\n[dir] .li.complete .status {\n    border-top: 2px solid #003da5;\n}\n.li.complete .status:before {\n    transition: all 200ms ease-in;\n}\n[dir] .li.complete .status:before {\n    background-color: #003da5;\n    border: none;\n}\n.li.complete .status h4 {\n    color: #003da5;\n}\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -315,77 +304,61 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "mt-5" }, [
       _vm.registro == 1
-        ? _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "flex mb-4" }, [
-              _c("div", { staticClass: "w-1/3" }),
-              _vm._v(" "),
-              _c("div", { staticClass: "w-1/3" }, [
-                _c(
-                  "ul",
-                  { staticClass: "timeline mt-5", attrs: { id: "timeline" } },
-                  [
-                    _c("li", { staticClass: "li complete" }, [
-                      _c("div", { staticClass: "status" }, [
-                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 1")])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "li" }, [
-                      _c("div", { staticClass: "status" }, [
-                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 2")])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "li" }, [
-                      _c("div", { staticClass: "status" }, [
-                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 3")])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "li" }, [
-                      _c("div", { staticClass: "status" }, [
-                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 4")])
-                      ])
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "w-1/3" })
-            ])
+        ? _c("div", { attrs: { align: "center" } }, [
+            _c(
+              "ul",
+              { staticClass: "timeline mt-5", attrs: { id: "timeline" } },
+              [
+                _c("li", { staticClass: "li complete" }, [
+                  _c("div", { staticClass: "status" }, [
+                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 1")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "li" }, [
+                  _c("div", { staticClass: "status" }, [
+                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 2")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "li" }, [
+                  _c("div", { staticClass: "status" }, [
+                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 3")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "li" }, [
+                  _c("div", { staticClass: "status" }, [
+                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 4")])
+                  ])
+                ])
+              ]
+            )
           ])
-        : _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "flex mb-4" }, [
-              _c("div", { staticClass: "w-1/3" }),
-              _vm._v(" "),
-              _c("div", { staticClass: "w-1/3" }, [
-                _c(
-                  "ul",
-                  { staticClass: "timeline mt-5", attrs: { id: "timeline" } },
-                  [
-                    _c("li", { staticClass: "li complete" }, [
-                      _c("div", { staticClass: "status" }, [
-                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 1")])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "li" }, [
-                      _c("div", { staticClass: "status" }, [
-                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 2")])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "li" }, [
-                      _c("div", { staticClass: "status" }, [
-                        _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 3")])
-                      ])
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "w-1/3" })
-            ])
+        : _c("div", { staticClass: "div" }, [
+            _c(
+              "ul",
+              { staticClass: "timeline mt-5", attrs: { id: "timeline" } },
+              [
+                _c("li", { staticClass: "li complete" }, [
+                  _c("div", { staticClass: "status" }, [
+                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 1")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "li" }, [
+                  _c("div", { staticClass: "status" }, [
+                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 2")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "li" }, [
+                  _c("div", { staticClass: "status" }, [
+                    _c("h4", { staticClass: "mt-5" }, [_vm._v("Paso 3")])
+                  ])
+                ])
+              ]
+            )
           ]),
       _vm._v(" "),
       _c("div", { staticClass: "vx-row" }, [
@@ -492,7 +465,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "El paciente autoriza que le llamen para que le envíen su medicamento."
+                  "El paciente autoriza que le llamen para que le envíen su\n                    medicamento."
                 )
               ]
             )

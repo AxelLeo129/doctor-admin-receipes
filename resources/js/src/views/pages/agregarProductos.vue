@@ -1,5 +1,36 @@
 <template>
     <div>
+        <vs-popup title="Medicamento Recetado" :active.sync="activar">
+            <h4 class="mb-2">
+                <strong v-text="nombre"></strong>
+            </h4>
+            <h5 class="mb-2" v-text="precentacion"></h5>
+            <h6 class="mb-2" v-text="descripcion"></h6>
+
+            <div class="mt-4">
+                <vs-textarea class="vs-textarea" label="Descripción de uso" v-model="uso" />
+                <!-- <vs-input class="inputx mb-3" label="Descripción de uso" v-model="uso"/> -->
+                <span class="text-danger text-sm" v-show="uso == ''">
+                    Este
+                    campo es requerido.
+                </span>
+            </div>
+            <vs-row vs-w="12">
+                <vs-col vs-type="flex" vs-justify="start" vs-align="start" vs-lg="4" vs-sm="4" vs-xs="4">
+                    <vs-button color="rgb(62, 201, 214)" @click="agregarmF" size="small" type="filled"
+                        :disabled="uso == null || uso == ''">Agregar & Finalizar</vs-button>
+                </vs-col>
+                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-lg="4" vs-sm="4" vs-xs="4">
+                </vs-col>
+                <vs-col vs-type="flex" vs-justify="end" vs-align="end" vs-lg="4" vs-sm="4" vs-xs="4">
+                    <vs-button color="primary" type="filled" @click="agregarM" size="small"
+                        :disabled="uso == null || uso == ''">
+                        Agregar &
+                        Continuar
+                    </vs-button>
+                </vs-col>
+            </vs-row>
+        </vs-popup>
         <div align="center" v-if="registro == 1">
             <ul class="timeline mt-5" id="timeline">
                 <li class="li complete">
@@ -69,38 +100,6 @@
                     </div>
                 </div>
             </div>
-
-            <vs-popup title="Medicamento Recetado" :active.sync="activar">
-                <h4 class="mb-2">
-                    <strong v-text="nombre"></strong>
-                </h4>
-                <h5 class="mb-2" v-text="precentacion"></h5>
-                <h6 class="mb-2" v-text="descripcion"></h6>
-
-                <div class="mt-4">
-                    <vs-textarea class="vs-textarea" label="Descripción de uso" v-model="uso" />
-                    <!-- <vs-input class="inputx mb-3" label="Descripción de uso" v-model="uso"/> -->
-                    <span class="text-danger text-sm" v-show="uso == ''">
-                        Este
-                        campo es requerido.
-                    </span>
-                </div>
-                <div class="vx-row">
-                    <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-                        <vs-button color="rgb(62, 201, 214)" @click="agregarmF" type="filled"
-                            :disabled="uso == null || uso == ''">Agregar & Finalizar</vs-button>
-                    </div>
-                    <div class="vx-col w-full sm:w-1/2 lg:w-1/2 mb-base">
-                        <div align="right">
-                            <vs-button color="primary" type="filled" @click="agregarM"
-                                :disabled="uso == null || uso == ''">
-                                Agregar &
-                                Continuar
-                            </vs-button>
-                        </div>
-                    </div>
-                </div>
-            </vs-popup>
 
             <div id="algolia-content-container" class="relative clearfix">
                 <vs-sidebar class="items-no-padding vs-sidebar-rounded background-absolute"
@@ -401,6 +400,7 @@
                 });
             },
             setData(id, nombre, descripcion, precentacion) {
+                this.uso = null;
                 this.idMedicanto = id;
                 this.nombre = nombre;
                 this.descripcion = descripcion;
@@ -518,7 +518,7 @@
             this.wasSidebarOpen = this.$store.state.reduceButton;
             this.$store.commit('TOGGLE_REDUCE_BUTTON', true);
         },
-        beforeDestroy(){
+        beforeDestroy() {
             if (!this.wasSidebarOpen) this.$store.commit('TOGGLE_REDUCE_BUTTON', false);
         }
     };
@@ -581,26 +581,46 @@
     }
 
     @media (min-device-width: 320px) and (max-device-width: 700px) {
-        .timeline {
-            list-style-type: none;
-            display: block;
-        }
-
-        .li {
-            transition: all 200ms ease-in;
-            display: flex;
-            width: inherit;
-        }
-
-        .timestamp {
-            width: 100px;
-        }
-
         .status {
+            padding: 0px 20px;
+            display: flex;
+            justify-content: center;
+            border-top: 2px solid #d6dce0;
+            position: relative;
+            transition: all 200ms ease-in;
+
+            h4 {
+                font-weight: 600;
+                font-size: 100;
+            }
+
             &:before {
-                left: -8%;
-                top: 30%;
+                content: "";
+                width: 25px;
+                height: 25px;
+                background-color: white;
+                border-radius: 25px;
+                border: 1px solid #ddd;
+                position: absolute;
+                top: -15px;
+                left: 42%;
                 transition: all 200ms ease-in;
+            }
+        }
+
+        .li.complete {
+            .status {
+                border-top: 2px solid #003da5;
+
+                &:before {
+                    background-color: #003da5;
+                    border: none;
+                    transition: all 200ms ease-in;
+                }
+
+                h4 {
+                    color: #003da5;
+                }
             }
         }
     }

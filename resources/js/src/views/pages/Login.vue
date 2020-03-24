@@ -121,6 +121,7 @@ export default {
         }
       })
         .then(Response => {
+          this.activado = false;
           this.token = Response.data.success.token;
           this.rol = Response.data.rol;
           this.user_id = Response.data.id;

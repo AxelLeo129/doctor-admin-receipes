@@ -458,26 +458,46 @@
     }
 
     @media (min-device-width: 320px) and (max-device-width: 700px) {
-        .timeline {
-            list-style-type: none;
-            display: block;
-        }
-
-        .li {
-            transition: all 200ms ease-in;
-            display: flex;
-            width: inherit;
-        }
-
-        .timestamp {
-            width: 100px;
-        }
-
         .status {
+            padding: 0px 10px;
+            display: flex;
+            justify-content: center;
+            border-top: 2px solid #d6dce0;
+            position: relative;
+            transition: all 200ms ease-in;
+
+            h4 {
+                font-weight: 600;
+                font-size: 100;
+            }
+
             &:before {
-                left: -8%;
-                top: 30%;
+                content: "";
+                width: 25px;
+                height: 25px;
+                background-color: white;
+                border-radius: 25px;
+                border: 1px solid #ddd;
+                position: absolute;
+                top: -15px;
+                left: 42%;
                 transition: all 200ms ease-in;
+            }
+        }
+
+        .li.complete {
+            .status {
+                border-top: 2px solid #003da5;
+
+                &:before {
+                    background-color: #003da5;
+                    border: none;
+                    transition: all 200ms ease-in;
+                }
+
+                h4 {
+                    color: #003da5;
+                }
             }
         }
     }

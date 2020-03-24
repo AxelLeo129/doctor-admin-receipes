@@ -133,6 +133,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        _this.activado = false;
         _this.token = Response.data.success.token;
         _this.rol = Response.data.rol;
         _this.user_id = Response.data.id;
