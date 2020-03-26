@@ -36,7 +36,7 @@
             <!-- INVOICE METADATA -->
             <div class="vx-row leading-loose p-base">
                 <div class="vx-col w-full md:w-1/2 mt-base">
-                    <img v-bind:src="image" class="mr-8 rounded h-24" />
+                    <img v-bind:src="image" class="mr-8 rounded altura" />
                 </div>
                 <div class="vx-col w-full md:w-1/2 text-right">
                     <h1>Receta</h1>
@@ -322,6 +322,16 @@
 </script>
 
 <style lang="scss">
+    .altura {
+        height: 6rem !important
+    }
+
+    @media (min-device-width: 320px) and (max-device-width: 700px) {
+        .altura {
+            height: 3rem !important
+        }
+    }
+
     @media print {
         .invoice-page {
             * {

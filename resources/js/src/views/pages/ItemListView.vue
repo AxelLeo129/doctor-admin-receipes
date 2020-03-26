@@ -14,16 +14,15 @@
         <template slot="no-body">
 
             <!-- ITEM IMAGE -->
-            <div class="item-img-container bg-white h-64 flex items-center justify-center mb-4 cursor-pointer"
-                @click="navigate_to_detail_view">
+            <div class="item-img-container bg-white h-64 flex items-center justify-center mb-4 cursor-pointer">
                 <img :src="'https://pharmazone.app/images/productos/' + item.img + '.png'" :alt="item.nombre" class="grid-view-img px-4 h-48 w-48">
             </div>
             <div class="item-details px-4">
 
                 <!-- TITLE & DESCRIPTION -->
                 <div class="my-4">
-                    <h6 class="truncate font-semibold mb-1 hover:text-primary cursor-pointer"
-                        @click="navigate_to_detail_view">{{ item.nombre }}</h6>
+                    <h5 class="truncate font-semibold mb-1 hover:text-primary">{{ item.nombre }}</h5>
+                    <h6 class="truncate font-semibold mb-1 hover:text-primary">{{ item.precentacion }}</h6>
                     <p class="item-description truncate text-sm" v-text="item.descripcion.slice(0, 10) + '...'"></p>
                 </div>
             </div>

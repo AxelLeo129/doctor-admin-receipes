@@ -53,18 +53,17 @@
             </ul>
         </div>
         <!-- IF CART HAVE ITEMS -->
-        <div class="vx-row">
+        <div class="vx-row mt-5">
             <!-- LEFT COL -->
-            <div class="vx-col lg:w-2/3 w-full relative">
-                <div class="items-list-view">
-                    <vx-card v-for="(item, index) in nuevaRecetaData.medicamentos" :key="item.id" style="height: 14rem;"
-                        class="mt-5">
+            <div class="vx-col sm:w-2/3 lg:w-2/3 w-full" v-if="cardType == true"> 
+                <div class="mt-5">
+                    <vx-card v-for="(item, index) in nuevaRecetaData.medicamentos" :key="item.id" class="mt-5 w-card">
                         <div class="vx-row">
-                            <div class="vx-col md:w-1/2 w-full">
+                            <div class="vx-col md:w-1/2 sm:w-1/2 mb-base">
                                 <img class="h-48 w-48" alt="image"
                                     :src="'https://pharmazone.app/images/productos/' + item.img + '.png'" />
                             </div>
-                            <div class="vx-col md:w-1/2 w-full">
+                            <div class="vx-col md:w-1/2 sm:w-1/2 mb-base">
                                 <h3 class="mb-3" v-text="item.nombre"></h3>
                                 <h5 class="mb-3" v-text="item.precentacion"></h5>
                                 <p class="mb-3" v-text="item.descripcion.slice(0, 10) + '...'"></p>
@@ -75,7 +74,23 @@
                     </vx-card>
                 </div>
             </div>
+            <div class="vx-col lg:w-2/3 w-full relative" v-else>
+                <div class="items-list-view" v-for="(item) in nuevaRecetaData.medicamentos" :key="item.id">
+                    <item-list-view :item="item" class="mb-base">
 
+                        <!-- SLOT: ITEM META -->
+
+                                <!-- SLOT: ACTION BUTTONS -->
+                                <template slot="action-buttons">
+
+                                    <!-- SECONDARY BUTTON: MOVE-TO/VIEW-IN WISHLIST -->
+                                    <div @click="remover(index)" class="item-view-secondary-action-btn bg-danger p-3 rounded-lg flex flex-grow items-center justify-center text-white cursor-pointer">
+                                        <span class="text-sm font-semibold ml-2">Remover</span>
+                                    </div>
+                                </template>
+                    </item-list-view>
+                </div>
+            </div>
             <!-- RIGHT COL -->
             <div class="vx-col lg:w-1/3 w-full">
                 <vx-card class="mt-5">
@@ -124,10 +139,12 @@
 
 <script>
     import axios from "axios";
+    const ItemListView = () => import('./ItemListView.vue')
 
     export default {
         data() {
             return {
+                cardType: true,
                 registro: null,
                 nextStep: null,
                 resid: null,
@@ -158,18 +175,37 @@
                 cvv: ""
             };
         },
+        components: {
+            ItemListView
+        },
         computed: {
             isInWishList() {
                 return itemId => this.$store.getters["eCommerce/isInWishList"](itemId);
+            },
+            windowWidth(){
+                return screen.width;
             }
         },
+        watch: {
+            windowWidth() {
+                this.setSidebarWidth();
+            }   
+        },
         created() {
+            this.setSidebarWidth();
             this.openLoading();
             this.registro = localStorage.getItem("regi");
             this.getUser();
             this.getData();
         },
         methods: {
+            setSidebarWidth() {
+                if (this.windowWidth < 992) {
+                    this.cardType = false;
+                } else {
+                    this.cardType = true;
+                }
+            },
             agregarmas() {
                 this.$router.push("/agregarProductos");
             },
@@ -404,6 +440,11 @@
 </script>
 
 <style lang="scss" scoped>
+    .w-card {
+        //width: 15rem;
+        height: 14rem;
+    }
+
     .timeline {
         list-style-type: none;
         display: flex;
@@ -458,6 +499,11 @@
     }
 
     @media (min-device-width: 320px) and (max-device-width: 700px) {
+        .w-card {
+            width: 100px;
+            height: 14rem;
+        }
+
         .status {
             padding: 0px 10px;
             display: flex;
