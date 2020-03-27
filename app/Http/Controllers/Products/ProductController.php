@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Products_category;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -203,7 +204,8 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-
+        $image_path = "images/productos/" . $product->img_url;
+        Storage::delete($image_path);
         if($product->delete()){
             return ['result' => 'success'];
         } else {

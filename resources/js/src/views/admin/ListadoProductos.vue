@@ -1,98 +1,58 @@
 <template>
     <div>
+        <vs-popup title="Eliminar Producto" :active.sync="popupActive3">
+            <p>¿Está seguro de eliminar este producto?</p>
+            <br />
+            <vs-button @click="deleteProduct(idMedicamento)" color="primary" type="filled">Aceptar
+            </vs-button>
+            <vs-button @click="popupActive3=false" color="danger" type="filled">Cancelar
+            </vs-button>
+        </vs-popup>
         <div class="vx-row">
-            <div class="vx-col md:w-1/2 w-full">
-                <vx-input-group class="mb-base">
-                    <vs-input placeholder="Nombre / Laboratorio / Precentación / Cantidad" v-model="buscar" />
-
-                    <template slot="append">
-                        <div class="append-text bg-primary">
-                            <span>
-                                <vs-icon icon="search"></vs-icon>
-                            </span>
-                        </div>
-                    </template>
-                </vx-input-group>
-            </div>
-            <div class="vx-col md:w-1/2 w-full">
-                <!-- <vx-input-group class="mb-base">
-          <vs-input placeholder="Laboratorio" />
-
-          <template slot="append">
-            <div class="append-text bg-primary">
-              <span>
-                <vs-icon icon="search"></vs-icon>
-              </span>
-            </div>
-          </template>
-        </vx-input-group>-->
+            <div class="vx-col sm:w-1/2">
+                <div align="left">
+                    <vs-button color="primary" type="filled" @click="nuevo" size="small">Nuevo Medicamento</vs-button>
+                </div>
             </div>
         </div>
-        <div class="vx-row">
-            <!-- CARD 9: DISPATCHED ORDERS -->
-            <div class="vx-col w-full">
-                <vx-card>
-                    <div class="vx-row">
-                        <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 mb-base">
-                            <h4>Top más vendidos</h4>
-                        </div>
-                        <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 mb-base">
-                            <div align="right">
-                                <vs-button color="primary" type="filled" @click="nuevo">Nuevo Medicamento</vs-button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <vs-table :data="dispatchedOrders" class="table-dark-inverted">
-                            <template slot="thead">
-                                <vs-th>NUMERO.</vs-th>
-                                <vs-th>NOMBRE</vs-th>
-                                <vs-th>LABORATORIO</vs-th>
-                                <vs-th>PRECENTACION</vs-th>
-                                <vs-th>CANTIDAD</vs-th>
-                                <vs-th>ACCIONES</vs-th>
-                            </template>
+        <vs-table pagination max-items="10" search :data="medicamentos">
+            <template slot="thead">
+                <vs-th sort-key='id'>#</vs-th>
+                <vs-th sort-key="name">NOMBRE</vs-th>
+                <vs-th sort-key="laboratory">LABORATORIO</vs-th>
+                <vs-th sort-key="precentation">PRECENTACION</vs-th>
+                <vs-th sort-key="quantity">CANTIDAD</vs-th>
+                <vs-th sort-key="actions">ACCIONES</vs-th>
+            </template>
 
-                            <template>
-                                <vs-tr v-for="(item, index) in searchPacientes" :key="index">
-                                    <vs-td>
-                                        <span v-text="item.id"></span>
-                                    </vs-td>
-                                    <vs-td>
-                                        <span v-text="item.name"></span>
-                                    </vs-td>
-                                    <vs-td>
-                                        <span v-text="item.lab"></span>
-                                    </vs-td>
-                                    <vs-td>
-                                        <span v-text="item.precentacion"></span>
-                                    </vs-td>
-                                    <vs-td>
-                                        <span v-text="item.quantity"></span>
-                                    </vs-td>
-                                    <vs-td>
-                                        <span>
-                                            <vs-button color="warning" type="filled" size="small"
-                                                @click="edit(item.id)">Editar</vs-button>
-                                            <vs-button color="danger" type="filled" size="small"
-                                                @click="popupActive3=true">Eliminar</vs-button>
-                                        </span>
-                                    </vs-td>
-                                    <vs-popup title="Eliminar Producto" :active.sync="popupActive3">
-                                        <p>¿Está seguro de eliminar este producto?</p>
-                                        <br />
-                                        <vs-button @click="deleteProduct(item.id)" color="primary" type="filled">Aceptar
-                                        </vs-button>
-                                        <vs-button @click="popupActive3=false" color="danger" type="filled">Cancelar
-                                        </vs-button>
-                                    </vs-popup>
-                                </vs-tr>
-                            </template>
-                        </vs-table>
-                    </div>
-                </vx-card>
-            </div>
-        </div>
+            <template slot-scope="{data}">
+                <vs-tr :data="item" :key="indextr" v-for="(item, indextr) in data">
+                    <vs-td>
+                        <span v-text="item.id"></span>
+                    </vs-td>
+                    <vs-td>
+                        <span v-text="item.name"></span>
+                    </vs-td>
+                    <vs-td>
+                        <span v-text="item.lab"></span>
+                    </vs-td>
+                    <vs-td>
+                        <span v-text="item.precentacion"></span>
+                    </vs-td>
+                    <vs-td>
+                        <span v-text="item.quantity"></span>
+                    </vs-td>
+                    <vs-td>
+                        <span>
+                            <vs-button color="warning" type="filled" size="small" @click="edit(item.id)">Editar
+                            </vs-button>
+                            <vs-button color="danger" type="filled" size="small" @click="eliminar(item.id)">Eliminar
+                            </vs-button>
+                        </span>
+                    </vs-td>
+                </vs-tr>
+            </template>
+        </vs-table>
     </div>
 </template>
 
@@ -102,12 +62,17 @@
     export default {
         data() {
             return {
+                idMedicamento: null,
                 popupActive3: false,
                 medicamentos: [],
                 buscar: ""
             };
         },
         methods: {
+            eliminar(id){
+                this.idMedicamento = id;
+                this.popupActive3 = true;
+            },
             openLoading() {
                 this.activeLoading = true;
                 this.$vs.loading({
@@ -133,11 +98,13 @@
                         }
                     })
                     .then(Response => {
+                        this.medicamentos = [];
                         Response.data.forEach(element => {
                             //if (element.user_id == id) {
                             this.medicamentos.push(element);
                             //}
                         });
+                        //console.log(this.medicamentos);
                         this.activeLoading = false;
                         this.$vs.loading.close();
                     })
@@ -165,6 +132,7 @@
                     })
                     .then(Response => {
                         this.getData();
+                        this.idMedicamento = null;
                         this.popupActive3 = false;
                         this.$vs.notify({
                             title: "Eliminado",

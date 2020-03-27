@@ -65,7 +65,6 @@
 
                     <div class="mt-4">
                         <vs-textarea class="vs-textarea" label="Observaciones" v-model="observations" />
-                        <span class="text-danger text-sm" v-show="observations === ''">{{ errors.campo }}</span>
                     </div>
 
                 </div>

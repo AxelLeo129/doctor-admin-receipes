@@ -69,56 +69,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      idMedicamento: null,
       popupActive3: false,
       medicamentos: [],
       buscar: ""
     };
   },
   methods: {
+    eliminar: function eliminar(id) {
+      this.idMedicamento = id;
+      this.popupActive3 = true;
+    },
     openLoading: function openLoading() {
       this.activeLoading = true;
       this.$vs.loading({
@@ -145,11 +110,13 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
+        _this.medicamentos = [];
         Response.data.forEach(function (element) {
           //if (element.user_id == id) {
           _this.medicamentos.push(element); //}
 
-        });
+        }); //console.log(this.medicamentos);
+
         _this.activeLoading = false;
 
         _this.$vs.loading.close();
@@ -182,6 +149,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         _this2.getData();
 
+        _this2.idMedicamento = null;
         _this2.popupActive3 = false;
 
         _this2.$vs.notify({
@@ -235,269 +203,206 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "vx-row" }, [
+  return _c(
+    "div",
+    [
       _c(
-        "div",
-        { staticClass: "vx-col md:w-1/2 w-full" },
+        "vs-popup",
+        {
+          attrs: { title: "Eliminar Producto", active: _vm.popupActive3 },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActive3 = $event
+            }
+          }
+        },
         [
+          _c("p", [_vm._v("¿Está seguro de eliminar este producto?")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
           _c(
-            "vx-input-group",
-            { staticClass: "mb-base" },
-            [
-              _c("vs-input", {
-                attrs: {
-                  placeholder: "Nombre / Laboratorio / Precentación / Cantidad"
-                },
-                model: {
-                  value: _vm.buscar,
-                  callback: function($$v) {
-                    _vm.buscar = $$v
-                  },
-                  expression: "buscar"
+            "vs-button",
+            {
+              attrs: { color: "primary", type: "filled" },
+              on: {
+                click: function($event) {
+                  return _vm.deleteProduct(_vm.idMedicamento)
                 }
-              }),
-              _vm._v(" "),
-              _c("template", { slot: "append" }, [
-                _c("div", { staticClass: "append-text bg-primary" }, [
-                  _c("span", [_c("vs-icon", { attrs: { icon: "search" } })], 1)
-                ])
-              ])
-            ],
-            2
+              }
+            },
+            [_vm._v("Aceptar\n        ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "vs-button",
+            {
+              attrs: { color: "danger", type: "filled" },
+              on: {
+                click: function($event) {
+                  _vm.popupActive3 = false
+                }
+              }
+            },
+            [_vm._v("Cancelar\n        ")]
           )
         ],
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "vx-col md:w-1/2 w-full" })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "vx-row" }, [
+      _c("div", { staticClass: "vx-row" }, [
+        _c("div", { staticClass: "vx-col sm:w-1/2" }, [
+          _c(
+            "div",
+            { attrs: { align: "left" } },
+            [
+              _c(
+                "vs-button",
+                {
+                  attrs: { color: "primary", type: "filled", size: "small" },
+                  on: { click: _vm.nuevo }
+                },
+                [_vm._v("Nuevo Medicamento")]
+              )
+            ],
+            1
+          )
+        ])
+      ]),
+      _vm._v(" "),
       _c(
-        "div",
-        { staticClass: "vx-col w-full" },
-        [
-          _c("vx-card", [
-            _c("div", { staticClass: "vx-row" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 mb-base"
-                },
-                [_c("h4", [_vm._v("Top más vendidos")])]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 mb-base"
-                },
-                [
-                  _c(
-                    "div",
-                    { attrs: { align: "right" } },
+        "vs-table",
+        {
+          attrs: {
+            pagination: "",
+            "max-items": "10",
+            search: "",
+            data: _vm.medicamentos
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "default",
+              fn: function(ref) {
+                var data = ref.data
+                return _vm._l(data, function(item, indextr) {
+                  return _c(
+                    "vs-tr",
+                    { key: indextr, attrs: { data: item } },
                     [
-                      _c(
-                        "vs-button",
-                        {
-                          attrs: { color: "primary", type: "filled" },
-                          on: { click: _vm.nuevo }
-                        },
-                        [_vm._v("Nuevo Medicamento")]
-                      )
+                      _c("vs-td", [
+                        _c("span", {
+                          domProps: { textContent: _vm._s(item.id) }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("span", {
+                          domProps: { textContent: _vm._s(item.name) }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("span", {
+                          domProps: { textContent: _vm._s(item.lab) }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("span", {
+                          domProps: { textContent: _vm._s(item.precentacion) }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("span", {
+                          domProps: { textContent: _vm._s(item.quantity) }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c(
+                          "span",
+                          [
+                            _c(
+                              "vs-button",
+                              {
+                                attrs: {
+                                  color: "warning",
+                                  type: "filled",
+                                  size: "small"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.edit(item.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("Editar\n                        ")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vs-button",
+                              {
+                                attrs: {
+                                  color: "danger",
+                                  type: "filled",
+                                  size: "small"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.eliminar(item.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("Eliminar\n                        ")]
+                            )
+                          ],
+                          1
+                        )
+                      ])
                     ],
                     1
                   )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "mt-4" },
-              [
-                _c(
-                  "vs-table",
-                  {
-                    staticClass: "table-dark-inverted",
-                    attrs: { data: _vm.dispatchedOrders }
-                  },
-                  [
-                    _c(
-                      "template",
-                      { slot: "thead" },
-                      [
-                        _c("vs-th", [_vm._v("NUMERO.")]),
-                        _vm._v(" "),
-                        _c("vs-th", [_vm._v("NOMBRE")]),
-                        _vm._v(" "),
-                        _c("vs-th", [_vm._v("LABORATORIO")]),
-                        _vm._v(" "),
-                        _c("vs-th", [_vm._v("PRECENTACION")]),
-                        _vm._v(" "),
-                        _c("vs-th", [_vm._v("CANTIDAD")]),
-                        _vm._v(" "),
-                        _c("vs-th", [_vm._v("ACCIONES")])
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.searchPacientes, function(item, index) {
-                      return _c(
-                        "vs-tr",
-                        { key: index },
-                        [
-                          _c("vs-td", [
-                            _c("span", {
-                              domProps: { textContent: _vm._s(item.id) }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("span", {
-                              domProps: { textContent: _vm._s(item.name) }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("span", {
-                              domProps: { textContent: _vm._s(item.lab) }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("span", {
-                              domProps: {
-                                textContent: _vm._s(item.precentacion)
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("span", {
-                              domProps: { textContent: _vm._s(item.quantity) }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c(
-                              "span",
-                              [
-                                _c(
-                                  "vs-button",
-                                  {
-                                    attrs: {
-                                      color: "warning",
-                                      type: "filled",
-                                      size: "small"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.edit(item.id)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Editar")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vs-button",
-                                  {
-                                    attrs: {
-                                      color: "danger",
-                                      type: "filled",
-                                      size: "small"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.popupActive3 = true
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Eliminar")]
-                                )
-                              ],
-                              1
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "vs-popup",
-                            {
-                              attrs: {
-                                title: "Eliminar Producto",
-                                active: _vm.popupActive3
-                              },
-                              on: {
-                                "update:active": function($event) {
-                                  _vm.popupActive3 = $event
-                                }
-                              }
-                            },
-                            [
-                              _c("p", [
-                                _vm._v(
-                                  "¿Está seguro de eliminar este producto?"
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c(
-                                "vs-button",
-                                {
-                                  attrs: { color: "primary", type: "filled" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleteProduct(item.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "Aceptar\n                                    "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "vs-button",
-                                {
-                                  attrs: { color: "danger", type: "filled" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.popupActive3 = false
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "Cancelar\n                                    "
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    })
-                  ],
-                  2
-                )
-              ],
-              1
-            )
+                })
+              }
+            }
           ])
+        },
+        [
+          _c(
+            "template",
+            { slot: "thead" },
+            [
+              _c("vs-th", { attrs: { "sort-key": "id" } }, [_vm._v("#")]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "name" } }, [
+                _vm._v("NOMBRE")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "laboratory" } }, [
+                _vm._v("LABORATORIO")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "precentation" } }, [
+                _vm._v("PRECENTACION")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "quantity" } }, [
+                _vm._v("CANTIDAD")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "actions" } }, [
+                _vm._v("ACCIONES")
+              ])
+            ],
+            1
+          )
         ],
-        1
+        2
       )
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

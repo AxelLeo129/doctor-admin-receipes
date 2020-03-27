@@ -345,7 +345,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "#dashboard-analytics .greet-user {\n  position: relative;\n}\n#dashboard-analytics .greet-user .decore-left {\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n#dashboard-analytics .greet-user .decore-right {\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n@media (max-width: 576px) {\n#dashboard-analytics .decore-left,\n#dashboard-analytics .decore-right {\n    width: 140px;\n}\n}", ""]);
+exports.push([module.i, ".tamanio {\n  font-size: 25px;\n}\n@media (min-device-width: 320px) and (max-device-width: 700px) {\n.tamanio {\n    font-size: 25px;\n}\n}\n#dashboard-analytics .greet-user {\n  position: relative;\n}\n#dashboard-analytics .greet-user .decore-left {\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n#dashboard-analytics .greet-user .decore-right {\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n@media (max-width: 576px) {\n#dashboard-analytics .decore-left,\n#dashboard-analytics .decore-right {\n    width: 140px;\n}\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -418,7 +418,7 @@ var render = function() {
                   attrs: { icon: "PlusIcon", svgClasses: "h-8 w-8" }
                 }),
                 _vm._v(" "),
-                _c("h1", { staticClass: "mb-6 text-black" }, [
+                _c("h1", { staticClass: "mb-6 text-black tamanio" }, [
                   _vm._v("Nuevo Medicamento/Producto")
                 ]),
                 _vm._v(" "),

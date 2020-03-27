@@ -20,7 +20,7 @@
                             class="p-6 mb-8 bg-primary inline-flex rounded-full text-white shadow" svgClasses="h-8 w-8">
                         </feather-icon>
                         <!-- <h1 class="mb-6 text-white">Congratulations {{ checkpointReward.userName }},</h1> -->
-                        <h1 class="mb-6 text-black">Nuevo Medicamento/Producto</h1>
+                        <h1 class="mb-6 text-black tamanio">Nuevo Medicamento/Producto</h1>
                         <br />
                         <p class="xl:w-3/4 lg:w-4/5 md:w-2/3 w-4/5 mx-auto text-blue">
                             Ingrese un nuevo
@@ -319,6 +319,14 @@
 </script>
 
 <style lang="scss">
+    .tamanio{
+        font-size: 25px;
+    } 
+    @media (min-device-width: 320px) and (max-device-width: 700px) {
+        .tamanio{
+            font-size: 25px;
+        }   
+    }
     /*! rtl:begin:ignore */
     #dashboard-analytics {
         .greet-user {
