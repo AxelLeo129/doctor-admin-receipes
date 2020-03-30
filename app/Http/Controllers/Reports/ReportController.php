@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Presentations;
+namespace App\Http\Controllers\Reports;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Presentation;
-use PhpParser\Node\Stmt\TraitUseAdaptation\Precedence;
 
-class PresentationController extends Controller
+class ReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,11 @@ class PresentationController extends Controller
      */
     public function index()
     {
-        return \DB::select('SELECT * FROM `presentations` ORDER BY name ASC');
+        //
+    }
+
+    public function reporteGeneral(){
+        return \DB::select("select o.user_id as id, u.name as nombre, r.name as rol, count(o.user_id) total, concat(year(o.created_at),'-',MONTH(o.created_at),'-',day(o.created_at)) as fecha from oauth_access_tokens o, users u, roles r where o.user_id = u.id and r.id = u.rol and u.id not in (1,2,3,4,5,6,7,8,30,31,55) group by 1,5");
     }
 
     /**
@@ -37,14 +39,7 @@ class PresentationController extends Controller
      */
     public function store(Request $request)
     {
-        $pre = new Presentation();
-        $pre->name = $request->name;
-        $pre->unidad = $request->unidad;
-        $pre->cantidad = $request->cantidad;
-        $pre->user_id = $request->user_id;
-        if($pre->save()){
-            return ['result' => 'success', "mess"=>$pre];
-        }
+        //
     }
 
     /**
@@ -55,7 +50,7 @@ class PresentationController extends Controller
      */
     public function show($id)
     {
-        return Presentation::where('id', $id)->get();
+        //
     }
 
     /**
@@ -76,19 +71,9 @@ class PresentationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $pre = Presentation::find($request->id);
-        $pre->name = $request->name;
-        $pre->unidad = $request->unidad;
-        $pre->cantidad = $request->cantidad;
-        $pre->user_id = $request->user_id;
-
-        if($pre->save()){
-            return ['result' => 'success', "mess"=>$pre];
-        }else{
-            return ['result' => 'fail', "mess"=>$pre];
-        }
+        //
     }
 
     /**

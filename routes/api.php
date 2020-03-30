@@ -1,5 +1,6 @@
 <?php
 
+use Facade\Ignition\QueryRecorder\Query;
 use Illuminate\Http\Request;
 //use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
@@ -22,14 +23,17 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'User\UserController@login');
 Route::any('register', 'User\UserController@register');
 Route::post('forgotPassword', 'User\UserController@resetPassword');
-Route::get('pdf', function () {
-    $pdf = App::make('dompdf.wrapper');
+// Route::get('reporteGeneral', function () {
 
-    $pdf->loadview('recipe');
+//     $datos = DB::select("select o.user_id as id, u.name as nombre, r.name as rol, count(o.user_id) total, concat(year(o.created_at),'-',MONTH(o.created_at),'-',day(o.created_at)) as fecha from oauth_access_tokens o, users u, roles r where o.user_id = u.id and r.id = u.rol and u.id not in (1,2,3,4,5,6,7,8,30,31,55) group by 1,5");
 
-    return $pdf->stream();
+//     $pdf = App::make('dompdf.wrapper');
 
-});
+//     $pdf->loadview('general', ['datos' => $datos]);
+
+//     return $pdf->stream();
+
+// });
 
 Route::group(['middleware' => 'auth:api'], function(){
     //User
@@ -124,6 +128,39 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('postTransaction', 'Transactions\TransactionController@store');
     Route::put('putTransaction', 'Transactions\TransactionController@update');
     Route::get('getTransactions/{id}', 'Transactions\TransactionController@show');
+    //Reportes
+    Route::get('reporteGeneral', function () {
+
+        $datos = DB::select("select o.user_id as id, u.name as nombre, r.name as rol, count(o.user_id) total, concat(year(o.created_at),'-',MONTH(o.created_at),'-',day(o.created_at)) as fecha from oauth_access_tokens o, users u, roles r where o.user_id = u.id and r.id = u.rol and u.id not in (1,2,3,4,5,6,7,8,30,31,55) group by 1,5");
+    
+        $pdf = App::make('dompdf.wrapper');
+    
+        $pdf->loadview('general', ['datos' => $datos]);
+    
+        return $pdf->stream();
+    
+    });
+
+    Route::get('reporteIngresos/{query}', function ($query) {
+
+        $datos = DB::select($query);
+    
+        $pdf = App::make('dompdf.wrapper');
+
+        $total = 0;
+
+        foreach($datos as $dato){
+            if($dato->valor == null){
+                $dato->valor = 0;
+            }
+            $total = $total + $dato->valor;
+        }
+    
+        $pdf->loadview('ingresos', ['datos' => $datos, 'total' => $total]);
+    
+        return $pdf->stream();
+    
+    });
 });
 
 Route::fallback(function(){

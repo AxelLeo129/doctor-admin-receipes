@@ -283,13 +283,13 @@ __webpack_require__.r(__webpack_exports__);
         Response.data.forEach(function (element) {
           if (element.user_id == ide) {
             _this2.presentaciones.push({
-              label: element.name + '-' + element.unidad + '-' + element.cantidad,
+              label: element.name,
               value: element.id
             });
 
             if (r == element.id) {
               _this2.precentation.push({
-                label: element.name + '-' + element.unidad + '-' + element.cantidad,
+                label: element.name,
                 value: element.id
               });
 
@@ -319,8 +319,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        console.log(Response.data);
-
+        //console.log(Response.data);
         if (Response.data.length == 0) {
           axios__WEBPACK_IMPORTED_MODULE_1___default()({
             method: "get",
@@ -330,8 +329,7 @@ __webpack_require__.r(__webpack_exports__);
               "content-type": "application/json"
             }
           }).then(function (Response) {
-            console.log(Response.data);
-
+            //console.log(Response.data);
             if (Response.data.length == 0) {
               _this3.activeLoading = false;
 

@@ -214,7 +214,7 @@ export default {
       let newArray = [];
 
       clone.forEach(element => {
-        if ((element.rol == this.token && (element.disabled == 3 || element.disabled == this.registro)) || element.rol == 0 ) {
+        if ((element.rol.includes(this.token) && (element.disabled == 3 || element.disabled == this.registro)) || element.rol.includes(0)) {
           newArray.push(element);
         }
       });
@@ -281,7 +281,7 @@ export default {
   },
   methods: {
     onItem() {
-      this.token = localStorage.getItem("ru");
+      this.token = parseInt(localStorage.getItem("ru"));
       this.registro = localStorage.getItem('regi');
       //console.log(this.token);
     },

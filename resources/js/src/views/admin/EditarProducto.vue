@@ -266,14 +266,12 @@
                         Response.data.forEach(element => {
                             if (element.user_id == ide) {
                                 this.presentaciones.push({
-                                    label: element.name + '-' + element.unidad + '-' + element
-                                        .cantidad,
+                                    label: element.name,
                                     value: element.id
                                 });
                                 if (r == element.id) {
                                     this.precentation.push({
-                                        label: element.name + '-' + element.unidad + '-' + element
-                                            .cantidad,
+                                        label: element.name,
                                         value: element.id
                                     });
                                     this.precentation1 = element.id;
@@ -301,7 +299,7 @@
                         }
                     })
                     .then(Response => {
-                        console.log(Response.data);
+                        //console.log(Response.data);
                         if (Response.data.length == 0) {
                             axios({
                                     method: "get",
@@ -312,7 +310,7 @@
                                     }
                                 })
                                 .then(Response => {
-                                    console.log(Response.data);
+                                    //console.log(Response.data);
                                     if (Response.data.length == 0) {
                                         this.activeLoading = false;
                                         this.$vs.loading.close();

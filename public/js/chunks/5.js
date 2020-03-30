@@ -2075,7 +2075,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
       var newArray = [];
       clone.forEach(function (element) {
-        if (element.rol == _this2.token && (element.disabled == 3 || element.disabled == _this2.registro) || element.rol == 0) {
+        if (element.rol.includes(_this2.token) && (element.disabled == 3 || element.disabled == _this2.registro) || element.rol.includes(0)) {
           newArray.push(element);
         }
       });
@@ -2134,7 +2134,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   },
   methods: {
     onItem: function onItem() {
-      this.token = localStorage.getItem("ru");
+      this.token = parseInt(localStorage.getItem("ru"));
       this.registro = localStorage.getItem('regi'); //console.log(this.token);
     },
     // handleWindowResize(event) {
@@ -6890,7 +6890,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "Listado de Pedidos ",
   slug: "facturacion",
   icon: "ListIcon",
-  rol: 9,
+  rol: [9],
   disabled: 3
 }, //Medico
 {
@@ -6898,28 +6898,28 @@ __webpack_require__.r(__webpack_exports__);
   name: "Home",
   slug: "home",
   icon: "HomeIcon",
-  rol: 2,
+  rol: [2],
   disabled: 3
 }, {
   url: "/nuevoPaciente",
   name: "Nueva Receta",
   slug: "nuevoPaciente",
   icon: "PlusIcon",
-  rol: 2,
+  rol: [2],
   disabled: 3
 }, {
   url: "/listadoRecetas",
   name: "Listado Recetas",
   slug: "listadoRecetas",
   icon: "ListIcon",
-  rol: 2,
+  rol: [2],
   disabled: 3
 }, {
   url: "/listadoPacientes",
   name: "Listado Diagnósticos",
   slug: "listadoPacientes",
   icon: "ListIcon",
-  rol: 2,
+  rol: [2],
   disabled: 1
 }, //Admin
 {
@@ -6927,7 +6927,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "Consola",
   slug: "consola",
   icon: "HomeIcon",
-  rol: 1,
+  rol: [1],
   disabled: 3
 }, //Admin - Productos
 {
@@ -6935,7 +6935,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "Listado Medicamentos",
   slug: "listadoProductos",
   icon: "ListIcon",
-  rol: 1,
+  rol: [1],
   disabled: 3
 }, //Admin - Categorias
 {
@@ -6943,7 +6943,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "Listado Categorias",
   slug: "listadoCategorias",
   icon: "ListIcon",
-  rol: 1,
+  rol: [1],
   disabled: 3
 }, //Admin - roles
 {
@@ -6951,7 +6951,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "Listado Roles",
   slug: "listadoRoles",
   icon: "ListIcon",
-  rol: 1,
+  rol: [1],
   disabled: 3
 }, //Admin - Laboratorios 
 {
@@ -6959,7 +6959,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "Listado Laboratorios",
   slug: "listadoLabs",
   icon: "ListIcon",
-  rol: 1,
+  rol: [1],
   disabled: 3
 }, //Admin - Presentaciones
 {
@@ -6967,21 +6967,21 @@ __webpack_require__.r(__webpack_exports__);
   name: "Listado Presentaciones",
   slug: "listadoPres",
   icon: "ListIcon",
-  rol: 1,
+  rol: [1],
   disabled: 3
 }, {
   url: "/boodskapper",
   name: "Listado Envíos",
   slug: "boodskapper",
   icon: "ListIcon",
-  rol: 5,
+  rol: [5],
   disabled: 3
 }, {
   url: "/visitador",
   name: "Listado Pedidos",
   slug: "visitador",
   icon: "ListIcon",
-  rol: 4,
+  rol: [4],
   disabled: 3
 }, //Admin - Usuarios
 {
@@ -6989,14 +6989,14 @@ __webpack_require__.r(__webpack_exports__);
   name: "Listado Usuarios",
   slug: "listadoUsurios",
   icon: "ListIcon",
-  rol: 1,
+  rol: [1],
   disabled: 3
 }, {
   url: "/dashboardCallCenter",
   name: "Listado Call-Center",
   slug: "ListCallCenter",
   icon: "ListIcon",
-  rol: 3,
+  rol: [3],
   disabled: 3
 }, // {
 //   url: "/buscarRecetas",
@@ -7011,21 +7011,21 @@ __webpack_require__.r(__webpack_exports__);
   name: "Buscar Pedidos",
   slug: "BuscarPedidos",
   icon: "ListIcon",
-  rol: 3,
+  rol: [3],
   disabled: 3
 }, {
   url: "/1visitador",
   name: "Listado médicos",
   slug: "ListMedicos",
   icon: "ListIcon",
-  rol: 6,
+  rol: [6],
   disabled: 3
 }, {
   url: "/nuevoMedico",
   name: "Nuevo Médico",
   slug: "nuevoMedico",
   icon: "PlusIcon",
-  rol: 6,
+  rol: [6],
   disabled: 3
 }, //Todos
 {
@@ -7033,7 +7033,14 @@ __webpack_require__.r(__webpack_exports__);
   name: "Cambiar Contreseña ",
   slug: "user/profile",
   icon: "KeyIcon",
-  rol: 0,
+  rol: [0],
+  disabled: 3
+}, {
+  url: "/reportes",
+  name: "Reportes",
+  slug: "reportes",
+  icon: "FileIcon",
+  rol: [1, 2, 6, 3, 5],
   disabled: 3
 }]);
 

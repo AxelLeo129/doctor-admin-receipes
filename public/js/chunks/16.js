@@ -207,7 +207,7 @@ __webpack_require__.r(__webpack_exports__);
         Response.data.forEach(function (element) {
           //if (element.user_id == idu) {
           _this.presentaciones.push({
-            label: element.name + '-' + element.unidad + '-' + element.cantidad,
+            label: element.name,
             value: element.id
           }); //}
 

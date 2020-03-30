@@ -193,8 +193,7 @@
                         Response.data.forEach(element => {
                             //if (element.user_id == idu) {
                             this.presentaciones.push({
-                                label: element.name + '-' + element.unidad + '-' + element
-                                    .cantidad,
+                                label: element.name,
                                 value: element.id
                             });
                             //}
