@@ -242,6 +242,9 @@
                 this.nuevaRecetaData = JSON.parse(
                     localStorage.getItem("nuevaRecetaData")
                 );
+                this.nuevaRecetaData.medicamentos.foreach(el => {
+                    console.log(el.img);
+                })
             },
             getUser() {
                 let token = localStorage.getItem("tu");

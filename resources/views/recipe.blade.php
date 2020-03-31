@@ -5,9 +5,9 @@
             <div style="color: #000000; margin: 4% 10% 2%; text-align: justify;font-family: sans-serif">
                 <table>
                     <tr>
-                        <td style="background-color: #EDEDED; text-align: left; width: 350px;">
-                            <img width="30%" src="data:image/png;base64,{{chunk_split(base64_encode($request->img))}}">
-                        </td>
+                        {{-- <td style="background-color: #EDEDED; text-align: left; width: 350px;">
+                            <img width="30%" src="data:image/png;base64,{{(base64_encode($request->img))}}">
+                        </td> --}}
                         <td>
                             <div align="right">
                                 <h3 style="color: #000000; margin: 0 0 7px"><strong>Receta</strong></h3>
