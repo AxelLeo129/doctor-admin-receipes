@@ -186,5 +186,13 @@ export default [
     icon: "FileIcon",
     rol: [1,2,6,3,5],
     disabled: 3
+  },
+  {
+    url: "/statistics",
+    name: "Estadísticas",
+    slug: "statistics",
+    icon: "BarChart2Icon",
+    rol: [1],
+    disabled: 3
   }
 ]

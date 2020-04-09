@@ -243,6 +243,67 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/statistics',
+                    name: 'statistics',
+                    component: () => import('@/views/admin/statistics/dashboard.vue'),
+                    beforeEnter(to, from, next) {
+                        let rol = localStorage.getItem('ru');
+                        let idu = localStorage.getItem('ui');
+                        let token = localStorage.getItem('tu');
+                        if (rol == null || rol == "" || idu == null || idu == "" || token == null || token == "") {
+                            next({
+                                name: 'page-login'
+                            });
+                        } else if (rol == 1) {
+                            next();
+                        } else if (rol == 2) {
+                            next({
+                                name: 'home'
+                            });
+                        } else if (rol == 3) {
+                            next({
+                                name: 'ListCallCenter'
+                            });
+                        } else if (rol == 4) {
+                            next({
+                                name: "visitador"
+                            });
+                        } else if (rol == 5) {
+                            next({
+                                name: "boodskapper"
+                            });
+                        } else if (rol == 6) {
+                            next({
+                                name: "1visitador"
+                            });
+                        } else if (rol == 9) {
+                            next({
+                                name: "facturacion"
+                            });
+                        } else {
+                            next({
+                                name: 'page-login'
+                            });
+                        }
+                    },
+                    meta: {
+                        breadcrumb: [{
+                                title: 'Estadísticas',
+                                url: '/statistics'
+                            },
+                            {
+                                title: 'Estadísticas'
+                            },
+                            {
+                                title: 'Estadísticas',
+                                active: true
+                            },
+                        ],
+                        pageTitle: 'Estadísticas',
+                        rule: 'editor'
+                    }
+                },
+                {
                     path: '/reportes',
                     name: 'listadoReportes',
                     component: () => import('@/views/admin/reportes/dashbord.vue'),

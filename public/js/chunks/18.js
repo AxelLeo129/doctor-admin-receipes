@@ -1,8 +1,8 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[18],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/facturacion/dashboard.vue?vue&type=script&lang=js&":
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/call-center/verReceta.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/facturacion/dashboard.vue?vue&type=script&lang=js& ***!
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/call-center/verReceta.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -11,8 +11,6 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -122,141 +120,79 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_1___default.a
+  data: function data() {
+    return {
+      bol: null,
+      rId: '',
+      clAddress: '',
+      clPhone: '',
+      pName: '',
+      pPhone: '',
+      medicinas: [],
+      medicinas1: [],
+      image: "/images/medicamentos/demol.PNG",
+      drName: "",
+      drEmail: "",
+      drPhone: "",
+      nuevaRecetaData: {},
+      recetas: [],
+      mailTo: "",
+      companyDetails: {
+        name: "",
+        addressLine1: "9 N. Sherwood Court",
+        addressLine2: "Nombre Médico",
+        zipcode: "94203",
+        mailId: "hello@pixinvent.net",
+        mobile: "s"
+      },
+      recipientDetails: {
+        fullName: "Peter Stark",
+        addressLine1: "8577 West West Drive ",
+        addressLine2: "Holbrook, NY",
+        zipcode: "90001",
+        mailId: "peter@mail.com",
+        mobile: "+91 988 888 8888"
+      },
+      invoiceDetails: {
+        invoiceNo: "001/2019",
+        invoiceDate: "Mon Dec 10 2018 07:46:00 GMT+0000 (GMT)"
+      },
+      invoiceData: {
+        tasks: [{
+          id: 1,
+          task: "Website Redesign",
+          hours: 60,
+          rate: 15,
+          amount: 90000
+        }, {
+          id: 2,
+          task: "Newsletter template design",
+          hours: 20,
+          rate: 12,
+          amount: 24000
+        }],
+        subtotal: 114000,
+        discountPercentage: 5,
+        discountedAmount: 5700,
+        total: 108300
+      },
+      imagen64: "/images/medicamentos/unnamed.jpg"
+    };
+  },
+  computed: {},
+  watch: {
+    mailTo: function mailTo(val, oldVal) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      this.bol = re.test(String(val).toLowerCase());
+    }
+  },
+  created: function created() {
+    this.openLoading();
+    this.getMendinas();
+    this.getUser();
+    this.getRecipe();
   },
   methods: {
     openLoading: function openLoading() {
@@ -265,104 +201,66 @@ __webpack_require__.r(__webpack_exports__);
         type: "default"
       });
     },
-    update: function update() {
+    enviarReceta: function enviarReceta() {
       var _this = this;
 
       this.openLoading();
-      var token = localStorage.getItem("tu");
-      var ui = localStorage.getItem("ui");
-      this.order_id = parseInt(this.order_id);
+      var token = localStorage.getItem('tu');
+      var medicinass = [];
+      this.medicinas.forEach(function (item) {
+        medicinass.push(item.name + ' ' + item.presentacion + ' ' + item.dispensing);
+      });
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: "post",
-        url: "http://127.0.0.1:8000/api/putOrder",
+        url: "http://127.0.0.1:8000/api/sendRecipe",
         data: JSON.stringify({
-          nit: this.nit,
-          noInvoice: this.noInvoice,
-          dateInvoice: this.dateInvoice,
-          status: 1,
-          facturador_id: ui,
-          order_id: this.order_id
+          no: 12,
+          img: this.imgenRes,
+          fecha: this.nuevaRecetaData.dateIssue,
+          nameP: this.pName,
+          phoneP: this.pPhone,
+          direccionC: this.clAddress,
+          nameD: this.drName,
+          phoneC: this.clPhone,
+          emailD: this.drEmail,
+          phoneD: this.drPhone,
+          medicamentos: medicinass,
+          email: this.mailTo,
+          name: this.nuevaRecetaData.name
         }),
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        if (_this.recipe_id != null) {
-          axios__WEBPACK_IMPORTED_MODULE_0___default()({
-            method: "put",
-            url: "http://127.0.0.1:8000/api/changeStatus",
-            data: JSON.stringify({
-              id: _this.recipe_id,
-              status: 2
-            }),
-            headers: {
-              authorization: "Bearer " + token,
-              "content-type": "application/json"
-            }
-          }).then(function (Response) {
-            _this.noInvoice = null;
-            _this.dateInvoice = null;
-            _this.popupActive = false;
-
-            _this.getusers();
-
-            _this.activeLoading = false;
-
-            _this.$vs.loading.close();
-
-            _this.$vs.notify({
-              title: "Guardado",
-              text: "Factura guardada exitosamente.",
-              color: "success",
-              iconPack: 'feather',
-              icon: 'icon-check'
-            });
-          }).catch(function (err) {
-            _this.activeLoading = false;
-
-            _this.$vs.loading.close();
-
-            console.log(err);
-          });
-        } else {
-          _this.noInvoice = null;
-          _this.dateInvoice = null;
-          _this.popupActive = false;
-
-          _this.getusers();
-
-          _this.activeLoading = false;
-
-          _this.$vs.loading.close();
-
-          _this.$vs.notify({
-            title: "Guardado",
-            text: "Factura guardada exitosamente.",
-            color: "success",
-            iconPack: 'feather',
-            icon: 'icon-check'
-          });
-        }
-      }).catch(function (err) {
+        _this.mailTo = "";
+        _this.bol = null;
         _this.activeLoading = false;
 
-        _this.$vs.loading.close(); //activado = true;
+        _this.$vs.loading.close();
 
-
+        _this.$vs.notify({
+          title: "Enviado",
+          text: "Receta enviada exitosamente.",
+          color: "success",
+          iconPack: 'feather',
+          icon: 'icon-check'
+        });
+      }).catch(function (err) {
         console.log(err);
+        _this.activeLoading = false;
+
+        _this.$vs.loading.close();
       });
     },
-    getusers: function getusers() {
+    getMendinas: function getMendinas() {
       var _this2 = this;
 
-      this.openLoading();
-      this.users = [];
       var token = localStorage.getItem("tu");
-      var id = localStorage.getItem("ui");
+      var idu = this.$route.params.idReceta;
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: "get",
-        url: "http://127.0.0.1:8000/api/getClientess",
+        url: "http://127.0.0.1:8000/api/getInfoRecipie/" + idu,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
@@ -370,213 +268,110 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (Response) {
         //console.log(Response);
         Response.data.forEach(function (element) {
-          element.cliente.client_addresse = element.cliente.callef + ' ' + element.cliente.apartamentof + ' ' + element.cliente.residenciaf + ' zona ' + element.cliente.codigof + ' ' + element.cliente.municipiof + ' ' + element.cliente.deparf + ' ' + element.cliente.paisf;
-
-          _this2.users.push(element);
-        }); //console.log("USUARIO");
-        //console.log(this.users);
-
-        _this2.activeLoading = false;
-
-        _this2.$vs.loading.close();
+          _this2.medicinas.push(element);
+        }); //console.log(this.medicinas);
       }).catch(function (err) {
         console.log(err);
         _this2.activeLoading = false;
 
         _this2.$vs.loading.close();
-
-        localStorage.removeItem("tu");
-        localStorage.removeItem("ru");
-        localStorage.removeItem("ui");
-        localStorage.removeItem("regi");
-        localStorage.removeItem("nuevaRecetaData");
-
-        _this2.$router.push("/");
-      });
-      axios__WEBPACK_IMPORTED_MODULE_0___default()({
-        method: "get",
-        url: "http://127.0.0.1:8000/api/getDelivery",
-        headers: {
-          authorization: "Bearer " + token,
-          "content-type": "application/json"
-        }
-      }).then(function (Response) {
-        Response.data.forEach(function (element) {
-          _this2.deliveryP.push({
-            label: element.name,
-            value: element.id
-          });
-        }); //console.log(this.deliveryP);
-      }).catch(function (err) {
-        console.log(err);
       });
     },
-    setData: function setData(order_id, recipie, address, nit, nombre, total, recipe_id) {
-      this.recipie = recipie;
-      this.address = address;
-      this.nit = nit;
-      this.nombre = nombre;
-      this.total = total;
-      this.order_id = order_id;
-      this.recipe_id = recipe_id;
-    },
-    inprogress: function inprogress(id_receta) {
+    getRecipe: function getRecipe() {
       var _this3 = this;
 
       var token = localStorage.getItem("tu");
-      var idu = localStorage.getItem("ui");
-
-      if (this.select == null) {
-        this.errors.push('Debe de seleccionar un mensajero');
-        this.activeLoading = false;
-        this.$vs.loading.close();
-      } else {
-        this.openLoading();
-        axios__WEBPACK_IMPORTED_MODULE_0___default()({
-          method: "post",
-          url: "http://127.0.0.1:8000/api/postShipping",
-          data: JSON.stringify({
-            id_recipies: id_receta,
-            delivery: this.select.value
-          }),
-          headers: {
-            authorization: "Bearer " + token,
-            "content-type": "application/json"
-          }
-        }).then(function (Response) {
-          _this3.activeLoading = false;
-
-          _this3.$vs.loading.close();
-
-          _this3.popupEnvio = false;
-
-          _this3.getusers();
-
-          _this3.$vs.notify({
-            title: "En proceso",
-            text: "El pedido del cliente ahora está en proceso de envío.",
-            color: "success",
-            iconPack: 'feather',
-            icon: 'icon-check'
-          });
-        }).catch(function (err) {
-          _this3.popupEnvio = false;
-          _this3.activeLoading = false;
-
-          _this3.$vs.loading.close();
-
-          console.log(err);
-        });
-      }
-    },
-    setClient: function setClient(id) {
-      this.id_recipies = id;
-    },
-    realizarEM: function realizarEM() {
-      if (this.mensajeroEM == null) {
-        this.errorsEM.push('Debe de seleccionar un mensajero');
-        this.activeLoading = false;
-        this.$vs.loading.close();
-      } else {
-        this.openLoading();
-
-        for (var i = 0; i <= Object.keys(this.selected).length - 1; i++) {
-          console.log("Objeto No:" + i);
-          this.crearPedido(this.selected[i].cliente.order_id);
-        }
-
-        this.getusers();
-        this.activeLoading = false;
-        this.$vs.loading.close();
-        this.popupEnvioMultiple = false;
-        this.$vs.notify({
-          title: "En proceso",
-          text: "Se realizaron los pedidos correctamente.",
-          color: "success",
-          iconPack: 'feather',
-          icon: 'icon-check'
-        });
-      }
-    },
-    crearPedido: function crearPedido(id_receta) {
-      var _this4 = this;
-
-      var token = localStorage.getItem("tu");
-      var idu = localStorage.getItem("ui");
+      var idu = this.$route.params.idReceta;
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
-        method: "post",
-        url: "http://127.0.0.1:8000/api/postShipping",
-        data: JSON.stringify({
-          id_recipies: id_receta,
-          delivery: this.mensajeroEM.value
-        }),
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getReceta/" + idu,
         headers: {
           authorization: "Bearer " + token,
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        _this4.activeLoading = false;
+        var f = new Date();
+        var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+        _this3.nuevaRecetaData.dateIssue = fecha;
+        _this3.pName = Response.data[0].name;
+        _this3.pPhone = Response.data[0].phone;
+        _this3.rId = Response.data[0].id;
+        _this3.activeLoading = false;
 
-        _this4.$vs.loading.close();
-
-        _this4.popupEnvio = false;
+        _this3.$vs.loading.close();
       }).catch(function (err) {
-        _this4.popupEnvio = false;
-        _this4.activeLoading = false;
-
-        _this4.$vs.loading.close();
-
         console.log(err);
+        _this3.activeLoading = false;
+
+        _this3.$vs.loading.close();
       });
     },
-    format: function format(input) {
-      var num = input.value.replace(/\./g, '');
+    getMedicamentos: function getMedicamentos() {//nuevaRecetaData.medicamentos
+    },
+    getUser: function getUser() {
+      var _this4 = this;
 
-      if (!isNaN(num)) {
-        num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g, '$1.');
-        num = num.split('').reverse().join('').replace(/^[\.]/, '');
-        input.value = num;
-      } else {
-        alert('Solo se permiten numeros');
-        input.value = input.value.replace(/[^\d\.]*/g, '');
-      }
+      var token = localStorage.getItem("tu");
+      var idu = this.$route.params.idMedico;
+      axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/getUser2/" + idu,
+        headers: {
+          authorization: "Bearer " + token,
+          "content-type": "application/json"
+        }
+      }).then(function (Response) {
+        //console.log(Response);
+        if (Response.data[0].clinicLogo == null || Response.data[0].clinicLogo == "") {
+          _this4.image = "/images/medicamentos/demol.PNG";
+        } else {
+          _this4.image = "data:image/png;base64," + Response.data[0].clinicLogo;
+        }
+
+        _this4.drName = Response.data[0].name;
+
+        if (Response.data[0].clinicPhone == null || Response.data[0].clinicPhone == '') {
+          _this4.clPhone = '+502: 8452-9862';
+        } else {
+          _this4.clPhone = Response.data[0].clinicPhone;
+        }
+
+        if (Response.data[0].clinicAddress == null || Response.data[0].clinicAddress == '') {
+          _this4.clAddress = 'Via 4 zona 4 Guatemala';
+        } else {
+          _this4.clAddress = Response.data[0].clinicAddress;
+        }
+
+        _this4.drEmail = Response.data[0].email;
+
+        if (Response.data[0].phone == null || Response.data[0].phone == "") {
+          _this4.drPhone = "+502: 8452-9862";
+        } else {
+          _this4.drPhone = "+502: " + Response.data[0].phone;
+        }
+      }).catch(function (err) {
+        console.log(err);
+        _this4.activeLoading = false;
+
+        _this4.$vs.loading.close();
+      });
+    },
+    printInvoice: function printInvoice() {
+      window.print();
     }
   },
-  data: function data() {
-    return {
-      users: [],
-      recipie: [],
-      deliveryP: [],
-      popupActive: false,
-      popupEnvio: false,
-      popupEnvioMultiple: false,
-      select: null,
-      mensajeroEM: null,
-      id_recipies: 0,
-      address: "",
-      nit: null,
-      nombre: null,
-      total: null,
-      noInvoice: null,
-      dateInvoice: null,
-      recipe_id: null,
-      order_id: null,
-      errors: [],
-      errorsEM: [],
-      selected: []
-    };
-  },
-  created: function created() {
-    this.getusers();
+  components: {},
+  mounted: function mounted() {
+    this.$emit("setAppClasses", "invoice-page");
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/facturacion/dashboard.vue?vue&type=style&index=0&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/facturacion/dashboard.vue?vue&type=style&index=0&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/call-center/verReceta.vue?vue&type=style&index=0&lang=scss&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/call-center/verReceta.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -584,22 +379,22 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".table {\n  font-family: arial, sans-serif;\n  border-collapse: collapse;\n  width: 100%;\n}\n[dir] .td {\n  border: 1px solid #dddddd;\n  padding: 8px;\n}\n[dir=ltr] .td {\n  text-align: left;\n}\n[dir=rtl] .td {\n  text-align: right;\n}\n[dir] .tr:nth-child(even) {\n  background-color: #dddddd;\n}\n[dir] #table-search {\n  margin-top: -55px;\n}\n@media only screen and (max-width:600px) {\n[dir] #table-search {\n    margin-top: 0px;\n}\n[dir] #btn-envio {\n    margin-top: 10px;\n}\n[dir=ltr] #btn-envio {\n    float: left;\n}\n[dir=rtl] #btn-envio {\n    float: right;\n}\n}\n\n", ""]);
+exports.push([module.i, "@media print {\n.invoice-page * {\n    visibility: hidden;\n}\n[dir] .invoice-page #content-area {\n    margin: 0 !important;\n}\n.invoice-page #invoice-container,\n.invoice-page #invoice-container * {\n    visibility: visible;\n}\n.invoice-page #invoice-container {\n    position: absolute;\n    top: 0;\n}\n[dir] .invoice-page #invoice-container {\n    box-shadow: none;\n}\n[dir=ltr] .invoice-page #invoice-container {\n    left: 0;\n}\n[dir=rtl] .invoice-page #invoice-container {\n    right: 0;\n}\n}", ""]);
 // Exports
 module.exports = exports;
 
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/dist/cjs.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/facturacion/dashboard.vue?vue&type=style&index=0&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader/dist/cjs.js??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/facturacion/dashboard.vue?vue&type=style&index=0&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/call-center/verReceta.vue?vue&type=style&index=0&lang=scss&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/call-center/verReceta.vue?vue&type=style&index=0&lang=scss& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../../node_modules/css-loader/dist/cjs.js??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./dashboard.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/facturacion/dashboard.vue?vue&type=style&index=0&lang=css&");
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader/dist/cjs.js!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../node_modules/vue-loader/lib??vue-loader-options!./verReceta.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/call-center/verReceta.vue?vue&type=style&index=0&lang=scss&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -621,9 +416,9 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/facturacion/dashboard.vue?vue&type=template&id=1f5659a8&":
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/call-center/verReceta.vue?vue&type=template&id=caa95580&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/facturacion/dashboard.vue?vue&type=template&id=1f5659a8& ***!
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/call-center/verReceta.vue?vue&type=template&id=caa95580& ***!
   \***********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -638,661 +433,220 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { attrs: { id: "invoice-page" } },
     [
-      _c("h4", [_vm._v("Información de los pedidos")]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v("Seleccione más de un registro para hacer un envío múltiple.")
-      ]),
-      _vm._v(" "),
-      _c("br"),
+      _vm.bol === false && _vm.mailTo !== ""
+        ? _c("span", { staticClass: "text-danger text-sm" }, [
+            _vm._v("Ingrese un email válido.")
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c(
-        "vs-table",
-        {
-          attrs: {
-            id: "table-search",
-            "max-items": "10",
-            search: "",
-            pagination: "",
-            data: _vm.users
-          },
-          scopedSlots: _vm._u([
-            {
-              key: "default",
-              fn: function(ref) {
-                var data = ref.data
-                return _vm._l(data, function(tr, indextr) {
-                  return _c(
-                    "vs-tr",
-                    { key: indextr, attrs: { data: tr } },
-                    [
-                      _c(
-                        "vs-td",
-                        { attrs: { data: data[indextr].cliente.id } },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(data[indextr].cliente.id) +
-                              "\n                "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-td",
-                        { attrs: { data: data[indextr].cliente.client_name } },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(data[indextr].cliente.client_name) +
-                              "\n                "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-td",
-                        { attrs: { data: data[indextr].cliente.client_phone } },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(data[indextr].cliente.client_phone) +
-                              "\n                "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      data[indextr].cliente.client_addresse.length > 30
-                        ? _c(
-                            "vs-td",
-                            {
-                              attrs: {
-                                data: data[indextr].cliente.client_addresse
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                    " +
-                                  _vm._s(
-                                    data[
-                                      indextr
-                                    ].cliente.client_addresse.substring(0, 25) +
-                                      "..."
-                                  ) +
-                                  "\n                "
-                              )
-                            ]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      data[indextr].cliente.client_addresse.length <= 30
-                        ? _c(
-                            "vs-td",
-                            {
-                              attrs: {
-                                data: data[indextr].cliente.client_addresse
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                    " +
-                                  _vm._s(
-                                    data[
-                                      indextr
-                                    ].cliente.client_addresse.substring(0, 25)
-                                  ) +
-                                  "\n                "
-                              )
-                            ]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      data[indextr].cliente.status == 1
-                        ? _c("vs-td", [
-                            _vm._v(
-                              "\n                    Nuevo\n                "
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      data[indextr].cliente.status == 2
-                        ? _c("vs-td", [
-                            _vm._v(
-                              "\n                    Empaquetando\n                "
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      data[indextr].cliente.status == 3
-                        ? _c("vs-td", [
-                            _vm._v(
-                              "\n                    Entregando\n                "
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      data[indextr].cliente.status == 4
-                        ? _c("vs-td", [
-                            _vm._v(
-                              "\n                    Entregado\n                "
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("vs-td", [
-                        _c(
-                          "span",
-                          { staticStyle: { float: "left" } },
-                          [
-                            _c(
-                              "vs-button",
-                              {
-                                attrs: {
-                                  size: "small",
-                                  color: "primary",
-                                  type: "filled"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    ;(_vm.popupActive = true),
-                                      _vm.setData(
-                                        data[indextr].cliente.order_id,
-                                        data[indextr].medicamentos,
-                                        data[indextr].cliente.client_addresse,
-                                        data[indextr].cliente.client_nit,
-                                        data[indextr].cliente.client_name,
-                                        data[indextr].cliente.total,
-                                        data[indextr].cliente.recipe_id
-                                      )
-                                  }
-                                }
-                              },
-                              [_vm._v("Facturar")]
-                            )
-                          ],
-                          1
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                })
-              }
-            }
-          ]),
-          model: {
-            value: _vm.selected,
-            callback: function($$v) {
-              _vm.selected = $$v
-            },
-            expression: "selected"
-          }
-        },
+        "div",
+        { staticClass: "flex flex-wrap items-center justify-between" },
         [
           _c(
-            "template",
-            { slot: "thead" },
+            "vx-input-group",
+            { staticClass: "mb-base mr-3" },
             [
-              _c("vs-th", [_vm._v("ID")]),
-              _vm._v(" "),
-              _c("vs-th", [_vm._v("Cliente")]),
-              _vm._v(" "),
-              _c("vs-th", [_vm._v("Teléfono")]),
-              _vm._v(" "),
-              _c("vs-th", [_vm._v("Dirección")]),
-              _vm._v(" "),
-              _c("vs-th", [_vm._v("Acciones")])
-            ],
-            1
-          )
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c(
-        "vs-popup",
-        {
-          staticClass: "holamundo",
-          attrs: {
-            fullscreen: "",
-            title: "Información del Pedido",
-            active: _vm.popupActive
-          },
-          on: {
-            "update:active": function($event) {
-              _vm.popupActive = $event
-            }
-          }
-        },
-        [
-          _c("p", [_vm._v("Medicamentos Pedidos:")]),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "vs-table",
-            {
-              attrs: { "max-items": "10", data: _vm.recipie },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var data = ref.data
-                    return _vm._l(_vm.recipie, function(tr, indextr) {
-                      return _c(
-                        "vs-tr",
-                        { key: indextr },
-                        [
-                          _c("vs-td", { attrs: { data: data[indextr].name } }, [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(data[indextr].name) +
-                                "\n                    "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            { attrs: { data: data[indextr].description } },
-                            [
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(data[indextr].description) +
-                                  "\n                    "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            { attrs: { data: data[indextr].preName } },
-                            [
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(data[indextr].preName) +
-                                  "\n                    "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            { attrs: { data: data[indextr].labName } },
-                            [
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(data[indextr].labName) +
-                                  "\n                    "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            { attrs: { data: data[indextr].cantidad } },
-                            [
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(data[indextr].cantidad) +
-                                  "\n                    "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            { attrs: { data: data[indextr].price } },
-                            [
-                              _vm._v(
-                                "\n                        Q " +
-                                  _vm._s(
-                                    data[indextr].price ||
-                                      _vm.numFormat("000,000.00")
-                                  ) +
-                                  "\n                    "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            { attrs: { data: data[indextr].cantidad } },
-                            [
-                              _vm._v(
-                                "\n                        Q " +
-                                  _vm._s(
-                                    data[indextr].price *
-                                      data[indextr].cantidad ||
-                                      _vm.numFormat("000,000.00")
-                                  ) +
-                                  "\n                    "
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    })
-                  }
+              _c("vs-input", {
+                attrs: { placeholder: "Email" },
+                model: {
+                  value: _vm.mailTo,
+                  callback: function($$v) {
+                    _vm.mailTo = $$v
+                  },
+                  expression: "mailTo"
                 }
-              ]),
-              model: {
-                value: _vm.selected,
-                callback: function($$v) {
-                  _vm.selected = $$v
-                },
-                expression: "selected"
-              }
-            },
-            [
-              _c(
-                "template",
-                { slot: "thead" },
-                [
-                  _c("vs-th", [_vm._v("Nombre del producto")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Descripción")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Presentación")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Laboratorio")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Cantidad")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Precio")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Subtotal")])
-                ],
-                1
-              )
+              }),
+              _vm._v(" "),
+              _c("template", { slot: "append" }, [
+                _c(
+                  "div",
+                  { staticClass: "append-text btn-addon" },
+                  [
+                    _c(
+                      "vs-button",
+                      {
+                        staticClass: "whitespace-no-wrap",
+                        attrs: {
+                          type: "border",
+                          disabled:
+                            _vm.mailTo == "" ||
+                            _vm.mailTo == null ||
+                            _vm.bol == false
+                        },
+                        on: { click: _vm.enviarReceta }
+                      },
+                      [
+                        _vm._v(
+                          "Enviar\n                        Receta\n                    "
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ])
             ],
             2
           ),
           _vm._v(" "),
-          _c("br"),
+          _c(
+            "div",
+            { staticClass: "flex items-center" },
+            [
+              _c(
+                "vs-button",
+                {
+                  staticClass: "mb-base mr-3",
+                  attrs: { "icon-pack": "feather", icon: "icon icon-file" },
+                  on: { click: _vm.printInvoice }
+                },
+                [_vm._v("Imprimir\n            ")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("vx-card", { attrs: { id: "invoice-container" } }, [
+        _c("div", { staticClass: "vx-row leading-loose p-base" }, [
+          _c("div", { staticClass: "vx-col w-full md:w-1/2 mt-base" }, [
+            _c("img", {
+              staticClass: "mr-8 rounded h-24",
+              attrs: { src: _vm.image }
+            })
+          ]),
           _vm._v(" "),
-          _c("p", [_vm._v("Dirección de Facturación:")]),
-          _vm._v(" "),
-          _vm.address == ""
-            ? _c("p", [_c("strong", [_vm._v("No se adjuntó la dirección")])])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("p", [_c("strong", [_vm._v(_vm._s(this.address))])]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("table", { staticClass: "table" }, [
-            _c("tr", { staticClass: "tr" }, [
-              _c("th", { staticClass: "td" }, [_vm._v("Nit")]),
-              _vm._v(" "),
-              _c("th", { staticClass: "td" }, [_vm._v("Nombre")]),
-              _vm._v(" "),
-              _c("th", { staticClass: "td" }, [_vm._v("Total a Pagar")])
-            ]),
+          _c("div", { staticClass: "vx-col w-full md:w-1/2 text-right" }, [
+            _c("h1", [_vm._v("Receta")]),
             _vm._v(" "),
-            _c("tr", { staticClass: "tr" }, [
-              _c("td", { staticClass: "td" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.nit) +
-                    "\n                "
-                )
-              ]),
+            _c("div", { staticClass: "invoice__invoice-detail mt-6" }, [
+              _c("h6", [_vm._v("Receta No.")]),
               _vm._v(" "),
-              _c("td", { staticClass: "td" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.nombre) +
-                    "\n                "
-                )
-              ]),
+              _c("p", { domProps: { textContent: _vm._s(_vm.rId) } }),
               _vm._v(" "),
-              _c("td", { staticClass: "td" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.total) +
-                    "\n                "
-                )
-              ])
+              _c("h6", { staticClass: "mt-4" }, [_vm._v("Fecha Receta")]),
+              _vm._v(" "),
+              _c("p", {
+                domProps: { textContent: _vm._s(_vm.nuevaRecetaData.dateIssue) }
+              })
             ])
           ]),
           _vm._v(" "),
-          _c("vx-card", [
-            _c(
-              "div",
-              { staticClass: "vx-row" },
-              [
-                _c("vs-input", {
-                  staticClass: "w-full",
-                  attrs: { label: "No. Factura", type: "number" },
-                  model: {
-                    value: _vm.noInvoice,
-                    callback: function($$v) {
-                      _vm.noInvoice = $$v
-                    },
-                    expression: "noInvoice"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.noInvoice === "",
-                        expression: "noInvoice === ''"
-                      }
-                    ],
-                    staticClass: "text-danger text-sm"
-                  },
-                  [_vm._v("Este campo es requerido.")]
-                ),
-                _vm._v(" "),
-                _c("vs-input", {
-                  staticClass: "w-full",
-                  attrs: { label: "Fecha Factura", type: "date" },
-                  model: {
-                    value: _vm.dateInvoice,
-                    callback: function($$v) {
-                      _vm.dateInvoice = $$v
-                    },
-                    expression: "dateInvoice"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.dateInvoice === "",
-                        expression: "dateInvoice === ''"
-                      }
-                    ],
-                    staticClass: "text-danger text-sm"
-                  },
-                  [_vm._v("Este campo es requerido.")]
-                )
-              ],
-              1
-            ),
+          _c("div", { staticClass: "vx-col w-full md:w-1/2 mt-12" }, [
+            _c("h5", [_vm._v("Paciente")]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "vx-row" },
-              [
-                _c(
-                  "vs-button",
-                  {
-                    staticClass: "mt-5",
-                    attrs: {
-                      color: "primary",
-                      type: "filled",
-                      disabled:
-                        _vm.noInvoice == null ||
-                        _vm.noInvoice == "" ||
-                        _vm.dateInvoice == null ||
-                        _vm.dateInvoice == ""
-                    },
-                    on: { click: _vm.update }
-                  },
-                  [_vm._v("\n                    Guardar Datos Facturación")]
-                )
-              ],
-              1
-            )
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "vs-popup",
-        {
-          staticClass: "holamundo",
-          attrs: { title: "Configurar envío", active: _vm.popupEnvio },
-          on: {
-            "update:active": function($event) {
-              _vm.popupEnvio = $event
-            }
-          }
-        },
-        [
-          _c("p", [_vm._v("Seleccionar al encargado del envío:")]),
-          _c("br"),
-          _vm._v(" "),
-          _vm.errors.length
-            ? _c("p", [
-                _c(
-                  "ul",
-                  _vm._l(_vm.errors, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "text-danger" },
-                      [_vm._v(_vm._s(error))]
-                    )
-                  }),
-                  0
-                )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("v-select", {
-            attrs: {
-              closeOnSelect: true,
-              options: _vm.deliveryP,
-              required: !_vm.select,
-              dir: _vm.$vs.rtl ? "rtl" : "ltr"
-            },
-            model: {
-              value: _vm.select,
-              callback: function($$v) {
-                _vm.select = $$v
-              },
-              expression: "select"
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _c("br"),
-          _c("br"),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "vs-button",
-            {
-              attrs: { color: "success", type: "filled" },
-              on: {
-                click: function($event) {
-                  return _vm.inprogress(_vm.id_recipies)
-                }
-              }
-            },
-            [_vm._v("Realizar envío\n        ")]
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "vs-popup",
-        {
-          staticClass: "holamundo",
-          attrs: { title: "Configurar envío", active: _vm.popupEnvioMultiple },
-          on: {
-            "update:active": function($event) {
-              _vm.popupEnvioMultiple = $event
-            }
-          }
-        },
-        [
-          _c("p", [_vm._v("Seleccionar al encargado para los envíos:")]),
-          _c("br"),
-          _vm._v(" "),
-          _vm.errorsEM.length
-            ? _c("p", [
-                _c(
-                  "ul",
-                  _vm._l(_vm.errorsEM, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "text-danger" },
-                      [_vm._v(_vm._s(error))]
-                    )
-                  }),
-                  0
-                )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("v-select", {
-            attrs: {
-              closeOnSelect: true,
-              options: _vm.deliveryP,
-              required: !_vm.mensajeroEM,
-              dir: _vm.$vs.rtl ? "rtl" : "ltr"
-            },
-            model: {
-              value: _vm.mensajeroEM,
-              callback: function($$v) {
-                _vm.mensajeroEM = $$v
-              },
-              expression: "mensajeroEM"
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "Si el envío previamente ya se realizó, no se tomará en cuenta."
-            )
+            _c("div", { staticClass: "invoice__recipient-info my-4" }, [
+              _c("p", { domProps: { textContent: _vm._s(_vm.pName) } }),
+              _vm._v(" "),
+              _c("p", [_vm._v("Guatemala")]),
+              _vm._v(" "),
+              _c("p", { domProps: { textContent: _vm._s(_vm.pPhone) } })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "invoice__recipient-contact" })
           ]),
           _vm._v(" "),
-          _c("br"),
-          _c("br"),
-          _c("br"),
-          _c("br"),
-          _vm._v(" "),
           _c(
-            "vs-button",
-            {
-              attrs: { color: "success", type: "filled" },
-              on: {
-                click: function($event) {
-                  return _vm.realizarEM()
-                }
-              }
-            },
-            [_vm._v("Realizar envío\n        ")]
+            "div",
+            { staticClass: "vx-col w-full md:w-1/2 mt-base text-right mt-12" },
+            [
+              _c("h5", [_vm._v(_vm._s(_vm.companyDetails.name))]),
+              _vm._v(" "),
+              _c("div", { staticClass: "invoice__company-info my-4" }, [
+                _c("p", { domProps: { textContent: _vm._s(_vm.clAddress) } }),
+                _vm._v(" "),
+                _c("p", [
+                  _c("strong", {
+                    domProps: { textContent: _vm._s(_vm.drName) }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("p", { domProps: { textContent: _vm._s(_vm.clPhone) } })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "invoice__company-contact" }, [
+                _c(
+                  "p",
+                  { staticClass: "flex items-center justify-end" },
+                  [
+                    _c("feather-icon", {
+                      attrs: { icon: "MailIcon", svgClasses: "h-4 w-4" }
+                    }),
+                    _vm._v(" "),
+                    _c("span", {
+                      staticClass: "ml-2",
+                      domProps: { textContent: _vm._s(_vm.drEmail) }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  { staticClass: "flex items-center justify-end" },
+                  [
+                    _c("feather-icon", {
+                      attrs: { icon: "PhoneIcon", svgClasses: "h-4 w-4" }
+                    }),
+                    _vm._v(" "),
+                    _c("span", {
+                      staticClass: "ml-2",
+                      domProps: { textContent: _vm._s(_vm.drPhone) }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ]
           )
-        ],
-        1
-      )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "p-base" },
+          [
+            _c(
+              "vs-table",
+              { attrs: { hoverFlat: "", data: _vm.invoiceData.tasks } },
+              [
+                _vm._l(_vm.medicinas, function(item) {
+                  return _c(
+                    "vs-tr",
+                    { key: item.id },
+                    [
+                      _c("vs-td", {
+                        domProps: {
+                          textContent: _vm._s(
+                            item.name +
+                              " " +
+                              item.presentacion +
+                              " " +
+                              item.dispensing
+                          )
+                        }
+                      })
+                    ],
+                    1
+                  )
+                })
+              ],
+              2
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "invoice__footer text-right p-base" }, [
+          _c("div", { attrs: { align: "right" } }, [
+            _c("h6", [_vm._v("PHARMAZone.app")])
+          ])
+        ])
+      ])
     ],
     1
   )
@@ -1304,18 +658,18 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/src/views/facturacion/dashboard.vue":
+/***/ "./resources/js/src/views/call-center/verReceta.vue":
 /*!**********************************************************!*\
-  !*** ./resources/js/src/views/facturacion/dashboard.vue ***!
+  !*** ./resources/js/src/views/call-center/verReceta.vue ***!
   \**********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _dashboard_vue_vue_type_template_id_1f5659a8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dashboard.vue?vue&type=template&id=1f5659a8& */ "./resources/js/src/views/facturacion/dashboard.vue?vue&type=template&id=1f5659a8&");
-/* harmony import */ var _dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dashboard.vue?vue&type=script&lang=js& */ "./resources/js/src/views/facturacion/dashboard.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/facturacion/dashboard.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _verReceta_vue_vue_type_template_id_caa95580___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./verReceta.vue?vue&type=template&id=caa95580& */ "./resources/js/src/views/call-center/verReceta.vue?vue&type=template&id=caa95580&");
+/* harmony import */ var _verReceta_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./verReceta.vue?vue&type=script&lang=js& */ "./resources/js/src/views/call-center/verReceta.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _verReceta_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./verReceta.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/call-center/verReceta.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1326,9 +680,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _dashboard_vue_vue_type_template_id_1f5659a8___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _dashboard_vue_vue_type_template_id_1f5659a8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _verReceta_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _verReceta_vue_vue_type_template_id_caa95580___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _verReceta_vue_vue_type_template_id_caa95580___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -1338,54 +692,54 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/src/views/facturacion/dashboard.vue"
+component.options.__file = "resources/js/src/views/call-center/verReceta.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/src/views/facturacion/dashboard.vue?vue&type=script&lang=js&":
+/***/ "./resources/js/src/views/call-center/verReceta.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************!*\
-  !*** ./resources/js/src/views/facturacion/dashboard.vue?vue&type=script&lang=js& ***!
+  !*** ./resources/js/src/views/call-center/verReceta.vue?vue&type=script&lang=js& ***!
   \***********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./dashboard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/facturacion/dashboard.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_verReceta_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./verReceta.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/call-center/verReceta.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_verReceta_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/facturacion/dashboard.vue?vue&type=style&index=0&lang=css&":
-/*!*******************************************************************************************!*\
-  !*** ./resources/js/src/views/facturacion/dashboard.vue?vue&type=style&index=0&lang=css& ***!
-  \*******************************************************************************************/
+/***/ "./resources/js/src/views/call-center/verReceta.vue?vue&type=style&index=0&lang=scss&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/src/views/call-center/verReceta.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_dist_cjs_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader/dist/cjs.js??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./dashboard.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/dist/cjs.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/facturacion/dashboard.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_dist_cjs_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_dist_cjs_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_dist_cjs_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_dist_cjs_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_dist_cjs_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_verReceta_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader/dist/cjs.js!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../node_modules/vue-loader/lib??vue-loader-options!./verReceta.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/call-center/verReceta.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_verReceta_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_verReceta_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_verReceta_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_verReceta_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_verReceta_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/facturacion/dashboard.vue?vue&type=template&id=1f5659a8&":
+/***/ "./resources/js/src/views/call-center/verReceta.vue?vue&type=template&id=caa95580&":
 /*!*****************************************************************************************!*\
-  !*** ./resources/js/src/views/facturacion/dashboard.vue?vue&type=template&id=1f5659a8& ***!
+  !*** ./resources/js/src/views/call-center/verReceta.vue?vue&type=template&id=caa95580& ***!
   \*****************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_template_id_1f5659a8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./dashboard.vue?vue&type=template&id=1f5659a8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/facturacion/dashboard.vue?vue&type=template&id=1f5659a8&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_template_id_1f5659a8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_verReceta_vue_vue_type_template_id_caa95580___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./verReceta.vue?vue&type=template&id=caa95580& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/call-center/verReceta.vue?vue&type=template&id=caa95580&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_verReceta_vue_vue_type_template_id_caa95580___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_template_id_1f5659a8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_verReceta_vue_vue_type_template_id_caa95580___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

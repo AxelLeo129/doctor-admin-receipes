@@ -18,6 +18,10 @@ class TransactionController extends Controller
         return \DB::select("SELECT MAX(numero_compra_medico) AS numero_compra_medico, id_producto, fecha_compra FROM transactions WHERE id_producto = $id_producto AND id_medico = $id_medico AND id_cliente = $id_cliente");
     }
 
+    public function getTransactions(){
+        return \DB::select("SELECT nombre_producto, fecha_compra, CONCAT('No. ',orden_id) AS orden_id, CONCAT('Q',precio_facturacion) AS precio_facturacion, CONCAT('Q',ingreso_neto) AS ingreso_neto, CONCAT('Q',iva) AS iva, CONCAT('Q',valor_comision_med) AS valor_comision_med, CONCAT('Q',valor_comision_vistador) AS valor_comision_vistador, CONCAT('Q',valor_comi_callcenter) AS valor_comi_callcenter, CONCAT('Q',valor_comision_mensajero) AS valor_comision_mensajero FROM transactions");
+    }
+
     /**
      * Show the form for creating a new resource.
      *

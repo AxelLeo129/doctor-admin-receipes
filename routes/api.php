@@ -128,6 +128,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('postTransaction', 'Transactions\TransactionController@store');
     Route::put('putTransaction', 'Transactions\TransactionController@update');
     Route::get('getTransactions/{id}', 'Transactions\TransactionController@show');
+    Route::get('getTransactions', 'Transactions\TransactionController@getTransactions');
     //Reportes
     Route::get('reporteGeneral', function () {
 
