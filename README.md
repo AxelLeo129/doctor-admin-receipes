@@ -14,7 +14,7 @@ cp ../ph.x/.env .
 
 mkdir public/images/productos
 
-cp -Rf ../ph.x/public/images/productos/* public/images/productos/.
+mv ../ph.x/public/images/productos/* public/images/productos/.
 
 sudo chmod -R o+rw bootstrap/cache
 
