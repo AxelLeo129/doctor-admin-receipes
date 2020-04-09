@@ -292,14 +292,14 @@ const router = new Router({
                                 url: '/statistics'
                             },
                             {
-                                title: 'Estadísticas'
+                                title: 'Transacciones'
                             },
                             {
-                                title: 'Estadísticas',
+                                title: 'Transacciones',
                                 active: true
                             },
                         ],
-                        pageTitle: 'Estadísticas',
+                        pageTitle: 'Transacciones',
                         rule: 'editor'
                     }
                 },

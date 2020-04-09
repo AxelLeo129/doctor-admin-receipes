@@ -189,7 +189,7 @@ export default [
   },
   {
     url: "/statistics",
-    name: "Estadísticas",
+    name: "Estadísticas de Transacciones",
     slug: "statistics",
     icon: "BarChart2Icon",
     rol: [1],
