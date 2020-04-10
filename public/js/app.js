@@ -56290,12 +56290,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           title: 'Estadísticas',
           url: '/statistics'
         }, {
-          title: 'Estadísticas'
+          title: 'Transacciones'
         }, {
-          title: 'Estadísticas',
+          title: 'Transacciones',
           active: true
         }],
-        pageTitle: 'Estadísticas',
+        pageTitle: 'Transacciones',
         rule: 'editor'
       }
     }, {

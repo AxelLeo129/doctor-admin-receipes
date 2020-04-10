@@ -7044,7 +7044,7 @@ __webpack_require__.r(__webpack_exports__);
   disabled: 3
 }, {
   url: "/statistics",
-  name: "Estadísticas",
+  name: "Estadísticas de Transacciones",
   slug: "statistics",
   icon: "BarChart2Icon",
   rol: [1],

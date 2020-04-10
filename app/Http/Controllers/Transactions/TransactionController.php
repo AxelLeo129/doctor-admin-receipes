@@ -19,7 +19,7 @@ class TransactionController extends Controller
     }
 
     public function getTransactions(){
-        return \DB::select("SELECT nombre_producto, fecha_compra, CONCAT('No. ',orden_id) AS orden_id, CONCAT('Q',precio_facturacion) AS precio_facturacion, CONCAT('Q',ingreso_neto) AS ingreso_neto, CONCAT('Q',iva) AS iva, CONCAT('Q',valor_comision_med) AS valor_comision_med, CONCAT('Q',valor_comision_vistador) AS valor_comision_vistador, CONCAT('Q',valor_comi_callcenter) AS valor_comi_callcenter, CONCAT('Q',valor_comision_mensajero) AS valor_comision_mensajero FROM transactions");
+        return \DB::select("SELECT nombre_producto, fecha_compra, CONCAT('No. ',orden_id) AS orden_id, CONCAT('Q',precio_facturacion) AS precio_facturacion, CONCAT('Q',ingreso_neto) AS ingreso_neto, CONCAT('Q',iva) AS iva, CONCAT('Q',valor_comision_med) AS valor_comision_med, CONCAT('Q',valor_comision_vistador) AS valor_comision_vistador, CONCAT('Q',valor_comi_callcenter) AS valor_comi_callcenter, CONCAT('Q',valor_comision_mensajero) AS valor_comision_mensajero, a.name AS medico, b.name AS visitador, c.name AS callcenter, d.name AS mensajero FROM transactions as tra LEFT JOIN users as a ON tra.id_medico = a.id LEFT JOIN users as b ON tra.id_visitador = b.id LEFT JOIN users as c ON tra.id_callcenter = c.id LEFT JOIN users as d ON tra.id_mensajero = d.id");
     }
 
     /**

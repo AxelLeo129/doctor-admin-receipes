@@ -133,8 +133,18 @@ __webpack_require__.r(__webpack_exports__);
         filter: true,
         width: 130
       }, {
+        headerName: 'Nombre Médico',
+        field: 'medico',
+        filter: true,
+        width: 180
+      }, {
         headerName: 'Comisión Médico',
         field: 'valor_comision_med',
+        filter: true,
+        width: 180
+      }, {
+        headerName: 'Nombre Visitador',
+        field: 'visitador',
         filter: true,
         width: 180
       }, {
@@ -143,10 +153,20 @@ __webpack_require__.r(__webpack_exports__);
         filter: true,
         width: 200
       }, {
+        headerName: 'Nombre Call-center',
+        field: 'callcenter',
+        filter: true,
+        width: 180
+      }, {
         headerName: 'Comisión Call-center',
         field: 'valor_comi_callcenter',
         filter: true,
         width: 250
+      }, {
+        headerName: 'Nombre Mensajero',
+        field: 'mensajero',
+        filter: true,
+        width: 180
       }, {
         headerName: 'Comisión Mensajero',
         field: 'valor_comision_mensajero',
