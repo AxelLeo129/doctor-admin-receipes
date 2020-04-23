@@ -2022,6 +2022,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2188,6 +2192,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         console.log(err);
       });
     },
+    printInvoice: function printInvoice(element) {
+      var printcontent = document.getElementById(element).innerHTML;
+      document.body.innerHTML = printcontent;
+      window.print();
+      location.href = "/";
+    },
     verReceta: function verReceta(id, id1) {
       var _this3 = this;
 
@@ -2203,9 +2213,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "content-type": "application/json"
         }
       }).then(function (Response) {
-        var f = new Date();
-        var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-        _this3.nuevaRecetaData.dateIssue = fecha;
+        _this3.nuevaRecetaData.dateIssue = Response.data[0].dateIssue;
         _this3.pName = Response.data[0].name;
         _this3.pPhone = Response.data[0].phone;
         _this3.rId = Response.data[0].id;
@@ -4621,145 +4629,170 @@ var render = function() {
           }
         },
         [
+          _c(
+            "vs-button",
+            {
+              staticClass: "mb-base mr-3",
+              attrs: { "icon-pack": "feather", icon: "icon icon-file" },
+              on: {
+                click: function($event) {
+                  return _vm.printInvoice("printR")
+                }
+              }
+            },
+            [_vm._v("Imprimir\n            ")]
+          ),
+          _vm._v(" "),
           _c("vx-card", { attrs: { id: "invoice-container" } }, [
-            _c("div", { staticClass: "vx-row leading-loose p-base" }, [
-              _c("div", { staticClass: "vx-col w-full md:w-1/2 mt-base" }, [
-                _c("img", {
-                  staticClass: "mr-8 rounded h-24",
-                  attrs: { src: _vm.image }
-                }),
-                _vm._v("()\n                ")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "vx-col w-full md:w-1/2 text-right" }, [
-                _c("h1", [_vm._v("Receta")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "invoice__invoice-detail mt-6" }, [
-                  _c("h6", [_vm._v("Receta No.")]),
-                  _vm._v(" "),
-                  _c("p", { domProps: { textContent: _vm._s(_vm.rId) } }),
-                  _vm._v(" "),
-                  _c("h6", { staticClass: "mt-4" }, [_vm._v("Fecha Receta")]),
-                  _vm._v(" "),
-                  _c("p", {
-                    domProps: {
-                      textContent: _vm._s(_vm.nuevaRecetaData.dateIssue)
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "vx-col w-full md:w-1/2 mt-12" }, [
-                _c("h5", [_vm._v("Paciente")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "invoice__recipient-info my-4" }, [
-                  _c("p", { domProps: { textContent: _vm._s(_vm.pName) } }),
-                  _vm._v(" "),
-                  _c("p", [_vm._v("Guatemala")]),
-                  _vm._v(" "),
-                  _c("p", { domProps: { textContent: _vm._s(_vm.pPhone) } })
+            _c("div", { attrs: { id: "printR" } }, [
+              _c("div", { staticClass: "vx-row leading-loose p-base" }, [
+                _c("div", { staticClass: "vx-col w-full md:w-1/2 mt-base" }, [
+                  _c("img", {
+                    staticClass: "mr-8 rounded h-24",
+                    attrs: { src: _vm.image }
+                  }),
+                  _vm._v("()\n                ")
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "invoice__recipient-contact" })
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "vx-col w-full md:w-1/2 mt-base text-right mt-12"
-                },
-                [
-                  _c("h5", [_vm._v(_vm._s(_vm.companyDetails.name))]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "invoice__company-info my-4" }, [
-                    _c("p", {
-                      domProps: { textContent: _vm._s(_vm.clAddress) }
-                    }),
+                _c(
+                  "div",
+                  { staticClass: "vx-col w-full md:w-1/2 text-right" },
+                  [
+                    _c("h1", [_vm._v("Receta")]),
                     _vm._v(" "),
-                    _c("p", [
-                      _c("strong", {
-                        domProps: { textContent: _vm._s(_vm.drName) }
+                    _c("div", { staticClass: "invoice__invoice-detail mt-6" }, [
+                      _c("h6", [_vm._v("Receta No.")]),
+                      _vm._v(" "),
+                      _c("p", { domProps: { textContent: _vm._s(_vm.rId) } }),
+                      _vm._v(" "),
+                      _c("h6", { staticClass: "mt-4" }, [
+                        _vm._v("Fecha Receta")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", {
+                        domProps: {
+                          textContent: _vm._s(_vm.nuevaRecetaData.dateIssue)
+                        }
+                      })
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "vx-col w-full md:w-1/2 mt-12" }, [
+                  _c("h5", [_vm._v("Paciente")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "invoice__recipient-info my-4" }, [
+                    _c("p", { domProps: { textContent: _vm._s(_vm.pName) } }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("Guatemala")]),
+                    _vm._v(" "),
+                    _c("p", { domProps: { textContent: _vm._s(_vm.pPhone) } })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "invoice__recipient-contact" })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "vx-col w-full md:w-1/2 mt-base text-right mt-12"
+                  },
+                  [
+                    _c("h5", [_vm._v(_vm._s(_vm.companyDetails.name))]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "invoice__company-info my-4" }, [
+                      _c("p", {
+                        domProps: { textContent: _vm._s(_vm.clAddress) }
+                      }),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("strong", {
+                          domProps: { textContent: _vm._s(_vm.drName) }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("p", {
+                        domProps: { textContent: _vm._s(_vm.clPhone) }
                       })
                     ]),
                     _vm._v(" "),
-                    _c("p", { domProps: { textContent: _vm._s(_vm.clPhone) } })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "invoice__company-contact" }, [
-                    _c(
-                      "p",
-                      { staticClass: "flex items-center justify-end" },
-                      [
-                        _c("feather-icon", {
-                          attrs: { icon: "MailIcon", svgClasses: "h-4 w-4" }
-                        }),
-                        _vm._v(" "),
-                        _c("span", {
-                          staticClass: "ml-2",
-                          domProps: { textContent: _vm._s(_vm.drEmail) }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "p",
-                      { staticClass: "flex items-center justify-end" },
-                      [
-                        _c("feather-icon", {
-                          attrs: { icon: "PhoneIcon", svgClasses: "h-4 w-4" }
-                        }),
-                        _vm._v(" "),
-                        _c("span", {
-                          staticClass: "ml-2",
-                          domProps: { textContent: _vm._s(_vm.drPhone) }
-                        })
-                      ],
-                      1
-                    )
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "p-base" },
-              [
-                _c(
-                  "vs-table",
-                  { attrs: { hoverFlat: "", data: _vm.invoiceData.tasks } },
-                  [
-                    _vm._l(_vm.medicinas, function(item) {
-                      return _c(
-                        "vs-tr",
-                        { key: item.id },
+                    _c("div", { staticClass: "invoice__company-contact" }, [
+                      _c(
+                        "p",
+                        { staticClass: "flex items-center justify-end" },
                         [
-                          _c("vs-td", {
-                            domProps: {
-                              textContent: _vm._s(
-                                item.name +
-                                  " " +
-                                  item.presentacion +
-                                  " " +
-                                  item.dispensing
-                              )
-                            }
+                          _c("feather-icon", {
+                            attrs: { icon: "MailIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
+                          _c("span", {
+                            staticClass: "ml-2",
+                            domProps: { textContent: _vm._s(_vm.drEmail) }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "p",
+                        { staticClass: "flex items-center justify-end" },
+                        [
+                          _c("feather-icon", {
+                            attrs: { icon: "PhoneIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
+                          _c("span", {
+                            staticClass: "ml-2",
+                            domProps: { textContent: _vm._s(_vm.drPhone) }
                           })
                         ],
                         1
                       )
-                    })
-                  ],
-                  2
+                    ])
+                  ]
                 )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "invoice__footer text-right p-base" }, [
-              _c("div", { attrs: { align: "right" } }, [
-                _c("h6", [_vm._v("PHARMAZone.app")])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "p-base" },
+                [
+                  _c(
+                    "vs-table",
+                    { attrs: { hoverFlat: "", data: _vm.invoiceData.tasks } },
+                    [
+                      _vm._l(_vm.medicinas, function(item) {
+                        return _c(
+                          "vs-tr",
+                          { key: item.id },
+                          [
+                            _c("vs-td", {
+                              domProps: {
+                                textContent: _vm._s(
+                                  item.name +
+                                    " " +
+                                    item.presentacion +
+                                    " " +
+                                    item.dispensing
+                                )
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "invoice__footer text-right p-base" }, [
+                _c("div", { attrs: { align: "right" } }, [
+                  _c("h6", [_vm._v("PHARMAZone.app")])
+                ])
               ])
             ])
           ])

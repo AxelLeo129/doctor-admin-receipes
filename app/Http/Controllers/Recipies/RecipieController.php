@@ -115,7 +115,7 @@ class RecipieController extends Controller
      */
     public function show($id)
     {
-        return \DB::select("SELECT reci.id, reci.phone, reci.name, reci.doctor_id, reci.symptom, reci.diagnostics, reci.observations, reci.call_center, reci.nextAppointment, reci.status, GROUP_CONCAT(prod.id SEPARATOR ',') products FROM recipies_products pp INNER JOIN recipies reci ON pp.recipe_id=reci.id INNER JOIN products prod ON pp.product_id=prod.id WHERE reci.id = $id GROUP BY reci.id");
+        return \DB::select("SELECT reci.id, reci.phone, reci.dateIssue, reci.name, reci.doctor_id, reci.symptom, reci.diagnostics, reci.observations, reci.call_center, reci.nextAppointment, reci.status, GROUP_CONCAT(prod.id SEPARATOR ',') products FROM recipies_products pp INNER JOIN recipies reci ON pp.recipe_id=reci.id INNER JOIN products prod ON pp.product_id=prod.id WHERE reci.id = $id GROUP BY reci.id");
     }
 
     /**

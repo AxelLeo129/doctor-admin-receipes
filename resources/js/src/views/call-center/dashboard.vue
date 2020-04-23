@@ -41,7 +41,10 @@
                 @click="reagendar">Reagendar</vs-button>
         </vs-popup>
         <vs-popup fullscreen class="holamundo" title="Detalles de la Receta" :active.sync="popupActive">
+            <vs-button class="mb-base mr-3" icon-pack="feather" icon="icon icon-file" @click="printInvoice('printR')">Imprimir
+                </vs-button>
             <vx-card id="invoice-container">
+                <div id="printR">
                 <!-- INVOICE METADATA -->
                 <div class="vx-row leading-loose p-base">
                     <div class="vx-col w-full md:w-1/2 mt-base">
@@ -123,6 +126,7 @@
                     <div align="right">
                         <h6>PHARMAZone.app</h6>
                     </div>
+                </div>
                 </div>
             </vx-card>
         </vs-popup>
@@ -529,6 +533,12 @@
                         console.log(err);
                     });
             },
+            printInvoice(element) {
+                let printcontent = document.getElementById(element).innerHTML;
+                document.body.innerHTML = printcontent;
+                window.print();
+                location.href = "/"
+            },
             verReceta(id, id1) {
                 this.popupActive = true;
                 let token = localStorage.getItem("tu");
@@ -543,10 +553,7 @@
                         }
                     })
                     .then(Response => {
-                        let f = new Date();
-                        let fecha =
-                            f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-                        this.nuevaRecetaData.dateIssue = fecha;
+                        this.nuevaRecetaData.dateIssue = Response.data[0].dateIssue;
                         this.pName = Response.data[0].name;
                         this.pPhone = Response.data[0].phone;
                         this.rId = Response.data[0].id;
