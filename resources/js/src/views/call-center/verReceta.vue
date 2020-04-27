@@ -276,10 +276,7 @@
                         }
                     })
                     .then(Response => {
-                        let f = new Date();
-                        let fecha =
-                            f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-                        this.nuevaRecetaData.dateIssue = fecha;
+                        this.nuevaRecetaData.dateIssue = Response.data[0].dateIssue;
                         this.pName = Response.data[0].name;
                         this.pPhone = Response.data[0].phone;
                         this.rId = Response.data[0].id;
