@@ -129,6 +129,21 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('putTransaction', 'Transactions\TransactionController@update');
     Route::get('getTransactions/{id}', 'Transactions\TransactionController@show');
     Route::get('getTransactions', 'Transactions\TransactionController@getTransactions');
+
+    //Ejemplo General Reportes
+    
+    Route::get('reporteGeneralEjemplo', function () {
+
+        $datos = DB::select("SELECT * FROM categories");
+    
+        $pdf = App::make('dompdf.wrapper');
+    
+        $pdf->loadview('reporte_general', ['datos' => $datos]);
+    
+        return $pdf->stream();
+    
+    });
+
     //Reportes
     Route::get('reporteGeneral', function () {
 

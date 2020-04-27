@@ -227,7 +227,7 @@
                         this.laboratory = [];
                         //console.log(Response.data);
                         Response.data.forEach(element => {
-                            if (element.user_id == ide) {
+                            //if (element.user_id == ide) {
                                 this.laboratorios.push({
                                     label: element.name,
                                     value: element.id
@@ -239,7 +239,7 @@
                                     });
                                     this.laboratory1 = element.id;
                                 }
-                            }
+                            //}
                         });
                         this.activeLoading = false;
                         this.$vs.loading.close();
@@ -264,7 +264,7 @@
                         this.precentation = [];
                         //console.log(Response.data);
                         Response.data.forEach(element => {
-                            if (element.user_id == ide) {
+                            //if (element.user_id == ide) {
                                 this.presentaciones.push({
                                     label: element.name,
                                     value: element.id
@@ -276,7 +276,7 @@
                                     });
                                     this.precentation1 = element.id;
                                 }
-                            }
+                            //}
                         });
                         this.activeLoading = false;
                         this.$vs.loading.close();
@@ -445,7 +445,7 @@
                     })
                     .then(Response => {
                         Response.data.forEach(element => {
-                            if (element.user_id == idu) {
+                            //if (element.user_id == idu) {
                                 this.categorias.push({
                                     label: element.name,
                                     value: element.id
@@ -456,7 +456,7 @@
                                         value: element.id
                                     });
                                 }
-                            }
+                            //}
                         });
                     })
                     .catch(err => {
